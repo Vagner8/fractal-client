@@ -1,0 +1,36 @@
+/* Universal scrollable elements styling */
+* {
+  /* Scrollbar dimensions */
+  ::-webkit-scrollbar {
+    width: 8px; /* Vertical scrollbar width */
+    height: 8px; /* Horizontal scrollbar height */
+  }
+
+  /* Track (the background of the scrollbar) */
+  ::-webkit-scrollbar-track {
+    background: #e0e0e0; /* Neutral light-gray color */
+    border-radius: 10px; /* Ensure the track has rounded edges */
+    margin: 2px; /* Add padding around the track */
+  }
+
+  /* Thumb (the draggable part of the scrollbar) */
+  ::-webkit-scrollbar-thumb {
+    background-color: #b0b0b0; /* Neutral mid-gray color */
+    border-radius: 10px; /* Rounded edges for modern appearance */
+    border: 2px solid #e0e0e0; /* Matches track to create separation */
+  }
+
+  /* Thumb hover (when the mouse is over the scrollbar) */
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #909090; /* Slightly darker gray on hover */
+  }
+
+  /* Thumb active (when dragging the scrollbar) */
+  ::-webkit-scrollbar-thumb:active {
+    background-color: #707070; /* Even darker gray when active */
+  }
+
+  /* Firefox compatibility */
+  scrollbar-width: thin; /* Thin scrollbar width */
+  scrollbar-color: #b0b0b0 #e0e0e0; /* Thumb color and track color */
+}

@@ -1,0 +1,22 @@
+<table mat-table [dataSource]="dataSource" class="table">
+  @for (column of columns; track column) {
+    <ng-container [matColumnDef]="column">
+      <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
+      <td [class.disable-cursor-pointer]="printControls" mat-cell *matCellDef="let row">
+        {{ printControls ? row[column] : row.getControlData(column) }}
+      </td>
+    </ng-container>
+  }
+  <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+  @if (printControls) {
+    <tr mat-row *matRowDef="let row; columns: columns"></tr>
+  } @else {
+    <tr
+      mat-row
+      *matRowDef="let row; columns: columns"
+      appTap
+      (hold)="ss.selectItems(row)"
+      (touch)="ss.setItem(row)"
+      [class.clicked-row]="ss.$items().includes(row)"></tr>
+  }
+</table>

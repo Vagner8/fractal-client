@@ -1,0 +1,9 @@
+@use 'variables.scss' as *;
+
+h1 {
+  height: 32px;
+  padding: $size-small;
+  margin: 0;
+  background-color: $color-common;
+  border-bottom: solid 1px #0000001f;
+}

@@ -1,0 +1,5 @@
+<button mat-mini-fab appTap (hold)="holdAndTouch('Hold')" (touch)="holdAndTouch('Touch')">
+  @if (showSpinner$ | async) {
+    <app-spinner class="manager-spinner" mode="determinate" />
+  }
+</button>

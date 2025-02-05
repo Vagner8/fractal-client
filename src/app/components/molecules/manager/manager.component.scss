@@ -1,0 +1,9 @@
+@use 'variables.scss' as *;
+
+.show {
+  animation: fadeIn 0.2s ease-in-out forwards;
+}
+
+:host {
+  display: flex;
+}

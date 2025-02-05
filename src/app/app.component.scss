@@ -1,0 +1,39 @@
+@use 'variables.scss' as *;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  app-toolbar {
+    position: sticky;
+    z-index: 10;
+    bottom: 0;
+  }
+
+  app-header {
+    position: sticky;
+    z-index: 10;
+    top: 0;
+  }
+
+  app-header,
+  app-sidenav,
+  app-toolbar {
+    animation: fadeIn 1s ease-in-out forwards;
+  }
+}
+
+.spinner {
+  position: absolute;
+  inset: auto 0 0 0;
+  height: $toolbar-height;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 0 $size-medium;
+}
+
+app-sidenav {
+  flex-grow: 1;
+}

@@ -1,0 +1,32 @@
+@use 'variables.scss' as *;
+
+.mat-mdc-form-field-icon-suffix {
+  padding: 0 !important;
+  position: absolute !important;
+  right: 0 !important;
+}
+
+.mat-mdc-progress-spinner circle {
+  stroke: $color-manager !important;
+}
+
+.manager-spinner .mat-mdc-progress-spinner circle {
+  stroke: $color-secondary !important;
+}
+
+.mat-drawer-app-sidenav {
+  .mat-drawer-inner-container {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
+
+.mat-drawer-container-app-sidenav {
+  mat-drawer-content {
+    height: calc(-130px + 100vh);
+  }
+}
+
+.mat-mdc-row .mat-mdc-cell {
+  cursor: pointer;
+}

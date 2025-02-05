@@ -1,0 +1,20 @@
+@use './variables.scss' as *;
+@use './scrollbar.scss';
+@use './animations.scss';
+@use './mat-styles.scss';
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}

@@ -1,0 +1,21 @@
+@let root = ent.$root();
+@let current = ss.$current();
+
+@if (root && current) {
+  @if (Modifiers) {
+    <app-modifier />
+  }
+  @if (!Modifiers) {
+    @switch (Pages) {
+      @case ('Home') {
+        <h1>Home</h1>
+      }
+      @case ('App') {
+        <app-control-panel [fractal]="root" />
+      }
+      @default {
+        <app-table [fractal]="current" />
+      }
+    }
+  }
+}

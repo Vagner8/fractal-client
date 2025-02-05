@@ -1,0 +1,8 @@
+@use 'variables.scss' as *;
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  height: $toolbar-height;
+  justify-content: flex-end;
+}

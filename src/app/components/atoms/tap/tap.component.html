@@ -1,0 +1,4 @@
+<button mat-flat-button appTap [tap]="tap" (hold)="hold.emit(tap)" (touch)="touch.emit(tap)">
+  <mat-icon>{{ tap.getControlData('Icon') }}</mat-icon>
+  {{ tap.cursor }}
+</button>

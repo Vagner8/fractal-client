@@ -1,0 +1,11 @@
+@use 'variables.scss' as *;
+
+.mat-drawer-container-app-sidenav {
+  padding: calc($size-small / 2);
+  width: 100%;
+  height: 100%;
+}
+
+.mat-drawer-app-sidenav {
+  width: $drawer-app-sidenav;
+}

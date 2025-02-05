@@ -1,0 +1,44 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "ES2022",
+    "module": "ES2022",
+    "useDefineForClassFields": false,
+    "lib": ["ES2022", "dom", "dom.iterable"],
+    "baseUrl": "./src",
+    "paths": {
+      "@components/atoms": ["app/components/atoms/index.ts"],
+      "@components/molecules": ["app/components/molecules/index.ts"],
+      "@components/organisms": ["app/components/organisms/index.ts"],
+
+      "@interceptors": ["app/interceptors/index.ts"],
+      "@directives": ["app/directives/index.ts"],
+      "@constants": ["app/constants/index.ts"],
+      "@services": ["app/services/index.ts"],
+      "@fractal": ["app/fractal/index.ts"],
+      "@utils": ["app/utils/index.ts"],
+      "@types": ["app/types/index.ts"],
+      "@mat": ["app/mat-angular.ts"]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

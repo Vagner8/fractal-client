@@ -1,0 +1,26 @@
+<mat-drawer-container class="mat-drawer-container-app-sidenav" autosize>
+  <mat-drawer
+    [opened]="mgr.$event() === 'Touch'"
+    [disableClose]="false"
+    class="mat-drawer-app-sidenav"
+    mode="side"
+    position="end">
+    @if (ts.$taps(); as taps) {
+      <mat-list>
+        @for (indicator of taps.sort; track indicator) {
+          @if (taps.findFractal(indicator); as tap) {
+            @switch (tap.parent.cursor) {
+              @case (appEntities.Modifiers) {
+                <app-tap [tap]="tap" (hold)="modifierHeld($event)" (touch)="modifierTouched($event)" />
+              }
+              @case (appEntities.Pages) {
+                <app-tap [tap]="tap" (touch)="pageTouched($event)" />
+              }
+            }
+          }
+        }
+      </mat-list>
+    }
+  </mat-drawer>
+  <router-outlet></router-outlet>
+</mat-drawer-container>

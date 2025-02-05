@@ -1,0 +1,7 @@
+<ul class="list" [class.two-items]="fractals.length === 2" [class.three-or-more-items]="fractals.length >= 3">
+  @for (fractal of fractals; track fractal.dto.id) {
+    <li class="item">
+      <app-form-card [fractal]="fractal" />
+    </li>
+  }
+</ul>

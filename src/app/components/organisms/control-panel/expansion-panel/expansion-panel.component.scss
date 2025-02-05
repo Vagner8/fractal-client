@@ -1,0 +1,40 @@
+@use 'variables.scss' as *;
+
+.icon {
+  margin-right: $size-small;
+}
+
+.children {
+  display: flex;
+  flex-direction: column;
+  gap: $size-medium;
+}
+
+.mat-expansion-panel {
+  border: solid 1px $color-border;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+.clicked-panel {
+  background-color: $color-secondary;
+}
+
+::ng-deep {
+  mat-expansion-panel {
+    .mat-expansion-panel-body {
+      padding: 0 $size-small $size-small;
+    }
+  }
+}
+
+::ng-deep {
+  mat-expansion-panel.new-panel {
+    .mat-expansion-panel-body {
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: $size-medium;
+    }
+  }
+}

@@ -1,0 +1,17 @@
+@let news = ss.$new();
+@let items = ss.$items();
+@let current = ss.$current();
+
+<div class="modifier">
+  @if (news.length > 0) {
+    <app-edit-modifier [fractals]="news" />
+  }
+
+  @if (current) {
+    <app-edit-modifier [fractals]="[current]" />
+  }
+
+  @if (items.length > 0) {
+    <app-edit-modifier [fractals]="items" />
+  }
+</div>

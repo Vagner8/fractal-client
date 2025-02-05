@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+  <file source-language="en-US" datatype="plaintext" original="ng2.template">
+    <body>
+      <trans-unit id="2559411238424161835" datatype="html">
+        <source><x id="START_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;mat-icon&gt;"/>close<x id="CLOSE_TAG_MAT_ICON" ctype="x-mat_icon" equiv-text="&lt;/mat-icon&gt;"/>Close</source>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/drawer/drawer.component.html</context>
+          <context context-type="linenumber">8,9</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="5674286808255988565" datatype="html">
+        <source>Create</source>
+        <target>Vytvořit</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/drawer/drawer.component.ts</context>
+          <context context-type="linenumber">36</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7585826646011739428" datatype="html">
+        <source>Edit</source>
+        <target>Upravit</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/drawer/drawer.component.ts</context>
+          <context context-type="linenumber">37</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="7022070615528435141" datatype="html">
+        <source>Delete</source>
+        <target>Odstranit</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/drawer/drawer.component.ts</context>
+          <context context-type="linenumber">38</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="2821179408673282599" datatype="html">
+        <source>Home</source>
+        <target>Hlavní</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/drawer/drawer.component.ts</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="4555457172864212828" datatype="html">
+        <source>Users</source>
+        <target>Uživatelé</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">src/app/components/drawer/drawer.component.ts</context>
+          <context context-type="linenumber">42</context>
+        </context-group>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

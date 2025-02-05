@@ -1,0 +1,26 @@
+@use 'variables.scss' as *;
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $size-medium;
+}
+
+.item {
+  flex: 1 1 100%;
+  box-sizing: border-box;
+}
+
+.list.two-items > .item {
+  flex: 1 1 calc(50% - $size-medium);
+}
+
+.list.three-or-more-items > .item {
+  flex: 1 1 calc(30.33% - $size-medium);
+}
+
+@media (max-width: 768px) {
+  .item {
+    flex: 1 1 100%;
+  }
+}

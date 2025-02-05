@@ -1,0 +1,7 @@
+@use 'variables.scss' as *;
+
+.modifier {
+  display: flex;
+  flex-direction: column;
+  gap: $size-medium;
+}

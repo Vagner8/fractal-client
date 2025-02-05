@@ -1,0 +1,25 @@
+@let icon = fractal.getControlData(indicators.Icon);
+
+<mat-expansion-panel
+  [class.clicked-panel]="ss.$current() === fractal"
+  hideToggle
+  (closed)="closed.emit(fractal)"
+  (afterExpand)="afterExpand(fractal)">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      @if (icon) {
+        <mat-icon class="icon">{{ icon }}</mat-icon>
+      }
+      {{ fractal.cursor }}</mat-panel-title
+    >
+  </mat-expansion-panel-header>
+  <div class="children">
+    <app-table [fractal]="fractal" [printControls]="true" />
+    @if (fractal.isCollection) {
+      <app-table [fractal]="fractal" />
+    }
+    @if (fractal.fractals) {
+      <ng-content />
+    }
+  </div>
+</mat-expansion-panel>
