@@ -2,6 +2,14 @@ import { FormControl, FormRecord } from '@angular/forms';
 import { FractalFactory } from '@fractal';
 import { Fractal, FractalForm, Fractals, FractalsDto } from '@types';
 
+export const constant = <T extends readonly string[]>(values: T): Record<T[number], T[number]> & { values: T } => {
+  const value = Object.fromEntries(values.map(value => [value, value])) as Record<T[number], T[number]>;
+  return {
+    ...value,
+    values,
+  };
+};
+
 export const createForm = (fractal: Fractal): FractalForm => {
   const formRecord = new FormRecord(
     fractal.controls.reduce((acc: Record<string, FormControl>, { data, indicator }) => {

@@ -1,0 +1,19 @@
+<button mat-button [matMenuTriggerFor]="menu">
+  {{ $title() }}
+</button>
+
+<mat-menu #menu="matMenu">
+  @if (fractal.isItem) {
+    @for (item of items.values; track item) {
+      <button mat-menu-item appTap (hold)="onMenuItemHeld(item)" (touch)="onMnuItemTouched(item)">
+        <span>{{ item }}</span>
+      </button>
+    }
+  } @else {
+    @for (item of collectionItems.values; track item) {
+      <button mat-menu-item (click)="onMnuItemTouched(item)">
+        <span>{{ item }}</span>
+      </button>
+    }
+  }
+</mat-menu>
