@@ -1,29 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
-import { InputComponent, SelectComponent } from '@components/atoms';
-import { ControlInputs, ControlKeys } from '@types';
+import { Component, Input } from '@angular/core';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { CardComponent, InputComponent, SelectComponent } from '@components/atoms';
+import { ControlInputs, NewControlKeys } from '@constants';
+import { NewControlMenuComponent } from './new-control-menu/new-control-menu.component';
 
 @Component({
   selector: 'app-new-control',
   standalone: true,
-  imports: [SelectComponent, InputComponent],
+  imports: [SelectComponent, InputComponent, CardComponent, NewControlMenuComponent],
   templateUrl: './new-control.component.html',
 })
-export class NewControlComponent implements OnInit {
-  labels = [ControlKeys.indicator, ControlKeys.input, ControlKeys.data];
-  formGroup!: FormGroup<{ [key: string]: FormControl }>;
-  controlInputs = Object.values(ControlInputs);
+export class NewControlComponent {
+  @Input() formArray!: FormArray<FormGroup<Record<string, FormControl>>>;
 
-  ngOnInit(): void {
-    this.formGroup = this.createFormGroup();
-  }
-
-  private createFormGroup(): FormGroup {
-    return new FormGroup(
-      this.labels.reduce((acc: Record<string, FormControl>, label) => {
-        acc[label] = new FormControl('');
-        return acc;
-      }, {})
-    );
-  }
+  controlInputs = ControlInputs;
+  newControlKeys = NewControlKeys;
 }

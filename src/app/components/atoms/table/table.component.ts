@@ -1,8 +1,9 @@
 import { Component, inject, Input } from '@angular/core';
+import { ControlKeys } from '@constants';
 import { TapDirective } from '@directives';
 import { MatTableModule } from '@mat';
 import { SelectService } from '@services';
-import { ControlKeys, Fractal } from '@types';
+import { Fractal } from '@types';
 
 @Component({
   selector: 'app-table',

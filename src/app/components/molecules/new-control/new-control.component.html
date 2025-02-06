@@ -1,4 +1,13 @@
-<form>
-  <app-input [label]="labels[0]" [formCtr]="formGroup.controls[labels[0]]" />
-  <app-select [opts]="controlInputs" [label]="labels[1]" [formCtr]="formGroup.controls[labels[1]]" />
-</form>
+@for (formGroup of formArray.controls; track $index) {
+  <app-card [title]="$index + 1 + ' ' + 'New'">
+    <app-new-control-menu card-action />
+    <form card-content>
+      <app-input [label]="newControlKeys.indicator" [formCtr]="formGroup.controls[newControlKeys.indicator]" />
+      <app-select
+        [opts]="controlInputs.strings"
+        [label]="newControlKeys.input"
+        [formCtr]="formGroup.controls[newControlKeys.input]" />
+      <app-input [label]="newControlKeys.data" [formCtr]="formGroup.controls[newControlKeys.data]" />
+    </form>
+  </app-card>
+}

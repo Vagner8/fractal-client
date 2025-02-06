@@ -1,7 +1,8 @@
 import { Component, Input, output } from '@angular/core';
 import { InputComponent, SelectComponent } from '@components/atoms';
+import { ControlInputs } from '@constants';
 import { MatButtonModule, MatInputModule } from '@mat';
-import { ControlInputs, Fractal, Indicators } from '@types';
+import { Fractal, Indicators } from '@types';
 
 @Component({
   selector: 'app-form',
@@ -16,5 +17,4 @@ export class FormComponent {
 
   indicators = Indicators;
   controlInputs = ControlInputs;
-  controlInputsArray = Object.values(ControlInputs);
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, output, signal } from '@angular/core';
 import { MatButtonModule, MatMenuModule } from '@mat';
 import { TapDirective } from '@directives';
 import { Fractal } from '@types';
@@ -15,6 +15,7 @@ import { Subscription } from 'rxjs';
 })
 export class FormCardMenuComponent implements OnInit, OnDestroy {
   @Input() fractal!: Fractal;
+  touch = output<string>();
 
   $title = signal('');
 
@@ -41,6 +42,7 @@ export class FormCardMenuComponent implements OnInit, OnDestroy {
 
   onMnuItemTouched(item: string): void {
     if (this.$title() === item) return;
+    this.touch.emit(item);
     switch (item) {
       case this.items.Edit:
         this.toggleFrom(true);

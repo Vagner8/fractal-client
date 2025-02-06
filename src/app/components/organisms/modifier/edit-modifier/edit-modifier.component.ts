@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { FormCardComponent } from '@components/molecules';
 import { Fractal } from '@types';
+import { FormCardComponent } from '../../form-card/form-card.component';
 
 @Component({
   selector: 'app-edit-modifier',

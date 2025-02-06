@@ -1,0 +1,9 @@
+<button mat-button [matMenuTriggerFor]="menu">Menu</button>
+
+<mat-menu #menu="matMenu">
+  @for (item of items.values; track item) {
+    <button mat-menu-item>
+      <span>{{ item }}</span>
+    </button>
+  }
+</mat-menu>

@@ -1,0 +1,6 @@
+<app-card [title]="fractal.cursor">
+  <app-form-card-menu card-action [fractal]="fractal" (touch)="onMenuItemTouched($event)" />
+  <app-form card-content [fractal]="fractal">
+    <app-new-control [formArray]="newControls" />
+  </app-form>
+</app-card>

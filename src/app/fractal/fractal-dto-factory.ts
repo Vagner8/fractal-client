@@ -1,4 +1,5 @@
-import { ControlInputs, ControlsDto, Fractal, FractalDto, FractalsDto, Indicators, SplitIndicators } from '@types';
+import { ControlInputs } from '@constants';
+import { ControlsDto, Fractal, FractalDto, FractalsDto, Indicators, SplitIndicators } from '@types';
 import { v4 } from 'uuid';
 
 export class FractalDtoFactory implements FractalDto {
