@@ -15,6 +15,12 @@ export class FormComponent {
   @Input() fractal!: Fractal;
   change = output<Fractal>();
 
+  ngOnInit(): void {
+    this.fractal.form.valueChanges.subscribe(value => {
+      console.log('🚀 ~ value:', value);
+    });
+  }
+
   indicators = Indicators;
   controlInputs = ControlInputs;
 }

@@ -36,12 +36,13 @@ export class ModifierComponent implements OnInit, OnDestroy {
               this.ds.add(toAdd.map(fractal => fractal.updateFractalByForm())).subscribe();
             }
             if (toUpdate.length > 0) {
-              this.ds.update(toUpdate.map(fractal => fractal.updateFractalByForm())).subscribe();
+              const filtered = toUpdate.filter(({ form }) => form.enabled && form.dirty);
+              filtered.length > 0 && this.ds.update(filtered.map(fractal => fractal.updateFractalByForm())).subscribe();
             }
             if (this.ncs.forms.size > 0) {
               let controlsDto: ControlDto[] = [];
               for (const [fractal, form] of this.ncs.forms.entries()) {
-                controlsDto = form.value.map(form => fractal.addControl(form));
+                controlsDto = form.controls.map(control => fractal.addControl(control));
               }
               this.ds.addControls(controlsDto).subscribe();
             }

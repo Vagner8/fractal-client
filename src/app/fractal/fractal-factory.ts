@@ -12,7 +12,7 @@ import {
 import { FractalDtoFactory } from './fractal-dto-factory';
 import { checkValue, createForm } from '@utils';
 import { findFractalRecursively } from 'app/utils/getters';
-import { FormRecord } from '@angular/forms';
+import { FormControl, FormGroup, FormRecord } from '@angular/forms';
 import { v4 } from 'uuid';
 import { ControlInputs, ControlKeys } from '@constants';
 
@@ -75,7 +75,8 @@ export class FractalFactory implements Fractal {
     return Boolean(this.getControlData(test));
   }
 
-  addControl(value: Record<string, string>): ControlDto {
+  addControl(form: FormGroup): ControlDto {
+    const value = form.value;
     const control: ControlDto = {
       id: v4(),
       data: value[ControlKeys.data],
@@ -84,6 +85,9 @@ export class FractalFactory implements Fractal {
       indicator: value[ControlKeys.indicator],
     };
     this.dto.controls[ControlKeys.indicator] = control;
+    this.form.addControl(value[ControlKeys.indicator], new FormControl(value[ControlKeys.data]));
+
+    // this.form = new FormRecord({});
     return control;
   }
 
@@ -119,12 +123,12 @@ export class FractalFactory implements Fractal {
   updateFractalByForm(): FractalDto {
     const { controls } = this.dto;
     for (const indicator in controls) {
-      const value = this.form.controls[indicator].value;
+      const form = this.form.controls[indicator];
       const control = controls[indicator];
       if (control.input === ControlInputs.Select) {
-        control.data = [value, ...control.data.split(':').filter(item => item !== value)].join(':');
+        control.data = [form.value, ...control.data.split(':').filter(item => item !== form.value)].join(':');
       } else {
-        control.data = value;
+        control.data = form.value;
       }
     }
     return this.dto;

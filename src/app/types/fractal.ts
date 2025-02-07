@@ -1,9 +1,9 @@
-import { FormControl, FormRecord } from '@angular/forms';
+import { FormControl, FormGroup, FormRecord } from '@angular/forms';
 import { ControlDto, ControlsDto } from './control';
 
 export type Fractals = Record<string, Fractal>;
 export type FractalsDto = Record<string, FractalDto>;
-export type FractalForm = FormRecord<FormControl<string>>;
+export type FractalForm = FormRecord<FormControl>;
 
 export interface FractalDto {
   id: string;
@@ -35,7 +35,7 @@ export interface Fractal {
   is(test: string | object): boolean;
   has(test: string): boolean;
 
-  addControl(value: Record<string, string>): ControlDto;
+  addControl(form: FormGroup): ControlDto;
   getControl(indicator: string): ControlDto;
   findControl(indicator: string): ControlDto | null;
   getControlData(indicator: string): string;

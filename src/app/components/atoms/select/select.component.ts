@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@mat';
 
@@ -10,9 +10,13 @@ import { MatSelectModule } from '@mat';
   styleUrl: './select.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SelectComponent {
+export class SelectComponent implements OnInit {
   @Input() opts: string[] = [];
   @Input() label: string = '';
   @Input() formCtr!: FormControl;
   @Input() className: string = '';
+
+  ngOnInit(): void {
+    this.formCtr.setValue(this.opts[0]);
+  }
 }
