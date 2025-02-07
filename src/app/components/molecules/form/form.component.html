@@ -5,7 +5,7 @@
 
     @switch (control.input) {
       @case (controlInputs.Select) {
-        <app-select [label]="indicator" [opts]="fromControl.value.split(':')" [formCtr]="fromControl" />
+        <app-select [label]="indicator" [opts]="control.data.split(':')" [formCtr]="fromControl" />
       }
       @default {
         <app-input [label]="indicator" [formCtr]="fromControl" />

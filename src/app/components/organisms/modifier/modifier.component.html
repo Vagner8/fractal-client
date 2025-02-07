@@ -3,12 +3,12 @@
 @let current = ss.$current();
 
 <div class="modifier">
-  @if (news.length > 0) {
-    <app-edit-modifier [fractals]="news" />
-  }
-
   @if (current) {
     <app-edit-modifier [fractals]="[current]" />
+  }
+
+  @if (news.length > 0) {
+    <app-edit-modifier [fractals]="news" />
   }
 
   @if (items.length > 0) {

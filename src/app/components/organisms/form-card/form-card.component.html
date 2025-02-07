@@ -1,6 +1,8 @@
 <app-card [title]="fractal.cursor">
   <app-form-card-menu card-action [fractal]="fractal" (touch)="onMenuItemTouched($event)" />
   <app-form card-content [fractal]="fractal">
-    <app-new-control [formArray]="newControls" />
+    @if (ncs.has(fractal)) {
+      <app-new-control [fractal]="fractal" />
+    }
   </app-form>
 </app-card>

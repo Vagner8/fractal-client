@@ -1,10 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { Fractal } from '@types';
 import { FormCardMenuComponent } from './form-card-menu/form-card-menu.component';
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { FormCardMenuItems, NewControlKeys } from '@constants';
+import { ControlMenuItems } from '@constants';
 import { CardComponent } from '@components/atoms';
 import { FormComponent, NewControlComponent } from '@components/molecules';
+import { NewControlService } from '@services';
 
 @Component({
   selector: 'app-form-card',
@@ -15,20 +15,12 @@ import { FormComponent, NewControlComponent } from '@components/molecules';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormCardComponent {
+  ncs = inject(NewControlService);
   @Input() fractal!: Fractal;
 
-  newControls = new FormArray<FormGroup>([]);
-
   onMenuItemTouched(menuItem: string): void {
-    if (menuItem === FormCardMenuItems.New) {
-      this.newControls.push(
-        new FormGroup(
-          NewControlKeys.values.reduce((acc: Record<string, FormControl>, label) => {
-            acc[label] = new FormControl('');
-            return acc;
-          }, {})
-        )
-      );
+    if (menuItem === ControlMenuItems.New) {
+      this.ncs.push(this.fractal);
     }
   }
 }

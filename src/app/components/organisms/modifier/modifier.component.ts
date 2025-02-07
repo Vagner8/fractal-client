@@ -1,7 +1,7 @@
 import { Component, computed, inject, OnDestroy, OnInit } from '@angular/core';
-import { AppModifiers } from '@types';
+import { AppModifiers, ControlDto } from '@types';
 import { MatButtonModule, MatCardModule } from '@mat';
-import { DataService, ModifiersService, SelectService } from '@services';
+import { DataService, ModifiersService, NewControlService, SelectService } from '@services';
 import { Subscription } from 'rxjs';
 import { EditModifierComponent } from './edit-modifier/edit-modifier.component';
 
@@ -16,6 +16,7 @@ export class ModifierComponent implements OnInit, OnDestroy {
   ds = inject(DataService);
   ss = inject(SelectService);
   ms = inject(ModifiersService);
+  ncs = inject(NewControlService);
   private subs: Subscription[] = [];
 
   $toUpdate = computed(() => {
@@ -37,9 +38,15 @@ export class ModifierComponent implements OnInit, OnDestroy {
             if (toUpdate.length > 0) {
               this.ds.update(toUpdate.map(fractal => fractal.updateFractalByForm())).subscribe();
             }
+            if (this.ncs.forms.size > 0) {
+              let controlsDto: ControlDto[] = [];
+              for (const [fractal, form] of this.ncs.forms.entries()) {
+                controlsDto = form.value.map(form => fractal.addControl(form));
+              }
+              this.ds.addControls(controlsDto).subscribe();
+            }
             break;
         }
-        this.ss.clear();
       })
     );
   }

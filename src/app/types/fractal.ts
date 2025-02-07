@@ -35,6 +35,7 @@ export interface Fractal {
   is(test: string | object): boolean;
   has(test: string): boolean;
 
+  addControl(value: Record<string, string>): ControlDto;
   getControl(indicator: string): ControlDto;
   findControl(indicator: string): ControlDto | null;
   getControlData(indicator: string): string;

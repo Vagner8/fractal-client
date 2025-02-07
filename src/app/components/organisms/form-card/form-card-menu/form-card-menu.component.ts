@@ -3,7 +3,7 @@ import { MatButtonModule, MatMenuModule } from '@mat';
 import { TapDirective } from '@directives';
 import { Fractal } from '@types';
 import { FormControlStatus } from '@angular/forms';
-import { FormCardMenuBunchItems, FormCardMenuCollectionItems, FormCardMenuItems } from '@constants';
+import { ControlMenuBunchItems, ControlMenuCollectionItems, ControlMenuItems } from '@constants';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -19,43 +19,44 @@ export class FormCardMenuComponent implements OnInit, OnDestroy {
 
   $title = signal('');
 
-  items = FormCardMenuItems;
-  bunchItems = FormCardMenuBunchItems;
-  collectionItems = FormCardMenuCollectionItems;
+  items = ControlMenuItems;
+  bunchItems = ControlMenuBunchItems;
+  collectionItems = ControlMenuCollectionItems;
 
   private subs: Subscription[] = [];
 
   ngOnInit(): void {
     this.toggleFrom(this.fractal.isItem);
     this.subs.push(
-      this.fractal.parent.childrenForms.statusChanges.subscribe(value =>
-        this.$title.set(this.formControlStatusMap(value))
-      )
+      this.fractal.form.statusChanges.subscribe(value => {
+        this.$title.set(this.formControlStatusMap(value));
+      })
     );
   }
 
   onMenuItemHeld(item: string): void {
-    if (this.$title() === item) return;
-    if (item === this.items.Edit) this.fractal.parent.childrenForms.enable();
-    if (item === this.items.Draft) this.fractal.parent.childrenForms.disable();
+    ({
+      [this.items.Edit]: (): void => this.toggleAllForms(true),
+      [this.items.Draft]: (): void => this.toggleAllForms(false),
+    })[item]();
   }
 
   onMnuItemTouched(item: string): void {
     if (this.$title() === item) return;
     this.touch.emit(item);
-    switch (item) {
-      case this.items.Edit:
-        this.toggleFrom(true);
-        break;
-      case this.items.Draft:
-        this.toggleFrom(false);
-        break;
-    }
+    ({
+      [this.items.Edit]: (): void => this.toggleFrom(true),
+      [this.items.Draft]: (): void => this.toggleFrom(false),
+    })[item]?.();
   }
 
   private toggleFrom(value: boolean): void {
     this.$title.set(this.items[value ? 'Edit' : 'Draft']);
     this.fractal.form[value ? 'enable' : 'disable']();
+  }
+
+  private toggleAllForms(value: boolean): void {
+    Object.values(this.fractal.parent.childrenForms.controls).forEach(form => form[value ? 'enable' : 'disable']());
   }
 
   private formControlStatusMap(status: FormControlStatus): string {
