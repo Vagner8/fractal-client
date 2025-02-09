@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
-import { AppEvents, AppEntities } from '@types';
 import { ManagerService, ModifiersService, TapsService, SelectService, EntitiesService } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
 import { ControlPanelComponent } from '../control-panel/control-panel.component';
 import { TableComponent } from '@components/atoms';
+import { AppEntities, AppEvents } from '@utils';
 
 @Component({
   selector: 'app-screen',

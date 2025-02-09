@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { ScreenComponent } from '@components/organisms';
-import { AppEntities } from '@types';
+import { AppEntities } from '@utils';
 
 export const routes: Routes = [
   {

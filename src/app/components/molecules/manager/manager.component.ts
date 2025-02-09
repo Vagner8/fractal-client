@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { MatButtonModule } from '@mat';
 import { TapDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
-import { AppEvents, AppEntities, AppGroups } from '@types';
 import { map, merge, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { EventService, ManagerService, TapsService, EntitiesService, BaseService } from '@services';
+import { AppEntities, AppEvents, AppGroups } from '@utils';
 
 @Component({
   selector: 'app-manager',

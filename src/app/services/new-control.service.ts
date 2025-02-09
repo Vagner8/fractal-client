@@ -2,12 +2,15 @@ import { inject, Injectable } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NewControlKeys } from '@constants';
 import { Fractal, NewControlFrom } from '@types';
+import { ControlFactory } from '@utils';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NewControlService {
   fb = inject(FormBuilder);
+  ds = inject(DataService);
   forms = new Map<Fractal, NewControlFrom>();
 
   has(fractal: Fractal): boolean {
@@ -31,6 +34,15 @@ export class NewControlService {
   removeAt(fractal: Fractal, index: number): void {
     const from = this.forms.get(fractal);
     from?.removeAt(index);
+  }
+
+  createControls(): void {
+    const factory = new ControlFactory(this.forms);
+    const { newControls, parentSortControl } = factory.addControls();
+    newControls.length > 0 && this.ds.addControls(newControls).subscribe();
+    parentSortControl && this.ds.updateControls([parentSortControl]).subscribe();
+    factory.clear();
+    this.forms.clear();
   }
 
   private createFormGroup(): FormGroup {

@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
-import { AppEntities } from '@types';
 import { BaseService } from './base.service';
+import { AppEntities } from '@utils';
 
 @Injectable({
   providedIn: 'root',

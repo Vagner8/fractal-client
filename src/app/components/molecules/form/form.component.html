@@ -1,14 +1,18 @@
-<form>
-  @for (indicator of fractal.controlsIndicators; track indicator) {
-    @let control = fractal.getControl(indicator);
-    @let fromControl = fractal.form.controls[indicator];
+@let sort = fractal.isItem ? fractal.parent.sort : fractal.controlsIndicators;
 
-    @switch (control.input) {
-      @case (controlInputs.Select) {
-        <app-select [label]="indicator" [opts]="control.data.split(':')" [formCtr]="fromControl" />
-      }
-      @default {
-        <app-input [label]="indicator" [formCtr]="fromControl" />
+<form>
+  @for (indicator of sort; track indicator) {
+    @let control = fractal.findControl(indicator);
+
+    @if (control) {
+      @let fromControl = fractal.getControlForm(indicator);
+      @switch (control.input) {
+        @case (controlInputs.Select) {
+          <app-select [label]="indicator" [opts]="control.data.split(':')" [formCtr]="fromControl" />
+        }
+        @default {
+          <app-input [label]="indicator" [formCtr]="fromControl" />
+        }
       }
     }
   }

@@ -24,18 +24,22 @@ export class DataService {
     return this.http.post<ControlDto[]>(this.controlApi, dto);
   }
 
+  updateControls(dto: ControlDto[]): Observable<ControlDto[]> {
+    return this.http.put<ControlDto[]>(this.controlApi, dto);
+  }
+
+  deleteControls(body: ControlDto[]): Observable<ControlDto[]> {
+    return this.http.delete<ControlDto[]>(this.controlApi, {
+      body,
+    });
+  }
+
   update(dto: FractalDto[]): Observable<FractalDto> {
     return this.http.put<FractalDto>(this.fractalApi, dto);
   }
 
   delete(body: FractalDto[]): Observable<FractalDto[]> {
     return this.http.delete<FractalDto[]>(this.fractalApi, {
-      body,
-    });
-  }
-
-  deleteControls(body: ControlDto[]): Observable<ControlDto[]> {
-    return this.http.delete<ControlDto[]>(this.controlApi, {
       body,
     });
   }

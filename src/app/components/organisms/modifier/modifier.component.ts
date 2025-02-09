@@ -1,9 +1,9 @@
-import { Component, computed, inject, OnDestroy, OnInit } from '@angular/core';
-import { AppModifiers, ControlDto } from '@types';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule, MatCardModule } from '@mat';
 import { DataService, ModifiersService, NewControlService, SelectService } from '@services';
 import { Subscription } from 'rxjs';
 import { EditModifierComponent } from './edit-modifier/edit-modifier.component';
+import { AppModifiers } from '@utils';
 
 @Component({
   selector: 'app-modifier',
@@ -19,19 +19,14 @@ export class ModifierComponent implements OnInit, OnDestroy {
   ncs = inject(NewControlService);
   private subs: Subscription[] = [];
 
-  $toUpdate = computed(() => {
-    const items = this.ss.$items();
-    const current = this.ss.$current();
-    return items.length === 0 && current ? [current] : items;
-  });
-
   ngOnInit(): void {
     this.subs.push(
       this.ms.hold$.subscribe(modifier => {
+        if (!modifier) return;
         const toAdd = this.ss.$new();
         const toUpdate = this.ss.$items();
-        switch (modifier?.cursor) {
-          case AppModifiers.Save:
+        ({
+          [AppModifiers.Save]: (): void => {
             if (toAdd.length > 0) {
               this.ds.add(toAdd.map(fractal => fractal.updateFractalByForm())).subscribe();
             }
@@ -40,14 +35,10 @@ export class ModifierComponent implements OnInit, OnDestroy {
               filtered.length > 0 && this.ds.update(filtered.map(fractal => fractal.updateFractalByForm())).subscribe();
             }
             if (this.ncs.forms.size > 0) {
-              let controlsDto: ControlDto[] = [];
-              for (const [fractal, form] of this.ncs.forms.entries()) {
-                controlsDto = form.controls.map(control => fractal.addControl(control));
-              }
-              this.ds.addControls(controlsDto).subscribe();
+              this.ncs.createControls();
             }
-            break;
-        }
+          },
+        })[modifier.cursor]?.();
       })
     );
   }

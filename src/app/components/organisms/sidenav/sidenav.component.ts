@@ -1,10 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
+import { SplitIndicators } from '@constants';
 import { FractalFactory } from '@fractal';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { ManagerService, ModifiersService, TapsService, SelectService, DataService } from '@services';
-import { AppEntities, Fractal, AppModifiers, SplitIndicators } from '@types';
+import { Fractal } from '@types';
+import { AppEntities, AppModifiers } from '@utils';
 import { BaseService } from 'app/services/base.service';
 
 @Component({
@@ -38,15 +40,18 @@ export class SidenavComponent {
   }
 
   modifierTouched(modifier: Fractal): void {
-    switch (true) {
-      case modifier.is(AppModifiers.New):
+    ({
+      [AppModifiers.New]: (): void => {
         this.ss.setNew(new FractalFactory({ parent: this.ss.$current() }));
         this.ms.touch(modifier);
-        break;
-      case (modifier.is(AppModifiers.Edit), modifier.is(AppModifiers.Edit)):
+      },
+      [AppModifiers.Edit]: (): void => {
         if (this.ss.areItems || this.ss.isCurrent) this.ms.touch(modifier);
-        break;
-    }
+      },
+      [AppModifiers.Delete]: (): void => {
+        if (this.ss.areItems || this.ss.isCurrent) this.ms.touch(modifier);
+      },
+    })[modifier.cursor]?.();
   }
 
   async pageTouched(tap: Fractal): Promise<void> {

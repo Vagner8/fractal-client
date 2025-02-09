@@ -1,20 +1,8 @@
-import {
-  FractalDto,
-  Fractal,
-  Fractals,
-  ControlDto,
-  Indicators,
-  SplitIndicators,
-  FractalForm,
-  AppEntities,
-  AppCollections,
-} from '@types';
+import { FractalDto, Fractal, Fractals, ControlDto, FractalForm } from '@types';
 import { FractalDtoFactory } from './fractal-dto-factory';
-import { checkValue, createForm } from '@utils';
-import { findFractalRecursively } from 'app/utils/getters';
-import { FormControl, FormGroup, FormRecord } from '@angular/forms';
-import { v4 } from 'uuid';
-import { ControlInputs, ControlKeys } from '@constants';
+import { AppCollections, AppEntities, checkValue, createForm, findFractalRecursively, updateSelectValue } from '@utils';
+import { FormControl, FormRecord } from '@angular/forms';
+import { ControlInputs, Indicators, SplitIndicators } from '@constants';
 
 export class FractalFactory implements Fractal {
   dto: FractalDto;
@@ -71,30 +59,13 @@ export class FractalFactory implements Fractal {
     return test === this.cursor;
   }
 
-  has(test: string): boolean {
-    return Boolean(this.getControlData(test));
-  }
-
-  addControl(form: FormGroup): ControlDto {
-    const value = form.value;
-    const control: ControlDto = {
-      id: v4(),
-      data: value[ControlKeys.data],
-      input: value[ControlKeys.input],
-      parentId: this.dto.id,
-      indicator: value[ControlKeys.indicator],
-    };
-    this.dto.controls[ControlKeys.indicator] = control;
-    this.form.addControl(value[ControlKeys.indicator], new FormControl(value[ControlKeys.data]));
-
-    // this.form = new FormRecord({});
-    return control;
+  has(indicator: string): boolean {
+    return Boolean(this.getControlData(indicator));
   }
 
   getControl(indicator: string): ControlDto {
     const control = this.dto.controls[indicator];
-    if (control) return control;
-    else throw new Error(`Unable to get control by: ${indicator}`);
+    return checkValue<ControlDto>(control, indicator);
   }
 
   findControl(indicator: string): ControlDto | null {
@@ -120,15 +91,20 @@ export class FractalFactory implements Fractal {
     return findFractalRecursively(test, this.fractals);
   }
 
+  getControlForm(indicator: string): FormControl {
+    const from = this.form.get(indicator) as FormControl;
+    return checkValue<FormControl>(from, indicator);
+  }
+
   updateFractalByForm(): FractalDto {
     const { controls } = this.dto;
     for (const indicator in controls) {
-      const form = this.form.controls[indicator];
+      const { value } = this.form.controls[indicator];
       const control = controls[indicator];
       if (control.input === ControlInputs.Select) {
-        control.data = [form.value, ...control.data.split(':').filter(item => item !== form.value)].join(':');
+        control.data = updateSelectValue({ value, data: control.data });
       } else {
-        control.data = form.value;
+        control.data = value;
       }
     }
     return this.dto;

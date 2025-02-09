@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
-import { Fractal, AppEntities, AppGroups } from '@types';
+import { Fractal } from '@types';
 import { BaseService } from './base.service';
+import { AppEntities, AppGroups } from '@utils';
 
 @Injectable({
   providedIn: 'root',

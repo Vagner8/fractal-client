@@ -8,8 +8,9 @@ import {
   MatTableModule,
 } from '@mat';
 import { SelectService } from '@services';
-import { Fractal, Indicators } from '@types';
+import { Fractal } from '@types';
 import { TableComponent } from '@components/atoms';
+import { Indicators } from '@constants';
 
 @Component({
   selector: 'app-expansion-panel',
