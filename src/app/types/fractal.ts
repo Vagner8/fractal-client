@@ -44,5 +44,4 @@ export interface Fractal {
   findFractal(test: string): Fractal | null;
 
   getControlForm(indicator: string): FormControl;
-  updateFractalByForm(): FractalDto;
 }

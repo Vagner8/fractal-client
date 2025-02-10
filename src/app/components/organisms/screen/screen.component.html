@@ -1,5 +1,5 @@
 @let root = ent.$root();
-@let current = ss.$current();
+@let current = ss.$current.signal();
 
 @if (root && current) {
   @if (Modifiers) {
@@ -14,9 +14,6 @@
         <app-control-panel [fractal]="root" />
       }
       @default {
-        @if (current) {
-          <app-form-cards [fractals]="[current]" />
-        }
         <app-table [fractal]="current" />
       }
     }

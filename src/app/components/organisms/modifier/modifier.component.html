@@ -1,4 +1,15 @@
+@let fractals = ss.$fractals.signal();
+@let newFractals = ss.$newFractals.signal();
+@let fractalForm = ss.$fractalForm.signal();
+
 <div class="modifier">
-  <app-form-cards [fractals]="ss.$newFractals()" />
-  <app-form-cards [fractals]="ss.$fractals()" />
+  @if (fractals.length > 0) {
+    <app-form-cards [fractals]="fractals" />
+  }
+  @if (newFractals.length > 0) {
+    <app-form-cards [fractals]="newFractals" />
+  }
+  @if (fractalForm) {
+    <app-form-cards [fractals]="[fractalForm]" />
+  }
 </div>

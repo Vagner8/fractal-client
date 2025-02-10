@@ -4,13 +4,6 @@
   background-color: $color-secondary !important;
 }
 
-.clickable-wrapper {
-  all: unset;
-  cursor: pointer;
-  display: block;
-  width: 100%;
-}
-
 .list {
   display: flex;
   flex-wrap: wrap;

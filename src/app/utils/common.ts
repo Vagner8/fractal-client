@@ -1,3 +1,6 @@
+import { WritableSignal } from '@angular/core';
+import { Fractal } from '@types';
+
 export const checkValue = <T>(value: T | null, args?: unknown): T => {
   if (value) return value;
   else {
@@ -26,3 +29,7 @@ export const constant = <T extends readonly string[]>(
 
 export const updateSelectValue = ({ value, data }: { value: string; data: string }): string =>
   [value, ...data.split(':').filter(item => item !== value)].join(':');
+
+export const doesSignalHasArray = (
+  signal: WritableSignal<(Fractal | null) | Fractal[]>
+): signal is WritableSignal<Fractal[]> => Array.isArray(signal());

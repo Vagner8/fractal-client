@@ -31,15 +31,15 @@ export class FractalMenuComponent implements OnInit, OnDestroy {
   }
 
   getItems(): string[] {
-    const { strings, End } = this.items;
-    return this.fractal.isItem ? strings : strings.filter(item => item !== End);
+    const { strings, Away } = this.items;
+    return this.fractal.isItem ? strings : strings.filter(item => item !== Away);
   }
 
   onItemHeld(item: string): void {
     ({
       [this.items.On]: (): void => this.toggleAllForms(true),
       [this.items.Off]: (): void => this.toggleAllForms(false),
-      [this.items.End]: (): void => this.ss.$fractals.set([]),
+      [this.items.Away]: (): void => this.ss.$fractals.clear(),
     })[item]?.();
   }
 
@@ -49,7 +49,7 @@ export class FractalMenuComponent implements OnInit, OnDestroy {
     ({
       [this.items.On]: (): void => this.toggleFrom(true),
       [this.items.Off]: (): void => this.toggleFrom(false),
-      [this.items.End]: (): void => this.ss.deleteFractal(this.fractal),
+      [this.items.Away]: (): void => this.ss.$fractals.delete(this.fractal),
     })[item]?.();
   }
 

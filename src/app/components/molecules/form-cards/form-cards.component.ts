@@ -17,8 +17,4 @@ export class FormCardsComponent {
   ss = inject(SelectService);
   ncs = inject(NewControlService);
   @Input() fractals: Fractal[] = [];
-
-  onClick(fractal: Fractal): void {
-    this.ss.setFractalForm(fractal);
-  }
 }

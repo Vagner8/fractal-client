@@ -16,7 +16,7 @@ export class ModifiersService extends BaseService {
     this.hold$.next(modifier);
   }
 
-  async touch(modifier: Fractal | null): Promise<void> {
+  async set(modifier: Fractal | null): Promise<void> {
     this.touch$.next(modifier);
     this.$modifier.set(modifier);
     await this.navigate({ [AppEntities.Modifiers]: modifier ? modifier.cursor : null });

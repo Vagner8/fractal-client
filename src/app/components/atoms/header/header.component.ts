@@ -18,6 +18,6 @@ export class HeaderComponent {
   title = computed<string>(() => {
     const modifier = this.ms.$modifier();
     const modifierTitle = modifier?.is(AppModifiers.New) ? AppModifiers.Edit : modifier?.cursor;
-    return `${this.ss.$current()?.cursor} ${modifierTitle || ''}`;
+    return `${this.ss.$current.signal()?.cursor} ${modifierTitle || ''}`;
   });
 }

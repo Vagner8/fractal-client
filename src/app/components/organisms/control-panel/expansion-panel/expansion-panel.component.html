@@ -1,7 +1,8 @@
 @let icon = fractal.getControlData(indicators.Icon);
+@let current = ss.$current.signal();
 
 <mat-expansion-panel
-  [class.clicked-panel]="ss.$current() === fractal"
+  [class.clicked-panel]="current === fractal"
   hideToggle
   (closed)="closed.emit(fractal)"
   (afterExpand)="afterExpand(fractal)">

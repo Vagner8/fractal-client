@@ -1,8 +1,9 @@
 import { FractalDto, Fractal, Fractals, ControlDto, FractalForm } from '@types';
 import { FractalDtoFactory } from './fractal-dto-factory';
-import { AppCollections, AppEntities, checkValue, createForm, findFractalRecursively, updateSelectValue } from '@utils';
+import { AppCollections, AppEntities, checkValue } from '@utils';
 import { FormControl, FormRecord } from '@angular/forms';
-import { ControlInputs, Indicators, SplitIndicators } from '@constants';
+import { Indicators, SplitIndicators } from '@constants';
+import { createForm, findFractalRecursively } from './helpers';
 
 export class FractalFactory implements Fractal {
   dto: FractalDto;
@@ -94,19 +95,5 @@ export class FractalFactory implements Fractal {
   getControlForm(indicator: string): FormControl {
     const from = this.form.get(indicator) as FormControl;
     return checkValue<FormControl>(from, indicator);
-  }
-
-  updateFractalByForm(): FractalDto {
-    const { controls } = this.dto;
-    for (const indicator in controls) {
-      const { value } = this.form.controls[indicator];
-      const control = controls[indicator];
-      if (control.input === ControlInputs.Select) {
-        control.data = updateSelectValue({ value, data: control.data });
-      } else {
-        control.data = value;
-      }
-    }
-    return this.dto;
   }
 }
