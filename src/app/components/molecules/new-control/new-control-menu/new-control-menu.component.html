@@ -1,9 +1,0 @@
-<button mat-button [matMenuTriggerFor]="menu">{{ defaultTitle }}</button>
-
-<mat-menu #menu="matMenu">
-  @for (item of items.values; track item) {
-    <button mat-menu-item appTap (touch)="touch.emit(item)">
-      <span>{{ item }}</span>
-    </button>
-  }
-</mat-menu>

@@ -1,6 +1,6 @@
 import { Directive, HostListener, inject, Input, OnDestroy, OnInit, output } from '@angular/core';
 import { EventService } from '@services';
-import { Fractal, Timeout } from '@types';
+import { Timeout } from '@types';
 
 @Directive({
   selector: '[appTap]',
@@ -9,7 +9,7 @@ import { Fractal, Timeout } from '@types';
 export class TapDirective implements OnInit, OnDestroy {
   es = inject(EventService);
 
-  @Input() tap?: Fractal;
+  @Input() disableHold = false;
 
   hold = output();
   touch = output();
@@ -32,6 +32,7 @@ export class TapDirective implements OnInit, OnDestroy {
 
   @HostListener('pointerdown')
   pointerdown(): void {
+    if (this.disableHold) return;
     this.holdDelayTimeout = setTimeout(() => this.es.holdRun$.next(), this.holdDelay);
     this.holdTimeout = setTimeout(() => (this.isHoldSucceed = true), this.holdThreshold);
   }

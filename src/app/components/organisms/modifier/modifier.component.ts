@@ -2,13 +2,13 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule, MatCardModule } from '@mat';
 import { DataService, ModifiersService, NewControlService, SelectService } from '@services';
 import { Subscription } from 'rxjs';
-import { EditModifierComponent } from './edit-modifier/edit-modifier.component';
 import { AppModifiers } from '@utils';
+import { FormCardsComponent } from '@components/molecules';
 
 @Component({
   selector: 'app-modifier',
   standalone: true,
-  imports: [MatButtonModule, MatCardModule, EditModifierComponent],
+  imports: [MatButtonModule, MatCardModule, FormCardsComponent],
   templateUrl: './modifier.component.html',
   styleUrl: './modifier.component.scss',
 })
@@ -23,8 +23,8 @@ export class ModifierComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.ms.hold$.subscribe(modifier => {
         if (!modifier) return;
-        const toAdd = this.ss.$new();
-        const toUpdate = this.ss.$items();
+        const toAdd = this.ss.$newFractals();
+        const toUpdate = this.ss.$fractals();
         ({
           [AppModifiers.Save]: (): void => {
             if (toAdd.length > 0) {

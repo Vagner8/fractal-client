@@ -14,6 +14,9 @@
         <app-control-panel [fractal]="root" />
       }
       @default {
+        @if (current) {
+          <app-form-cards [fractals]="[current]" />
+        }
         <app-table [fractal]="current" />
       }
     }
