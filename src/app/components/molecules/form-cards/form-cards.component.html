@@ -2,8 +2,8 @@
   <ul class="list" [class.two-items]="fractals.length === 2" [class.three-or-more-items]="fractals.length >= 3">
     @for (fractal of fractals; track fractal.dto.id) {
       <li class="item">
-        <app-card [className]="ss.$fractalForm.signal() === fractal ? 'clicked' : ''" [title]="fractal.cursor">
-          <app-fractal-menu card-action [fractal]="fractal" />
+        <app-card [title]="fractal.cursor">
+          <app-button-icon card-action icon="close" [disableHold]="false" (touch)="onDeleteFormCard(fractal)" />
           <app-form card-content [fractal]="fractal" />
         </app-card>
       </li>

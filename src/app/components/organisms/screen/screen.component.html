@@ -7,10 +7,10 @@
   }
   @if (!Modifiers) {
     @switch (Pages) {
-      @case ('Home') {
+      @case (appPages.Home) {
         <h1>Home</h1>
       }
-      @case ('App') {
+      @case (appPages.App) {
         <app-control-panel [fractal]="root" />
       }
       @default {

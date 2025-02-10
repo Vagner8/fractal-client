@@ -5,4 +5,4 @@ export * from './tap/tap.component';
 export * from './spinner/spinner.component';
 export * from './table/table.component';
 export * from './card/card.component';
-export * from './fractal-menu/fractal-menu.component';
+export * from './button-icon/button-icon.component';

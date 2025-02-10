@@ -1,12 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
-import { SplitIndicators } from '@constants';
-import { FractalFactory } from 'app/utils/fractal';
+import { SplitIndicators, AppEntities, AppModifiers } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { ManagerService, ModifiersService, TapsService, SelectService, DataService } from '@services';
 import { Fractal } from '@types';
-import { AppEntities, AppModifiers } from '@utils';
+import { FractalFactory } from '@utils';
 import { BaseService } from 'app/services/base.service';
 
 @Component({
@@ -31,41 +30,39 @@ export class SidenavComponent {
     this.ms.hold(modifier);
     switch (modifier.cursor) {
       case AppModifiers.Delete:
-        if (!this.ss.$fractals.isEmpty) {
-          this.ds.delete(this.ss.$fractals.toDto()).subscribe();
+        if (!this.ss.$selected.isEmpty) {
+          this.ds.delete(this.ss.$selected.toDto()).subscribe();
         }
         break;
     }
   }
 
   modifierTouched(modifier: Fractal): void {
-    const { $current, $fractals, $fractalForm, $newFractals } = this.ss;
+    const { $current, $selected, $new } = this.ss;
     ({
       [AppModifiers.New]: (): void => {
-        this.ss.$fractalForm.toggle(new FractalFactory({ parent: $current.value }));
         this.ms.set(modifier);
       },
       [AppModifiers.Edit]: (): void => {
-        if ($fractalForm.has($current.value)) {
-          return;
-        }
-        if ($fractals.isEmpty && $newFractals.isEmpty && $current.value) {
-          this.ss.$fractals.set([$current.value]);
+        if ($selected.isEmpty && $new.isEmpty && $current.value) {
+          this.ss.$selected.set([$current.value]);
           this.ms.set(modifier);
         }
-        if ($current.value && $fractals.has($current.value)) {
-          this.ss.clear('$fractals');
-          this.ss.$fractalForm.toggle($current.value);
+        if ($current.value && $selected.has($current.value)) {
+          this.ss.clear('$selected');
+        }
+        if (!$selected.isEmpty) {
+          this.ms.set(modifier);
         }
       },
       [AppModifiers.Delete]: (): void => {
-        // if (this.ss.are('$fractals')) this.ms.set(modifier);
+        // if (this.ss.are('$selected')) this.ms.set(modifier);
       },
     })[modifier.cursor]?.();
   }
 
   async pageTouched(tap: Fractal): Promise<void> {
-    this.ss.clear('$fractals', '$newFractals');
+    this.ss.clear('$selected', '$new');
     this.ss.$current.set(tap);
     await this.bs.navigate({}, [tap.cursor]);
     this.ms.set(null);

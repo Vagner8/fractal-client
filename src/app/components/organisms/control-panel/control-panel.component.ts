@@ -27,7 +27,7 @@ export class ControlPanelComponent {
   });
 
   closed(): void {
-    this.ss.clear('$fractals', '$newFractals');
+    this.ss.clear('$selected', '$new');
     const current = this.ss.$current.value;
     if (current && !this.fractal.isRoot) this.ss.$current.set(current.parent);
     this.accordion()?.closeAll();

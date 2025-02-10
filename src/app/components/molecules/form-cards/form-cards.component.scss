@@ -1,9 +1,5 @@
 @use 'variables.scss' as *;
 
-::ng-deep .clicked {
-  background-color: $color-secondary !important;
-}
-
 .list {
   display: flex;
   flex-wrap: wrap;

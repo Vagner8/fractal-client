@@ -1,15 +1,8 @@
-@let fractals = ss.$fractals.signal();
-@let newFractals = ss.$newFractals.signal();
-@let fractalForm = ss.$fractalForm.signal();
-
 <div class="modifier">
-  @if (fractals.length > 0) {
-    <app-form-cards [fractals]="fractals" />
+  @if (!ss.$selected.isEmpty) {
+    <app-form-cards [fractals]="ss.$selected.signal()" />
   }
-  @if (newFractals.length > 0) {
-    <app-form-cards [fractals]="newFractals" />
-  }
-  @if (fractalForm) {
-    <app-form-cards [fractals]="[fractalForm]" />
+  @if (!ss.$new.isEmpty) {
+    <app-form-cards [fractals]="ss.$new.signal()" />
   }
 </div>

@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
+import { AppEntities } from '@constants';
 import { Fractal, FractalDto } from '@types';
-import { AppEntities, createFractalsRecursively, FractalFactory } from '@utils';
+import { createFractalsRecursively, FractalFactory } from '@utils';
 
 @Injectable({
   providedIn: 'root',

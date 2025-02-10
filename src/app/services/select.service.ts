@@ -3,20 +3,18 @@ import { Fractal } from '@types';
 import { FractalSignal, FractalsSignal } from '@utils';
 
 interface SelectServiceSignals {
+  $new: FractalsSignal;
   $current: FractalSignal;
-  $fractals: FractalsSignal;
-  $newFractals: FractalsSignal;
-  $fractalForm: FractalSignal;
+  $selected: FractalsSignal;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class SelectService implements SelectServiceSignals {
+  $new = new FractalsSignal();
   $current = new FractalSignal();
-  $fractals = new FractalsSignal();
-  $newFractals = new FractalsSignal();
-  $fractalForm = new FractalSignal();
+  $selected = new FractalsSignal();
 
   clear(...keys: (keyof SelectServiceSignals)[]): void {
     keys.forEach(key => this[key].clear());

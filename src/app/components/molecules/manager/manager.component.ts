@@ -5,7 +5,7 @@ import { SpinnerComponent } from '@components/atoms';
 import { map, merge, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { EventService, ManagerService, TapsService, EntitiesService, BaseService } from '@services';
-import { AppEntities, AppEvents, AppGroups } from '@utils';
+import { AppEntities, AppEvents, AppGroups } from '@constants';
 
 @Component({
   selector: 'app-manager',

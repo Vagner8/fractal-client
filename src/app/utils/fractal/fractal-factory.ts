@@ -1,8 +1,8 @@
 import { FractalDto, Fractal, Fractals, ControlDto, FractalForm } from '@types';
 import { FractalDtoFactory } from './fractal-dto-factory';
-import { AppCollections, AppEntities, checkValue } from '@utils';
+import { checkValue } from '@utils';
 import { FormControl, FormRecord } from '@angular/forms';
-import { Indicators, SplitIndicators } from '@constants';
+import { Indicators, SplitIndicators, AppCollections, AppEntities } from '@constants';
 import { createForm, findFractalRecursively } from './helpers';
 
 export class FractalFactory implements Fractal {

@@ -1,0 +1,11 @@
+<button
+  type="button"
+  matSuffix
+  mat-icon-button
+  i18n-aria-label
+  appTap
+  [disableHold]="disableHold"
+  (hold)="hold.emit()"
+  (touch)="touch.emit()">
+  <mat-icon>{{ icon }}</mat-icon>
+</button>

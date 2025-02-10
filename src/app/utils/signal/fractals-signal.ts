@@ -1,5 +1,6 @@
 import { Fractal, FractalDto } from '@types';
 import { AppSignal } from './app-signal';
+import { updateFractalsByForm } from '../fractal';
 
 export class FractalsSignal extends AppSignal<Fractal[]> {
   constructor() {
@@ -32,5 +33,9 @@ export class FractalsSignal extends AppSignal<Fractal[]> {
 
   toDto(): FractalDto[] {
     return this.value.map(({ dto }) => dto);
+  }
+
+  updateFractalsByForm(): FractalDto[] {
+    return updateFractalsByForm(this.value);
   }
 }

@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule, MatCardModule } from '@mat';
 import { DataService, ModifiersService, NewControlService, SelectService } from '@services';
 import { Subscription } from 'rxjs';
-import { AppModifiers, updateFractalsByForm } from '@utils';
+import { AppModifiers } from '@constants';
 import { FormCardsComponent } from '@components/molecules';
 
 @Component({
@@ -23,14 +23,14 @@ export class ModifierComponent implements OnInit, OnDestroy {
     this.subs.push(
       this.ms.hold$.subscribe(modifier => {
         if (!modifier) return;
-        const { $fractals, $newFractals } = this.ss;
+        const { $selected, $new } = this.ss;
         ({
           [AppModifiers.Save]: (): void => {
-            if (!$newFractals.isEmpty) {
-              this.ds.add(updateFractalsByForm($newFractals.value)).subscribe();
+            if (!$new.isEmpty) {
+              this.ds.add($new.updateFractalsByForm()).subscribe();
             }
-            if (!$fractals.isEmpty) {
-              this.ds.update(updateFractalsByForm($fractals.value)).subscribe();
+            if (!$selected.isEmpty) {
+              this.ds.update($selected.updateFractalsByForm()).subscribe();
             }
             if (this.ncs.forms.size > 0) {
               this.ncs.createControls();

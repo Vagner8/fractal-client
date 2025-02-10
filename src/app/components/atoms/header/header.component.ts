@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { ModifiersService, SelectService } from '@services';
-import { AppModifiers } from '@utils';
+import { AppModifiers } from '@constants';
 
 @Component({
   selector: 'app-header',

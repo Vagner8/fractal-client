@@ -15,8 +15,8 @@
       mat-row
       *matRowDef="let row; columns: columns"
       appTap
-      (hold)="ss.$fractals.toggleAll(row)"
-      (touch)="ss.$fractals.toggle(row)"
-      [class.clicked-row]="ss.$fractals.signal().includes(row)"></tr>
+      (hold)="ss.$selected.toggleAll(row)"
+      (touch)="ss.$selected.toggle(row)"
+      [class.clicked-row]="ss.$selected.signal().includes(row)"></tr>
   }
 </table>

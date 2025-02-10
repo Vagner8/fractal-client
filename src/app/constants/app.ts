@@ -1,4 +1,4 @@
-import { constant } from './common';
+import { constant } from '@utils';
 
 export const AppEvents = constant(['Hold', 'Touch'] as const);
 export const AppGroups = constant(['Taps'] as const);
