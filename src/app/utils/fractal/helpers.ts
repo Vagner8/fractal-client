@@ -1,5 +1,5 @@
 import { FractalFactory } from 'app/utils/fractal';
-import { Fractal, Fractals, FractalsDto } from '@types';
+import { Fractal, Fractals, FractalsDto, SortMode } from '@types';
 import { ConstSplitIndicators } from '@constants';
 
 export const createFractalsRecursively = (fractalsDto: FractalsDto | null, parent: Fractal): Fractals | null => {
@@ -24,11 +24,22 @@ export const findFractalRecursively = (test: string, fractals: Fractals | null):
   return null;
 };
 
-export const getFractalSort = (fractal: Fractal): string[] => {
-  if (fractal.isItem) {
-    const parentSort = fractal.parent.splitControlData(ConstSplitIndicators.Sort);
-    return parentSort.length > 0 ? parentSort : Object.keys(fractal.parent.dto.fractals || {});
-  }
-  const ownSort = fractal.splitControlData(ConstSplitIndicators.Sort);
-  return ownSort.length > 0 ? ownSort : Object.keys(fractal.dto.fractals || {});
+export const getFractalSort = (fractal: Fractal, mode: SortMode): string[] => {
+  const { dto, parent, isItem } = fractal;
+  const handle: Record<SortMode, () => string[]> = {
+    form() {
+      if (isItem) {
+        const parentSort = parent.splitControlData(ConstSplitIndicators.Sort);
+        return parentSort.length > 0 ? parentSort : Object.keys(parent.dto.fractals || {});
+      }
+      return Object.keys(dto.controls);
+    },
+    table() {
+      if (isItem) throw new Error('The item table sort is not supported');
+      const ownSort = fractal.splitControlData(ConstSplitIndicators.Sort);
+      return ownSort.length > 0 ? ownSort : Object.keys(dto.fractals || {});
+    },
+  };
+
+  return handle[mode]();
 };

@@ -12,9 +12,4 @@ import { Fractal } from '@types';
 export class ControlDataFormsComponent {
   @Input() fractal!: Fractal;
   controlInputs = ConstControlInputs;
-
-  ngOnInit(): void {
-    console.log('🚀 ~ fractal:', this.fractal);
-    console.log('🚀 ~ sort:', this.fractal.sort);
-  }
 }

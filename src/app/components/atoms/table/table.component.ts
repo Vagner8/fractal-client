@@ -18,7 +18,7 @@ export class TableComponent {
   @Input() fractal!: Fractal;
 
   get columns(): string[] {
-    return this.printControls ? [ConstControlDtoKeys.indicator, ConstControlDtoKeys.data] : this.fractal.sort;
+    return this.printControls ? [ConstControlDtoKeys.indicator, ConstControlDtoKeys.data] : this.fractal.sort();
   }
 
   get dataSource(): unknown[] {

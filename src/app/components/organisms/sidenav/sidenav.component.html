@@ -7,7 +7,7 @@
     position="end">
     @if (ts.$taps(); as taps) {
       <mat-list>
-        @for (indicator of taps.sort; track indicator) {
+        @for (indicator of taps.sort(); track indicator) {
           @if (taps.findFractal(indicator); as tap) {
             @switch (tap.parent.cursor) {
               @case (appEntities.Modifiers) {

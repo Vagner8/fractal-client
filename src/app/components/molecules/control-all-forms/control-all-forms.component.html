@@ -1,6 +1,8 @@
+@let sort = fractal.sort('form');
+
 <form>
-  <app-list [length]="fractal.sort.length">
-    @for (indicator of fractal.sort; track indicator) {
+  <app-list [length]="sort.length">
+    @for (indicator of sort; track indicator) {
       @if (fractal.findControl(indicator); as control) {
         @let controlForm = fractal.getControlFrom(indicator);
         <li>

@@ -1,4 +1,4 @@
-import { FractalDto, Fractal, Fractals, ControlDto, FractalForm, ControlFromRecord } from '@types';
+import { FractalDto, Fractal, Fractals, ControlDto, FractalForm, ControlFromRecord, SortMode } from '@types';
 import { FractalDtoFactory } from './fractal-dto-factory';
 import { checkValue } from '@utils';
 import { FormRecord } from '@angular/forms';
@@ -31,10 +31,6 @@ export class FractalFactory implements Fractal {
     return this.is(ConstAppCollections);
   }
 
-  get sort(): string[] {
-    return getFractalSort(this);
-  }
-
   get cursor(): string {
     return checkValue(
       this.findControl(ConstIndicators.Cursor)?.data || this.findControl(ConstIndicators.Position)?.data,
@@ -54,6 +50,10 @@ export class FractalFactory implements Fractal {
     if (test instanceof FractalFactory) return this === test;
     if (typeof test === 'object') return Object.values(test).includes(this.cursor);
     return test === this.cursor;
+  }
+
+  sort(mode: SortMode = 'table'): string[] {
+    return getFractalSort(this, mode);
   }
 
   getControl(indicator: string): ControlDto {
