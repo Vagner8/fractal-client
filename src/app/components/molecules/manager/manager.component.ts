@@ -5,7 +5,7 @@ import { SpinnerComponent } from '@components/atoms';
 import { map, merge, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { EventService, ManagerService, TapsService, EntitiesService, BaseService } from '@services';
-import { AppEntities, AppEvents, AppGroups } from '@constants';
+import { ConstAppEntities, ConstAppEvents, ConstAppGroups } from '@constants';
 
 @Component({
   selector: 'app-manager',
@@ -17,7 +17,7 @@ import { AppEntities, AppEvents, AppGroups } from '@constants';
 })
 export class ManagerComponent implements OnInit {
   showSpinner$!: Observable<boolean>;
-  prevEvent: keyof typeof AppEvents | null = null;
+  prevEvent: keyof typeof ConstAppEvents | null = null;
 
   bs = inject(BaseService);
   ts = inject(TapsService);
@@ -29,13 +29,13 @@ export class ManagerComponent implements OnInit {
     this.showSpinner$ = merge(this.es.holdRun$.pipe(map(() => true)), this.es.holdEnd$.pipe(map(() => false)));
   }
 
-  async holdAndTouch(event: keyof typeof AppEvents): Promise<void> {
+  async holdAndTouch(event: keyof typeof ConstAppEvents): Promise<void> {
     if (this.prevEvent !== event) {
       await this.mgr.set(event);
     }
-    if (event === AppEvents.Touch && this.prevEvent !== AppEvents.Hold) {
-      this.ts.$taps.update(prev => (prev?.is(AppEntities.Pages) ? this.ent.modifiers : this.ent.pages));
-      await this.bs.navigate({ [AppGroups.Taps]: this.ts.$taps()?.cursor });
+    if (event === ConstAppEvents.Touch && this.prevEvent !== ConstAppEvents.Hold) {
+      this.ts.$taps.update(prev => (prev?.is(ConstAppEntities.Pages) ? this.ent.modifiers : this.ent.pages));
+      await this.bs.navigate({ [ConstAppGroups.Taps]: this.ts.$taps()?.cursor });
     }
     this.prevEvent = event;
   }

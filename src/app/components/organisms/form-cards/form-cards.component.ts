@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, Input } from '@angular/core';
 import { Fractal } from '@types';
 import { ButtonIconComponent, CardComponent } from '@components/atoms';
-import { BaseService, ModifiersService, NewControlService, SelectService } from '@services';
+import { BaseService, ModifiersService, SelectService } from '@services';
 import { MatButtonModule } from '@mat';
-import { AppEntities } from '@constants';
+import { ConstAppEntities, ConstAppModifiers } from '@constants';
 import { FormComponent } from '@components/molecules';
 
 @Component({
@@ -15,14 +15,14 @@ import { FormComponent } from '@components/molecules';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormCardsComponent {
-  bs = inject(BaseService);
-  ss = inject(SelectService);
-  ms = inject(ModifiersService);
-  ncs = inject(NewControlService);
+  private bs = inject(BaseService);
+  private ss = inject(SelectService);
+  private ms = inject(ModifiersService);
   @Input() fractals: Fractal[] = [];
+  $renderControls = computed(() => Boolean(this.ms.$prevModifier()?.is(ConstAppModifiers.Edit)));
 
   onDeleteFormCard(fractal: Fractal): void {
     this.ss.$selected.delete(fractal);
-    this.ss.$selected.isEmpty && this.bs.navigate({ [AppEntities.Modifiers]: null });
+    this.ss.$selected.isEmpty && this.bs.navigate({ [ConstAppEntities.Modifiers]: null });
   }
 }

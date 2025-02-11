@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { AppEntities } from '@constants';
+import { ConstAppEntities } from '@constants';
 import { Fractal, FractalDto } from '@types';
 import { createFractalsRecursively, FractalFactory } from '@utils';
 
@@ -15,9 +15,9 @@ export class EntitiesService {
   init(dto: FractalDto): void {
     const root = new FractalFactory({ dto });
     root.fractals = createFractalsRecursively(root.dto.fractals, root);
-    this.pages = root.findFractal(AppEntities.Pages);
-    this.manager = root.findFractal(AppEntities.Manager);
-    this.modifiers = root.findFractal(AppEntities.Modifiers);
+    this.pages = root.findFractal(ConstAppEntities.Pages);
+    this.manager = root.findFractal(ConstAppEntities.Manager);
+    this.modifiers = root.findFractal(ConstAppEntities.Modifiers);
     this.$root.set(root);
 
     console.log('🚀 ~ root', this.$root());

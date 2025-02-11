@@ -1,4 +1,4 @@
-import { ControlInputs, Indicators, SplitIndicators } from '@constants';
+import { ConstControlInputs, ConstIndicators, ConstSplitIndicators } from '@constants';
 import { ControlsDto, Fractal, FractalDto, FractalsDto } from '@types';
 import { v4 } from 'uuid';
 
@@ -18,30 +18,30 @@ export class FractalDtoFactory implements FractalDto {
 
   private collectionControls(id: string): ControlsDto {
     return {
-      [Indicators.Cursor]: {
+      [ConstIndicators.Cursor]: {
         id: v4(),
         data: '',
-        input: ControlInputs.Text,
+        input: ConstControlInputs.Text,
         parentId: id,
-        indicator: Indicators.Cursor,
+        indicator: ConstIndicators.Cursor,
       },
-      [SplitIndicators.Sort]: {
+      [ConstSplitIndicators.Sort]: {
         id: v4(),
         data: '',
-        input: ControlInputs.Organizer,
+        input: ConstControlInputs.Organizer,
         parentId: id,
-        indicator: SplitIndicators.Sort,
+        indicator: ConstSplitIndicators.Sort,
       },
     };
   }
 
   private itemControls(id: string, collection: Fractal): ControlsDto {
     if (collection.children.length === 0) {
-      return collection.splitControlData(SplitIndicators.Sort).reduce((acc: ControlsDto, column) => {
+      return collection.splitControlData(ConstSplitIndicators.Sort).reduce((acc: ControlsDto, column) => {
         acc[column] = {
           id: v4(),
           data: '',
-          input: ControlInputs.Text,
+          input: ConstControlInputs.Text,
           parentId: id,
           indicator: column,
         };
@@ -56,7 +56,7 @@ export class FractalDtoFactory implements FractalDto {
           ...control,
           id: v4(),
           parentId: id,
-          data: control.input === ControlInputs.Text ? '' : control.data,
+          data: control.input === ConstControlInputs.Text ? '' : control.data,
         };
       }
 

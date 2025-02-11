@@ -1,6 +1,6 @@
 import { Fractal, FractalDto } from '@types';
 import { State } from './state';
-import { updateFractalsByForm } from '../fractal';
+import { updateFractalsByForm } from '../fractal/fractal-form';
 
 export class FractalsState extends State<Fractal[]> {
   constructor() {

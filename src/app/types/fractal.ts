@@ -1,9 +1,9 @@
 import { FormControl, FormRecord } from '@angular/forms';
-import { ControlDto, ControlsDto } from './control';
+import { ControlDto, ControlEditableKeys, ControlsDto } from './control';
 
 export type Fractals = Record<string, Fractal>;
 export type FractalsDto = Record<string, FractalDto>;
-export type FractalForm = FormRecord<FormControl>;
+export type FractalForm = FormRecord<FormRecord<FormControl>>;
 
 export interface FractalDto {
   id: string;
@@ -43,5 +43,5 @@ export interface Fractal {
   getFractal(test: string): Fractal;
   findFractal(test: string): Fractal | null;
 
-  getControlForm(indicator: string): FormControl;
+  getControlForm(indicator: string, key: keyof ControlEditableKeys): FormControl;
 }

@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, inject, Input, OnInit, output } from '@angular/core';
 import { InputComponent, SelectComponent } from '@components/atoms';
-import { ControlInputs, Indicators } from '@constants';
+import { ConstControlInputs, ConstIndicators } from '@constants';
 import { MatButtonModule, MatInputModule } from '@mat';
 import { Fractal } from '@types';
 
@@ -17,8 +17,8 @@ export class FormComponent implements OnInit {
   change = output<Fractal>();
 
   prevSize!: number;
-  indicators = Indicators;
-  controlInputs = ControlInputs;
+  indicators = ConstIndicators;
+  controlInputs = ConstControlInputs;
 
   ngOnInit(): void {
     this.prevSize = Object.values(this.fractal.form.controls).length;

@@ -1,5 +1,10 @@
+import { ControlDto, ControlEditableKeys, ControlKeys } from '@types';
 import { constant } from '@utils';
 
-export const NewControlKeys = constant(['input', 'indicator', 'data'] as const);
-export const ControlKeys = constant([...NewControlKeys.values, 'id', 'parentId'] as const);
-export const ControlInputs = constant(['Text', 'Select', 'Organizer'] as const);
+export const ConstControlDtoEditableKeys = constant(['input', 'indicator', 'data'] as (keyof ControlEditableKeys)[]);
+export const ConstControlKeys = constant(['id', 'parentId'] as (keyof ControlKeys)[]);
+export const ConstControlDtoKeys = constant([
+  ...ConstControlDtoEditableKeys.values,
+  ...ConstControlKeys.values,
+] as (keyof ControlDto)[]);
+export const ConstControlInputs = constant(['Text', 'Select', 'Organizer'] as const);

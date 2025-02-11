@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
-import { SplitIndicators, AppEntities, AppModifiers } from '@constants';
+import { ConstSplitIndicators, ConstAppEntities, ConstAppModifiers } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { ManagerService, ModifiersService, TapsService, SelectService, DataService } from '@services';
 import { Fractal } from '@types';
@@ -22,13 +22,13 @@ export class SidenavComponent {
   ms = inject(ModifiersService);
   mgr = inject(ManagerService);
 
-  appEntities = AppEntities;
-  splitIndicators = SplitIndicators;
+  appEntities = ConstAppEntities;
+  splitIndicators = ConstSplitIndicators;
 
   modifierHeld(modifier: Fractal): void {
     this.ms.hold(modifier);
     switch (modifier.cursor) {
-      case AppModifiers.Delete:
+      case ConstAppModifiers.Delete:
         if (!this.ss.$selected.isEmpty) {
           this.ds.delete(this.ss.$selected.toDto()).subscribe();
         }
@@ -39,10 +39,10 @@ export class SidenavComponent {
   modifierTouched(modifier: Fractal): void {
     const { $current, $selected } = this.ss;
     ({
-      [AppModifiers.New]: (): void => {
+      [ConstAppModifiers.New]: (): void => {
         this.ms.set(modifier);
       },
-      [AppModifiers.Edit]: (): void => {
+      [ConstAppModifiers.Edit]: (): void => {
         if (!$selected.isEmpty) {
           this.ms.set(modifier);
         }
@@ -51,7 +51,7 @@ export class SidenavComponent {
           this.ms.set(modifier);
         }
       },
-      [AppModifiers.Delete]: (): void => {},
+      [ConstAppModifiers.Delete]: (): void => {},
     })[modifier.cursor]?.();
   }
 

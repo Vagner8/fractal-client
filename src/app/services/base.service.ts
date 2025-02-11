@@ -1,17 +1,13 @@
-import { inject, Injectable } from '@angular/core';
-import { ActivatedRoute, Params, QueryParamsHandling, Router } from '@angular/router';
-import { AppEntities } from '@constants';
+import { inject, Injectable, signal } from '@angular/core';
+import { Params, QueryParamsHandling, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BaseService {
-  route = inject(ActivatedRoute);
-  router = inject(Router);
+  private router = inject(Router);
 
-  get isModifierParams(): boolean {
-    return Boolean(this.route.snapshot.queryParams[AppEntities.Modifiers]);
-  }
+  $modifiersParam = signal<string | null>(null);
 
   async navigate(
     queryParams?: Params,

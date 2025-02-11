@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { ControlKeys } from '@constants';
+import { ConstControlDtoKeys } from '@constants';
 import { TapDirective } from '@directives';
 import { MatTableModule } from '@mat';
 import { SelectService } from '@services';
@@ -18,7 +18,7 @@ export class TableComponent {
   @Input() fractal!: Fractal;
 
   get columns(): string[] {
-    return this.printControls ? [ControlKeys.indicator, ControlKeys.data] : this.fractal.sort;
+    return this.printControls ? [ConstControlDtoKeys.indicator, ConstControlDtoKeys.data] : this.fractal.sort;
   }
 
   get dataSource(): unknown[] {

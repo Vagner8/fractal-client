@@ -10,7 +10,7 @@ import {
 import { SelectService } from '@services';
 import { Fractal } from '@types';
 import { TableComponent } from '@components/atoms';
-import { Indicators } from '@constants';
+import { ConstIndicators } from '@constants';
 
 @Component({
   selector: 'app-expansion-panel',
@@ -33,7 +33,7 @@ export class ExpansionPanelComponent implements OnInit {
   panel = viewChild(MatExpansionPanel);
   closed = output<Fractal>();
 
-  indicators = Indicators;
+  indicators = ConstIndicators;
 
   ngOnInit(): void {
     if (this.fractal.isRoot) {

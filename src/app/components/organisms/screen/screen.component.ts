@@ -3,7 +3,7 @@ import { SelectService, EntitiesService } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
 import { ControlPanelComponent } from '../control-panel/control-panel.component';
 import { TableComponent } from '@components/atoms';
-import { AppPages } from '@constants';
+import { ConstAppPages } from '@constants';
 
 @Component({
   selector: 'app-screen',
@@ -22,5 +22,5 @@ export class ScreenComponent {
   @Input() Manager = '';
   @Input() Modifiers = '';
 
-  appPages = AppPages;
+  appPages = ConstAppPages;
 }

@@ -1,8 +1,8 @@
 import { constant } from '@utils';
 
-export const AppEvents = constant(['Hold', 'Touch'] as const);
-export const AppGroups = constant(['Taps'] as const);
-export const AppEntities = constant(['Root', 'Pages', 'Manager', 'Modifiers'] as const);
-export const AppModifiers = constant(['New', 'Edit', 'Save', 'Delete'] as const);
-export const AppCollections = constant(['Users', 'Products'] as const);
-export const AppPages = constant(['App', 'Home', ...AppCollections.values] as const);
+export const ConstAppEvents = constant(['Hold', 'Touch'] as const);
+export const ConstAppGroups = constant(['Taps'] as const);
+export const ConstAppEntities = constant(['Root', 'Pages', 'Manager', 'Modifiers'] as const);
+export const ConstAppModifiers = constant(['New', 'Edit', 'Save', 'Delete'] as const);
+export const ConstAppCollections = constant(['Users', 'Products'] as const);
+export const ConstAppPages = constant(['App', 'Home', ...ConstAppCollections.values] as const);

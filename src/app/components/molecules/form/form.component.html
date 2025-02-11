@@ -5,7 +5,7 @@
     @let control = fractal.findControl(indicator);
 
     @if (control) {
-      @let fromControl = fractal.getControlForm(indicator);
+      @let fromControl = fractal.getControlForm(indicator, 'data');
       @switch (control.input) {
         @case (controlInputs.Select) {
           <app-select [label]="indicator" [opts]="control.data.split(':')" [formCtr]="fromControl" />

@@ -4,7 +4,13 @@
       <li class="item">
         <app-card [title]="fractal.cursor">
           <app-button-icon card-action icon="close" [disableHold]="false" (touch)="onDeleteFormCard(fractal)" />
-          <app-form card-content [fractal]="fractal" />
+          @if ($renderControls()) {
+            <app-card card-content title="title">
+              <h1 card-content>content</h1>
+            </app-card>
+          } @else {
+            <app-form card-content [fractal]="fractal" />
+          }
         </app-card>
       </li>
     }
