@@ -1,8 +1,14 @@
-import { FractalDto, Fractal, Fractals, ControlDto, FractalForm, ControlEditableKeys } from '@types';
+import { FractalDto, Fractal, Fractals, ControlDto, FractalForm, ControlFromRecord } from '@types';
 import { FractalDtoFactory } from './fractal-dto-factory';
 import { checkValue } from '@utils';
-import { FormControl, FormRecord } from '@angular/forms';
-import { ConstIndicators, ConstSplitIndicators, ConstAppCollections, ConstAppEntities } from '@constants';
+import { FormRecord } from '@angular/forms';
+import {
+  ConstIndicators,
+  ConstSplitIndicators,
+  ConstAppCollections,
+  ConstAppEntities,
+  ConstControlFormKeys,
+} from '@constants';
 import { findFractalRecursively } from './helpers';
 import { createFractalForm } from './fractal-form';
 
@@ -95,7 +101,10 @@ export class FractalFactory implements Fractal {
     return findFractalRecursively(test, this.fractals);
   }
 
-  getControlForm(indicator: string, key: keyof ControlEditableKeys): FormControl {
-    return this.form.controls[indicator].controls[key] as FormControl;
+  getControlFrom(indicator: string): ControlFromRecord {
+    return ConstControlFormKeys.values.reduce((acc, key) => {
+      acc[key] = this.form.controls[indicator].controls[key];
+      return acc;
+    }, {} as ControlFromRecord);
   }
 }
