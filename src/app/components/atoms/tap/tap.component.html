@@ -1,8 +1,6 @@
-@let icon = tap.getControlData('Icon');
-
 <button mat-flat-button appTap (hold)="hold.emit(tap)" (touch)="touch.emit(tap)">
-  @if (icon) {
-    <mat-icon>{{ tap.getControlData('Icon') }}</mat-icon>
+  @if (tap.findControl(indicators.Icon); as icon) {
+    <mat-icon aria-hidden="false" [fontIcon]="icon.data"></mat-icon>
   }
   {{ tap.cursor }}
 </button>

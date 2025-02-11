@@ -1,0 +1,15 @@
+<form>
+  @for (indicator of fractal.sort; track indicator) {
+    @if (fractal.findControl(indicator); as control) {
+      @let dataForm = fractal.getControlFrom(indicator).data;
+      @switch (control.input) {
+        @case (controlInputs.Select) {
+          <app-select [label]="indicator" [opts]="control.data.split(':')" [formCtr]="dataForm" />
+        }
+        @default {
+          <app-input [label]="indicator" [formCtr]="dataForm" />
+        }
+      }
+    }
+  }
+</form>

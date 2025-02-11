@@ -1,8 +1,8 @@
 <div class="modifier">
   @if (!ss.$selected.isEmpty) {
-    <app-form-cards [fractals]="ss.$selected.signal()" />
+    <app-fractal-form [fractals]="ss.$selected.signal()" />
   }
   @if (!ss.$new.isEmpty) {
-    <app-form-cards [fractals]="ss.$new.signal()" />
+    <app-fractal-form [fractals]="ss.$new.signal()" />
   }
 </div>

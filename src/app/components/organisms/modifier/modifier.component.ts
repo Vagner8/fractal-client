@@ -3,12 +3,12 @@ import { MatButtonModule, MatCardModule } from '@mat';
 import { BaseService, DataService, ModifiersService, NewControlService, SelectService } from '@services';
 import { Subscription } from 'rxjs';
 import { ConstAppModifiers } from '@constants';
-import { FormCardsComponent } from '../form-cards/form-cards.component';
+import { FractalFormComponent } from '../fractal-form/fractal-form.component';
 
 @Component({
   selector: 'app-modifier',
   standalone: true,
-  imports: [MatButtonModule, MatCardModule, FormCardsComponent],
+  imports: [MatButtonModule, MatCardModule, FractalFormComponent],
   templateUrl: './modifier.component.html',
   styleUrl: './modifier.component.scss',
 })

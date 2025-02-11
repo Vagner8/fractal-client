@@ -1,0 +1,16 @@
+@if (fractals.length > 0) {
+  <app-list [length]="fractals.length">
+    @for (fractal of fractals; track fractal.dto.id) {
+      <li>
+        <app-card [title]="fractal.cursor">
+          <app-button-icon card-action icon="close" [disableHold]="false" (touch)="onDeleteFormCard(fractal)" />
+          @if ($allControlForms()) {
+            <app-control-all-forms card-content [fractal]="fractal" />
+          } @else {
+            <app-control-data-forms card-content [fractal]="fractal" />
+          }
+        </app-card>
+      </li>
+    }
+  </app-list>
+}

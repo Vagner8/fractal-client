@@ -1,15 +1,12 @@
-@let icon = fractal.getControlData(indicators.Icon);
-@let current = ss.$current.signal();
-
 <mat-expansion-panel
-  [class.clicked-panel]="current === fractal"
+  [class.clicked-panel]="ss.$current.signal() === fractal"
   hideToggle
   (closed)="closed.emit(fractal)"
   (afterExpand)="afterExpand(fractal)">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      @if (icon) {
-        <mat-icon class="icon">{{ icon }}</mat-icon>
+      @if (fractal.findControl(indicators.Icon); as iconControl) {
+        <mat-icon class="icon">{{ iconControl.data }}</mat-icon>
       }
       {{ fractal.cursor }}</mat-panel-title
     >

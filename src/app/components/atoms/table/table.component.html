@@ -3,7 +3,7 @@
     <ng-container [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
       <td [class.disable-cursor-pointer]="printControls" mat-cell *matCellDef="let row">
-        {{ printControls ? row[column] : row.getControlData(column) }}
+        {{ printControls ? row[column] : row.findControl(column)?.data }}
       </td>
     </ng-container>
   }

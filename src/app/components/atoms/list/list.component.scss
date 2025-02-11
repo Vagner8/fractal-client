@@ -1,0 +1,26 @@
+@use 'variables.scss' as *;
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $size-medium;
+}
+
+::ng-deep li {
+  flex: 1 1 100%;
+  box-sizing: border-box;
+}
+
+.list.two-items > ::ng-deep li {
+  flex: 1 1 calc(50% - $size-medium);
+}
+
+.list.three-or-more-items > ::ng-deep li {
+  flex: 1 1 calc(30.33% - $size-medium);
+}
+
+@media (max-width: 768px) {
+  ::ng-deep li {
+    flex: 1 1 100%;
+  }
+}

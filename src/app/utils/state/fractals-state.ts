@@ -28,7 +28,7 @@ export class FractalsState extends State<Fractal[]> {
   }
 
   toggleAll({ parent }: Fractal): void {
-    this.set(this.isEmpty ? parent.children : []);
+    this.set(this.isEmpty ? parent.childrenFractals : []);
   }
 
   toDto(): FractalDto[] {

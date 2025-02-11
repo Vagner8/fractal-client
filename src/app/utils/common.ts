@@ -1,12 +1,12 @@
 import { WritableSignal } from '@angular/core';
 import { Fractal } from '@types';
 
-export const checkValue = <T>(value: T | null, text = 'no message'): T => {
+export const checkValue = <T>(value: T | null | undefined, message = 'no message'): T => {
   if (value) return value;
   else {
-    const message = `Failed check. Returned value: ${value}. Message: ${text}`;
-    console.error(message);
-    throw new Error(message);
+    const errorMessage = `Failed check. Returned value: ${value}. Message: ${message}`;
+    console.error(errorMessage);
+    throw new Error(errorMessage);
   }
 };
 

@@ -8,7 +8,7 @@ export class FractalState extends State<Fractal | null> {
   }
 
   get get(): Fractal {
-    return checkValue(this.value);
+    return checkValue(this.value, `Unable to get state in: ${this.value?.cursor}`);
   }
 
   has(fractal: Fractal | null): boolean {

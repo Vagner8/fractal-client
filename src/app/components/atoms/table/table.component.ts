@@ -22,6 +22,6 @@ export class TableComponent {
   }
 
   get dataSource(): unknown[] {
-    return this.printControls ? this.fractal.controls : this.fractal.children;
+    return this.printControls ? this.fractal.controls : this.fractal.childrenFractals;
   }
 }

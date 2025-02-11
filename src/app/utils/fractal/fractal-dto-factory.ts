@@ -36,7 +36,7 @@ export class FractalDtoFactory implements FractalDto {
   }
 
   private itemControls(id: string, collection: Fractal): ControlsDto {
-    if (collection.children.length === 0) {
+    if (collection.childrenFractals.length === 0) {
       return collection.splitControlData(ConstSplitIndicators.Sort).reduce((acc: ControlsDto, column) => {
         acc[column] = {
           id: v4(),
@@ -50,8 +50,8 @@ export class FractalDtoFactory implements FractalDto {
     } else {
       const copy: ControlsDto = {};
 
-      for (const indicator in collection.children[0].dto.controls) {
-        const control = collection.children[0].dto.controls[indicator];
+      for (const indicator in collection.childrenFractals[0].dto.controls) {
+        const control = collection.childrenFractals[0].dto.controls[indicator];
         copy[indicator] = {
           ...control,
           id: v4(),

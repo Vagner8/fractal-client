@@ -1,5 +1,6 @@
 import { FractalFactory } from 'app/utils/fractal';
 import { Fractal, Fractals, FractalsDto } from '@types';
+import { ConstSplitIndicators } from '@constants';
 
 export const createFractalsRecursively = (fractalsDto: FractalsDto | null, parent: Fractal): Fractals | null => {
   if (!fractalsDto) return null;
@@ -21,4 +22,13 @@ export const findFractalRecursively = (test: string, fractals: Fractals | null):
     }
   }
   return null;
+};
+
+export const getFractalSort = (fractal: Fractal): string[] => {
+  if (fractal.isItem) {
+    const parentSort = fractal.parent.splitControlData(ConstSplitIndicators.Sort);
+    return parentSort.length > 0 ? parentSort : Object.keys(fractal.parent.dto.fractals || {});
+  }
+  const ownSort = fractal.splitControlData(ConstSplitIndicators.Sort);
+  return ownSort.length > 0 ? ownSort : Object.keys(fractal.dto.fractals || {});
 };

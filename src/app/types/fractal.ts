@@ -19,25 +19,20 @@ export interface Fractal {
   fractals: Fractals | null;
   childrenForms: FormRecord;
 
+  get isRoot(): boolean;
+  get isItem(): boolean;
+  get isCollection(): boolean;
+
   get sort(): string[];
   get cursor(): string;
 
-  get children(): Fractal[];
   get controls(): ControlDto[];
-
-  get childrenIndicators(): string[];
-  get controlsIndicators(): string[];
-
-  get isItem(): boolean;
-  get isRoot(): boolean;
-  get isCollection(): boolean;
+  get childrenFractals(): Fractal[];
 
   is(test: string | object): boolean;
-  has(test: string): boolean;
 
   getControl(indicator: string): ControlDto;
   findControl(indicator: string): ControlDto | null;
-  getControlData(indicator: string): string;
   splitControlData(indicator: string): string[];
 
   getFractal(test: string): Fractal;
