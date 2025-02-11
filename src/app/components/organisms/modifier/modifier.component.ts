@@ -1,9 +1,9 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule, MatCardModule } from '@mat';
-import { DataService, ModifiersService, NewControlService, SelectService } from '@services';
+import { BaseService, DataService, ModifiersService, NewControlService, SelectService } from '@services';
 import { Subscription } from 'rxjs';
 import { AppModifiers } from '@constants';
-import { FormCardsComponent } from '@components/molecules';
+import { FormCardsComponent } from '../form-cards/form-cards.component';
 
 @Component({
   selector: 'app-modifier',
@@ -13,6 +13,7 @@ import { FormCardsComponent } from '@components/molecules';
   styleUrl: './modifier.component.scss',
 })
 export class ModifierComponent implements OnInit, OnDestroy {
+  bs = inject(BaseService);
   ds = inject(DataService);
   ss = inject(SelectService);
   ms = inject(ModifiersService);
@@ -20,28 +21,27 @@ export class ModifierComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
 
   ngOnInit(): void {
-    this.subs.push(
-      this.ms.hold$.subscribe(modifier => {
-        if (!modifier) return;
-        const { $selected, $new } = this.ss;
-        ({
-          [AppModifiers.Save]: (): void => {
-            if (!$new.isEmpty) {
-              this.ds.add($new.updateFractalsByForm()).subscribe();
-            }
-            if (!$selected.isEmpty) {
-              this.ds.update($selected.updateFractalsByForm()).subscribe();
-            }
-            if (this.ncs.forms.size > 0) {
-              this.ncs.createControls();
-            }
-          },
-        })[modifier.cursor]?.();
-      })
-    );
+    this.subs.push(this.ms.hold$.subscribe(modifier => modifier && this.onModifierHeld(modifier.cursor)));
   }
 
   ngOnDestroy(): void {
     this.subs.forEach(sub => sub.unsubscribe());
+  }
+
+  private onModifierHeld(cursor: string): void {
+    const { $selected, $new } = this.ss;
+    ({
+      [AppModifiers.Save]: (): void => {
+        if (!$new.isEmpty) {
+          this.ds.add($new.updateFractalsByForm()).subscribe();
+        }
+        if (!$selected.isEmpty) {
+          this.ds.update($selected.updateFractalsByForm()).subscribe();
+        }
+        if (this.ncs.forms.size > 0) {
+          this.ncs.createControls();
+        }
+      },
+    })[cursor]?.();
   }
 }

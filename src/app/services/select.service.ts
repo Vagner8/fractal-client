@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Fractal } from '@types';
-import { FractalSignal, FractalsSignal } from '@utils';
+import { FractalState, FractalsState } from '@utils';
 
 interface SelectServiceSignals {
-  $new: FractalsSignal;
-  $current: FractalSignal;
-  $selected: FractalsSignal;
+  $new: FractalsState;
+  $current: FractalState;
+  $selected: FractalsState;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class SelectService implements SelectServiceSignals {
-  $new = new FractalsSignal();
-  $current = new FractalSignal();
-  $selected = new FractalsSignal();
+  $new = new FractalsState();
+  $current = new FractalState();
+  $selected = new FractalsState();
 
   clear(...keys: (keyof SelectServiceSignals)[]): void {
     keys.forEach(key => this[key].clear());

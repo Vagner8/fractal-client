@@ -5,7 +5,6 @@ import { SplitIndicators, AppEntities, AppModifiers } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { ManagerService, ModifiersService, TapsService, SelectService, DataService } from '@services';
 import { Fractal } from '@types';
-import { FractalFactory } from '@utils';
 import { BaseService } from 'app/services/base.service';
 
 @Component({
@@ -38,26 +37,21 @@ export class SidenavComponent {
   }
 
   modifierTouched(modifier: Fractal): void {
-    const { $current, $selected, $new } = this.ss;
+    const { $current, $selected } = this.ss;
     ({
       [AppModifiers.New]: (): void => {
         this.ms.set(modifier);
       },
       [AppModifiers.Edit]: (): void => {
-        if ($selected.isEmpty && $new.isEmpty && $current.value) {
-          this.ss.$selected.set([$current.value]);
-          this.ms.set(modifier);
-        }
-        if ($current.value && $selected.has($current.value)) {
-          this.ss.clear('$selected');
-        }
         if (!$selected.isEmpty) {
           this.ms.set(modifier);
         }
+        if ($selected.isEmpty && $current.value) {
+          this.ss.$selected.set([$current.value]);
+          this.ms.set(modifier);
+        }
       },
-      [AppModifiers.Delete]: (): void => {
-        // if (this.ss.are('$selected')) this.ms.set(modifier);
-      },
+      [AppModifiers.Delete]: (): void => {},
     })[modifier.cursor]?.();
   }
 

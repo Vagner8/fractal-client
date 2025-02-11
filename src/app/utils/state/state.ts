@@ -1,7 +1,7 @@
 import { signal, WritableSignal } from '@angular/core';
 import { Fractal } from '@types';
 
-export abstract class AppSignal<T> {
+export abstract class State<T> {
   value: T;
   signal: WritableSignal<T>;
 

@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { Fractal } from '@types';
 import { ButtonIconComponent, CardComponent } from '@components/atoms';
-import { BaseService, NewControlService, SelectService } from '@services';
+import { BaseService, ModifiersService, NewControlService, SelectService } from '@services';
 import { MatButtonModule } from '@mat';
-import { FormComponent } from '../form/form.component';
 import { AppEntities } from '@constants';
+import { FormComponent } from '@components/molecules';
 
 @Component({
   selector: 'app-form-cards',
@@ -17,11 +17,12 @@ import { AppEntities } from '@constants';
 export class FormCardsComponent {
   bs = inject(BaseService);
   ss = inject(SelectService);
+  ms = inject(ModifiersService);
   ncs = inject(NewControlService);
   @Input() fractals: Fractal[] = [];
 
   onDeleteFormCard(fractal: Fractal): void {
     this.ss.$selected.delete(fractal);
-    this.bs.navigate({ [AppEntities.Modifiers]: null });
+    this.ss.$selected.isEmpty && this.bs.navigate({ [AppEntities.Modifiers]: null });
   }
 }

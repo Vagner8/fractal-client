@@ -1,8 +1,8 @@
 import { Fractal, FractalDto } from '@types';
-import { AppSignal } from './app-signal';
+import { State } from './state';
 import { updateFractalsByForm } from '../fractal';
 
-export class FractalsSignal extends AppSignal<Fractal[]> {
+export class FractalsState extends State<Fractal[]> {
   constructor() {
     super([]);
   }

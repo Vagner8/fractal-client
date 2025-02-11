@@ -1,8 +1,8 @@
 import { Fractal } from '@types';
-import { AppSignal } from './app-signal';
+import { State } from './state';
 import { checkValue } from '../common';
 
-export class FractalSignal extends AppSignal<Fractal | null> {
+export class FractalState extends State<Fractal | null> {
   constructor() {
     super(null);
   }
