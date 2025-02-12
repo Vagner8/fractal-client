@@ -1,26 +1,25 @@
 @use 'variables.scss' as *;
 
 .list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: $size-medium;
+  gap: map-get($size, sm);
+  display: grid;
+  grid-template-columns: 1fr;
 }
 
-::ng-deep li {
-  flex: 1 1 100%;
-  box-sizing: border-box;
+@media (min-width: map-get($breakpoints, xs)) {
+  .list {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-.list.two-items > ::ng-deep li {
-  flex: 1 1 calc(50% - $size-medium);
+@media (min-width: map-get($breakpoints, md)) {
+  .list {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
-.list.three-or-more-items > ::ng-deep li {
-  flex: 1 1 calc(30.33% - $size-medium);
-}
-
-@media (max-width: 768px) {
-  ::ng-deep li {
-    flex: 1 1 100%;
+@media (min-width: map-get($breakpoints, lg)) {
+  .list {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }

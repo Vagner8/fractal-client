@@ -1,7 +1,7 @@
 @use 'variables.scss' as *;
 
 .clicked-row {
-  background-color: $color-secondary;
+  background-color: map-get($color, secondary);
 }
 
 .disable-cursor-pointer {
@@ -9,5 +9,5 @@
 }
 
 .table {
-  border: solid 1px $color-border;
+  border: solid 1px map-get($color, border);
 }

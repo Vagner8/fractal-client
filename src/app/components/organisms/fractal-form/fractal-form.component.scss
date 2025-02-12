@@ -3,7 +3,7 @@
 .list {
   display: flex;
   flex-wrap: wrap;
-  gap: $size-medium;
+  gap: map-get($size, md);
 }
 
 .item {
@@ -12,11 +12,11 @@
 }
 
 .list.two-items > .item {
-  flex: 1 1 calc(50% - $size-medium);
+  flex: 1 1 calc(50% - map-get($size, md));
 }
 
 .list.three-or-more-items > .item {
-  flex: 1 1 calc(30.33% - $size-medium);
+  flex: 1 1 calc(30.33% - map-get($size, md));
 }
 
 @media (max-width: 768px) {

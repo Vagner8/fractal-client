@@ -3,5 +3,5 @@
 .modifier {
   display: flex;
   flex-direction: column;
-  gap: $size-medium;
+  gap: map-get($size, md);
 }

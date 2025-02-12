@@ -4,11 +4,12 @@ import { BaseService, DataService, ModifiersService, NewControlService, SelectSe
 import { Subscription } from 'rxjs';
 import { ConstAppModifiers } from '@constants';
 import { FractalFormComponent } from '../fractal-form/fractal-form.component';
+import { ListComponent } from '@components/atoms';
 
 @Component({
   selector: 'app-modifier',
   standalone: true,
-  imports: [MatButtonModule, MatCardModule, FractalFormComponent],
+  imports: [MatButtonModule, MatCardModule, FractalFormComponent, ListComponent],
   templateUrl: './modifier.component.html',
   styleUrl: './modifier.component.scss',
 })

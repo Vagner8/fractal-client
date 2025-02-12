@@ -1,5 +1,5 @@
 @use 'variables.scss' as *;
 
 .mat-card-title-group {
-  margin-bottom: $size-small;
+  margin-bottom: map-get($size, sm);
 }

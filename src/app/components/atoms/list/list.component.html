@@ -1,3 +1,7 @@
-<ul class="list" [class.two-items]="length === 2" [class.three-or-more-items]="length >= 3">
-  <ng-content />
+<ul class="list">
+  @for (fractal of fractals; track fractal.dto.id) {
+    <li class="item">
+      <ng-container *ngTemplateOutlet="templateRef; context: { $implicit: fractal }"></ng-container>
+    </li>
+  }
 </ul>

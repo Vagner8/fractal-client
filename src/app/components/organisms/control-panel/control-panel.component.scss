@@ -3,5 +3,5 @@
 .mat-accordion {
   display: flex;
   flex-direction: column;
-  gap: $size-extra-small;
+  gap: map-get($size, xs);
 }

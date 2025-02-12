@@ -1,8 +1,9 @@
 <div class="modifier">
   @if (!ss.$selected.isEmpty) {
-    <app-fractal-form [fractals]="ss.$selected.signal()" />
-  }
-  @if (!ss.$new.isEmpty) {
-    <app-fractal-form [fractals]="ss.$new.signal()" />
+    <app-list [fractals]="ss.$selected.signal()" [templateRef]="fractalForm" />
   }
 </div>
+
+<ng-template #fractalForm let-fractal>
+  <app-fractal-form [fractal]="fractal" />
+</ng-template>

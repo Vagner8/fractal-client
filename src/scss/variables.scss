@@ -1,16 +1,27 @@
-$size-extra-small: 4px;
-$size-small: 8px;
-$size-medium: 16px;
-$size-large: 24px;
+$size: (
+  xs: 4px,
+  sm: 8px,
+  md: 16px,
+  lg: 24px,
+);
 
-$color-common: #fff;
-$color-success: #28a745;
-$color-danger: #dc3545;
-$color-warning: #ffc107;
-$color-secondary: #f5f5f5;
-$color-manager: #ff4081;
-$color-border: #e0e0e0;
+$color: (
+  common: #fff,
+  border: #e0e0e0,
+  danger: #dc3545,
+  manager: #ff4081,
+  success: #28a745,
+  warning: #ffc107,
+  secondary: #f5f5f5,
+);
 
-$toolbar-height: $size-large * 3;
+$breakpoints: (
+  xs: 600px,
+  sm: 900px,
+  md: 1200px,
+  lg: 1800px,
+);
+
+$toolbar-height: map-get($size, lg) * 3;
 $toolbar-tap-width: 40px;
 $drawer-app-sidenav: 120px;

@@ -2,8 +2,8 @@
 
 h1 {
   height: 32px;
-  padding: $size-small;
+  padding: map-get($size, sm);
   margin: 0;
-  background-color: $color-common;
+  background-color: map-get($color, common);
   border-bottom: solid 1px #0000001f;
 }

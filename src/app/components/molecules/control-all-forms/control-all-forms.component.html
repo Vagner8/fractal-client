@@ -1,7 +1,7 @@
 @let sort = fractal.sort('form');
 
 <form>
-  <app-list [length]="sort.length">
+  <app-list>
     @for (indicator of sort; track indicator) {
       @if (fractal.findControl(indicator); as control) {
         @let controlForm = fractal.getControlFrom(indicator);

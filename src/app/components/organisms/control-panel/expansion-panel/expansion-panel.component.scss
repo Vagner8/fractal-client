@@ -1,29 +1,29 @@
 @use 'variables.scss' as *;
 
 .icon {
-  margin-right: $size-small;
+  margin-right: map-get($size, sm);
 }
 
 .children {
   display: flex;
   flex-direction: column;
-  gap: $size-medium;
+  gap: map-get($size, md);
 }
 
 .mat-expansion-panel {
-  border: solid 1px $color-border;
+  border: solid 1px map-get($color, border);
   box-shadow: none !important;
   border-radius: 0 !important;
 }
 
 .clicked-panel {
-  background-color: $color-secondary;
+  background-color: map-get($color, secondary);
 }
 
 ::ng-deep {
   mat-expansion-panel {
     .mat-expansion-panel-body {
-      padding: 0 $size-small $size-small;
+      padding: 0 map-get($size, sm) map-get($size, sm);
     }
   }
 }
@@ -34,7 +34,7 @@
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: $size-medium;
+      gap: map-get($size, md);
     }
   }
 }

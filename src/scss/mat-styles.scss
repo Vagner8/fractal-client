@@ -7,11 +7,11 @@
 }
 
 .mat-mdc-progress-spinner circle {
-  stroke: $color-manager !important;
+  stroke: map-get($color, manager) !important;
 }
 
 .manager-spinner .mat-mdc-progress-spinner circle {
-  stroke: $color-secondary !important;
+  stroke: map-get($color, secondary) !important;
 }
 
 .mat-drawer-app-sidenav {
