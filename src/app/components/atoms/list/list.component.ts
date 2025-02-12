@@ -10,6 +10,10 @@ import { Fractal } from '@types';
   styleUrl: './list.component.scss',
 })
 export class ListComponent {
-  @Input() fractals: Fractal[] = [];
+  @Input() dataSource: Fractal[] | string[] = [];
   @Input() templateRef!: TemplateRef<unknown>;
+
+  trackFn(data: Fractal | string): string {
+    return typeof data === 'string' ? data : data.cursor;
+  }
 }

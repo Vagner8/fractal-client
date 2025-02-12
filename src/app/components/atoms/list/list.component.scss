@@ -1,25 +1,26 @@
 @use 'variables.scss' as *;
 
-.list {
+ul {
+  display: flex;
+  flex-wrap: wrap;
   gap: map-get($size, sm);
-  display: grid;
-  grid-template-columns: 1fr;
 }
 
-@media (min-width: map-get($breakpoints, xs)) {
-  .list {
-    grid-template-columns: 1fr 1fr;
-  }
+li {
+  flex: 1 1 100%;
+  box-sizing: border-box;
 }
 
-@media (min-width: map-get($breakpoints, md)) {
-  .list {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
+ul.two-items > li {
+  flex: 1 1 calc(50% - map-get($size, sm));
 }
 
-@media (min-width: map-get($breakpoints, lg)) {
-  .list {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+ul.three-or-more-items > li {
+  flex: 1 1 calc(30.33% - map-get($size, sm));
+}
+
+@media (max-width: 768px) {
+  li {
+    flex: 1 1 100%;
   }
 }
