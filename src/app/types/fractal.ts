@@ -1,7 +1,7 @@
 import { FormControl, FormRecord } from '@angular/forms';
 import { ControlDto, ControlFromRecord, ControlsDto } from './control';
 
-export type SortMode = 'form' | 'table';
+export type SortMode = 'form' | 'table' | 'tableControl';
 export type Fractals = Record<string, Fractal>;
 export type FractalsDto = Record<string, FractalDto>;
 export type FractalForm = FormRecord<FormRecord<FormControl>>;

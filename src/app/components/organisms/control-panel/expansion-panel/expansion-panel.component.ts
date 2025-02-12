@@ -28,11 +28,10 @@ import { ConstIndicators } from '@constants';
   styleUrl: './expansion-panel.component.scss',
 })
 export class ExpansionPanelComponent implements OnInit {
-  ss = inject(SelectService);
   @Input() fractal!: Fractal;
+  ss = inject(SelectService);
   panel = viewChild(MatExpansionPanel);
   closed = output<Fractal>();
-
   indicators = ConstIndicators;
 
   ngOnInit(): void {

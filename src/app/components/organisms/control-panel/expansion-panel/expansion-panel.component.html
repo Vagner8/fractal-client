@@ -5,16 +5,16 @@
   (afterExpand)="afterExpand(fractal)">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      @if (fractal.findControl(indicators.Icon); as iconControl) {
-        <mat-icon class="icon">{{ iconControl.data }}</mat-icon>
+      @if (fractal.findControl(indicators.Icon)?.data; as icon) {
+        <mat-icon class="icon">{{ icon }}</mat-icon>
       }
       {{ fractal.cursor }}</mat-panel-title
     >
   </mat-expansion-panel-header>
   <div class="children">
-    <app-table [fractal]="fractal" [printControls]="true" />
+    <app-table [fractal]="fractal" [dataSource]="fractal.controls" [columns]="fractal.sort('tableControl')" />
     @if (fractal.isCollection) {
-      <app-table [fractal]="fractal" />
+      <app-table [fractal]="fractal" [dataSource]="fractal.childrenFractals" [columns]="fractal.sort()" />
     }
     @if (fractal.fractals) {
       <ng-content />

@@ -2,13 +2,13 @@
   @for (column of columns; track column) {
     <ng-container [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
-      <td [class.disable-cursor-pointer]="printControls" mat-cell *matCellDef="let row">
-        {{ printControls ? row[column] : row.findControl(column)?.data }}
+      <td [class.disable-cursor-pointer]="!isFractals" mat-cell *matCellDef="let row">
+        {{ isFractals ? row.findControl(column)?.data : row[column] }}
       </td>
     </ng-container>
   }
   <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
-  @if (printControls) {
+  @if (!isFractals) {
     <tr mat-row *matRowDef="let row; columns: columns"></tr>
   } @else {
     <tr

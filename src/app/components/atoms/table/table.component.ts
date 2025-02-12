@@ -1,9 +1,9 @@
-import { Component, inject, Input } from '@angular/core';
-import { ConstControlDtoKeys } from '@constants';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { TapDirective } from '@directives';
 import { MatTableModule } from '@mat';
 import { SelectService } from '@services';
 import { Fractal } from '@types';
+import { isFractal } from '@utils';
 
 @Component({
   selector: 'app-table',
@@ -12,16 +12,14 @@ import { Fractal } from '@types';
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
-export class TableComponent {
-  ss = inject(SelectService);
-  @Input() printControls = false;
+export class TableComponent implements OnInit {
   @Input() fractal!: Fractal;
+  @Input() columns: string[] = [];
+  @Input() dataSource: unknown[] = [];
+  ss = inject(SelectService);
+  isFractals = false;
 
-  get columns(): string[] {
-    return this.printControls ? [ConstControlDtoKeys.indicator, ConstControlDtoKeys.data] : this.fractal.sort();
-  }
-
-  get dataSource(): unknown[] {
-    return this.printControls ? this.fractal.controls : this.fractal.childrenFractals;
+  ngOnInit(): void {
+    this.isFractals = isFractal(this.dataSource[0]);
   }
 }

@@ -1,6 +1,6 @@
 import { FractalFactory } from 'app/utils/fractal';
 import { Fractal, Fractals, FractalsDto, SortMode } from '@types';
-import { ConstSplitIndicators } from '@constants';
+import { ConstControlFormKeys, ConstSplitIndicators } from '@constants';
 
 export const createFractalsRecursively = (fractalsDto: FractalsDto | null, parent: Fractal): Fractals | null => {
   if (!fractalsDto) return null;
@@ -38,6 +38,9 @@ export const getFractalSort = (fractal: Fractal, mode: SortMode): string[] => {
       if (isItem) throw new Error('The item table sort is not supported');
       const ownSort = fractal.splitControlData(ConstSplitIndicators.Sort);
       return ownSort.length > 0 ? ownSort : Object.keys(dto.fractals || {});
+    },
+    tableControl() {
+      return ConstControlFormKeys.strings;
     },
   };
 

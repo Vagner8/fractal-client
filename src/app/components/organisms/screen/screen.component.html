@@ -14,7 +14,7 @@
         <app-control-panel [fractal]="root" />
       }
       @default {
-        <app-table [fractal]="current" />
+        <app-table [fractal]="current" [columns]="current.sort()" [dataSource]="current.childrenFractals" />
       }
     }
   }
