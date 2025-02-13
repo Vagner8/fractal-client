@@ -7,15 +7,20 @@
     position="end">
     @if (ts.$taps(); as taps) {
       <mat-list>
-        @for (indicator of taps.sort(); track indicator) {
-          @if (taps.findFractal(indicator); as tap) {
-            @switch (tap.parent.cursor) {
-              @case (appEntities.Modifiers) {
-                <app-tap [tap]="tap" (hold)="modifierHeld($event)" (touch)="modifierTouched($event)" />
-              }
-              @case (appEntities.Pages) {
-                <app-tap [tap]="tap" (touch)="pageTouched($event)" />
-              }
+        @if (taps.is(appEntities.Pages)) {
+          @for (indicator of taps.sort(); track indicator) {
+            @if (taps.findFractal(indicator); as tap) {
+              <app-tap [tap]="tap" (touch)="pageTouched($event)" />
+            }
+          }
+          @if (es.$app(); as app) {
+            <app-tap [tap]="app" (touch)="pageTouched($event)" />
+          }
+        }
+        @if (taps.is(appEntities.Modifiers)) {
+          @for (indicator of taps.sort(); track indicator) {
+            @if (taps.findFractal(indicator); as tap) {
+              <app-tap [tap]="tap" (hold)="modifierHeld($event)" (touch)="modifierTouched($event)" />
             }
           }
         }

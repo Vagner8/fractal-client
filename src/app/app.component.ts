@@ -12,8 +12,8 @@ import { DataService, EntitiesService } from '@services';
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
-  ds = inject(DataService);
   ent = inject(EntitiesService);
+  private ds = inject(DataService);
 
   ngOnInit(): void {
     this.ds.get().subscribe(dto => this.ent.init(dto));

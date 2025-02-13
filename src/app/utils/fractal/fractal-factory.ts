@@ -20,11 +20,11 @@ export class FractalFactory implements Fractal {
   }
 
   get isItem(): boolean {
-    return !this.isRoot && this.parent.is(ConstAppCollections);
+    return !this.isApp && this.parent.is(ConstAppCollections);
   }
 
-  get isRoot(): boolean {
-    return this.is(ConstAppEntities.Root);
+  get isApp(): boolean {
+    return this.is(ConstAppEntities.App);
   }
 
   get isCollection(): boolean {

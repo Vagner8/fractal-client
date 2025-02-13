@@ -7,19 +7,19 @@ import { createFractalsRecursively, FractalFactory } from '@utils';
   providedIn: 'root',
 })
 export class EntitiesService {
-  $root = signal<Fractal | null>(null);
+  $app = signal<Fractal | null>(null);
   pages: Fractal | null = null;
   manager: Fractal | null = null;
   modifiers: Fractal | null = null;
 
   init(dto: FractalDto): void {
-    const root = new FractalFactory({ dto });
-    root.fractals = createFractalsRecursively(root.dto.fractals, root);
-    this.pages = root.findFractal(ConstAppEntities.Pages);
-    this.manager = root.findFractal(ConstAppEntities.Manager);
-    this.modifiers = root.findFractal(ConstAppEntities.Modifiers);
-    this.$root.set(root);
+    const app = new FractalFactory({ dto });
+    app.fractals = createFractalsRecursively(app.dto.fractals, app);
+    this.pages = app.findFractal(ConstAppEntities.Pages);
+    this.manager = app.findFractal(ConstAppEntities.Manager);
+    this.modifiers = app.findFractal(ConstAppEntities.Modifiers);
+    this.$app.set(app);
 
-    console.log('🚀 ~ root', this.$root());
+    console.log('🚀 ~ app', this.$app());
   }
 }

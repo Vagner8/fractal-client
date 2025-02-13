@@ -20,7 +20,7 @@ export interface Fractal {
   fractals: Fractals | null;
   childrenForms: FormRecord;
 
-  get isRoot(): boolean;
+  get isApp(): boolean;
   get isItem(): boolean;
   get isCollection(): boolean;
 

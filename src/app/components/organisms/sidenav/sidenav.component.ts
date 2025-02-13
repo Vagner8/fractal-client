@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { ConstSplitIndicators, ConstAppEntities, ConstAppModifiers } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { ManagerService, ModifiersService, TapsService, SelectService, DataService } from '@services';
+import { ManagerService, ModifiersService, TapsService, SelectService, DataService, EntitiesService } from '@services';
 import { Fractal } from '@types';
 import { BaseService } from 'app/services/base.service';
 
@@ -19,6 +19,7 @@ export class SidenavComponent {
   ds = inject(DataService);
   ts = inject(TapsService);
   ss = inject(SelectService);
+  es = inject(EntitiesService);
   ms = inject(ModifiersService);
   mgr = inject(ManagerService);
 
@@ -55,10 +56,9 @@ export class SidenavComponent {
     })[modifier.cursor]?.();
   }
 
-  async pageTouched(tap: Fractal): Promise<void> {
+  pageTouched(tap: Fractal): void {
+    this.ms.clear();
     this.ss.clear('$selected', '$new');
     this.ss.$current.set(tap);
-    await this.bs.navigate({}, [tap.cursor]);
-    this.ms.set(null);
   }
 }

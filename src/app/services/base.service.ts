@@ -1,4 +1,4 @@
-import { inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { Params, QueryParamsHandling, Router } from '@angular/router';
 
 @Injectable({
@@ -6,8 +6,6 @@ import { Params, QueryParamsHandling, Router } from '@angular/router';
 })
 export class BaseService {
   private router = inject(Router);
-
-  $modifiersParam = signal<string | null>(null);
 
   async navigate(
     queryParams?: Params,

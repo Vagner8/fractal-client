@@ -18,7 +18,10 @@ export class FractalFormComponent {
   private ss = inject(SelectService);
   private ms = inject(ModifiersService);
   @Input() fractal!: Fractal;
-  $allControlForms = computed(() => Boolean(this.ms.$prevModifier()?.is(ConstAppModifiers.Edit)));
+  $showAllControlForms = computed(() => {
+    const records = this.ms.$records();
+    return [records.at(-1), records.at(-2)].every(modifier => modifier?.is(ConstAppModifiers.Edit));
+  });
 
   onDeleteFormCard(fractal: Fractal): void {
     this.ss.$selected.delete(fractal);

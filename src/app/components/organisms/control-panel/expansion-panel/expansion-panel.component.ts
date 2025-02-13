@@ -35,7 +35,7 @@ export class ExpansionPanelComponent implements OnInit {
   indicators = ConstIndicators;
 
   ngOnInit(): void {
-    if (this.fractal.isRoot) {
+    if (this.fractal.isApp) {
       this.ss.$current.set(this.fractal);
       this.panel()?.open();
     }

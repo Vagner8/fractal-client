@@ -1,7 +1,7 @@
-@let root = ent.$root();
+@let app = ent.$app();
 @let current = ss.$current.signal();
 
-@if (root && current) {
+@if (app && current) {
   @if (Modifiers) {
     <app-modifier />
   }
@@ -11,7 +11,7 @@
         <h1>Home</h1>
       }
       @case (appPages.App) {
-        <app-control-panel [fractal]="root" />
+        <app-control-panel [fractal]="app" />
       }
       @default {
         <app-table [fractal]="current" [columns]="current.sort()" [dataSource]="current.childrenFractals" />

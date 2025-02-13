@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule, MatCardModule } from '@mat';
-import { BaseService, DataService, ModifiersService, NewControlService, SelectService } from '@services';
+import { DataService, ModifiersService, SelectService } from '@services';
 import { Subscription } from 'rxjs';
 import { ConstAppModifiers } from '@constants';
 import { FractalFormComponent } from '../fractal-form/fractal-form.component';
@@ -14,11 +14,9 @@ import { ListComponent } from '@components/atoms';
   styleUrl: './modifier.component.scss',
 })
 export class ModifierComponent implements OnInit, OnDestroy {
-  bs = inject(BaseService);
-  ds = inject(DataService);
   ss = inject(SelectService);
-  ms = inject(ModifiersService);
-  ncs = inject(NewControlService);
+  private ds = inject(DataService);
+  private ms = inject(ModifiersService);
   private subs: Subscription[] = [];
 
   ngOnInit(): void {
