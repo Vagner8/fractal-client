@@ -5,20 +5,20 @@ import { ExpansionPanelComponent } from './expansion-panel/expansion-panel.compo
 import { SelectService } from '@services';
 
 @Component({
-  selector: 'app-control-panel',
+  selector: 'app-application',
   standalone: true,
   imports: [MatExpansionModule, ExpansionPanelComponent],
-  templateUrl: './control-panel.component.html',
-  styleUrl: './control-panel.component.scss',
+  templateUrl: './application.component.html',
+  styleUrl: './application.component.scss',
 })
-export class ControlPanelComponent {
-  ss = inject(SelectService);
+export class ApplicationComponent {
   @Input() fractal!: Fractal;
+  ss = inject(SelectService);
   accordion = viewChild(MatAccordion);
 
   shouldRender = computed(() => {
     if (this.fractal.isItem) return false;
-    let current = this.ss.$current.signal();
+    let current = this.ss.$currentPanel();
     while (current) {
       if (current === this.fractal) return true;
       current = current.parent;
@@ -27,9 +27,9 @@ export class ControlPanelComponent {
   });
 
   closed(): void {
-    this.ss.clear('$selected', '$new');
-    const current = this.ss.$current.value;
-    if (current && !this.fractal.isApp) this.ss.$current.set(current.parent);
+    this.ss.clear('$selected');
+    const current = this.ss.$currentPanel();
+    if (current && !this.fractal.isApp) this.ss.$currentPanel.set(current.parent);
     this.accordion()?.closeAll();
   }
 }

@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, computed, inject, Input } from '@angular/core';
 import { Fractal } from '@types';
 import { ButtonIconComponent, CardComponent } from '@components/atoms';
-import { BaseService, ModifiersService, SelectService } from '@services';
-import { ConstAppEntities, ConstAppModifiers } from '@constants';
+import { ModifiersService, SelectService } from '@services';
+import { ConstEditMods } from '@constants';
 import { ControlAllFormsComponent, ControlDataFormsComponent } from '@components/molecules';
 
 @Component({
@@ -14,17 +14,13 @@ import { ControlAllFormsComponent, ControlDataFormsComponent } from '@components
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FractalFormComponent {
-  private bs = inject(BaseService);
   private ss = inject(SelectService);
   private ms = inject(ModifiersService);
   @Input() fractal!: Fractal;
-  $showAllControlForms = computed(() => {
-    const records = this.ms.$records();
-    return [records.at(-1), records.at(-2)].every(modifier => modifier?.is(ConstAppModifiers.Edit));
-  });
+  $showAllControlForms = computed(() => this.ms.$editMode() === ConstEditMods.Controls);
 
   onDeleteFormCard(fractal: Fractal): void {
     this.ss.$selected.delete(fractal);
-    this.ss.$selected.isEmpty && this.bs.navigate({ [ConstAppEntities.Modifiers]: null });
+    this.ss.$selected.isEmpty && this.ms.clear();
   }
 }

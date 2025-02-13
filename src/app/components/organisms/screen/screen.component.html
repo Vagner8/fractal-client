@@ -11,7 +11,7 @@
         <h1>Home</h1>
       }
       @case (appPages.App) {
-        <app-control-panel [fractal]="app" />
+        <app-application [fractal]="app" />
       }
       @default {
         <app-table [fractal]="current" [columns]="current.sort()" [dataSource]="current.childrenFractals" />

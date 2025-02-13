@@ -1,4 +1,4 @@
-import { effect, inject, Injectable } from '@angular/core';
+import { effect, inject, Injectable, signal } from '@angular/core';
 import { Fractal } from '@types';
 import { FractalState, FractalsState } from '@utils';
 import { BaseService } from './base.service';
@@ -14,9 +14,12 @@ interface SelectServiceSignals {
 })
 export class SelectService implements SelectServiceSignals {
   bs = inject(BaseService);
+
   $new = new FractalsState();
   $current = new FractalState();
   $selected = new FractalsState();
+
+  $currentPanel = signal<Fractal | null>(null);
 
   constructor() {
     effect(() => {

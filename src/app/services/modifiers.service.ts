@@ -2,7 +2,7 @@ import { effect, inject, Injectable, signal } from '@angular/core';
 import { Fractal } from '@types';
 import { BaseService } from './base.service';
 import { Subject } from 'rxjs';
-import { ConstAppEntities } from '@constants';
+import { ConstEditMods, ConstModifiers, ConstParams } from '@constants';
 
 @Injectable({
   providedIn: 'root',
@@ -11,14 +11,16 @@ export class ModifiersService {
   bs = inject(BaseService);
   hold$ = new Subject<Fractal | null>();
   touch$ = new Subject<Fractal | null>();
-  $records = signal<Fractal[]>([]);
   $modifier = signal<Fractal | null>(null);
+  $editMode = signal<string | null>(null);
 
   constructor() {
-    effect(() => {
-      const current = this.$modifier();
-      this.bs.navigate({ [ConstAppEntities.Modifiers]: current && current.cursor });
-    });
+    effect(() =>
+      this.bs.navigate({
+        [ConstParams.EditMode]: this.$editMode(),
+        [ConstParams.Modifiers]: this.$modifier()?.cursor,
+      })
+    );
   }
 
   hold(modifier: Fractal | null): void {
@@ -26,20 +28,20 @@ export class ModifiersService {
   }
 
   set(modifier: Fractal | null): void {
+    const { Controls, Fractals } = ConstEditMods;
     this.touch$.next(modifier);
-    this.$records.update(prev => {
-      if (!modifier) return prev;
-      return prev.length < 3 ? [...prev, modifier] : [...prev.slice(1), modifier];
+    this.$modifier.update(prev => {
+      this.$editMode.set(prev?.is(ConstModifiers.Edit) ? Controls : Fractals);
+      return modifier;
     });
-    this.$modifier.set(modifier);
   }
 
   clear(): void {
-    this.$records.set([]);
     this.$modifier.set(null);
+    this.$editMode.set(null);
   }
 
-  init({ app, ConstAppModifiers }: { app: Fractal; ConstAppModifiers: string }): void {
-    this.$modifier.set(ConstAppModifiers ? app.getFractal(ConstAppModifiers) : null);
+  init({ app, ConstModifiers }: { app: Fractal; ConstModifiers: string }): void {
+    this.$modifier.set(ConstModifiers ? app.getFractal(ConstModifiers) : null);
   }
 }

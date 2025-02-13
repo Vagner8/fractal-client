@@ -1,11 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
-import { ConstSplitIndicators, ConstAppEntities, ConstAppModifiers } from '@constants';
+import { ConstSplitIndicators, ConstEntities, ConstModifiers, ConstEvents } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { ManagerService, ModifiersService, TapsService, SelectService, DataService, EntitiesService } from '@services';
 import { Fractal } from '@types';
-import { BaseService } from 'app/services/base.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -15,21 +14,21 @@ import { BaseService } from 'app/services/base.service';
   styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
-  bs = inject(BaseService);
-  ds = inject(DataService);
-  ts = inject(TapsService);
-  ss = inject(SelectService);
   es = inject(EntitiesService);
-  ms = inject(ModifiersService);
   mgr = inject(ManagerService);
+  ts = inject(TapsService);
+  private ds = inject(DataService);
+  private ss = inject(SelectService);
+  private ms = inject(ModifiersService);
 
-  appEntities = ConstAppEntities;
+  events = ConstEvents;
+  entities = ConstEntities;
   splitIndicators = ConstSplitIndicators;
 
   modifierHeld(modifier: Fractal): void {
     this.ms.hold(modifier);
     switch (modifier.cursor) {
-      case ConstAppModifiers.Delete:
+      case ConstModifiers.Delete:
         if (!this.ss.$selected.isEmpty) {
           this.ds.delete(this.ss.$selected.toDto()).subscribe();
         }
@@ -40,10 +39,10 @@ export class SidenavComponent {
   modifierTouched(modifier: Fractal): void {
     const { $current, $selected } = this.ss;
     ({
-      [ConstAppModifiers.New]: (): void => {
+      [ConstModifiers.New]: (): void => {
         this.ms.set(modifier);
       },
-      [ConstAppModifiers.Edit]: (): void => {
+      [ConstModifiers.Edit]: (): void => {
         if (!$selected.isEmpty) {
           this.ms.set(modifier);
         }
@@ -52,7 +51,7 @@ export class SidenavComponent {
           this.ms.set(modifier);
         }
       },
-      [ConstAppModifiers.Delete]: (): void => {},
+      [ConstModifiers.Delete]: (): void => {},
     })[modifier.cursor]?.();
   }
 

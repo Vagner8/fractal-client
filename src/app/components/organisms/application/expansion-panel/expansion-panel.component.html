@@ -1,5 +1,5 @@
 <mat-expansion-panel
-  [class.clicked-panel]="ss.$current.signal() === fractal"
+  [class.clicked-panel]="ss.$currentPanel() === fractal"
   hideToggle
   (closed)="closed.emit(fractal)"
   (afterExpand)="afterExpand(fractal)">

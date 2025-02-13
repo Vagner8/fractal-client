@@ -3,7 +3,7 @@
     <mat-accordion>
       @for (cursor of fractal.sort(); track cursor) {
         @if (fractal.findFractal(cursor); as fractal) {
-          <app-control-panel [fractal]="fractal" />
+          <app-application [fractal]="fractal" />
         }
       }
     </mat-accordion>

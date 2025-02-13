@@ -2,7 +2,7 @@ import { FractalDto, Fractal, Fractals, ControlDto, FractalForm, ControlFromReco
 import { FractalDtoFactory } from './fractal-dto-factory';
 import { checkValue } from '@utils';
 import { FormRecord } from '@angular/forms';
-import { ConstIndicators, ConstAppCollections, ConstAppEntities, ConstControlFormKeys } from '@constants';
+import { ConstIndicators, ConstCollections, ConstEntities, ConstControlFormKeys } from '@constants';
 import { findFractalRecursively, getFractalSort } from './helpers';
 import { createFractalForm } from './fractal-form';
 
@@ -20,15 +20,15 @@ export class FractalFactory implements Fractal {
   }
 
   get isItem(): boolean {
-    return !this.isApp && this.parent.is(ConstAppCollections);
+    return !this.isApp && this.parent.is(ConstCollections);
   }
 
   get isApp(): boolean {
-    return this.is(ConstAppEntities.App);
+    return this.is(ConstEntities.App);
   }
 
   get isCollection(): boolean {
-    return this.is(ConstAppCollections);
+    return this.is(ConstCollections);
   }
 
   get cursor(): string {

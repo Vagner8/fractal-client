@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule, MatCardModule } from '@mat';
 import { DataService, ModifiersService, SelectService } from '@services';
 import { Subscription } from 'rxjs';
-import { ConstAppModifiers } from '@constants';
+import { ConstModifiers } from '@constants';
 import { FractalFormComponent } from '../fractal-form/fractal-form.component';
 import { ListComponent } from '@components/atoms';
 
@@ -30,7 +30,7 @@ export class ModifierComponent implements OnInit, OnDestroy {
   private onModifierHeld(cursor: string): void {
     const { $selected, $new } = this.ss;
     ({
-      [ConstAppModifiers.Save]: (): void => {
+      [ConstModifiers.Save]: (): void => {
         if (!$new.isEmpty) {
           this.ds.add($new.updateFractalsByForm()).subscribe();
         }

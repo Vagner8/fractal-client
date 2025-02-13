@@ -1,14 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { SelectService, EntitiesService } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
-import { ControlPanelComponent } from '../control-panel/control-panel.component';
+import { ApplicationComponent } from '../application/application.component';
 import { TableComponent } from '@components/atoms';
-import { ConstAppPages } from '@constants';
+import { ConstPages } from '@constants';
 
 @Component({
   selector: 'app-screen',
   standalone: true,
-  imports: [ControlPanelComponent, ModifierComponent, TableComponent],
+  imports: [ApplicationComponent, ModifierComponent, TableComponent],
   templateUrl: './screen.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -22,5 +22,5 @@ export class ScreenComponent {
   @Input() Manager = '';
   @Input() Modifiers = '';
 
-  appPages = ConstAppPages;
+  appPages = ConstPages;
 }

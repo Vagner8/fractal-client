@@ -1,16 +1,20 @@
-import { Injectable, signal } from '@angular/core';
+import { effect, inject, Injectable, signal } from '@angular/core';
 import { BaseService } from './base.service';
-import { ConstAppEntities } from '@constants';
+import { ConstParams } from '@constants';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ManagerService extends BaseService {
-  $event = signal('');
+export class ManagerService {
+  bs = inject(BaseService);
+  $event = signal<string | null>(null);
 
-  async set(event: string): Promise<void> {
+  constructor() {
+    effect(() => this.bs.navigate({ [ConstParams.Manager]: this.$event() }));
+  }
+
+  set(event: string): void {
     this.$event.set(event);
-    await this.navigate({ [ConstAppEntities.Manager]: event });
   }
 
   init({ Manager }: { Manager: string }): void {
