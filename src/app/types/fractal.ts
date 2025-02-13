@@ -32,11 +32,8 @@ export interface Fractal {
   is(test: string | object): boolean;
   sort(mode?: SortMode): string[];
 
-  getControl(indicator: string): ControlDto;
   findControl(indicator: string): ControlDto | null;
   splitControlData(indicator: string): string[];
-
-  getFractal(test: string): Fractal;
   findFractal(test: string): Fractal | null;
 
   getControlFrom(indicator: string): ControlFromRecord;

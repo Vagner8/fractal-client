@@ -56,10 +56,6 @@ export class FractalFactory implements Fractal {
     return getFractalSort(this, mode);
   }
 
-  getControl(indicator: string): ControlDto {
-    return checkValue(this.dto.controls[indicator], `Unable to get control be indicator: ${indicator}`);
-  }
-
   findControl(indicator: string): ControlDto | null {
     const control = this.dto.controls[indicator];
     return control ? control : null;
@@ -70,11 +66,8 @@ export class FractalFactory implements Fractal {
     return control?.data ? control.data.split(':') : [];
   }
 
-  getFractal(test: string): Fractal {
-    return checkValue(findFractalRecursively(test, this.fractals), `Unable to get fractal by: ${test}`);
-  }
-
   findFractal(test: string): Fractal | null {
+    if (this.cursor === test || this.dto.id === test) return this;
     return findFractalRecursively(test, this.fractals);
   }
 

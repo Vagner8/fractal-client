@@ -9,7 +9,7 @@ export const checkValue = <T>(value: T | null | undefined, message = 'no message
 
 export const constant = <T extends Readonly<string[]>>(
   values: T
-): { [K in T[number]]: K } & { values: T; strings: T[number][]; record: { [K in T[number]]: string } } => {
+): { [K in T[number]]: K } & { values: T; strings: string[]; record: { [K in T[number]]: string } } => {
   const result = Object.fromEntries(values.map(value => [value, value])) as { [K in T[number]]: K };
   return {
     ...result,

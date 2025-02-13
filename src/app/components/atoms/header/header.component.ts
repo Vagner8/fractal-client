@@ -6,7 +6,6 @@ import { ConstModifiers } from '@constants';
   selector: 'app-header',
   standalone: true,
   imports: [],
-  providers: [],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

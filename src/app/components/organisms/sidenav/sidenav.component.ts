@@ -15,8 +15,8 @@ import { Fractal } from '@types';
 })
 export class SidenavComponent {
   es = inject(EntitiesService);
-  mgr = inject(ManagerService);
   ts = inject(TapsService);
+  mas = inject(ManagerService);
   private ds = inject(DataService);
   private ss = inject(SelectService);
   private ms = inject(ModifiersService);

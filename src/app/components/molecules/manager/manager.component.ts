@@ -21,19 +21,19 @@ export class ManagerComponent implements OnInit {
 
   private ts = inject(TapsService);
   private es = inject(EventService);
-  private mgr = inject(ManagerService);
-  private ent = inject(EntitiesService);
+  private mas = inject(ManagerService);
+  private ens = inject(EntitiesService);
 
   ngOnInit(): void {
     this.showSpinner$ = merge(this.es.holdRun$.pipe(map(() => true)), this.es.holdEnd$.pipe(map(() => false)));
   }
 
-  async holdAndTouch(event: keyof typeof ConstEvents): Promise<void> {
+  holdAndTouch(event: string): void {
     if (this.prevEvent !== event) {
-      this.mgr.set(event);
+      this.mas.set(event);
     }
     if (event === ConstEvents.Touch && this.prevEvent !== ConstEvents.Hold) {
-      this.ts.$taps.update(prev => (prev?.is(ConstEntities.Pages) ? this.ent.modifiers : this.ent.pages));
+      this.ts.$taps.update(prev => (prev?.is(ConstEntities.Pages) ? this.ens.modifiers : this.ens.pages));
     }
     this.prevEvent = event;
   }

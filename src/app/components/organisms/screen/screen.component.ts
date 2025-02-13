@@ -1,9 +1,11 @@
-import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
-import { SelectService, EntitiesService, TapsService } from '@services';
+import { ChangeDetectionStrategy, Component, effect, inject, Input, OnInit } from '@angular/core';
+import { SelectService, EntitiesService, TapsService, ManagerService, ModifiersService } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
 import { ApplicationComponent } from '../application/application.component';
 import { TableComponent } from '@components/atoms';
 import { ConstPages, ConstParams } from '@constants';
+import { AppParams } from '@types';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-screen',
@@ -12,22 +14,44 @@ import { ConstPages, ConstParams } from '@constants';
   templateUrl: './screen.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ScreenComponent implements OnInit {
+export class ScreenComponent implements OnInit, AppParams {
   @Input() Taps = '';
   @Input() Pages = '';
   @Input() Manager = '';
   @Input() EditMode = '';
   @Input() Modifiers = '';
 
+  router = inject(Router);
   ts = inject(TapsService);
   ss = inject(SelectService);
-  ent = inject(EntitiesService);
+  ms = inject(ModifiersService);
+  mas = inject(ManagerService);
+  ens = inject(EntitiesService);
 
   appPages = ConstPages;
 
+  constructor() {
+    effect(() => {
+      const current = this.ss.$current.signal();
+      this.router.navigate(current ? [current.cursor] : [], {
+        queryParams: {
+          [ConstParams.Taps]: this.ts.$taps()?.cursor,
+          [ConstParams.Manager]: this.mas.$event(),
+          [ConstParams.EditMode]: this.ms.$editMode(),
+          [ConstParams.Modifiers]: this.ms.$modifier()?.cursor,
+        },
+        queryParamsHandling: 'merge',
+      });
+    });
+  }
+
   ngOnInit(): void {
-    const app = this.ent.$app();
+    const app = this.ens.$app();
     if (!app) return;
-    ConstParams;
+    this.Taps && this.ts.set(app.findFractal(this.Taps));
+    this.Pages && this.ss.$current.set(app.findFractal(this.Pages));
+    this.Manager && this.mas.set(this.Manager);
+    this.EditMode && this.ms.$editMode.set(this.EditMode);
+    this.Modifiers && this.ms.set(app.findFractal(this.Modifiers));
   }
 }
