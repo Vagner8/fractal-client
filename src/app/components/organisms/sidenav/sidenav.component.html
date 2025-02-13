@@ -10,17 +10,17 @@
         @if (taps.is(entities.Pages)) {
           @for (indicator of taps.sort(); track indicator) {
             @if (taps.findFractal(indicator); as tap) {
-              <app-tap [tap]="tap" (touch)="pageTouched($event)" />
+              <app-tap [tap]="tap" (touch)="onPageTouched($event)" />
             }
           }
           @if (es.$app(); as app) {
-            <app-tap [tap]="app" (touch)="pageTouched($event)" />
+            <app-tap [tap]="app" (touch)="onPageTouched($event)" />
           }
         }
         @if (taps.is(entities.Modifiers)) {
           @for (indicator of taps.sort(); track indicator) {
             @if (taps.findFractal(indicator); as tap) {
-              <app-tap [tap]="tap" (hold)="modifierHeld($event)" (touch)="modifierTouched($event)" />
+              <app-tap [tap]="tap" (hold)="onModifierHeld($event)" (touch)="onModifierTouched($event)" />
             }
           }
         }

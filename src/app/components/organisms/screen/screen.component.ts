@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
-import { SelectService, EntitiesService } from '@services';
+import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
+import { SelectService, EntitiesService, TapsService } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
 import { ApplicationComponent } from '../application/application.component';
 import { TableComponent } from '@components/atoms';
-import { ConstPages } from '@constants';
+import { ConstPages, ConstParams } from '@constants';
 
 @Component({
   selector: 'app-screen',
@@ -12,15 +12,22 @@ import { ConstPages } from '@constants';
   templateUrl: './screen.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ScreenComponent {
+export class ScreenComponent implements OnInit {
+  @Input() Taps = '';
+  @Input() Pages = '';
+  @Input() Manager = '';
+  @Input() EditMode = '';
+  @Input() Modifiers = '';
+
+  ts = inject(TapsService);
   ss = inject(SelectService);
   ent = inject(EntitiesService);
 
-  @Input() Taps = '';
-  @Input() Rows = '';
-  @Input() Pages = '';
-  @Input() Manager = '';
-  @Input() Modifiers = '';
-
   appPages = ConstPages;
+
+  ngOnInit(): void {
+    const app = this.ent.$app();
+    if (!app) return;
+    ConstParams;
+  }
 }

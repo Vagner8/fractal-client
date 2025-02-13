@@ -25,7 +25,7 @@ export class SidenavComponent {
   entities = ConstEntities;
   splitIndicators = ConstSplitIndicators;
 
-  modifierHeld(modifier: Fractal): void {
+  onModifierHeld(modifier: Fractal): void {
     this.ms.hold(modifier);
     switch (modifier.cursor) {
       case ConstModifiers.Delete:
@@ -36,13 +36,14 @@ export class SidenavComponent {
     }
   }
 
-  modifierTouched(modifier: Fractal): void {
+  onModifierTouched(modifier: Fractal): void {
     const { $current, $selected } = this.ss;
+    const { New, Edit, Delete } = ConstModifiers.record;
     ({
-      [ConstModifiers.New]: (): void => {
+      [New]: (): void => {
         this.ms.set(modifier);
       },
-      [ConstModifiers.Edit]: (): void => {
+      [Edit]: (): void => {
         if (!$selected.isEmpty) {
           this.ms.set(modifier);
         }
@@ -51,11 +52,11 @@ export class SidenavComponent {
           this.ms.set(modifier);
         }
       },
-      [ConstModifiers.Delete]: (): void => {},
+      [Delete]: (): void => {},
     })[modifier.cursor]?.();
   }
 
-  pageTouched(tap: Fractal): void {
+  onPageTouched(tap: Fractal): void {
     this.ms.clear();
     this.ss.clear('$selected', '$new');
     this.ss.$current.set(tap);

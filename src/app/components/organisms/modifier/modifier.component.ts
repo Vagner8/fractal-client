@@ -29,8 +29,9 @@ export class ModifierComponent implements OnInit, OnDestroy {
 
   private onModifierHeld(cursor: string): void {
     const { $selected, $new } = this.ss;
+    const { Save } = ConstModifiers.record;
     ({
-      [ConstModifiers.Save]: (): void => {
+      [Save]: (): void => {
         if (!$new.isEmpty) {
           this.ds.add($new.updateFractalsByForm()).subscribe();
         }

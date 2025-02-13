@@ -9,4 +9,10 @@ export const ConstCollections = constant(['Users', 'Products'] as const);
 
 export const ConstPages = constant(['Home', ...ConstCollections.values, ...ConstApp.values] as const);
 export const ConstEntities = constant(['Pages', 'Manager', 'Modifiers', ...ConstApp.values] as const);
-export const ConstParams = constant(['EditMode', ...ConstEntities.values] as const);
+export const ConstParams = constant([
+  'EditMode',
+  ConstGroups.Taps,
+  ConstEntities.Pages,
+  ConstEntities.Manager,
+  ConstEntities.Modifiers,
+] as const);
