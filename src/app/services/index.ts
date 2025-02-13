@@ -5,4 +5,3 @@ export * from './taps.service';
 export * from './manager.service';
 export * from './select.service';
 export * from './entities.service';
-export * from './new-control.service';

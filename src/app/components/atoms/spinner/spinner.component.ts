@@ -8,7 +8,6 @@ import { interval, map, Observable } from 'rxjs';
   standalone: true,
   imports: [AsyncPipe, MatProgressSpinnerModule],
   templateUrl: './spinner.component.html',
-  styleUrl: './spinner.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SpinnerComponent implements OnInit {

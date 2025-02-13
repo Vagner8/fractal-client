@@ -1,5 +1,4 @@
 import { FractalDto, Fractal, Fractals, ControlDto, FractalForm, ControlFromRecord, SortMode } from '@types';
-import { FractalDtoFactory } from './fractal-dto-factory';
 import { checkValue } from '@utils';
 import { FormRecord } from '@angular/forms';
 import { ConstIndicators, ConstCollections, ConstEntities, ConstControlFormKeys } from '@constants';
@@ -13,9 +12,9 @@ export class FractalFactory implements Fractal {
   fractals: Fractals | null = null;
   childrenForms = new FormRecord({});
 
-  constructor({ dto, parent }: { dto?: FractalDto; parent?: Fractal | null }) {
+  constructor({ dto, parent }: { dto: FractalDto; parent?: Fractal | null }) {
     this.parent = parent ? parent : ({} as Fractal);
-    this.dto = dto ? dto : new FractalDtoFactory(this.parent);
+    this.dto = dto;
     this.form = createFractalForm(this);
   }
 

@@ -7,7 +7,7 @@ import { Fractal } from '@types';
 export class TapsService {
   $taps = signal<Fractal | null>(null);
 
-  async set(taps: Fractal | null): Promise<void> {
+  set(taps: Fractal | null): void {
     this.$taps.set(taps);
   }
 }
