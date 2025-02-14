@@ -12,7 +12,7 @@
     >
   </mat-expansion-panel-header>
   <div class="children">
-    <app-table [fractal]="fractal" [dataSource]="fractal.controls" [columns]="fractal.sort('tableControl')" />
+    <app-table [fractal]="fractal" [dataSource]="fractal.controls" [columns]="fractal.sort('SortOwnControls')" />
     @if (fractal.isCollection) {
       <app-table [fractal]="fractal" [dataSource]="fractal.childrenFractals" [columns]="fractal.sort()" />
     }

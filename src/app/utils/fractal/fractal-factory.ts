@@ -1,8 +1,24 @@
-import { FractalDto, Fractal, Fractals, ControlDto, FractalForm, ControlFromRecord, SortMode } from '@types';
-import { checkValue } from '@utils';
+import {
+  FractalDto,
+  Fractal,
+  Fractals,
+  ControlDto,
+  FractalForm,
+  ControlFromRecord,
+  SortMode,
+  NewControlForm,
+} from '@types';
+import { addControlsDto, checkValue } from '@utils';
 import { FormRecord } from '@angular/forms';
-import { ConstIndicators, ConstCollections, ConstEntities, ConstControlFormKeys } from '@constants';
-import { findFractalRecursively, getFractalSort } from './helpers';
+import {
+  ConstIndicators,
+  ConstCollections,
+  ConstEntities,
+  ConstControlFormKeys,
+  ConstSeparator,
+  ConstSort,
+} from '@constants';
+import { findFractalRecursively } from './helpers';
 import { createFractalForm } from './fractal-form';
 
 export class FractalFactory implements Fractal {
@@ -51,8 +67,23 @@ export class FractalFactory implements Fractal {
     return test === this.cursor;
   }
 
-  sort(mode: SortMode = 'table'): string[] {
-    return getFractalSort(this, mode);
+  sort(mode: SortMode = 'SortChildren'): string[] {
+    const control = this.findControl(mode);
+    if (control) {
+      return control.data.split(ConstSeparator);
+    } else {
+      return {
+        [ConstSort.SortChildren]: (): string[] => {
+          return this.dto.fractals ? Object.keys(this.dto.fractals) : [];
+        },
+        [ConstSort.SortOwnControls]: (): string[] => {
+          return Object.keys(this.dto.controls);
+        },
+        [ConstSort.SortChildrenControls]: (): string[] => {
+          return this.dto.fractals ? Object.keys(Object.values(this.dto.fractals)[0].controls) : [];
+        },
+      }[mode]();
+    }
   }
 
   findControl(indicator: string): ControlDto | null {
@@ -60,14 +91,13 @@ export class FractalFactory implements Fractal {
     return control ? control : null;
   }
 
-  splitControlData(indicator: string): string[] {
-    const control = this.findControl(indicator);
-    return control?.data ? control.data.split(':') : [];
-  }
-
   findFractal(test: string): Fractal | null {
     if (this.cursor === test || this.dto.id === test) return this;
     return findFractalRecursively(test, this.fractals);
+  }
+
+  addControlsDto(forms: NewControlForm[]): ControlDto[] {
+    return addControlsDto(forms, this);
   }
 
   getControlFrom(indicator: string): ControlFromRecord {

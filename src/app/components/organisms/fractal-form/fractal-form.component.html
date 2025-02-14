@@ -2,7 +2,7 @@
   <app-button-icon card-action icon="close" [disableHold]="false" (touch)="onDeleteFormCard(fractal)" />
   @if (ms.$editMode() === editMode.Controls) {
     <div card-content class="controls-forms">
-      <app-list [templateRef]="controlsForms" [dataSource]="fractal.sort('form')" />
+      <app-list [templateRef]="controlsForms" [dataSource]="fractal.sort('SortOwnControls')" />
       @if (newControlsForm$ | async; as controlsFrom) {
         <app-list [templateRef]="newControlsForms" [dataSource]="controlsFrom.controls" />
       }

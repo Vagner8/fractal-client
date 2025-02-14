@@ -1,3 +1,5 @@
+import { ConstSeparator } from '@constants';
+
 export const checkValue = <T>(value: T | null | undefined, message = 'no message'): T => {
   if (value) return value;
   else {
@@ -20,4 +22,4 @@ export const constant = <T extends Readonly<string[]>>(
 };
 
 export const updateSelectValue = ({ value, data }: { value: string; data: string }): string =>
-  [value, ...data.split(':').filter(item => item !== value)].join(':');
+  [value, ...data.split(ConstSeparator).filter(item => item !== value)].join(ConstSeparator);

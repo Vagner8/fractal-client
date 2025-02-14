@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
-import { ConstSplitIndicators, ConstEntities, ConstModifiers, ConstEvents } from '@constants';
+import { ConstSort, ConstEntities, ConstModifiers, ConstEvents } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { ManagerService, ModifiersService, TapsService, SelectService, DataService, EntitiesService } from '@services';
 import { Fractal } from '@types';
@@ -23,7 +23,7 @@ export class SidenavComponent {
 
   events = ConstEvents;
   entities = ConstEntities;
-  splitIndicators = ConstSplitIndicators;
+  splitIndicators = ConstSort;
 
   onModifierHeld({ cursor }: Fractal): void {
     this.ms.hold(cursor);

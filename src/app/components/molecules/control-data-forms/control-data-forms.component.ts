@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { InputComponent, SelectComponent } from '@components/atoms';
-import { ConstControlInputs } from '@constants';
+import { ConstControlInputs, ConstSeparator } from '@constants';
 import { Fractal } from '@types';
 
 @Component({
@@ -12,4 +12,5 @@ import { Fractal } from '@types';
 export class ControlDataFormsComponent {
   @Input() fractal!: Fractal;
   controlInputs = ConstControlInputs;
+  separator = ConstSeparator;
 }

@@ -1,13 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Fractal, NewControlForm } from '@types';
 import { ButtonIconComponent, CardComponent, ListComponent } from '@components/atoms';
-import { ModifiersService, SelectService } from '@services';
+import { DataService, ModifiersService, SelectService } from '@services';
 import { ConstEditMods, ConstModifiers } from '@constants';
 import { ControlDataFormsComponent, ControlFormComponent } from '@components/molecules';
 import { AsyncPipe } from '@angular/common';
 import { FormArray } from '@angular/forms';
 import { filter, map } from 'rxjs';
-import { BaseComponent, newControlForm } from '@utils';
+import { addControlsDto, BaseComponent, newControlForm } from '@utils';
 
 @Component({
   selector: 'app-fractal-form',
@@ -27,6 +27,7 @@ import { BaseComponent, newControlForm } from '@utils';
 export class FractalFormComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() fractal!: Fractal;
   ms = inject(ModifiersService);
+  private ds = inject(DataService);
   private ss = inject(SelectService);
   editMode = ConstEditMods;
   newControlsForm = new FormArray<NewControlForm>([]);
@@ -35,15 +36,18 @@ export class FractalFormComponent extends BaseComponent implements OnInit, OnDes
   );
 
   ngOnInit(): void {
-    this.push(
-      this.ms.touch$
-        .pipe(filter(modifier => this.ms.$editMode() === ConstEditMods.Controls && modifier === ConstModifiers.New))
-        .subscribe(() => this.newControlsForm.push(newControlForm()))
+    this.pushSub(
+      this.ms.touch$.pipe(filter(this.touchFilter)).subscribe(() => this.newControlsForm.push(newControlForm()))
+    );
+    this.pushSub(
+      this.ms.hold$
+        .pipe(filter(this.holdFilter))
+        .subscribe(() => this.ds.addControls(addControlsDto(this.newControlsForm.controls, this.fractal)))
     );
   }
 
   ngOnDestroy(): void {
-    this.clear();
+    this.clearSubs();
   }
 
   onDeleteFormCard(fractal: Fractal): void {
@@ -57,4 +61,12 @@ export class FractalFormComponent extends BaseComponent implements OnInit, OnDes
   onDeleteNewControlForm(index: number): void {
     this.newControlsForm.removeAt(index);
   }
+
+  private holdFilter = (modifier: string | null): boolean => {
+    return modifier === ConstModifiers.Save && this.newControlsForm.value.length > 0;
+  };
+
+  private touchFilter = (modifier: string | null): boolean => {
+    return this.ms.$editMode() === ConstEditMods.Controls && modifier === ConstModifiers.New;
+  };
 }
