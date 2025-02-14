@@ -1,6 +1,7 @@
 import { FractalFactory } from 'app/utils/fractal';
-import { Fractal, Fractals, FractalsDto, SortMode } from '@types';
+import { ControlDto, ControlsDto, Fractal, Fractals, FractalsDto, NewControlForm, SortMode } from '@types';
 import { ConstControlFormKeys, ConstSplitIndicators } from '@constants';
+import { v4 } from 'uuid';
 
 export const createFractalsRecursively = (fractalsDto: FractalsDto | null, parent: Fractal): Fractals | null => {
   if (!fractalsDto) return null;
@@ -45,4 +46,23 @@ export const getFractalSort = (fractal: Fractal, mode: SortMode): string[] => {
   };
 
   return handle[mode]();
+};
+
+export const createControlDto = (parentId: string): ControlDto => {
+  return {
+    id: v4(),
+    parentId,
+    data: '',
+    input: '',
+    indicator: '',
+  };
+};
+
+export const createControlsDto = (forms: NewControlForm[], parentId: string): ControlsDto => {
+  return forms.reduce((acc: ControlsDto, form) => {
+    const indicator = form.value[ConstControlFormKeys.indicator];
+    acc[indicator] = createControlDto(parentId);
+    ConstControlFormKeys.values.forEach(key => (acc[indicator][key] = form.value[key]));
+    return acc;
+  }, {});
 };

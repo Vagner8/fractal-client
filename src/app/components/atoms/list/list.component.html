@@ -1,7 +1,7 @@
 <ul [class.two-items]="dataSource.length === 2" [class.three-or-more-items]="dataSource.length >= 3">
-  @for (data of dataSource; track trackFn(data)) {
+  @for (data of dataSource; track trackFn()) {
     <li>
-      <ng-container *ngTemplateOutlet="templateRef; context: { $implicit: data }"></ng-container>
+      <ng-container *ngTemplateOutlet="templateRef; context: { $implicit: data, index: $index }"></ng-container>
     </li>
   }
 </ul>

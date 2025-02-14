@@ -1,8 +1,23 @@
 <app-card [title]="fractal.cursor">
   <app-button-icon card-action icon="close" [disableHold]="false" (touch)="onDeleteFormCard(fractal)" />
-  @if ($showAllControlForms()) {
-    <app-control-all-forms card-content [fractal]="fractal" />
+  @if (ms.$editMode() === editMode.Controls) {
+    <div card-content class="controls-forms">
+      <app-list [templateRef]="controlsForms" [dataSource]="fractal.sort('form')" />
+      @if (newControlsForm$ | async; as controlsFrom) {
+        <app-list [templateRef]="newControlsForms" [dataSource]="controlsFrom.controls" />
+      }
+    </div>
   } @else {
     <app-control-data-forms card-content [fractal]="fractal" />
   }
 </app-card>
+
+<ng-template #controlsForms let-indicator let-index="index">
+  @if (fractal.findControl(indicator); as control) {
+    <app-control-form [title]="indicator" [formRecord]="fractal.form.controls[indicator]" />
+  }
+</ng-template>
+
+<ng-template #newControlsForms let-formRecord let-index="index">
+  <app-control-form title="New" [formRecord]="formRecord" (touch)="onDeleteNewControlForm(index)" />
+</ng-template>

@@ -1,6 +1,7 @@
-import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, FormRecord } from '@angular/forms';
 import { ConstControlFormKeys, ConstControlKeys } from '@constants';
 
+export type NewControlForm = FormRecord<FormControl>;
 export type ControlDto = ControlFormKeys & ControlKeys;
 export type ControlsDto = Record<string, ControlDto>;
 export type NewControlFrom = FormArray<FormGroup<Record<string, FormControl>>>;

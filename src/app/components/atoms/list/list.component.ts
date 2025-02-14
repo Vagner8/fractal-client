@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, TemplateRef } from '@angular/core';
+import { FormArray, FormRecord } from '@angular/forms';
 import { Fractal } from '@types';
+import { v4 } from 'uuid';
 
 @Component({
   selector: 'app-list',
@@ -10,10 +12,12 @@ import { Fractal } from '@types';
   styleUrl: './list.component.scss',
 })
 export class ListComponent {
-  @Input() dataSource: Fractal[] | string[] = [];
+  @Input() dataSource: Fractal[] | string[] | FormArray['controls'] = [];
   @Input() templateRef!: TemplateRef<unknown>;
 
-  trackFn(data: Fractal | string): string {
-    return typeof data === 'string' ? data : data.cursor;
+  a!: FormArray<FormRecord>;
+
+  trackFn(): string {
+    return v4();
   }
 }

@@ -3,3 +3,4 @@ export * from './control';
 export * from './fractal';
 export * from './state';
 export * from './guards';
+export * from './base-component';

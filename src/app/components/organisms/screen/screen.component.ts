@@ -38,7 +38,7 @@ export class ScreenComponent implements OnInit, AppParams {
           [ConstParams.Taps]: this.ts.$taps()?.cursor,
           [ConstParams.Manager]: this.mas.$event(),
           [ConstParams.EditMode]: this.ms.$editMode(),
-          [ConstParams.Modifiers]: this.ms.$modifier()?.cursor,
+          [ConstParams.Modifiers]: this.ms.$modifier(),
         },
         queryParamsHandling: 'merge',
       });
@@ -51,7 +51,6 @@ export class ScreenComponent implements OnInit, AppParams {
     this.Taps && this.ts.set(app.findFractal(this.Taps));
     this.Pages && this.ss.$current.set(app.findFractal(this.Pages));
     this.Manager && this.mas.set(this.Manager);
-    this.EditMode && this.ms.$editMode.set(this.EditMode);
-    this.Modifiers && this.ms.set(app.findFractal(this.Modifiers));
+    this.Modifiers && this.ms.set(app.findFractal(this.Modifiers)?.cursor || null);
   }
 }

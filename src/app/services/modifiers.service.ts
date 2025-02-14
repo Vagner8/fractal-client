@@ -1,5 +1,4 @@
 import { Injectable, signal } from '@angular/core';
-import { Fractal } from '@types';
 import { Subject } from 'rxjs';
 import { ConstEditMods, ConstModifiers } from '@constants';
 
@@ -7,20 +6,20 @@ import { ConstEditMods, ConstModifiers } from '@constants';
   providedIn: 'root',
 })
 export class ModifiersService {
-  hold$ = new Subject<Fractal | null>();
-  touch$ = new Subject<Fractal | null>();
-  $modifier = signal<Fractal | null>(null);
+  hold$ = new Subject<string | null>();
+  touch$ = new Subject<string | null>();
+  $modifier = signal<string | null>(null);
   $editMode = signal<string | null>(null);
 
-  hold(modifier: Fractal | null): void {
+  hold(modifier: string | null): void {
     this.hold$.next(modifier);
   }
 
-  set(modifier: Fractal | null): void {
-    const { Controls, Fractals } = ConstEditMods;
+  set(modifier: string | null): void {
+    const { Edit } = ConstModifiers;
     this.touch$.next(modifier);
     this.$modifier.update(prev => {
-      this.$editMode.set(prev?.is(ConstModifiers.Edit) ? Controls : Fractals);
+      if (modifier === Edit) this.updateEditMode(prev);
       return modifier;
     });
   }
@@ -28,5 +27,15 @@ export class ModifiersService {
   clear(): void {
     this.$modifier.set(null);
     this.$editMode.set(null);
+  }
+
+  private updateEditMode(prevModifier: string | null): void {
+    const { Controls, Fractals } = ConstEditMods;
+    this.$editMode.update(prev => {
+      if (prevModifier) {
+        return prev === Controls ? Fractals : Controls;
+      }
+      return Fractals;
+    });
   }
 }

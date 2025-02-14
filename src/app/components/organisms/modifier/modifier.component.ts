@@ -20,7 +20,7 @@ export class ModifierComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
 
   ngOnInit(): void {
-    this.subs.push(this.ms.hold$.subscribe(modifier => modifier && this.onModifierHeld(modifier.cursor)));
+    this.subs.push(this.ms.hold$.subscribe(modifier => modifier && this.onModifierHeld(modifier)));
   }
 
   ngOnDestroy(): void {
@@ -38,9 +38,6 @@ export class ModifierComponent implements OnInit, OnDestroy {
         if (!$selected.isEmpty) {
           this.ds.update($selected.updateFractalsByForm()).subscribe();
         }
-        // if (this.ncs.forms.size > 0) {
-        //   this.ncs.createControls();
-        // }
       },
     })[cursor]?.();
   }
