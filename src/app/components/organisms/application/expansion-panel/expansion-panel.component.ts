@@ -1,29 +1,14 @@
 import { Component, inject, Input, OnInit, output, viewChild } from '@angular/core';
-import {
-  MatButtonModule,
-  MatCardModule,
-  MatExpansionModule,
-  MatExpansionPanel,
-  MatIconModule,
-  MatTableModule,
-} from '@mat';
+import { MatButtonModule, MatExpansionModule, MatExpansionPanel, MatIconModule } from '@mat';
 import { SelectService } from '@services';
 import { Fractal } from '@types';
-import { TableComponent } from '@components/atoms';
-import { ConstIndicators } from '@constants';
+import { ConstControlFormKeys, ConstIndicators } from '@constants';
+import { ChildrenControlsComponent, ControlsComponent } from '@components/molecules';
 
 @Component({
   selector: 'app-expansion-panel',
   standalone: true,
-  imports: [
-    MatExpansionModule,
-    MatButtonModule,
-    MatIconModule,
-    MatCardModule,
-    MatTableModule,
-    TableComponent,
-    TableComponent,
-  ],
+  imports: [MatExpansionModule, MatButtonModule, MatIconModule, ControlsComponent, ChildrenControlsComponent],
   templateUrl: './expansion-panel.component.html',
   styleUrl: './expansion-panel.component.scss',
 })
@@ -33,6 +18,7 @@ export class ExpansionPanelComponent implements OnInit {
   panel = viewChild(MatExpansionPanel);
   closed = output<Fractal>();
   indicators = ConstIndicators;
+  controlFormKeys = ConstControlFormKeys.strings;
 
   ngOnInit(): void {
     if (this.fractal.isApp) {

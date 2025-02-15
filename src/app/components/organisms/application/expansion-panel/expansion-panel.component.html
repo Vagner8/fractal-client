@@ -12,9 +12,9 @@
     >
   </mat-expansion-panel-header>
   <div class="children">
-    <app-table [fractal]="fractal" [dataSource]="fractal.controls" [columns]="fractal.sort('SortOwnControls')" />
+    <app-controls [fractal]="fractal" [customColumns]="controlFormKeys" />
     @if (fractal.isCollection) {
-      <app-table [fractal]="fractal" [dataSource]="fractal.childrenFractals" [columns]="fractal.sort()" />
+      <app-children-controls [fractal]="fractal" />
     }
     @if (fractal.fractals) {
       <ng-content />

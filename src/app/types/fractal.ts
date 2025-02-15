@@ -35,8 +35,11 @@ export interface Fractal {
   get controls(): ControlDto[];
   get childrenFractals(): Fractal[];
 
+  get sortChildren(): string[];
+  get sortControls(): string[];
+  get sortChildrenControls(): string[];
+
   is(test: string | object): boolean;
-  sort(mode?: SortMode): string[];
 
   findControl(indicator: string): ControlDto | null;
   findFractal(test: string): Fractal | null;

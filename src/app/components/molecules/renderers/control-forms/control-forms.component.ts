@@ -4,12 +4,12 @@ import { ButtonIconComponent, CardComponent, InputComponent, SelectComponent } f
 import { ConstControlFormKeys, ConstControlInputs } from '@constants';
 
 @Component({
-  selector: 'app-control-form',
+  selector: 'app-controls-form',
   standalone: true,
   imports: [CardComponent, InputComponent, SelectComponent, ButtonIconComponent],
-  templateUrl: './control-form.component.html',
+  templateUrl: './control-forms.component.html',
 })
-export class ControlFormComponent {
+export class ControlFormsComponent {
   @Input() title = '';
   @Input() formRecord!: FormRecord<FormControl>;
   touch = output();

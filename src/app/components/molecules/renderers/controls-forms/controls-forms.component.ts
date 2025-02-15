@@ -1,30 +1,30 @@
-import { ChangeDetectionStrategy, Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { Fractal, NewControlForm } from '@types';
+import { Component, inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { ButtonIconComponent, CardComponent, ListComponent } from '@components/atoms';
-import { DataService, ModifiersService, SelectService } from '@services';
-import { ConstEditMods, ConstModifiers } from '@constants';
-import { ControlDataFormsComponent, ControlFormComponent } from '@components/molecules';
+import { ControlDataFormsComponent } from '../control-data-forms/control-data-forms.component';
 import { AsyncPipe } from '@angular/common';
+import { Fractal, NewControlForm } from '@types';
+import { ConstEditMods, ConstModifiers } from '@constants';
+import { addControlsDto, BaseComponent, newControlForm } from '@utils';
+import { DataService, ModifiersService, SelectService } from '@services';
 import { FormArray } from '@angular/forms';
 import { filter, map } from 'rxjs';
-import { addControlsDto, BaseComponent, newControlForm } from '@utils';
+import { ControlFormsComponent } from '../control-forms/control-forms.component';
 
 @Component({
-  selector: 'app-fractal-form',
+  selector: 'app-controls-forms',
   standalone: true,
   imports: [
     CardComponent,
     ButtonIconComponent,
     ControlDataFormsComponent,
     ListComponent,
-    ControlFormComponent,
+    ControlFormsComponent,
     AsyncPipe,
   ],
-  templateUrl: './fractal-form.component.html',
-  styleUrl: './fractal-form.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './controls-forms.component.html',
+  styleUrl: './controls-forms.component.scss',
 })
-export class FractalFormComponent extends BaseComponent implements OnInit, OnDestroy {
+export class ControlsFormsComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() fractal!: Fractal;
   ms = inject(ModifiersService);
   private ds = inject(DataService);

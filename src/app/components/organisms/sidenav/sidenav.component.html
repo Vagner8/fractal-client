@@ -8,7 +8,7 @@
     @if (ts.$taps(); as taps) {
       <mat-list>
         @if (taps.is(entities.Pages)) {
-          @for (indicator of taps.sort(); track indicator) {
+          @for (indicator of taps.sortChildren; track indicator) {
             @if (taps.findFractal(indicator); as tap) {
               <app-tap [tap]="tap" (touch)="onPageTouched($event)" />
             }
@@ -18,7 +18,7 @@
           }
         }
         @if (taps.is(entities.Modifiers)) {
-          @for (indicator of taps.sort(); track indicator) {
+          @for (indicator of taps.sortChildren; track indicator) {
             @if (taps.findFractal(indicator); as tap) {
               <app-tap [tap]="tap" (hold)="onModifierHeld($event)" (touch)="onModifierTouched($event)" />
             }

@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, TemplateRef } from '@angular/core';
-import { FormArray, FormRecord } from '@angular/forms';
+import { FormArray } from '@angular/forms';
 import { Fractal } from '@types';
 import { v4 } from 'uuid';
 
@@ -14,8 +14,6 @@ import { v4 } from 'uuid';
 export class ListComponent {
   @Input() dataSource: Fractal[] | string[] | FormArray['controls'] = [];
   @Input() templateRef!: TemplateRef<unknown>;
-
-  a!: FormArray<FormRecord>;
 
   trackFn(): string {
     return v4();

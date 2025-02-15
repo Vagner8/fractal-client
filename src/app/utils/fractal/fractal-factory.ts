@@ -1,13 +1,4 @@
-import {
-  FractalDto,
-  Fractal,
-  Fractals,
-  ControlDto,
-  FractalForm,
-  ControlFromRecord,
-  SortMode,
-  NewControlForm,
-} from '@types';
+import { FractalDto, Fractal, Fractals, ControlDto, FractalForm, ControlFromRecord, NewControlForm } from '@types';
 import { addControlsDto, checkValue } from '@utils';
 import { FormRecord } from '@angular/forms';
 import {
@@ -61,29 +52,24 @@ export class FractalFactory implements Fractal {
     return Object.values(this.fractals || {});
   }
 
+  get sortChildren(): string[] {
+    const sort = this.findControl(ConstSort.SortChildren);
+    return sort ? sort.data.split(ConstSeparator) : Object.keys(this.dto.fractals || {});
+  }
+
+  get sortControls(): string[] {
+    return Object.keys(this.dto.controls);
+  }
+
+  get sortChildrenControls(): string[] {
+    const sort = this.findControl(ConstSort.SortChildrenControls);
+    return sort ? sort.data.split(ConstSeparator) : [];
+  }
+
   is(test: string | object): boolean {
     if (test instanceof FractalFactory) return this === test;
     if (typeof test === 'object') return Object.values(test).includes(this.cursor);
     return test === this.cursor;
-  }
-
-  sort(mode: SortMode = 'SortChildren'): string[] {
-    const control = this.findControl(mode);
-    if (control) {
-      return control.data.split(ConstSeparator);
-    } else {
-      return {
-        [ConstSort.SortChildren]: (): string[] => {
-          return this.dto.fractals ? Object.keys(this.dto.fractals) : [];
-        },
-        [ConstSort.SortOwnControls]: (): string[] => {
-          return Object.keys(this.dto.controls);
-        },
-        [ConstSort.SortChildrenControls]: (): string[] => {
-          return this.dto.fractals ? Object.keys(Object.values(this.dto.fractals)[0].controls) : [];
-        },
-      }[mode]();
-    }
   }
 
   findControl(indicator: string): ControlDto | null {

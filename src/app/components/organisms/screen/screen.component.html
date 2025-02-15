@@ -14,10 +14,7 @@
         <app-application [fractal]="app" />
       }
       @default {
-        <app-table
-          [fractal]="current"
-          [columns]="current.sort('SortChildrenControls')"
-          [dataSource]="current.childrenFractals" />
+        <app-children-controls [fractal]="current" />
       }
     }
   }

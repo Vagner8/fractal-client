@@ -3,13 +3,13 @@ import { MatButtonModule, MatCardModule } from '@mat';
 import { DataService, ModifiersService, SelectService } from '@services';
 import { Subscription } from 'rxjs';
 import { ConstModifiers } from '@constants';
-import { FractalFormComponent } from '../fractal-form/fractal-form.component';
 import { ListComponent } from '@components/atoms';
+import { ControlsFormsComponent } from '@components/molecules';
 
 @Component({
   selector: 'app-modifier',
   standalone: true,
-  imports: [MatButtonModule, MatCardModule, FractalFormComponent, ListComponent],
+  imports: [MatButtonModule, MatCardModule, ControlsFormsComponent, ListComponent],
   templateUrl: './modifier.component.html',
   styleUrl: './modifier.component.scss',
 })

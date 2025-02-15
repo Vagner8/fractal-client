@@ -2,15 +2,15 @@ import { ChangeDetectionStrategy, Component, effect, inject, Input, OnInit } fro
 import { SelectService, EntitiesService, TapsService, ManagerService, ModifiersService } from '@services';
 import { ModifierComponent } from '../modifier/modifier.component';
 import { ApplicationComponent } from '../application/application.component';
-import { TableComponent } from '@components/atoms';
 import { ConstPages, ConstParams } from '@constants';
 import { AppParams } from '@types';
 import { Router } from '@angular/router';
+import { ChildrenControlsComponent } from '@components/molecules';
 
 @Component({
   selector: 'app-screen',
   standalone: true,
-  imports: [ApplicationComponent, ModifierComponent, TableComponent],
+  imports: [ApplicationComponent, ModifierComponent, ChildrenControlsComponent],
   templateUrl: './screen.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

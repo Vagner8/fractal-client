@@ -1,5 +1,5 @@
 <form>
-  @for (indicator of fractal.sort('SortOwnControls'); track indicator) {
+  @for (indicator of fractal.sortControls; track indicator) {
     @if (fractal.findControl(indicator); as control) {
       @let dataForm = fractal.getControlFrom(indicator).data;
       @switch (control.input) {

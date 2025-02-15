@@ -1,0 +1,9 @@
+@use 'variables.scss' as *;
+
+.table {
+  border: solid 1px map-get($color, border);
+}
+
+.td {
+  cursor: default;
+}
