@@ -4,12 +4,12 @@ import { DataService, ModifiersService, SelectService } from '@services';
 import { Subscription } from 'rxjs';
 import { ConstModifiers } from '@constants';
 import { ListComponent } from '@components/atoms';
-import { ControlsFormsComponent } from '@components/molecules';
+import { FractalControlsFormsComponent } from '@components/molecules';
 
 @Component({
   selector: 'app-modifier',
   standalone: true,
-  imports: [MatButtonModule, MatCardModule, ControlsFormsComponent, ListComponent],
+  imports: [MatButtonModule, MatCardModule, FractalControlsFormsComponent, ListComponent],
   templateUrl: './modifier.component.html',
   styleUrl: './modifier.component.scss',
 })

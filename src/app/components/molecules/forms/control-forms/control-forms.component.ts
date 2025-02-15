@@ -4,7 +4,7 @@ import { ButtonIconComponent, CardComponent, InputComponent, SelectComponent } f
 import { ConstControlFormKeys, ConstControlInputs } from '@constants';
 
 @Component({
-  selector: 'app-controls-form',
+  selector: 'app-control-forms',
   standalone: true,
   imports: [CardComponent, InputComponent, SelectComponent, ButtonIconComponent],
   templateUrl: './control-forms.component.html',

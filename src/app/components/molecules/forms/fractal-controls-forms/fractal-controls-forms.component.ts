@@ -11,7 +11,7 @@ import { filter, map } from 'rxjs';
 import { ControlFormsComponent } from '../control-forms/control-forms.component';
 
 @Component({
-  selector: 'app-controls-forms',
+  selector: 'app-fractal-controls-forms',
   standalone: true,
   imports: [
     CardComponent,
@@ -21,10 +21,10 @@ import { ControlFormsComponent } from '../control-forms/control-forms.component'
     ControlFormsComponent,
     AsyncPipe,
   ],
-  templateUrl: './controls-forms.component.html',
-  styleUrl: './controls-forms.component.scss',
+  templateUrl: './fractal-controls-forms.component.html',
+  styleUrl: './fractal-controls-forms.component.scss',
 })
-export class ControlsFormsComponent extends BaseComponent implements OnInit, OnDestroy {
+export class FractalControlsFormsComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() fractal!: Fractal;
   ms = inject(ModifiersService);
   private ds = inject(DataService);

@@ -14,10 +14,10 @@
 
 <ng-template #controlsForms let-indicator let-index="index">
   @if (fractal.findControl(indicator); as control) {
-    <app-controls-form [title]="indicator" [formRecord]="fractal.form.controls[indicator]" />
+    <app-control-forms [title]="indicator" [formRecord]="fractal.form.controls[indicator]" />
   }
 </ng-template>
 
 <ng-template #newControlsForms let-formRecord let-index="index">
-  <app-controls-form title="New" [formRecord]="formRecord" (touch)="onDeleteNewControlForm(index)" />
+  <app-control-forms title="New" [formRecord]="formRecord" (touch)="onDeleteNewControlForm(index)" />
 </ng-template>
