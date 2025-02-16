@@ -1,24 +1,41 @@
-import { Injectable, signal } from '@angular/core';
-import { Fractal } from '@types';
-import { FractalState, FractalsState } from '@utils';
+import { Injectable } from '@angular/core';
+import { ControlDto, Fractal } from '@types';
+import { ArrayState, FractalState, FractalsState } from '@utils';
 
 interface SelectServiceSignals {
-  $new: FractalsState;
-  $current: FractalState;
-  $selected: FractalsState;
+  $newFractals: ArrayState<Fractal>;
+  $newControls: ArrayState<ControlDto>;
+  $touchedControls: ArrayState<ControlDto>;
+
+  $currentPanel: FractalState;
+  $currentFractal: FractalState;
+  $selectedFractals: FractalsState;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class SelectService implements SelectServiceSignals {
-  $new = new FractalsState();
-  $current = new FractalState();
-  $selected = new FractalsState();
+  $newFractals = new ArrayState([]);
+  $newControls = new ArrayState([]);
+  $touchedControls = new ArrayState([]);
 
-  $currentPanel = signal<Fractal | null>(null);
+  $currentPanel = new FractalState(null);
+  $currentFractal = new FractalState(null);
+
+  $selectedFractals = new FractalsState([]);
 
   clear(...keys: (keyof SelectServiceSignals)[]): void {
     keys.forEach(key => this[key].clear());
+  }
+
+  setCurrentFractals(fractal: Fractal | null): void {
+    this.$currentFractal.set(fractal);
+    this.$selectedFractals.set(fractal ? [fractal] : []);
+  }
+
+  setCurrentPanel(fractal: Fractal | null): void {
+    this.$currentPanel.set(fractal);
+    this.$selectedFractals.set(fractal ? [fractal] : []);
   }
 }

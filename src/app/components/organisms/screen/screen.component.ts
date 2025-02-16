@@ -32,7 +32,7 @@ export class ScreenComponent implements OnInit, AppParams {
 
   constructor() {
     effect(() => {
-      const current = this.ss.$current.signal();
+      const current = this.ss.$currentFractal.signal();
       this.router.navigate(current ? [current.cursor] : [], {
         queryParams: {
           [ConstParams.Taps]: this.ts.$taps()?.cursor,
@@ -49,7 +49,7 @@ export class ScreenComponent implements OnInit, AppParams {
     const app = this.ens.$app();
     if (!app) return;
     this.Taps && this.ts.set(app.findFractal(this.Taps));
-    this.Pages && this.ss.$current.set(app.findFractal(this.Pages));
+    this.Pages && this.ss.setCurrentFractals(app.findFractal(this.Pages));
     this.Manager && this.mas.set(this.Manager);
     this.Modifiers && this.ms.set(app.findFractal(this.Modifiers)?.cursor || null);
   }

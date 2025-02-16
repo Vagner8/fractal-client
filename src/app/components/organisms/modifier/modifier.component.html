@@ -1,6 +1,6 @@
 <div class="modifier">
-  @if (!ss.$selected.isEmpty) {
-    <app-list [dataSource]="ss.$selected.signal()" [templateRef]="fractalForm" />
+  @if (!ss.$selectedFractals.isEmpty) {
+    <app-list [dataSource]="ss.$selectedFractals.signal()" [templateRef]="fractalForm" />
   }
 </div>
 

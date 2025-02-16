@@ -36,13 +36,27 @@ export class FractalControlsFormsComponent extends BaseComponent implements OnIn
   );
 
   ngOnInit(): void {
+    const { New, Save } = ConstModifiers.record;
+    const { Controls } = ConstEditMods;
     this.pushSub(
-      this.ms.touch$.pipe(filter(this.touchFilter)).subscribe(() => this.newControlsForm.push(newControlForm()))
+      this.ms.touch$.pipe(filter(Boolean)).subscribe(modifier => {
+        ({
+          [New]: (): void => {
+            if (this.ms.$editMode() !== Controls) return;
+            this.newControlsForm.push(newControlForm());
+          },
+        })[modifier]?.();
+      })
     );
     this.pushSub(
-      this.ms.hold$
-        .pipe(filter(this.holdFilter))
-        .subscribe(() => this.ds.addControls(addControlsDto(this.newControlsForm.controls, this.fractal)))
+      this.ms.hold$.pipe(filter(Boolean)).subscribe(modifier => {
+        ({
+          [Save]: (): void => {
+            if (this.newControlsForm.value.length === 0) return;
+            this.ds.addControls(addControlsDto(this.newControlsForm.controls, this.fractal));
+          },
+        })[modifier]?.();
+      })
     );
   }
 
@@ -51,8 +65,8 @@ export class FractalControlsFormsComponent extends BaseComponent implements OnIn
   }
 
   onDeleteFormCard(fractal: Fractal): void {
-    this.ss.$selected.delete(fractal);
-    if (this.ss.$selected.isEmpty) {
+    this.ss.$selectedFractals.delete(fractal);
+    if (this.ss.$selectedFractals.isEmpty) {
       this.ms.clear();
       this.newControlsForm.clear();
     }
@@ -61,12 +75,4 @@ export class FractalControlsFormsComponent extends BaseComponent implements OnIn
   onDeleteNewControlForm(index: number): void {
     this.newControlsForm.removeAt(index);
   }
-
-  private holdFilter = (modifier: string | null): boolean => {
-    return modifier === ConstModifiers.Save && this.newControlsForm.value.length > 0;
-  };
-
-  private touchFilter = (modifier: string | null): boolean => {
-    return this.ms.$editMode() === ConstEditMods.Controls && modifier === ConstModifiers.New;
-  };
 }

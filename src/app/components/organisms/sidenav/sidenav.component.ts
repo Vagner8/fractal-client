@@ -29,26 +29,26 @@ export class SidenavComponent {
     this.ms.hold(cursor);
     switch (cursor) {
       case ConstModifiers.Delete:
-        if (!this.ss.$selected.isEmpty) {
-          this.ds.delete(this.ss.$selected.toDto()).subscribe();
+        if (!this.ss.$selectedFractals.isEmpty) {
+          this.ds.delete(this.ss.$selectedFractals.toDto()).subscribe();
         }
         break;
     }
   }
 
   onModifierTouched({ cursor }: Fractal): void {
-    const { $current, $selected } = this.ss;
+    const { $currentFractal, $selectedFractals } = this.ss;
     const { New, Edit, Delete } = ConstModifiers.record;
     ({
       [New]: (): void => {
         this.ms.set(cursor);
       },
       [Edit]: (): void => {
-        if (!$selected.isEmpty) {
+        if (!$selectedFractals.isEmpty) {
           this.ms.set(cursor);
         }
-        if ($selected.isEmpty && $current.value) {
-          this.ss.$selected.set([$current.value]);
+        if ($selectedFractals.isEmpty && $currentFractal.value) {
+          this.ss.$selectedFractals.set([$currentFractal.value]);
           this.ms.set(cursor);
         }
       },
@@ -58,7 +58,6 @@ export class SidenavComponent {
 
   onPageTouched(tap: Fractal): void {
     this.ms.clear();
-    this.ss.clear('$selected', '$new');
-    this.ss.$current.set(tap);
+    this.ss.setCurrentFractals(tap);
   }
 }

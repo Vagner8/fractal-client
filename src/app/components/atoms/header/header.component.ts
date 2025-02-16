@@ -18,6 +18,6 @@ export class HeaderComponent {
     const { New, Edit } = ConstModifiers;
     const modifier = this.ms.$modifier();
     const modifierTitle = modifier === New ? Edit : modifier;
-    return `${this.ss.$current.signal()?.cursor} ${modifierTitle || ''}`;
+    return `${this.ss.$currentFractal.signal()?.cursor} ${modifierTitle || ''}`;
   });
 }

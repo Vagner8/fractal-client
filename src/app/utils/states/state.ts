@@ -1,5 +1,4 @@
 import { signal, WritableSignal } from '@angular/core';
-import { Fractal } from '@types';
 
 export abstract class State<T> {
   value: T;
@@ -10,16 +9,20 @@ export abstract class State<T> {
     this.signal = signal(initValue);
   }
 
+  get isEmpty(): boolean {
+    return Array.isArray(this.value) ? this.value.length === 0 : this.value !== null;
+  }
+
   set(value: T): void {
     this.value = value;
     this.signal.set(value);
   }
 
-  clear(): void {
-    this.set(this.initValue);
+  has(value: unknown): boolean {
+    return Array.isArray(this.value) ? this.value.includes(value) : this.value === value;
   }
 
-  abstract has(fractal: Fractal | null): boolean;
-  abstract toggle(fractal: Fractal | null): void;
-  abstract get isEmpty(): boolean;
+  clear(): void {
+    this.signal.set(this.initValue);
+  }
 }
