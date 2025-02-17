@@ -1,7 +1,12 @@
 @use 'variables.scss' as *;
 
 .controls-forms {
-  gap: map-get($size, xs);
+  gap: map-get($size, sm);
   display: flex;
   flex-direction: column;
+}
+
+button {
+  all: unset;
+  width: 100%;
 }

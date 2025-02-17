@@ -3,3 +3,7 @@
 .mat-card-title-group {
   margin-bottom: map-get($size, sm);
 }
+
+.selected {
+  background-color: rgba(map-get($color, secondary), 0.5);
+}

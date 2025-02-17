@@ -1,10 +1,10 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule, MatCardModule } from '@mat';
-import { DataService, ModifiersService, SelectService } from '@services';
+import { DataService, SelectService } from '@services';
 import { ConstModifiers } from '@constants';
 import { ListComponent } from '@components/atoms';
 import { FractalControlsFormsComponent } from '@components/molecules';
-import { BaseComponent } from '@utils';
+import { BaseComponent, updateFractalsByForm } from '@utils';
 
 @Component({
   selector: 'app-modifier',
@@ -16,11 +16,9 @@ import { BaseComponent } from '@utils';
 export class ModifierComponent extends BaseComponent implements OnInit, OnDestroy {
   ss = inject(SelectService);
   private ds = inject(DataService);
-  private ms = inject(ModifiersService);
 
   ngOnInit(): void {
-    console.log(this.ss.$selectedFractals.signal());
-    this.pushSub(this.ms.hold$.subscribe(modifier => modifier && this.onModifierHeld(modifier)));
+    this.pushSub(this.ss.modifiers.hold$.subscribe(modifier => modifier && this.onModifierHeld(modifier)));
   }
 
   ngOnDestroy(): void {
@@ -28,12 +26,12 @@ export class ModifierComponent extends BaseComponent implements OnInit, OnDestro
   }
 
   private onModifierHeld(cursor: string): void {
-    const { $selectedFractals } = this.ss;
+    const { selectedFractals } = this.ss;
     const { Save } = ConstModifiers.record;
     ({
       [Save]: (): void => {
-        if (!$selectedFractals.isEmpty) {
-          this.ds.update($selectedFractals.updateFractalsByForm()).subscribe();
+        if (!selectedFractals.isEmpty) {
+          this.ds.update(updateFractalsByForm(selectedFractals.value)).subscribe();
         }
       },
     })[cursor]?.();

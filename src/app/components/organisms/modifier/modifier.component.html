@@ -1,6 +1,10 @@
 <div class="modifier">
-  @if (!ss.$selectedFractals.isEmpty) {
-    <app-list [dataSource]="ss.$selectedFractals.signal()" [templateRef]="fractalForm" />
+  @if (ss.currentFractal.signal(); as current) {
+    <app-fractal-controls-forms [fractal]="current" />
+  }
+
+  @if (!ss.selectedFractals.isEmpty) {
+    <app-list [dataSource]="ss.selectedFractals.signal()" [templateRef]="fractalForm" />
   }
 </div>
 

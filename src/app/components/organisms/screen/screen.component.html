@@ -1,7 +1,7 @@
 @let app = ens.$app();
-@let current = ss.$currentFractal.signal();
+@let current = ss.currentFractal.signal();
 
-@if (app && current) {
+@if (app) {
   @if (Modifiers) {
     <app-modifier />
   }
@@ -14,7 +14,9 @@
         <app-application [fractal]="app" />
       }
       @default {
-        <app-children-controls [fractal]="current" />
+        @if (current) {
+          <app-children-controls [fractal]="current" />
+        }
       }
     }
   }

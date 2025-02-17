@@ -12,6 +12,7 @@ export const ConstCollections = constant(['Users', 'Products'] as const);
 export const ConstPages = constant(['Home', ...ConstCollections.values, ConstApp] as const);
 export const ConstEntities = constant(['Pages', 'Manager', 'Modifiers', ConstApp] as const);
 export const ConstParams = constant([
+  'Selected',
   'EditMode',
   ConstGroups.Taps,
   ConstEntities.Pages,

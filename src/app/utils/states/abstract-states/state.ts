@@ -1,6 +1,8 @@
-import { signal, WritableSignal } from '@angular/core';
+import { inject, signal, WritableSignal } from '@angular/core';
+import { Router } from '@angular/router';
 
 export abstract class State<T> {
+  protected router = inject(Router);
   value: T;
   signal: WritableSignal<T>;
 
@@ -9,17 +11,12 @@ export abstract class State<T> {
     this.signal = signal(initValue);
   }
 
-  get isEmpty(): boolean {
-    return Array.isArray(this.value) ? this.value.length === 0 : this.value !== null;
-  }
+  abstract get isEmpty(): boolean;
+  abstract has(value: unknown): boolean;
 
   set(value: T): void {
     this.value = value;
     this.signal.set(value);
-  }
-
-  has(value: unknown): boolean {
-    return Array.isArray(this.value) ? this.value.includes(value) : this.value === value;
   }
 
   clear(): void {

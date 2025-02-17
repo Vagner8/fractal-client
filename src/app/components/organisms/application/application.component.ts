@@ -17,8 +17,8 @@ export class ApplicationComponent {
   accordion = viewChild(MatAccordion);
 
   shouldRender = computed(() => {
-    if (this.fractal.isItem) return false;
-    let current = this.ss.$currentPanel.signal();
+    let current = this.ss.currentFractal.signal();
+    if (current?.isItem) return false;
     while (current) {
       if (current === this.fractal) return true;
       current = current.parent;
@@ -27,9 +27,8 @@ export class ApplicationComponent {
   });
 
   closed(): void {
-    this.ss.clear('$selectedFractals');
-    const current = this.ss.$currentPanel.value;
-    if (current && !this.fractal.isApp) this.ss.setCurrentPanel(current.parent);
+    const current = this.ss.currentFractal.value;
+    if (current && !this.fractal.isApp) this.ss.currentFractal.set(current.parent);
     this.accordion()?.closeAll();
   }
 }

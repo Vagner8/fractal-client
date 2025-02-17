@@ -1,16 +1,18 @@
-<app-card [title]="fractal.cursor">
-  <app-button-icon card-action icon="close" [disableHold]="false" (touch)="onDeleteFormCard(fractal)" />
-  @if (ms.$editMode() === editMode.Controls) {
-    <div card-content class="controls-forms">
-      <app-list [templateRef]="controlsForms" [dataSource]="fractal.sortControls" />
-      @if (newControlsForm$ | async; as controlsFrom) {
-        <app-list [templateRef]="newControlsForms" [dataSource]="controlsFrom.controls" />
-      }
-    </div>
-  } @else {
-    <app-control-data-forms card-content [fractal]="fractal" />
-  }
-</app-card>
+<button type="button" (click)="ss.currentForm.set(fractal)">
+  <app-card [title]="fractal.cursor" [className]="ss.currentForm.has(fractal) ? 'selected' : ''">
+    <app-button-icon card-action icon="close" [disableHold]="false" (touch)="onDeleteFormCard(fractal)" />
+    @if (ss.modifiers.$editMode() === editMode.Controls) {
+      <div card-content class="controls-forms">
+        <app-list [templateRef]="controlsForms" [dataSource]="fractal.sortControls" />
+        @if (newControls$ | async; as controlsFrom) {
+          <app-list [templateRef]="newControlsForms" [dataSource]="controlsFrom.controls" />
+        }
+      </div>
+    } @else {
+      <app-control-data-forms card-content [fractal]="fractal" />
+    }
+  </app-card>
+</button>
 
 <ng-template #controlsForms let-indicator let-index="index">
   @if (fractal.findControl(indicator); as control) {

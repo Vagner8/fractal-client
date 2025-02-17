@@ -4,8 +4,8 @@ import { TapDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
 import { map, merge, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import { EventService, ManagerService, TapsService, EntitiesService } from '@services';
-import { ConstEntities, ConstEvents } from '@constants';
+import { EventService, SelectService } from '@services';
+import { ConstEvents } from '@constants';
 
 @Component({
   selector: 'app-manager',
@@ -19,21 +19,19 @@ export class ManagerComponent implements OnInit {
   showSpinner$!: Observable<boolean>;
   prevEvent: string | null = null;
 
-  private ts = inject(TapsService);
   private es = inject(EventService);
-  private mas = inject(ManagerService);
-  private ens = inject(EntitiesService);
+  private ss = inject(SelectService);
 
   ngOnInit(): void {
     this.showSpinner$ = merge(this.es.holdRun$.pipe(map(() => true)), this.es.holdEnd$.pipe(map(() => false)));
   }
 
-  holdAndTouch(event: string): void {
+  async holdAndTouch(event: string): Promise<void> {
     if (this.prevEvent !== event) {
-      this.mas.set(event);
+      await this.ss.manager.setAndNavigate(event);
     }
     if (event === ConstEvents.Touch && this.prevEvent !== ConstEvents.Hold) {
-      this.ts.$taps.update(prev => (prev?.is(ConstEntities.Pages) ? this.ens.modifiers : this.ens.pages));
+      this.ss.taps.toggle();
     }
     this.prevEvent = event;
   }

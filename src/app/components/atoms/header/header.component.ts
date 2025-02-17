@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { ModifiersService, SelectService } from '@services';
+import { SelectService } from '@services';
 import { ConstModifiers } from '@constants';
 
 @Component({
@@ -12,12 +12,11 @@ import { ConstModifiers } from '@constants';
 })
 export class HeaderComponent {
   ss = inject(SelectService);
-  ms = inject(ModifiersService);
 
   title = computed<string>(() => {
     const { New, Edit } = ConstModifiers;
-    const modifier = this.ms.$modifier();
+    const modifier = this.ss.modifiers.signal();
     const modifierTitle = modifier === New ? Edit : modifier;
-    return `${this.ss.$currentFractal.signal()?.cursor} ${modifierTitle || ''}`;
+    return `${this.ss.currentFractal.signal()?.cursor} ${modifierTitle || ''}`;
   });
 }

@@ -4,11 +4,11 @@ import { ControlDataFormsComponent } from '../control-data-forms/control-data-fo
 import { AsyncPipe } from '@angular/common';
 import { Fractal, NewControlForm } from '@types';
 import { ConstEditMods, ConstModifiers } from '@constants';
-import { addControlsDto, BaseComponent, newControlForm } from '@utils';
-import { DataService, ModifiersService, SelectService } from '@services';
-import { FormArray } from '@angular/forms';
-import { filter, map } from 'rxjs';
+import { BaseComponent } from '@utils';
+import { CreateControlsService, SelectService } from '@services';
+import { filter, Observable } from 'rxjs';
 import { ControlFormsComponent } from '../control-forms/control-forms.component';
+import { FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-fractal-controls-forms',
@@ -26,34 +26,36 @@ import { ControlFormsComponent } from '../control-forms/control-forms.component'
 })
 export class FractalControlsFormsComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() fractal!: Fractal;
-  ms = inject(ModifiersService);
-  private ds = inject(DataService);
-  private ss = inject(SelectService);
+  @Input() selected = false;
+
+  ss = inject(SelectService);
+  private ccs = inject(CreateControlsService);
+
   editMode = ConstEditMods;
-  newControlsForm = new FormArray<NewControlForm>([]);
-  newControlsForm$ = this.newControlsForm.valueChanges.pipe(
-    map(() => (this.newControlsForm.value.length > 0 ? this.newControlsForm : null))
-  );
+  newControls$!: Observable<FormArray<NewControlForm> | null>;
 
   ngOnInit(): void {
+    this.newControls$ = this.ccs.newControls(this.fractal);
     const { New, Save } = ConstModifiers.record;
     const { Controls } = ConstEditMods;
+
     this.pushSub(
-      this.ms.touch$.pipe(filter(Boolean)).subscribe(modifier => {
+      this.ss.modifiers.touch$.pipe(filter(Boolean)).subscribe(modifier => {
         ({
           [New]: (): void => {
-            if (this.ms.$editMode() !== Controls) return;
-            this.newControlsForm.push(newControlForm());
+            if (this.ss.modifiers.$editMode() === Controls) {
+              this.ccs.addNewControl(this.fractal);
+            }
           },
         })[modifier]?.();
       })
     );
+
     this.pushSub(
-      this.ms.hold$.pipe(filter(Boolean)).subscribe(modifier => {
+      this.ss.modifiers.hold$.pipe(filter(Boolean)).subscribe(modifier => {
         ({
           [Save]: (): void => {
-            if (this.newControlsForm.value.length === 0) return;
-            this.ds.addControls(addControlsDto(this.newControlsForm.controls, this.fractal));
+            this.ccs.addControlsToFractalAndSave(this.fractal);
           },
         })[modifier]?.();
       })
@@ -65,14 +67,14 @@ export class FractalControlsFormsComponent extends BaseComponent implements OnIn
   }
 
   onDeleteFormCard(fractal: Fractal): void {
-    this.ss.$selectedFractals.delete(fractal);
-    if (this.ss.$selectedFractals.isEmpty) {
-      this.ms.clear();
-      this.newControlsForm.clear();
+    this.ss.selectedFractals.delete(fractal);
+    if (this.ss.selectedFractals.isEmpty) {
+      this.ss.modifiers.clear();
+      this.ccs.newControlsMap.clear();
     }
   }
 
   onDeleteNewControlForm(index: number): void {
-    this.newControlsForm.removeAt(index);
+    this.ccs.removeControlFormAt(this.fractal, index);
   }
 }

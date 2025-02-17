@@ -3,7 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { ConstSort, ConstEntities, ConstModifiers, ConstEvents } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { ManagerService, ModifiersService, TapsService, SelectService, DataService, EntitiesService } from '@services';
+import { SelectService, DataService, EntitiesService } from '@services';
 import { Fractal } from '@types';
 
 @Component({
@@ -15,49 +15,42 @@ import { Fractal } from '@types';
 })
 export class SidenavComponent {
   es = inject(EntitiesService);
-  ts = inject(TapsService);
-  mas = inject(ManagerService);
+  ss = inject(SelectService);
   private ds = inject(DataService);
-  private ss = inject(SelectService);
-  private ms = inject(ModifiersService);
 
   events = ConstEvents;
   entities = ConstEntities;
   splitIndicators = ConstSort;
 
   onModifierHeld({ cursor }: Fractal): void {
-    this.ms.hold(cursor);
+    this.ss.modifiers.hold$.next(cursor);
     switch (cursor) {
       case ConstModifiers.Delete:
-        if (!this.ss.$selectedFractals.isEmpty) {
-          this.ds.delete(this.ss.$selectedFractals.toDto()).subscribe();
+        if (!this.ss.selectedFractals.isEmpty) {
+          this.ds.delete(this.ss.selectedFractals.toDto()).subscribe();
         }
         break;
     }
   }
 
   onModifierTouched({ cursor }: Fractal): void {
-    const { $currentFractal, $selectedFractals } = this.ss;
+    const { currentFractal, selectedFractals } = this.ss;
     const { New, Edit, Delete } = ConstModifiers.record;
     ({
       [New]: (): void => {
-        this.ms.set(cursor);
+        this.ss.modifiers.setAndNavigate(cursor);
       },
       [Edit]: (): void => {
-        if (!$selectedFractals.isEmpty) {
-          this.ms.set(cursor);
-        }
-        if ($selectedFractals.isEmpty && $currentFractal.value) {
-          this.ss.$selectedFractals.set([$currentFractal.value]);
-          this.ms.set(cursor);
-        }
+        if (selectedFractals.isEmpty && currentFractal.isEmpty) return;
+        this.ss.modifiers.setAndNavigate(cursor);
       },
       [Delete]: (): void => {},
     })[cursor]?.();
   }
 
   onPageTouched(tap: Fractal): void {
-    this.ms.clear();
-    this.ss.setCurrentFractals(tap);
+    this.ss.modifiers.clear();
+    this.ss.selectedFractals.clear();
+    this.ss.currentFractal.setAndNavigate(tap);
   }
 }

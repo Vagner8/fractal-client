@@ -1,11 +1,11 @@
 <mat-drawer-container class="mat-drawer-container-app-sidenav" autosize>
   <mat-drawer
-    [opened]="mas.$event() === events.Touch"
+    [opened]="ss.manager.has(events.Touch)"
     [disableClose]="false"
     class="mat-drawer-app-sidenav"
     mode="side"
     position="end">
-    @if (ts.$taps(); as taps) {
+    @if (ss.taps.signal(); as taps) {
       <mat-list>
         @if (taps.is(entities.Pages)) {
           @for (indicator of taps.sortChildren; track indicator) {
