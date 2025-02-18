@@ -13,5 +13,4 @@ import { MatButtonModule, MatFormFieldModule, MatIcon, MatInputModule } from '@m
 export class InputComponent {
   @Input() label: string = '';
   @Input() formCtr!: FormControl;
-  @Input() className: string = '';
 }

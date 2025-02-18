@@ -16,19 +16,18 @@ export class ApplicationComponent {
   ss = inject(SelectService);
   accordion = viewChild(MatAccordion);
 
+  closed(): void {
+    const current = this.ss.currentFractal.value;
+    if (current && !this.fractal.isApp) this.ss.currentFractal.set(current.parent);
+    this.accordion()?.closeAll();
+  }
+
   shouldRender = computed(() => {
     let current = this.ss.currentFractal.signal();
-    if (current?.isItem) return false;
     while (current) {
       if (current === this.fractal) return true;
       current = current.parent;
     }
     return false;
   });
-
-  closed(): void {
-    const current = this.ss.currentFractal.value;
-    if (current && !this.fractal.isApp) this.ss.currentFractal.set(current.parent);
-    this.accordion()?.closeAll();
-  }
 }

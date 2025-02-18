@@ -1,5 +1,5 @@
 <button type="button" (click)="ss.currentForm.set(fractal)">
-  <app-card [title]="fractal.cursor" [className]="ss.currentForm.has(fractal) ? 'selected' : ''">
+  <app-card [title]="fractal.cursor" [selected]="ss.currentForm.has(fractal)">
     <app-button-icon card-action icon="close" [disableHold]="false" (touch)="onDeleteFormCard(fractal)" />
     @if (ss.modifiers.$editMode() === editMode.Controls) {
       <div card-content class="controls-forms">

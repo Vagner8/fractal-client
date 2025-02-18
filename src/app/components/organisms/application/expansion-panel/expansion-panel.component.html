@@ -1,4 +1,5 @@
 <mat-expansion-panel
+  #panel
   [class.clicked-panel]="ss.currentFractal.has(fractal)"
   hideToggle
   (closed)="closed.emit(fractal)"
@@ -11,13 +12,15 @@
       {{ fractal.cursor }}</mat-panel-title
     >
   </mat-expansion-panel-header>
-  <div class="children">
-    <app-controls [fractal]="fractal" [customColumns]="controlFormKeys" />
-    @if (fractal.isCollection) {
-      <app-children-controls [fractal]="fractal" />
-    }
-    @if (fractal.fractals) {
-      <ng-content />
-    }
-  </div>
+  @if (panel.expanded) {
+    <div class="children">
+      <app-controls [fractal]="fractal" [customColumns]="controlFormKeys" class="controls" />
+      @if (fractal.isCollection) {
+        <app-children-controls [fractal]="fractal" class="children-controls" />
+      }
+      @if (fractal.fractals) {
+        <ng-content />
+      }
+    </div>
+  }
 </mat-expansion-panel>

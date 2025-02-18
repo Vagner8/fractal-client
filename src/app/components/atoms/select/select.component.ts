@@ -14,7 +14,6 @@ export class SelectComponent implements OnInit {
   @Input() opts: string[] = [];
   @Input() label: string = '';
   @Input() formCtr!: FormControl;
-  @Input() className: string = '';
 
   ngOnInit(): void {
     this.formCtr.setValue(this.opts[0]);

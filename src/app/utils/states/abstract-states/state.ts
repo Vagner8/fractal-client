@@ -20,6 +20,6 @@ export abstract class State<T> {
   }
 
   clear(): void {
-    this.signal.set(this.initValue);
+    this.set(this.initValue);
   }
 }

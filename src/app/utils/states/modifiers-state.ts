@@ -41,6 +41,6 @@ export class ModifiersState extends ObjectState<string | null> {
 
   private updateEditMode(): void {
     const { Controls, Fractals } = ConstEditMods;
-    this.$editMode.update(prev => (prev === Controls ? Fractals : Controls));
+    this.$editMode.update(prev => (!prev || prev === Controls ? Fractals : Controls));
   }
 }

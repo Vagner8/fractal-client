@@ -1,7 +1,1 @@
-@use 'variables.scss' as *;
 
-.mat-accordion {
-  display: flex;
-  flex-direction: column;
-  gap: map-get($size, xs);
-}

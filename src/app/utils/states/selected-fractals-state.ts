@@ -44,9 +44,10 @@ export class SelectedFractalsState extends ArrayState<Fractal> {
   }
 
   private navigate(): void {
+    const ids = this.value.map(fractal => fractal.dto.id);
     this.router.navigate([], {
       queryParams: {
-        [ConstParams.Selected]: this.value.map(fractal => fractal.dto.id).join(ConstSeparator),
+        [ConstParams.Selected]: ids.length === 0 ? null : ids.join(ConstSeparator),
       },
       queryParamsHandling: 'merge',
     });

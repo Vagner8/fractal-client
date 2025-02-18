@@ -7,34 +7,29 @@
 .children {
   display: flex;
   flex-direction: column;
-  gap: map-get($size, md);
+  gap: map-get($size, sm);
 }
 
 .mat-expansion-panel {
   border: solid 1px map-get($color, border);
   box-shadow: none !important;
-  border-radius: 0 !important;
 }
 
 .clicked-panel {
   background-color: map-get($color, secondary);
 }
 
-::ng-deep {
-  mat-expansion-panel {
-    .mat-expansion-panel-body {
-      padding: 0 map-get($size, sm) map-get($size, sm);
-    }
-  }
+.controls,
+.children-controls {
+  overflow: auto;
 }
 
-::ng-deep {
-  mat-expansion-panel.new-panel {
-    .mat-expansion-panel-body {
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      gap: map-get($size, md);
+@media (max-width: map-get($breakpoints, sm)) {
+  ::ng-deep {
+    mat-expansion-panel {
+      .mat-expansion-panel-body {
+        padding: 0 map-get($size, sm) map-get($size, sm);
+      }
     }
   }
 }

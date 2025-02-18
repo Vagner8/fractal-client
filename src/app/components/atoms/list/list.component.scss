@@ -19,8 +19,9 @@ ul.three-or-more-items > li {
   flex: 1 1 calc(30.33% - map-get($size, sm));
 }
 
-@media (max-width: 768px) {
-  li {
+@media (max-width: map-get($breakpoints, sm)) {
+  ul.two-items > li,
+  ul.three-or-more-items > li {
     flex: 1 1 100%;
   }
 }

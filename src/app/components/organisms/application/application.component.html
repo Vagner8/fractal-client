@@ -1,11 +1,11 @@
-<app-expansion-panel [fractal]="fractal" (closed)="closed()">
-  @if (shouldRender()) {
-    <mat-accordion>
-      @for (cursor of fractal.sortChildren; track cursor) {
-        @if (fractal.findFractal(cursor); as fractal) {
+<mat-accordion>
+  <app-expansion-panel [fractal]="fractal" (closed)="closed()">
+    @for (cursor of fractal.sortChildren; track cursor) {
+      @if (fractal.findFractal(cursor); as fractal) {
+        @if (shouldRender() && !fractal.isItem) {
           <app-application [fractal]="fractal" />
         }
       }
-    </mat-accordion>
-  }
-</app-expansion-panel>
+    }
+  </app-expansion-panel>
+</mat-accordion>
