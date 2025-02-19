@@ -1,5 +1,5 @@
-import { FractalDto, Fractal, Fractals, ControlDto, FractalForm, ControlFromRecord, NewControlForm } from '@types';
-import { addControlsDto, checkValue } from '@utils';
+import { FractalDto, Fractal, Fractals, ControlDto, FractalForm, ControlFormRecord } from '@types';
+import { checkValue } from '@utils';
 import { FormRecord } from '@angular/forms';
 import {
   ConstIndicators,
@@ -82,14 +82,9 @@ export class FractalFactory implements Fractal {
     return findFractalRecursively(test, this.fractals);
   }
 
-  addControlsDto(forms: NewControlForm[]): ControlDto[] {
-    return addControlsDto(forms, this);
-  }
-
-  getControlFrom(indicator: string): ControlFromRecord {
-    return ConstControlFormKeys.values.reduce((acc, key) => {
-      acc[key] = this.form.controls[indicator].controls[key];
-      return acc;
-    }, {} as ControlFromRecord);
+  getControlFrom(indicator: string): ControlFormRecord {
+    return Object.fromEntries(
+      ConstControlFormKeys.values.map(key => [key, this.form.controls[indicator].controls[key]])
+    ) as ControlFormRecord;
   }
 }

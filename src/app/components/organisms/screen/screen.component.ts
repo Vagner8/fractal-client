@@ -31,7 +31,7 @@ export class ScreenComponent implements OnInit, AppParams {
   ngOnInit(): void {
     const app = this.ens.$app();
     if (!app) return;
-    this.Taps && this.ss.taps.setAndNavigate(app.findFractal(this.Taps));
+    this.Taps && this.ss.taps.set(app.findFractal(this.Taps));
     this.Pages && this.ss.currentFractal.set(app.findFractal(this.Pages));
     this.Manager && this.ss.manager.set(this.Manager);
     this.Selected && this.ss.selectedFractals.init(this.Selected);

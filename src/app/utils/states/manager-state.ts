@@ -1,7 +1,11 @@
-import { ObjectState } from './abstract-states/object-state';
+import { inject } from '@angular/core';
+import { ObjectState } from './abstract/object-state';
 import { ConstParams } from '@constants';
+import { Router } from '@angular/router';
 
 export class ManagerState extends ObjectState<string | null> {
+  router = inject(Router);
+
   constructor() {
     super(null);
   }

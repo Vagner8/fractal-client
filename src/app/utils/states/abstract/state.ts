@@ -1,8 +1,6 @@
-import { inject, signal, WritableSignal } from '@angular/core';
-import { Router } from '@angular/router';
+import { signal, WritableSignal } from '@angular/core';
 
 export abstract class State<T> {
-  protected router = inject(Router);
   value: T;
   signal: WritableSignal<T>;
 

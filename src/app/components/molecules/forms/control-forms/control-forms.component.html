@@ -1,10 +1,7 @@
 @let controls = formRecord.controls;
 
-<app-card [title]="title">
-  @if (title === 'New') {
-    <app-button-icon card-action icon="close" [disableHold]="false" (touch)="touch.emit()" />
-  }
-  <ng-container card-content>
+<app-card [title]="title" [selected]="selected">
+  <ng-container>
     <app-input [label]="labels.indicator" [formCtr]="controls[labels.indicator]" />
     <app-select [label]="labels.input" [opts]="selectOpts" [formCtr]="controls[labels.input]" />
     <app-input [label]="labels.data" [formCtr]="controls[labels.data]" />

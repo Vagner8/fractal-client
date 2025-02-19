@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { FormArray } from '@angular/forms';
-import { Fractal, NewControlForm } from '@types';
-import { addControlsDto, newControlForm } from '@utils';
+import { ControlDto, Fractal, ControlForm } from '@types';
+import { createControlDto, newControlForm } from '@utils';
 import { map, Observable } from 'rxjs';
 import { DataService } from './data.service';
 
@@ -10,29 +10,35 @@ import { DataService } from './data.service';
 })
 export class CreateControlsService {
   ds = inject(DataService);
-  newControlsMap = new Map<Fractal, FormArray<NewControlForm>>();
+  newControlsFormsMap = new Map<Fractal, FormArray<ControlForm>>();
 
-  newControls(fractal: Fractal): Observable<FormArray<NewControlForm> | null> {
-    const form = new FormArray<NewControlForm>([]);
-    this.newControlsMap.set(fractal, form);
+  newControlsForms(fractal: Fractal): Observable<FormArray<ControlForm> | null> {
+    const form = new FormArray<ControlForm>([]);
+    this.newControlsFormsMap.set(fractal, form);
     return form.valueChanges.pipe(map(() => (form.value.length > 0 ? form : null)));
   }
 
-  getForms(fractal: Fractal): FormArray<NewControlForm> | undefined {
-    return this.newControlsMap.get(fractal);
+  pushNewControlForm(fractal: Fractal): void {
+    this.newControlsFormsMap.get(fractal)?.push(newControlForm());
   }
 
-  addNewControl(fractal: Fractal): void {
-    this.newControlsMap.get(fractal)?.push(newControlForm());
+  removeNewControlFormAt(fractal: Fractal, index: number): void {
+    this.newControlsFormsMap.get(fractal)?.removeAt(index);
   }
 
-  removeControlFormAt(fractal: Fractal, index: number): void {
-    this.newControlsMap.get(fractal)?.removeAt(index);
+  addNewControlsFormsToFractalAndSave(): void {
+    for (const [fractal, form] of this.newControlsFormsMap) {
+      this.ds.addControls(this.addNewControlsDtoToFractal(fractal, form)).subscribe();
+    }
   }
 
-  addControlsToFractalAndSave(fractal: Fractal): void {
-    const newControls = this.newControlsMap.get(fractal);
-    if (!newControls || newControls.length === 0) return;
-    this.ds.addControls(addControlsDto(newControls.controls, fractal));
+  private addNewControlsDtoToFractal(fractal: Fractal, form: FormArray<ControlForm>): ControlDto[] {
+    return form.controls.map(controlForm => {
+      const controlDto = createControlDto(controlForm, fractal.dto.id);
+      fractal.dto.controls[controlDto.indicator] = controlDto;
+      fractal.form.addControl(controlDto.indicator, controlForm);
+      form.clear();
+      return controlDto;
+    });
   }
 }

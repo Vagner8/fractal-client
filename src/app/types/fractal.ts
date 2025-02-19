@@ -1,11 +1,11 @@
 import { FormRecord } from '@angular/forms';
-import { ControlDto, ControlFromRecord, ControlsDto, NewControlForm } from './control';
+import { ControlDto, ControlFormRecord, ControlsDto, ControlForm } from './control';
 import { ConstSort } from '@constants';
 
 export type SortMode = (typeof ConstSort.values)[number];
 export type Fractals = Record<string, Fractal>;
 export type FractalsDto = Record<string, FractalDto>;
-export type FractalForm = FormRecord<NewControlForm>;
+export type FractalForm = FormRecord<ControlForm>;
 
 export interface FractalDto {
   id: string;
@@ -44,6 +44,5 @@ export interface Fractal {
   findControl(indicator: string): ControlDto | null;
   findFractal(test: string): Fractal | null;
 
-  addControlsDto(forms: NewControlForm[]): ControlDto[];
-  getControlFrom(indicator: string): ControlFromRecord;
+  getControlFrom(indicator: string): ControlFormRecord;
 }

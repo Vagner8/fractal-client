@@ -1,13 +1,13 @@
-import { ObjectState } from './abstract-states/object-state';
+import { ObjectState } from './abstract/object-state';
 import { ConstEditMods, ConstModifiers, ConstParams } from '@constants';
-import { signal } from '@angular/core';
+import { inject, signal } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 export class ModifiersState extends ObjectState<string | null> {
+  router = inject(Router);
   $editMode = signal<string | null>(null);
-
   hold$ = new BehaviorSubject<string | null>(null);
-  touch$ = new BehaviorSubject<string | null>(null);
 
   constructor() {
     super(null);

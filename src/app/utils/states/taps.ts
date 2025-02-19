@@ -1,11 +1,13 @@
 import { Fractal } from '@types';
-import { ObjectState } from './abstract-states/object-state';
+import { ObjectState } from './abstract/object-state';
 import { inject } from '@angular/core';
 import { ConstEntities, ConstParams } from '@constants';
 import { EntitiesService } from '@services';
+import { Router } from '@angular/router';
 
 export class TapsState extends ObjectState<Fractal | null> {
   ens = inject(EntitiesService);
+  router = inject(Router);
 
   constructor() {
     super(null);

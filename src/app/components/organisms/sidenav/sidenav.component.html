@@ -13,14 +13,14 @@
               <app-tap [tap]="tap" (touch)="onPageTouched($event)" />
             }
           }
-          @if (es.$app(); as app) {
+          @if (ens.$app(); as app) {
             <app-tap [tap]="app" (touch)="onPageTouched($event)" />
           }
         }
         @if (taps.is(entities.Modifiers)) {
           @for (indicator of taps.sortChildren; track indicator) {
             @if (taps.findFractal(indicator); as tap) {
-              <app-tap [tap]="tap" (hold)="onModifierHeld($event)" (touch)="onModifierTouched($event)" />
+              <app-tap [tap]="tap" (hold)="ms.onHold($event.cursor)" (touch)="ms.onTouch($event.cursor)" />
             }
           }
         }

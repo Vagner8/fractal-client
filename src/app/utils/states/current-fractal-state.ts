@@ -1,11 +1,12 @@
 import { Fractal } from '@types';
-import { ObjectState } from './abstract-states/object-state';
+import { ObjectState } from './abstract/object-state';
 import { inject } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConstParams } from '@constants';
 
 export class CurrentFractalState extends ObjectState<Fractal | null> {
   route = inject(ActivatedRoute);
+  router = inject(Router);
 
   constructor() {
     super(null);

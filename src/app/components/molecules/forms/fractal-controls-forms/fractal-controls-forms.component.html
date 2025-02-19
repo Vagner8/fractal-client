@@ -1,25 +1,30 @@
-<button type="button" (click)="ss.currentForm.set(fractal)">
-  <app-card [title]="fractal.cursor" [selected]="ss.currentForm.has(fractal)">
-    <app-button-icon card-action icon="close" [disableHold]="false" (touch)="onDeleteFormCard(fractal)" />
+<button (click)="onCardClicked($event)">
+  <app-card [title]="fractal.cursor" [selected]="ss.selectedFractalForm.has(fractal)">
     @if (ss.modifiers.$editMode() === editMode.Controls) {
-      <div card-content class="controls-forms">
+      <div class="controls-forms">
         <app-list [templateRef]="controlsForms" [dataSource]="fractal.sortControls" />
-        @if (newControls$ | async; as controlsFrom) {
+        @if (newControlsForms$ | async; as controlsFrom) {
           <app-list [templateRef]="newControlsForms" [dataSource]="controlsFrom.controls" />
         }
       </div>
     } @else {
-      <app-control-data-forms card-content [fractal]="fractal" />
+      <app-control-data-forms [fractal]="fractal" />
     }
   </app-card>
 </button>
 
 <ng-template #controlsForms let-indicator let-index="index">
   @if (fractal.findControl(indicator); as control) {
-    <app-control-forms [title]="indicator" [formRecord]="fractal.form.controls[indicator]" />
+    @let controlForm = fractal.form.controls[indicator];
+    <button (click)="onControlFormClicked($event, controlForm)">
+      <app-control-forms
+        [title]="indicator"
+        [selected]="!!ss.selectedControlsForms.map.get(fractal)?.has(controlForm)"
+        [formRecord]="controlForm" />
+    </button>
   }
 </ng-template>
 
 <ng-template #newControlsForms let-formRecord let-index="index">
-  <app-control-forms title="New" [formRecord]="formRecord" (touch)="onDeleteNewControlForm(index)" />
+  <app-control-forms title="New" [formRecord]="formRecord" (touch)="ccs.removeNewControlFormAt(this.fractal, index)" />
 </ng-template>

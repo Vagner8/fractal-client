@@ -1,11 +1,13 @@
 import { Fractal, FractalDto } from '@types';
-import { ArrayState } from './abstract-states/array-state';
+import { ArrayState } from './abstract/array-state';
 import { ConstParams, ConstSeparator } from '@constants';
 import { inject } from '@angular/core';
 import { EntitiesService } from '@services';
+import { Router } from '@angular/router';
 
 export class SelectedFractalsState extends ArrayState<Fractal> {
   ens = inject(EntitiesService);
+  router = inject(Router);
 
   constructor() {
     super([]);
@@ -17,11 +19,6 @@ export class SelectedFractalsState extends ArrayState<Fractal> {
       const fractal = this.ens.$app()?.findFractal(id);
       this.push(fractal);
     });
-  }
-
-  toggle(fractal: Fractal): void {
-    this.set(this.has(fractal) ? this.value.filter(prev => prev !== fractal) : [...this.value, fractal]);
-    this.navigate();
   }
 
   toggleAll({ parent }: Fractal): void {
@@ -40,6 +37,11 @@ export class SelectedFractalsState extends ArrayState<Fractal> {
 
   deleteAndNavigate(fractal: Fractal | null): void {
     super.delete(fractal);
+    this.navigate();
+  }
+
+  override toggle(fractal: Fractal): void {
+    super.toggle(fractal);
     this.navigate();
   }
 
