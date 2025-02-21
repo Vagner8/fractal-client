@@ -5,7 +5,7 @@ import { AsyncPipe } from '@angular/common';
 import { Fractal, ControlForm } from '@types';
 import { ConstEditMods } from '@constants';
 import { CreateControlsService, SelectService } from '@services';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ControlFormsComponent } from '../control-forms/control-forms.component';
 import { FormArray } from '@angular/forms';
 import { isClosestMatField } from '@utils';
@@ -24,10 +24,10 @@ export class FractalControlsFormsComponent implements OnInit {
   ccs = inject(CreateControlsService);
 
   editMode = ConstEditMods;
-  newControlsForms$!: Observable<FormArray<ControlForm> | null>;
+  newControlsForms$!: Observable<FormArray<ControlForm> | undefined>;
 
   ngOnInit(): void {
-    this.newControlsForms$ = this.ccs.newControlsForms(this.fractal);
+    this.newControlsForms$ = this.ccs.changes$.pipe(map(map => map.get(this.fractal)));
   }
 
   onCardClicked({ target }: Event): void {

@@ -1,12 +1,14 @@
 import { signal, WritableSignal } from '@angular/core';
+import { Subject } from 'rxjs';
 
 export abstract class State<T> {
   value: T;
-  signal: WritableSignal<T>;
+  $value: WritableSignal<T>;
+  value$ = new Subject<T>();
 
   constructor(private initValue: T) {
     this.value = initValue;
-    this.signal = signal(initValue);
+    this.$value = signal(initValue);
   }
 
   abstract get isEmpty(): boolean;
@@ -14,7 +16,8 @@ export abstract class State<T> {
 
   set(value: T): void {
     this.value = value;
-    this.signal.set(value);
+    this.$value.set(value);
+    this.value$.next(value);
   }
 
   clear(): void {

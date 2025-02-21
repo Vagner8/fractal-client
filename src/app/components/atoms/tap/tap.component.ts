@@ -14,6 +14,7 @@ import { ConstIndicators } from '@constants';
 })
 export class TapComponent {
   @Input() tap!: Fractal;
+  @Input() disableHoldEvent = false;
 
   hold = output<Fractal>();
   touch = output<Fractal>();

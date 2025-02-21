@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule, MatCardModule } from '@mat';
 import { SelectService } from '@services';
 import { ListComponent } from '@components/atoms';
@@ -11,12 +11,6 @@ import { FractalControlsFormsComponent } from '@components/molecules';
   templateUrl: './modifier.component.html',
   styleUrl: './modifier.component.scss',
 })
-export class ModifierComponent implements OnDestroy {
+export class ModifierComponent {
   ss = inject(SelectService);
-
-  ngOnDestroy(): void {
-    this.ss.modifiers.clear();
-    this.ss.selectedFractalForm.clear();
-    this.ss.selectedFractals.clear();
-  }
 }

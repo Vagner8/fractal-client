@@ -4,7 +4,7 @@
   mat-icon-button
   i18n-aria-label
   appTap
-  [disableHold]="disableHold"
+  [disableHoldEvent]="disableHoldEvent"
   (hold)="hold.emit()"
   (touch)="touch.emit()">
   <mat-icon>{{ icon }}</mat-icon>

@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { FormArray } from '@angular/forms';
 import { ControlDto, Fractal, ControlForm } from '@types';
 import { createControlDto, newControlForm } from '@utils';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { DataService } from './data.service';
 
 @Injectable({
@@ -11,19 +11,23 @@ import { DataService } from './data.service';
 export class CreateControlsService {
   ds = inject(DataService);
   newControlsFormsMap = new Map<Fractal, FormArray<ControlForm>>();
-
-  newControlsForms(fractal: Fractal): Observable<FormArray<ControlForm> | null> {
-    const form = new FormArray<ControlForm>([]);
-    this.newControlsFormsMap.set(fractal, form);
-    return form.valueChanges.pipe(map(() => (form.value.length > 0 ? form : null)));
-  }
+  changes$ = new BehaviorSubject<Map<Fractal, FormArray<ControlForm>>>(this.newControlsFormsMap);
 
   pushNewControlForm(fractal: Fractal): void {
-    this.newControlsFormsMap.get(fractal)?.push(newControlForm());
+    const controlForm = newControlForm();
+    let formArray = this.newControlsFormsMap.get(fractal);
+    if (!formArray) {
+      formArray = new FormArray<ControlForm>([controlForm]);
+      this.newControlsFormsMap.set(fractal, formArray);
+    } else {
+      formArray.push(controlForm);
+    }
+    this.changes$.next(this.newControlsFormsMap);
   }
 
   removeNewControlFormAt(fractal: Fractal, index: number): void {
     this.newControlsFormsMap.get(fractal)?.removeAt(index);
+    this.changes$.next(this.newControlsFormsMap);
   }
 
   addNewControlsFormsToFractalAndSave(): void {

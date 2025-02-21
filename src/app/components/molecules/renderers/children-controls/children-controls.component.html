@@ -14,5 +14,5 @@
     appTap
     (hold)="ss.selectedFractals.toggleAll(row)"
     (touch)="ss.selectedFractals.toggle(row)"
-    [class.clicked-row]="ss.selectedFractals.signal().includes(row)"></tr>
+    [class.clicked-row]="ss.selectedFractals.$value().includes(row)"></tr>
 </table>

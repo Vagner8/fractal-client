@@ -25,6 +25,16 @@ export class ModifiersState extends ObjectState<string | null> {
 
   async setAndNavigate(modifier: string | null): Promise<void> {
     this.set(modifier);
+    this.navigate(modifier);
+  }
+
+  override async clear(): Promise<void> {
+    super.clear();
+    this.$editMode.set(null);
+    this.navigate(null);
+  }
+
+  private async navigate(modifier: string | null): Promise<void> {
     this.router.navigate([], {
       queryParams: {
         [ConstParams.EditMode]: this.$editMode(),
@@ -32,11 +42,6 @@ export class ModifiersState extends ObjectState<string | null> {
       },
       queryParamsHandling: 'merge',
     });
-  }
-
-  override clear(): void {
-    super.clear();
-    this.$editMode.set(null);
   }
 
   private updateEditMode(): void {

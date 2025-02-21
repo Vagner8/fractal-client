@@ -15,8 +15,8 @@ export class HeaderComponent {
 
   title = computed<string>(() => {
     const { New, Edit } = ConstModifiers;
-    const modifier = this.ss.modifiers.signal();
+    const modifier = this.ss.modifiers.$value();
     const modifierTitle = modifier === New ? Edit : modifier;
-    return `${this.ss.currentFractal.signal()?.cursor} ${modifierTitle || ''}`;
+    return `${this.ss.currentFractal.$value()?.cursor} ${modifierTitle || ''}`;
   });
 }

@@ -9,7 +9,7 @@ import { Timeout } from '@types';
 export class TapDirective implements OnInit, OnDestroy {
   es = inject(EventService);
 
-  @Input() disableHold = false;
+  @Input() disableHoldEvent = false;
 
   hold = output();
   touch = output();
@@ -32,7 +32,7 @@ export class TapDirective implements OnInit, OnDestroy {
 
   @HostListener('pointerdown')
   pointerdown(): void {
-    if (this.disableHold) return;
+    if (this.disableHoldEvent) return;
     this.holdDelayTimeout = setTimeout(() => this.es.holdRun$.next(), this.holdDelay);
     this.holdTimeout = setTimeout(() => (this.isHoldSucceed = true), this.holdThreshold);
   }

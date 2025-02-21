@@ -13,18 +13,23 @@
   </app-card>
 </button>
 
-<ng-template #controlsForms let-indicator let-index="index">
+<ng-template #controlsForms let-indicator>
   @if (fractal.findControl(indicator); as control) {
     @let controlForm = fractal.form.controls[indicator];
     <button (click)="onControlFormClicked($event, controlForm)">
       <app-control-forms
         [title]="indicator"
         [selected]="!!ss.selectedControlsForms.map.get(fractal)?.has(controlForm)"
-        [formRecord]="controlForm" />
+        [controlForm]="controlForm" />
     </button>
   }
 </ng-template>
 
-<ng-template #newControlsForms let-formRecord let-index="index">
-  <app-control-forms title="New" [formRecord]="formRecord" (touch)="ccs.removeNewControlFormAt(this.fractal, index)" />
+<ng-template #newControlsForms let-controlForm>
+  <button (click)="onControlFormClicked($event, controlForm)">
+    <app-control-forms
+      title="New"
+      [selected]="!!ss.selectedControlsForms.map.get(fractal)?.has(controlForm)"
+      [controlForm]="controlForm" />
+  </button>
 </ng-template>

@@ -43,11 +43,11 @@ export class ModifiersService {
   }
 
   onHold(modifier: string): void {
-    this.holdHandlers[modifier]();
+    this.holdHandlers[modifier]?.();
   }
 
   onTouch(modifier: string): void {
-    this.navigate(this.touchHandlers[modifier](), modifier);
+    this.navigate(this.touchHandlers[modifier]?.(), modifier);
   }
 
   private navigate(shouldNavigate: boolean, modifier: string): void {

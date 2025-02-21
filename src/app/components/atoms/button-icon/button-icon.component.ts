@@ -10,7 +10,7 @@ import { MatButtonModule, MatIcon } from '@mat';
 })
 export class ButtonIconComponent {
   @Input() icon!: string;
-  @Input() disableHold = true;
+  @Input() disableHoldEvent = true;
   hold = output();
   touch = output();
 }

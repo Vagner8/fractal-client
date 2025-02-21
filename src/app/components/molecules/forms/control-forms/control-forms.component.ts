@@ -1,6 +1,7 @@
-import { Component, Input, output } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CardComponent, InputComponent, SelectComponent } from '@components/atoms';
 import { ConstControlFormKeys, ConstControlInputs } from '@constants';
+import { CreateControlsService } from '@services';
 import { ControlForm } from '@types';
 
 @Component({
@@ -12,8 +13,8 @@ import { ControlForm } from '@types';
 export class ControlFormsComponent {
   @Input() title = '';
   @Input() selected = false;
-  @Input() formRecord!: ControlForm;
-  touch = output();
+  @Input() controlForm!: ControlForm;
+  ccs = inject(CreateControlsService);
   labels = ConstControlFormKeys.record;
   selectOpts = ConstControlInputs.strings;
 }

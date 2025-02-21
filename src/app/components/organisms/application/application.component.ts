@@ -23,7 +23,7 @@ export class ApplicationComponent {
   }
 
   shouldRender = computed(() => {
-    let current = this.ss.currentFractal.signal();
+    let current = this.ss.currentFractal.$value();
     while (current) {
       if (current === this.fractal) return true;
       current = current.parent;
