@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, TemplateRef } from '@angular/core';
-import { FormArray } from '@angular/forms';
-import { Fractal } from '@types';
+import { Control, Fractal } from '@types';
 import { v4 } from 'uuid';
 
 @Component({
@@ -12,7 +11,7 @@ import { v4 } from 'uuid';
   styleUrl: './list.component.scss',
 })
 export class ListComponent {
-  @Input() dataSource: Fractal[] | string[] | FormArray['controls'] = [];
+  @Input() dataSource: Fractal[] | string[] | Control[] = [];
   @Input() templateRef!: TemplateRef<unknown>;
 
   trackFn(): string {

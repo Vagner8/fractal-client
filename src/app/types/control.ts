@@ -1,3 +1,4 @@
+import { WritableSignal } from '@angular/core';
 import { FormControl, FormRecord } from '@angular/forms';
 import { ConstControlFormKeys, ConstControlKeys } from '@constants';
 
@@ -7,3 +8,12 @@ export type ControlsDto = Record<string, ControlDto>;
 export type ControlFormRecord = Record<keyof ControlEditableFields, FormControl>;
 export type ControlEditableFields = Record<(typeof ConstControlFormKeys.values)[number], string>;
 export type ControlNoneEditableFields = Record<(typeof ConstControlKeys.values)[number], string>;
+
+export type Controls = Record<string, Control>;
+
+export type Control = {
+  dto: ControlDto;
+  form: ControlForm;
+  $selected: WritableSignal<boolean>;
+  $formVisible: WritableSignal<boolean>;
+};

@@ -10,47 +10,60 @@ export class ModifiersService {
   private ss = inject(SelectService);
   private ccs = inject(CreateControlsService);
 
-  private get holdHandlers(): { [key: string]: () => void } {
-    const { Save } = ConstModifiers.record;
+  private get holdHandlers(): { [key: string]: () => boolean | Promise<boolean> } {
+    const { Save, Edit } = ConstModifiers.record;
+    const { currentFractal, selectedFractals } = this.ss;
     return {
-      [Save]: (): void => {
+      [Edit]: async (): Promise<boolean> => {
+        !selectedFractals.has(currentFractal.value) && (await selectedFractals.pushAndNavigate(currentFractal.value));
+        return true;
+      },
+      [Save]: (): boolean => {
         if (this.ccs.newControlsFormsMap.size > 0) {
           this.ccs.addNewControlsFormsToFractalAndSave();
         }
+        return false;
       },
     };
   }
 
-  private get touchHandlers(): { [key: string]: () => boolean } {
+  private get touchHandlers(): { [key: string]: () => boolean | Promise<boolean> } {
     const { New, Edit, Delete } = ConstModifiers.record;
     const { Controls } = ConstEditMods;
-    const { selectedFractalForm } = this.ss;
+    const { editMode, modifiers, selectedFractals, selectFractalFrom, selectedControls } = this.ss;
     return {
       [New]: (): boolean => {
-        if (this.ss.modifiers.$editMode() === Controls) {
-          selectedFractalForm.value && this.ccs.pushNewControlForm(selectedFractalForm.value);
-          return false;
+        if (editMode.has(Controls) && selectFractalFrom.value) {
+          selectFractalFrom.value.pushNewControl();
         }
         return false;
       },
       [Edit]: (): boolean => {
-        return true;
+        modifiers.has(Edit) && editMode.toggleAndNavigate();
+        return !selectedFractals.isEmpty;
       },
-      [Delete]: (): boolean => {
+      [Delete]: async (): Promise<boolean> => {
+        if (!selectedControls.isEmpty) {
+          return false;
+        }
+        if (!selectFractalFrom.isEmpty) {
+          await selectedFractals.deleteAndNavigate(selectFractalFrom.value);
+        }
+        if (selectedFractals.isEmpty) {
+          await this.ss.modifiers.clear();
+        }
         return false;
       },
     };
   }
 
-  onHold(modifier: string): void {
-    this.holdHandlers[modifier]?.();
+  async onHold(modifier: string): Promise<void> {
+    const shouldNavigate = await this.holdHandlers[modifier]?.();
+    shouldNavigate && this.ss.modifiers.setAndNavigate(modifier);
   }
 
-  onTouch(modifier: string): void {
-    this.navigate(this.touchHandlers[modifier]?.(), modifier);
-  }
-
-  private navigate(shouldNavigate: boolean, modifier: string): void {
+  async onTouch(modifier: string): Promise<void> {
+    const shouldNavigate = await this.touchHandlers[modifier]?.();
     shouldNavigate && this.ss.modifiers.setAndNavigate(modifier);
   }
 }

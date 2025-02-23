@@ -2,7 +2,7 @@
   <app-expansion-panel [fractal]="fractal" (closed)="closed()">
     @for (cursor of fractal.sortChildren; track cursor) {
       @if (fractal.findFractal(cursor); as fractal) {
-        @if (shouldRender() && !fractal.isItem) {
+        @if (shouldRender() && !fractal.parent.is(Collections)) {
           <app-application [fractal]="fractal" />
         }
       }

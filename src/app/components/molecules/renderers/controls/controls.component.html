@@ -1,9 +1,9 @@
-<table mat-table [dataSource]="fractal.controls" class="table">
+<table mat-table [dataSource]="dataSource" class="table">
   @for (column of columns; track column) {
     <ng-container [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
       <td class="td" mat-cell *matCellDef="let row">
-        {{ row[column] }}
+        {{ row.dto[column] }}
       </td>
     </ng-container>
   }

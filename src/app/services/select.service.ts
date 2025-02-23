@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import {
-  SelectedFractalFormState,
   CurrentFractalState,
   ManagerState,
   ModifiersState,
+  SelectedControlsState,
   SelectedFractalsState,
+  SelectFractalFromState,
   TapsState,
+  EditModeState,
 } from '@utils';
-import { SelectedControlsFormsState } from 'app/utils/states/selected-controls-forms-state';
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +16,10 @@ import { SelectedControlsFormsState } from 'app/utils/states/selected-controls-f
 export class SelectService {
   taps = new TapsState();
   manager = new ManagerState();
+  editMode = new EditModeState();
   modifiers = new ModifiersState();
   currentFractal = new CurrentFractalState();
   selectedFractals = new SelectedFractalsState();
-  selectedFractalForm = new SelectedFractalFormState();
-  selectedControlsForms = new SelectedControlsFormsState();
+  selectedControls = new SelectedControlsState();
+  selectFractalFrom = new SelectFractalFromState();
 }

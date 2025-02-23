@@ -1,40 +1,27 @@
-import { FractalDto, Fractal, Fractals, ControlDto, FractalForm, ControlFormRecord } from '@types';
+import { FractalDto, Fractal, Fractals, ControlDto, FractalForm, Controls } from '@types';
 import { checkValue } from '@utils';
 import { FormRecord } from '@angular/forms';
-import {
-  ConstIndicators,
-  ConstCollections,
-  ConstEntities,
-  ConstControlFormKeys,
-  ConstSeparator,
-  ConstSort,
-} from '@constants';
-import { findFractalRecursively } from './helpers';
-import { createFractalForm } from './fractal-form';
+import { ConstIndicators, ConstSeparator, ConstSort } from '@constants';
+import { createControls, findFractalRecursively } from './helpers';
+import { ControlDtoFactory } from '../control/control-dto-factory';
+import { ControlFactory } from '../control/control-factory';
+import { NewControlsState } from '../states/new-controls-state';
 
 export class FractalFactory implements Fractal {
   dto: FractalDto;
   form: FractalForm;
   parent: Fractal;
   fractals: Fractals | null = null;
+  controls: Controls;
   childrenForms = new FormRecord({});
+
+  newControls = new NewControlsState();
 
   constructor({ dto, parent }: { dto: FractalDto; parent?: Fractal | null }) {
     this.parent = parent ? parent : ({} as Fractal);
     this.dto = dto;
-    this.form = createFractalForm(this);
-  }
-
-  get isItem(): boolean {
-    return !this.isApp && this.parent.is(ConstCollections);
-  }
-
-  get isApp(): boolean {
-    return this.is(ConstEntities.App);
-  }
-
-  get isCollection(): boolean {
-    return this.is(ConstCollections);
+    this.form = new FormRecord({});
+    this.controls = createControls(this);
   }
 
   get cursor(): string {
@@ -42,10 +29,6 @@ export class FractalFactory implements Fractal {
       this.findControl(ConstIndicators.Cursor)?.data || this.findControl(ConstIndicators.Position)?.data,
       'Unable to get cursor'
     );
-  }
-
-  get controls(): ControlDto[] {
-    return Object.values(this.dto.controls);
   }
 
   get childrenFractals(): Fractal[] {
@@ -82,9 +65,7 @@ export class FractalFactory implements Fractal {
     return findFractalRecursively(test, this.fractals);
   }
 
-  getControlFrom(indicator: string): ControlFormRecord {
-    return Object.fromEntries(
-      ConstControlFormKeys.values.map(key => [key, this.form.controls[indicator].controls[key]])
-    ) as ControlFormRecord;
+  pushNewControl(): void {
+    this.newControls.push(new ControlFactory(new ControlDtoFactory(this.dto.id)));
   }
 }

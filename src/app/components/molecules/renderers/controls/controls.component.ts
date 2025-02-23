@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatTableModule } from '@mat';
-import { Fractal } from '@types';
+import { Control, Fractal } from '@types';
 
 @Component({
   selector: 'app-controls',
@@ -12,7 +12,12 @@ import { Fractal } from '@types';
 export class ControlsComponent {
   @Input() fractal!: Fractal;
   @Input() customColumns?: string[];
+
   get columns(): string[] {
     return this.customColumns ? this.customColumns : this.fractal.sortControls;
+  }
+
+  get dataSource(): Control[] {
+    return Object.values(this.fractal.controls);
   }
 }

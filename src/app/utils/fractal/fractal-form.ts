@@ -1,25 +1,6 @@
-import { FormControl, FormRecord } from '@angular/forms';
 import { ConstControlInputs, ConstControlFormKeys } from '@constants';
-import { ControlDto, ControlForm, Fractal, FractalDto, FractalForm } from '@types';
+import { ControlDto, ControlForm, Fractal, FractalDto } from '@types';
 import { updateSelectValue } from '../common';
-
-export const createControlFromRecord = (control: ControlDto): ControlForm => {
-  const formRecord = new FormRecord<FormControl>({});
-  ConstControlFormKeys.values.forEach(key => {
-    return formRecord.addControl(key, new FormControl(control[key]));
-  });
-  return formRecord;
-};
-
-export const createFractalForm = (fractal: Fractal): FractalForm => {
-  const fractalForm: FractalForm = new FormRecord({});
-  for (const indicator in fractal.dto.controls) {
-    const controlFromRecord = createControlFromRecord(fractal.dto.controls[indicator]);
-    fractalForm.addControl(indicator, controlFromRecord);
-    if (fractal.isItem) fractal.parent.childrenForms.addControl(fractal.cursor, controlFromRecord);
-  }
-  return fractalForm;
-};
 
 const updateControlByFormRecord = (control: ControlDto, controlForm: ControlForm): void => {
   ConstControlFormKeys.values.forEach(key => {

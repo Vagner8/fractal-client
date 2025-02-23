@@ -1,6 +1,7 @@
 import { FormRecord } from '@angular/forms';
-import { ControlDto, ControlFormRecord, ControlsDto, ControlForm } from './control';
+import { ControlDto, ControlsDto, ControlForm, Controls, Control } from './control';
 import { ConstSort } from '@constants';
+import { ArrayState } from 'app/utils/states/abstract/array-state';
 
 export type SortMode = (typeof ConstSort.values)[number];
 export type Fractals = Record<string, Fractal>;
@@ -24,15 +25,12 @@ export interface Fractal {
   form: FractalForm;
   parent: Fractal;
   fractals: Fractals | null;
+  controls: Controls;
   childrenForms: FormRecord;
 
-  get isApp(): boolean;
-  get isItem(): boolean;
-  get isCollection(): boolean;
+  newControls: ArrayState<Control>;
 
   get cursor(): string;
-
-  get controls(): ControlDto[];
   get childrenFractals(): Fractal[];
 
   get sortChildren(): string[];
@@ -44,5 +42,5 @@ export interface Fractal {
   findControl(indicator: string): ControlDto | null;
   findFractal(test: string): Fractal | null;
 
-  getControlFrom(indicator: string): ControlFormRecord;
+  pushNewControl(): void;
 }

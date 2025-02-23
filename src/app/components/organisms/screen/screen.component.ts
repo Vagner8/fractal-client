@@ -34,7 +34,8 @@ export class ScreenComponent implements OnInit, AppParams {
     this.Taps && this.ss.taps.set(app.findFractal(this.Taps));
     this.Pages && this.ss.currentFractal.set(app.findFractal(this.Pages));
     this.Manager && this.ss.manager.set(this.Manager);
+    this.EditMode && this.ss.editMode.set(this.EditMode);
     this.Selected && this.ss.selectedFractals.init(this.Selected);
-    this.Modifiers && this.ss.modifiers.init(this.Modifiers, this.EditMode);
+    this.Modifiers && this.ss.modifiers.set(this.Modifiers);
   }
 }

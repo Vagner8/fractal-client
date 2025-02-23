@@ -2,7 +2,7 @@ import { Component, inject, Input, OnInit, output, viewChild } from '@angular/co
 import { MatButtonModule, MatExpansionModule, MatExpansionPanel, MatIconModule } from '@mat';
 import { SelectService } from '@services';
 import { Fractal } from '@types';
-import { ConstControlFormKeys, ConstIndicators } from '@constants';
+import { ConstCollections, ConstControlFormKeys, ConstEntities, ConstIndicators } from '@constants';
 import { ChildrenControlsComponent, ControlsComponent } from '@components/molecules';
 
 @Component({
@@ -17,11 +17,13 @@ export class ExpansionPanelComponent implements OnInit {
   ss = inject(SelectService);
   panel = viewChild(MatExpansionPanel);
   closed = output<Fractal>();
-  indicators = ConstIndicators;
-  controlFormKeys = ConstControlFormKeys.strings;
+
+  Indicators = ConstIndicators;
+  Collections = ConstCollections;
+  ControlFormKeys = ConstControlFormKeys.strings;
 
   ngOnInit(): void {
-    if (this.fractal.isApp) {
+    if (this.fractal.is(ConstEntities.App)) {
       this.ss.currentFractal.set(this.fractal);
       this.panel()?.open();
     }

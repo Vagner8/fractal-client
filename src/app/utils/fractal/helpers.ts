@@ -1,5 +1,6 @@
 import { FractalFactory } from 'app/utils/fractal';
-import { Fractal, Fractals, FractalsDto } from '@types';
+import { Controls, Fractal, Fractals, FractalsDto } from '@types';
+import { ControlFactory } from '../control/control-factory';
 
 export const createFractalsRecursively = (fractalsDto: FractalsDto | null, parent: Fractal): Fractals | null => {
   if (!fractalsDto) return null;
@@ -23,11 +24,13 @@ export const findFractalRecursively = (test: string, fractals: Fractals | null):
   return null;
 };
 
-// export const updateFractalSort = (fractal: Fractal, indicator: string): void => {
-//   const { sort, control } = fractal.splitControlData(ConstSort.Sort);
-//   if (control) {
-//     const value = [...sort, indicator].join(ConstSeparator);
-//     control.data = value;
-//     fractal.getControlFrom(ConstSort.Sort).data.setValue(value);
-//   }
-// };
+export const createControls = (fractal: Fractal): Controls => {
+  const { dto, form } = fractal;
+  return Object.fromEntries(
+    Object.entries(dto.controls).map(([key, controlDto]) => {
+      const control = new ControlFactory(controlDto);
+      form.addControl(key, control.form);
+      return [key, control];
+    })
+  );
+};

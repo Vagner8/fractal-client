@@ -3,6 +3,7 @@ import { MatAccordion, MatExpansionModule } from '@mat';
 import { Fractal } from '@types';
 import { ExpansionPanelComponent } from './expansion-panel/expansion-panel.component';
 import { SelectService } from '@services';
+import { ConstCollections, ConstEntities } from '@constants';
 
 @Component({
   selector: 'app-application',
@@ -16,9 +17,11 @@ export class ApplicationComponent {
   ss = inject(SelectService);
   accordion = viewChild(MatAccordion);
 
+  Collections = ConstCollections;
+
   closed(): void {
     const current = this.ss.currentFractal.value;
-    if (current && !this.fractal.isApp) this.ss.currentFractal.set(current.parent);
+    if (current && !this.fractal.is(ConstEntities.App)) this.ss.currentFractal.set(current.parent);
     this.accordion()?.closeAll();
   }
 

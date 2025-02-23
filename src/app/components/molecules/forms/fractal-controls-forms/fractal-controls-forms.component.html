@@ -1,10 +1,12 @@
-<button (click)="onCardClicked($event)">
-  <app-card [title]="fractal.cursor" [selected]="ss.selectedFractalForm.has(fractal)">
-    @if (ss.modifiers.$editMode() === editMode.Controls) {
+@let newControls = fractal.newControls.$value();
+
+<button (click)="onFractalFormClicked()">
+  <app-card [title]="fractal.cursor" [selected]="ss.selectFractalFrom.has(fractal)">
+    @if (ss.editMode.has(EditMode.Controls)) {
       <div class="controls-forms">
         <app-list [templateRef]="controlsForms" [dataSource]="fractal.sortControls" />
-        @if (newControlsForms$ | async; as controlsFrom) {
-          <app-list [templateRef]="newControlsForms" [dataSource]="controlsFrom.controls" />
+        @if (newControls.length) {
+          <app-list [templateRef]="newControlsForms" [dataSource]="newControls" />
         }
       </div>
     } @else {
@@ -14,22 +16,16 @@
 </button>
 
 <ng-template #controlsForms let-indicator>
-  @if (fractal.findControl(indicator); as control) {
-    @let controlForm = fractal.form.controls[indicator];
-    <button (click)="onControlFormClicked($event, controlForm)">
-      <app-control-forms
-        [title]="indicator"
-        [selected]="!!ss.selectedControlsForms.map.get(fractal)?.has(controlForm)"
-        [controlForm]="controlForm" />
+  @let control = fractal.controls[indicator];
+  @if (control.$formVisible()) {
+    <button (click)="onControlFormClicked(control)">
+      <app-control-forms [title]="indicator" [selected]="control.$selected()" [controlForm]="control.form" />
     </button>
   }
 </ng-template>
 
-<ng-template #newControlsForms let-controlForm>
-  <button (click)="onControlFormClicked($event, controlForm)">
-    <app-control-forms
-      title="New"
-      [selected]="!!ss.selectedControlsForms.map.get(fractal)?.has(controlForm)"
-      [controlForm]="controlForm" />
+<ng-template #newControlsForms let-control>
+  <button (click)="onControlFormClicked(control)">
+    <app-control-forms title="New" [selected]="control.$selected()" [controlForm]="control.form" />
   </button>
 </ng-template>

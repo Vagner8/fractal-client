@@ -1,6 +1,6 @@
 @let controls = controlForm.controls;
 
-<app-card [title]="title" [selected]="selected">
+<app-card [title]="title" [selected]="selected" [ngStyle]="{ visibility: '' }">
   <ng-container>
     <app-input [label]="labels.indicator" [formCtr]="controls[labels.indicator]" />
     <app-select [label]="labels.input" [opts]="selectOpts" [formCtr]="controls[labels.input]" />

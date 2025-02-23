@@ -6,7 +6,7 @@
   (afterExpand)="afterExpand(fractal)">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      @if (fractal.findControl(indicators.Icon)?.data; as icon) {
+      @if (fractal.findControl(Indicators.Icon)?.data; as icon) {
         <mat-icon class="icon">{{ icon }}</mat-icon>
       }
       {{ fractal.cursor }}</mat-panel-title
@@ -14,8 +14,8 @@
   </mat-expansion-panel-header>
   @if (panel.expanded) {
     <div class="children">
-      <app-controls [fractal]="fractal" [customColumns]="controlFormKeys" class="controls" />
-      @if (fractal.isCollection) {
+      <app-controls [fractal]="fractal" [customColumns]="ControlFormKeys" class="controls" />
+      @if (fractal.is(Collections)) {
         <app-children-controls [fractal]="fractal" class="children-controls" />
       }
       @if (fractal.fractals) {

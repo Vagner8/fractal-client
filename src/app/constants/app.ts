@@ -19,5 +19,5 @@ export const ConstParams = constant([
   ConstEntities.Modifiers,
 ] as const);
 
-export const ConstUnsaveModifiers = constant(['Save', 'Delete'] as const);
-export const ConstModifiers = constant(['New', 'Edit', ...ConstUnsaveModifiers.values] as const);
+export const ConstHoldModifiers = constant(['Edit', 'Save', 'Delete'] as const);
+export const ConstModifiers = constant(['New', ...ConstHoldModifiers.values] as const);

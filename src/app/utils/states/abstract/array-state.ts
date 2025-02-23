@@ -17,7 +17,7 @@ export abstract class ArrayState<T> extends State<T[]> {
     return this.value.length === 0;
   }
 
-  override has(value: T): boolean {
-    return this.value.includes(value);
+  override has(value: T | null): boolean {
+    return this.value.some(item => item === value);
   }
 }

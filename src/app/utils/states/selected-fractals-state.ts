@@ -1,9 +1,22 @@
-import { Fractal, FractalDto } from '@types';
+import { Control, Fractal } from '@types';
 import { ArrayState } from './abstract/array-state';
 import { ConstParams, ConstSeparator } from '@constants';
 import { inject } from '@angular/core';
 import { EntitiesService } from '@services';
 import { Router } from '@angular/router';
+import { ObjectState } from './abstract/object-state';
+
+export class SelectedControlsState extends ArrayState<Control> {
+  constructor() {
+    super([]);
+  }
+}
+
+export class SelectFractalFromState extends ObjectState<Fractal | null> {
+  constructor() {
+    super(null);
+  }
+}
 
 export class SelectedFractalsState extends ArrayState<Fractal> {
   ens = inject(EntitiesService);
@@ -14,11 +27,7 @@ export class SelectedFractalsState extends ArrayState<Fractal> {
   }
 
   init(selected: string): void {
-    const ids = selected.split(ConstSeparator);
-    ids.forEach(id => {
-      const fractal = this.ens.$app()?.findFractal(id);
-      this.push(fractal);
-    });
+    selected.split(ConstSeparator).forEach(id => this.push(this.ens.$app()?.findFractal(id)));
   }
 
   toggleAll({ parent }: Fractal): void {
@@ -26,16 +35,12 @@ export class SelectedFractalsState extends ArrayState<Fractal> {
     this.navigate();
   }
 
-  toDto(): FractalDto[] {
-    return this.value.map(({ dto }) => dto);
-  }
-
-  pushAndNavigate(fractal: Fractal | null): void {
+  async pushAndNavigate(fractal: Fractal | null): Promise<void> {
     super.push(fractal);
     this.navigate();
   }
 
-  deleteAndNavigate(fractal: Fractal | null): void {
+  async deleteAndNavigate(fractal: Fractal | null): Promise<void> {
     super.delete(fractal);
     this.navigate();
   }

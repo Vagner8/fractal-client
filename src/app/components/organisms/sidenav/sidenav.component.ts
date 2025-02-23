@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
-import { ConstSort, ConstEntities, ConstEvents, ConstUnsaveModifiers } from '@constants';
+import { ConstSort, ConstEntities, ConstEvents, ConstHoldModifiers } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { SelectService, EntitiesService, ModifiersService } from '@services';
 import { Fractal } from '@types';
@@ -21,7 +21,7 @@ export class SidenavComponent {
   events = ConstEvents;
   entities = ConstEntities;
   splitIndicators = ConstSort;
-  unsaveModifiers = ConstUnsaveModifiers;
+  unsaveModifiers = ConstHoldModifiers;
 
   async onPageTouched(tap: Fractal): Promise<void> {
     await this.ss.modifiers.clear();
