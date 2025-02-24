@@ -1,6 +1,8 @@
-@if (ens.$app()) {
+@if (fs.$app()) {
   <app-header />
-  <app-sidenav />
+  @if (fs.modifiers && fs.collections) {
+    <app-sidenav [modifiers]="fs.modifiers" [collections]="fs.collections" />
+  }
   <app-toolbar />
 } @else {
   <div class="spinner">

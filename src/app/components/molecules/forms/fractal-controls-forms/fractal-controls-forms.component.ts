@@ -7,12 +7,11 @@ import { CreateControlsService, SelectService } from '@services';
 import { map, Observable } from 'rxjs';
 import { ControlFormsComponent } from '../control-forms/control-forms.component';
 import { FormArray } from '@angular/forms';
-import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'app-fractal-controls-forms',
   standalone: true,
-  imports: [CardComponent, ControlDataFormsComponent, ListComponent, ControlFormsComponent, AsyncPipe],
+  imports: [CardComponent, ControlDataFormsComponent, ListComponent, ControlFormsComponent],
   templateUrl: './fractal-controls-forms.component.html',
   styleUrl: './fractal-controls-forms.component.scss',
 })

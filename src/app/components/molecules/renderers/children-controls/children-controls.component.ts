@@ -1,8 +1,7 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TapDirective } from '@directives';
 import { MatTableModule } from '@mat';
-import { SelectService } from '@services';
-import { Fractal } from '@types';
+import { CollectionFractal, ItemFractal } from '@utils';
 
 @Component({
   selector: 'app-children-controls',
@@ -12,9 +11,18 @@ import { Fractal } from '@types';
   styleUrl: './children-controls.component.scss',
 })
 export class ChildrenControlsComponent {
-  @Input() fractal!: Fractal;
-  ss = inject(SelectService);
+  @Input() fractal!: CollectionFractal;
+
   get columns(): string[] {
-    return this.fractal.sortChildrenControls;
+    return ['Name', 'Email', 'Position'];
+  }
+
+  onHold(row: ItemFractal): void {
+    const isSomeItemSelected = Array.from(row.parent.fractals.values).some(fractal => fractal.$selected());
+    row.parent.fractals.values.forEach(fractal => fractal.$selected.set(isSomeItemSelected));
+  }
+
+  onTouch(row: ItemFractal): void {
+    row.$selected.update(prev => !prev);
   }
 }

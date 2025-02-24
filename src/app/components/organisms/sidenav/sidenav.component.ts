@@ -1,30 +1,38 @@
-import { Component, inject } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject, Input } from '@angular/core';
+import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
-import { ConstSort, ConstEntities, ConstEvents, ConstHoldModifiers } from '@constants';
+import { ConstEvents, ConstNavigationModifiers, ConstParams } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { SelectService, EntitiesService, ModifiersService } from '@services';
-import { Fractal } from '@types';
+import { EventService } from '@services';
+import { AbstractFractal, CollectionFractal, isCollection } from '@utils';
 
 @Component({
   selector: 'app-sidenav',
   standalone: true,
-  imports: [MatSidenavModule, RouterOutlet, MatListModule, TapComponent],
+  imports: [RouterModule, MatSidenavModule, RouterOutlet, MatListModule, TapComponent],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
-  ss = inject(SelectService);
-  ms = inject(ModifiersService);
-  ens = inject(EntitiesService);
+  @Input() modifiers!: CollectionFractal;
+  @Input() collections!: CollectionFractal;
+  es = inject(EventService);
+  router = inject(Router);
 
-  events = ConstEvents;
-  entities = ConstEntities;
-  splitIndicators = ConstSort;
-  unsaveModifiers = ConstHoldModifiers;
+  Events = ConstEvents;
 
-  async onPageTouched(tap: Fractal): Promise<void> {
-    await this.ss.modifiers.clear();
-    this.ss.currentFractal.setAndNavigate(tap);
+  onPageTouched(page: AbstractFractal): void {
+    isCollection(page.parent) && page.parent.unselectAllChildren();
+    page.$selected.set(true);
+    this.router.navigate([page.controls.get('Cursor')]);
+  }
+
+  onModifierTouched(modifier: AbstractFractal): void {
+    if (modifier.is(ConstNavigationModifiers)) {
+      this.router.navigate([], {
+        queryParams: { [ConstParams.Modifiers]: ConstNavigationModifiers.Edit },
+        queryParamsHandling: 'merge',
+      });
+    }
   }
 }

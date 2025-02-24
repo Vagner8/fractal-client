@@ -1,12 +1,8 @@
 @use 'variables.scss' as *;
 
-button[disabled] {
-  background-color: map-get($color, common);
-}
-
 button {
   width: 100%;
-  justify-content: start;
+  justify-content: flex-start;
   height: calc(map-get($size, lg) * 2);
   &:hover {
     border-radius: 0;

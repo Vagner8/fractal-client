@@ -9,7 +9,7 @@ export const ConstEditMods = constant(['Fractals', 'Controls'] as const);
 export const ConstCollections = constant(['Users', 'Products'] as const);
 
 export const ConstPages = constant(['Home', ...ConstCollections.values, ConstApp] as const);
-export const ConstEntities = constant(['Pages', 'Manager', 'Modifiers', ConstApp] as const);
+export const ConstEntities = constant(['Pages', 'Manager', 'Modifiers', 'Collections', ConstApp] as const);
 export const ConstParams = constant([
   'Selected',
   'EditMode',
@@ -17,7 +17,9 @@ export const ConstParams = constant([
   ConstEntities.Pages,
   ConstEntities.Manager,
   ConstEntities.Modifiers,
+  ConstEntities.Collections,
 ] as const);
 
-export const ConstHoldModifiers = constant(['Edit', 'Save', 'Delete'] as const);
-export const ConstModifiers = constant(['New', ...ConstHoldModifiers.values] as const);
+export const ConstNavigationModifiers = constant(['Edit', 'New'] as const);
+export const ConstHoldModifiers = constant(['Save', 'Delete', ConstNavigationModifiers.Edit] as const);
+export const ConstModifiers = constant([ConstNavigationModifiers.New, ...ConstHoldModifiers.values] as const);

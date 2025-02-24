@@ -20,6 +20,6 @@ export class EntitiesService {
     this.modifiers = app.findFractal(ConstEntities.Modifiers);
     this.$app.set(app);
 
-    console.log('🚀 ~ app', this.$app());
+    // console.log('🚀 ~ app', this.$app());
   }
 }

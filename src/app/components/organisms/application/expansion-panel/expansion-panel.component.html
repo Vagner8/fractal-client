@@ -15,9 +15,9 @@
   @if (panel.expanded) {
     <div class="children">
       <app-controls [fractal]="fractal" [customColumns]="ControlFormKeys" class="controls" />
-      @if (fractal.is(Collections)) {
+      <!-- @if (fractal.is(Collections)) {
         <app-children-controls [fractal]="fractal" class="children-controls" />
-      }
+      } -->
       @if (fractal.fractals) {
         <ng-content />
       }

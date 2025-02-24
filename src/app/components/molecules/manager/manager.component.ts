@@ -1,38 +1,47 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@mat';
 import { TapDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
-import { map, merge, Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
-import { EventService, SelectService } from '@services';
-import { ConstEvents } from '@constants';
+import { EventService, FractalService } from '@services';
+import { ConstEvents, ConstParams } from '@constants';
+import { Router } from '@angular/router';
+
+const { Hold, Touch } = ConstEvents;
 
 @Component({
   selector: 'app-manager',
   standalone: true,
-  imports: [MatButtonModule, SpinnerComponent, TapDirective, AsyncPipe],
+  imports: [MatButtonModule, SpinnerComponent, TapDirective],
   templateUrl: './manager.component.html',
   styleUrl: './manager.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ManagerComponent implements OnInit {
-  showSpinner$!: Observable<boolean>;
+export class ManagerComponent {
   prevEvent: string | null = null;
 
-  private es = inject(EventService);
-  private ss = inject(SelectService);
+  es = inject(EventService);
+  private fs = inject(FractalService);
+  private router = inject(Router);
 
-  ngOnInit(): void {
-    this.showSpinner$ = merge(this.es.holdRun$.pipe(map(() => true)), this.es.holdEnd$.pipe(map(() => false)));
+  onHold(): void {
+    this.prevEvent = Hold;
+    this.es.$managerEvent.set(Hold);
+    this.navigate(Hold);
   }
 
-  async holdAndTouch(event: string): Promise<void> {
-    if (this.prevEvent !== event) {
-      await this.ss.manager.setAndNavigate(event);
+  onTouch(): void {
+    if (this.prevEvent === Touch) {
+      this.fs.modifiers?.$selected.update(prev => {
+        this.fs.collections?.$selected.set(prev);
+        return !prev;
+      });
     }
-    if (event === ConstEvents.Touch && this.prevEvent !== ConstEvents.Hold) {
-      this.ss.taps.toggle();
-    }
-    this.prevEvent = event;
+    this.prevEvent = Touch;
+    this.es.$managerEvent.set(Touch);
+    this.navigate(ConstEvents.Touch);
+  }
+
+  private navigate(event: string): void {
+    this.router.navigate([], { queryParams: { [ConstParams.Manager]: event }, queryParamsHandling: 'merge' });
   }
 }

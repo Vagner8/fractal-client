@@ -33,7 +33,7 @@ export class TapDirective implements OnInit, OnDestroy {
   @HostListener('pointerdown')
   pointerdown(): void {
     if (this.disableHoldEvent) return;
-    this.holdDelayTimeout = setTimeout(() => this.es.holdRun$.next(), this.holdDelay);
+    this.holdDelayTimeout = setTimeout(() => this.es.$isHoldEventRunning.set(true), this.holdDelay);
     this.holdTimeout = setTimeout(() => (this.isHoldSucceed = true), this.holdThreshold);
   }
 
@@ -41,7 +41,7 @@ export class TapDirective implements OnInit, OnDestroy {
   pointerup(): void {
     if (this.isHoldSucceed) {
       this.hold.emit();
-      this.es.holdEnd$.next();
+      this.es.$isHoldEventRunning.set(false);
       this.cancel();
     } else {
       this.touch.emit();
@@ -60,7 +60,7 @@ export class TapDirective implements OnInit, OnDestroy {
 
   private cancel(): void {
     this.isHoldSucceed = false;
-    this.es.holdEnd$.next();
+    this.es.$isHoldEventRunning.set(false);
     this.holdTimeout && clearTimeout(this.holdTimeout);
     this.holdDelayTimeout && clearTimeout(this.holdDelayTimeout);
   }

@@ -1,21 +1,20 @@
-@let app = ens.$app();
-@let current = ss.currentFractal.$value();
+@let app = fs.$app();
 
 @if (app) {
   @if (Modifiers) {
-    <app-modifier />
+    <app-editor />
   }
   @if (!Modifiers) {
     @switch (Pages) {
-      @case (appPages.Home) {
+      @case (ConstPages.Home) {
         <h1>Home</h1>
       }
-      @case (appPages.App) {
+      <!-- @case (ConstPages.App) {
         <app-application [fractal]="app" />
-      }
+      } -->
       @default {
-        @if (current) {
-          <app-children-controls [fractal]="current" />
+        @if (currentPage(); as currentPage) {
+          <app-children-controls [fractal]="currentPage" />
         }
       }
     }

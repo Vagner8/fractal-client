@@ -1,8 +1,12 @@
-<button mat-flat-button [disableHoldEvent]="disableHoldEvent" appTap (hold)="hold.emit(tap)" (touch)="touch.emit(tap)">
-  <ng-container>
-    @if (tap.findControl(indicators.Icon)?.data; as icon) {
-      <mat-icon aria-hidden="false" [fontIcon]="icon" />
-    }
-    {{ tap.cursor }}
-  </ng-container>
+@let icon = tap.controls.get('Icon');
+
+<button
+  mat-flat-button
+  extended
+  [disableHoldEvent]="disableHoldEvent"
+  appTap
+  (hold)="hold.emit(tap)"
+  (touch)="touch.emit(tap)">
+  <mat-icon [hidden]="!icon" aria-hidden="false">{{ icon }}</mat-icon>
+  {{ tap.controls.get('Cursor') }}
 </button>

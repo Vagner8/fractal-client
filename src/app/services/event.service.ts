@@ -1,10 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable, signal } from '@angular/core';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventService {
-  holdRun$ = new Subject<void>();
-  holdEnd$ = new Subject<void>();
+  $managerEvent = signal<string | null>(null);
+  $isHoldEventRunning = signal(false);
 }

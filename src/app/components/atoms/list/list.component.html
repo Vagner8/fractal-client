@@ -1,5 +1,5 @@
 <ul [class.two-items]="dataSource.length === 2" [class.three-or-more-items]="dataSource.length >= 3">
-  @for (data of dataSource; track trackFn()) {
+  @for (data of dataSource; track trackFn(data)) {
     <li>
       <ng-container *ngTemplateOutlet="templateRef; context: { $implicit: data, index: $index }"></ng-container>
     </li>

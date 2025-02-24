@@ -1,34 +1,19 @@
 <mat-drawer-container class="mat-drawer-container-app-sidenav" autosize>
   <mat-drawer
-    [opened]="ss.manager.has(events.Touch)"
+    [opened]="es.$managerEvent() === Events.Touch"
     [disableClose]="false"
     class="mat-drawer-app-sidenav"
     mode="side"
     position="end">
-    @if (ss.taps.$value(); as taps) {
-      <mat-list>
-        @if (taps.is(entities.Pages)) {
-          @for (indicator of taps.sortChildren; track indicator) {
-            @if (taps.findFractal(indicator); as tap) {
-              <app-tap [tap]="tap" [disableHoldEvent]="true" (touch)="onPageTouched($event)" />
-            }
-          }
-          @if (ens.$app(); as app) {
-            <app-tap [tap]="app" [disableHoldEvent]="true" (touch)="onPageTouched($event)" />
-          }
-        }
-        @if (taps.is(entities.Modifiers)) {
-          @for (indicator of taps.sortChildren; track indicator) {
-            @if (taps.findFractal(indicator); as tap) {
-              <app-tap
-                [tap]="tap"
-                [disableHoldEvent]="!unsaveModifiers.strings.includes(indicator)"
-                (hold)="ms.onHold($event.cursor)"
-                (touch)="ms.onTouch($event.cursor)" />
-            }
-          }
-        }
-      </mat-list>
+    @if (modifiers.$selected()) {
+      @for (modifier of modifiers.fractals.values; track modifier.dto.id) {
+        <app-tap [tap]="modifier" (touch)="onModifierTouched(modifier)" />
+      }
+    }
+    @if (collections.$selected()) {
+      @for (connection of collections.fractals.values; track connection.dto.id) {
+        <app-tap [tap]="connection" [disableHoldEvent]="true" (touch)="onPageTouched($event)" />
+      }
     }
   </mat-drawer>
   <router-outlet></router-outlet>

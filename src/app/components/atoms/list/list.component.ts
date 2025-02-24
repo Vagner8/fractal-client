@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, TemplateRef } from '@angular/core';
 import { Control, Fractal } from '@types';
-import { v4 } from 'uuid';
+
+type DataSource = Fractal | string | Control;
 
 @Component({
   selector: 'app-list',
@@ -11,10 +12,10 @@ import { v4 } from 'uuid';
   styleUrl: './list.component.scss',
 })
 export class ListComponent {
-  @Input() dataSource: Fractal[] | string[] | Control[] = [];
+  @Input() dataSource: DataSource[] = [];
   @Input() templateRef!: TemplateRef<unknown>;
 
-  trackFn(): string {
-    return v4();
+  trackFn(data: DataSource): string {
+    return typeof data === 'string' ? data : data.dto.id;
   }
 }

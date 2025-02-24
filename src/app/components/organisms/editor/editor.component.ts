@@ -5,12 +5,12 @@ import { ListComponent } from '@components/atoms';
 import { FractalControlsFormsComponent } from '@components/molecules';
 
 @Component({
-  selector: 'app-modifier',
+  selector: 'app-editor',
   standalone: true,
   imports: [MatButtonModule, MatCardModule, FractalControlsFormsComponent, ListComponent],
-  templateUrl: './modifier.component.html',
-  styleUrl: './modifier.component.scss',
+  templateUrl: './editor.component.html',
+  styleUrl: './editor.component.scss',
 })
-export class ModifierComponent {
+export class EditorComponent {
   ss = inject(SelectService);
 }
