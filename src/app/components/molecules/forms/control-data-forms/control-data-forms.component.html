@@ -1,10 +1,10 @@
 <form>
-  @for (indicator of fractal.sortControls; track indicator) {
-    @if (fractal.findControl(indicator); as control) {
-      @let dataForm = fractal.controls[indicator].form.controls[controlFormKeys.data];
-      @switch (control.input) {
-        @case (controlInputs.Select) {
-          <app-select [label]="indicator" [opts]="control.data.split(separator)" [formCtr]="dataForm" />
+  @for (indicator of ['Email', 'Name', 'Position']; track indicator) {
+    @if (fractal.controls.get(indicator); as control) {
+      @let dataForm = control.form.controls[ControlFormKeys.data];
+      @switch (control.dto.input) {
+        @case (ControlInputs.Select) {
+          <app-select [label]="indicator" [opts]="control.dto.data.split(Separator)" [formCtr]="dataForm" />
         }
         @default {
           <app-input [label]="indicator" [formCtr]="dataForm" />

@@ -1,12 +1,8 @@
+import { Control, ControlsDto, Indicators } from './control';
+import { WritableSignal } from '@angular/core';
 import { FormRecord } from '@angular/forms';
-import { ControlDto, ControlsDto, ControlForm, Controls, Control } from './control';
-import { ConstSort } from '@constants';
-import { ArrayState } from 'app/utils/states/abstract/array-state';
 
-export type SortMode = (typeof ConstSort.values)[number];
-export type Fractals = Record<string, Fractal>;
 export type FractalsDto = Record<string, FractalDto>;
-export type FractalForm = FormRecord<ControlForm>;
 
 export interface FractalDto {
   id: string;
@@ -15,32 +11,33 @@ export interface FractalDto {
   controls: ControlsDto;
 }
 
-export interface SplitControlDataReturnType {
-  sort: string[];
-  control: ControlDto | null;
+export interface RecordFractals {
+  record: Record<string, Fractal>;
+  get values(): Fractal[];
+  set(key: string, fractal: Fractal): void;
+  get(indicator: string): Fractal | null;
+  getCollection(test: string, fractals?: RecordFractals): FractalCollection | null;
+}
+
+export interface RecordControls {
+  record: Record<string, Control>;
+  get values(): Control[];
+  get(indicator: string): Control;
+  getData(value: Indicators | { string: string }): string;
 }
 
 export interface Fractal {
   dto: FractalDto;
-  form: FractalForm;
-  parent: Fractal;
-  fractals: Fractals | null;
-  controls: Controls;
-  childrenForms: FormRecord;
+  form: FormRecord;
+  parent: FractalCollection;
+  controls: RecordControls;
+  $selected: WritableSignal<boolean>;
+  is(value: string | object): boolean;
+}
 
-  newControls: ArrayState<Control>;
-
-  get cursor(): string;
-  get childrenFractals(): Fractal[];
-
-  get sortChildren(): string[];
-  get sortControls(): string[];
-  get sortChildrenControls(): string[];
-
-  is(test: string | object): boolean;
-
-  findControl(indicator: string): ControlDto | null;
-  findFractal(test: string): Fractal | null;
-
-  pushNewControl(): void;
+export interface FractalCollection extends Fractal {
+  parent: FractalCollection;
+  fractals: RecordFractals;
+  unselectAllChildren(): void;
+  getSelectedCollection(): FractalCollection | null;
 }

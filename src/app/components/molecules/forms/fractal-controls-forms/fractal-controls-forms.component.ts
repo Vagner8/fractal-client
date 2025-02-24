@@ -1,12 +1,8 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CardComponent, ListComponent } from '@components/atoms';
 import { ControlDataFormsComponent } from '../control-data-forms/control-data-forms.component';
-import { Fractal, ControlForm, Control } from '@types';
-import { ConstEditMods } from '@constants';
-import { CreateControlsService, SelectService } from '@services';
-import { map, Observable } from 'rxjs';
 import { ControlFormsComponent } from '../control-forms/control-forms.component';
-import { FormArray } from '@angular/forms';
+import { Fractal } from '@types';
 
 @Component({
   selector: 'app-fractal-controls-forms',
@@ -15,26 +11,26 @@ import { FormArray } from '@angular/forms';
   templateUrl: './fractal-controls-forms.component.html',
   styleUrl: './fractal-controls-forms.component.scss',
 })
-export class FractalControlsFormsComponent implements OnInit {
+export class FractalControlsFormsComponent {
   @Input() fractal!: Fractal;
 
-  ss = inject(SelectService);
-  ccs = inject(CreateControlsService);
+  // ss = inject(SelectService);
+  // ccs = inject(CreateControlsService);
 
-  EditMode = ConstEditMods;
-  newControlsForms$!: Observable<FormArray<ControlForm> | undefined>;
+  // EditMode = ConstEditMods;
+  // newControlsForms$!: Observable<FormArray<ControlForm> | undefined>;
 
-  ngOnInit(): void {
-    this.newControlsForms$ = this.ccs.changes$.pipe(map(map => map.get(this.fractal)));
-  }
+  // ngOnInit(): void {
+  //   this.newControlsForms$ = this.ccs.changes$.pipe(map(map => map.get(this.fractal)));
+  // }
 
   onFractalFormClicked(): void {
-    if (this.ss.selectFractalFrom.has(this.fractal)) return;
-    this.ss.selectedControls.clear();
-    this.ss.selectFractalFrom.set(this.fractal);
+    // if (this.ss.selectFractalFrom.has(this.fractal)) return;
+    // this.ss.selectedControls.clear();
+    // this.ss.selectFractalFrom.set(this.fractal);
   }
 
-  onControlFormClicked(control: Control): void {
-    control.$selected.update(prev => !prev);
-  }
+  // onControlFormClicked(control: Control): void {
+  //   control.$selected.update(prev => !prev);
+  // }
 }

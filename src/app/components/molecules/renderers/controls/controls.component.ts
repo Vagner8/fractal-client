@@ -14,7 +14,7 @@ export class ControlsComponent {
   @Input() customColumns?: string[];
 
   get columns(): string[] {
-    return this.customColumns ? this.customColumns : this.fractal.sortControls;
+    return this.customColumns ? this.customColumns : [];
   }
 
   get dataSource(): Control[] {

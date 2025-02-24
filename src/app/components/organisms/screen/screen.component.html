@@ -1,8 +1,9 @@
 @let app = fs.$app();
+@let selectedCollection = fs.collections?.getSelectedCollection();
 
 @if (app) {
-  @if (Modifiers) {
-    <app-editor />
+  @if (Modifiers && selectedCollection) {
+    <app-editor [collection]="selectedCollection" />
   }
   @if (!Modifiers) {
     @switch (Pages) {

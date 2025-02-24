@@ -1,8 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatButtonModule, MatCardModule } from '@mat';
-import { SelectService } from '@services';
 import { ListComponent } from '@components/atoms';
 import { FractalControlsFormsComponent } from '@components/molecules';
+import { FractalCollection } from '@types';
 
 @Component({
   selector: 'app-editor',
@@ -12,5 +12,5 @@ import { FractalControlsFormsComponent } from '@components/molecules';
   styleUrl: './editor.component.scss',
 })
 export class EditorComponent {
-  ss = inject(SelectService);
+  @Input() collection!: FractalCollection;
 }

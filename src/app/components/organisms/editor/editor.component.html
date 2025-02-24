@@ -1,7 +1,5 @@
 <div class="modifier">
-  @if (!ss.selectedFractals.isEmpty) {
-    <app-list [dataSource]="ss.selectedFractals.$value()" [templateRef]="fractalForm" />
-  }
+  <app-list [dataSource]="collection.fractals.values" [templateRef]="fractalForm" />
 </div>
 
 <ng-template #fractalForm let-fractal>

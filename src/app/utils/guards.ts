@@ -1,6 +1,6 @@
-import { Fractal } from '@types';
-import { AbstractFractal, CollectionFractal, FractalFactory } from './fractal';
+import { Fractal, FractalCollection } from '@types';
+import { FractalCollectionFactory, FractalFactory } from './fractal';
 
-export const isFractal = (test: unknown): test is Fractal => test instanceof FractalFactory;
-export const isCollection = (fractal: AbstractFractal): fractal is CollectionFractal =>
-  fractal instanceof CollectionFractal;
+export const isFractal = (value: unknown): value is Fractal => value instanceof FractalFactory;
+export const isCollection = (value: Fractal | null): value is FractalCollection =>
+  value instanceof FractalCollectionFactory;

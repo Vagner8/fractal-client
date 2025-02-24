@@ -1,31 +1,5 @@
-@let newControls = fractal.newControls.$value();
-
 <button (click)="onFractalFormClicked()">
-  <app-card [title]="fractal.cursor" [selected]="ss.selectFractalFrom.has(fractal)">
-    @if (ss.editMode.has(EditMode.Controls)) {
-      <div class="controls-forms">
-        <app-list [templateRef]="controlsForms" [dataSource]="fractal.sortControls" />
-        @if (newControls.length) {
-          <app-list [templateRef]="newControlsForms" [dataSource]="newControls" />
-        }
-      </div>
-    } @else {
-      <app-control-data-forms [fractal]="fractal" />
-    }
+  <app-card [title]="fractal.controls.getData('Cursor')">
+    <app-control-data-forms [fractal]="fractal" />
   </app-card>
 </button>
-
-<ng-template #controlsForms let-indicator>
-  @let control = fractal.controls[indicator];
-  @if (control.$formVisible()) {
-    <button (click)="onControlFormClicked(control)">
-      <app-control-forms [title]="indicator" [selected]="control.$selected()" [controlForm]="control.form" />
-    </button>
-  }
-</ng-template>
-
-<ng-template #newControlsForms let-control>
-  <button (click)="onControlFormClicked(control)">
-    <app-control-forms title="New" [selected]="control.$selected()" [controlForm]="control.form" />
-  </button>
-</ng-template>

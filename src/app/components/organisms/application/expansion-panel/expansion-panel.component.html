@@ -1,15 +1,15 @@
 <mat-expansion-panel
   #panel
-  [class.clicked-panel]="ss.currentFractal.has(fractal)"
+  [class.clicked-panel]="false"
   hideToggle
   (closed)="closed.emit(fractal)"
   (afterExpand)="afterExpand(fractal)">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      @if (fractal.findControl(Indicators.Icon)?.data; as icon) {
+      @if (fractal.controls.getData('Icon'); as icon) {
         <mat-icon class="icon">{{ icon }}</mat-icon>
       }
-      {{ fractal.cursor }}</mat-panel-title
+      {{ fractal.controls.getData('Cursor') }}</mat-panel-title
     >
   </mat-expansion-panel-header>
   @if (panel.expanded) {
@@ -18,9 +18,9 @@
       <!-- @if (fractal.is(Collections)) {
         <app-children-controls [fractal]="fractal" class="children-controls" />
       } -->
-      @if (fractal.fractals) {
+      <!-- @if (fractal.fractals) {
         <ng-content />
-      }
+      } -->
     </div>
   }
 </mat-expansion-panel>

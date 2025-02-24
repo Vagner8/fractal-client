@@ -11,7 +11,7 @@ import { Fractal } from '@types';
 })
 export class ControlDataFormsComponent {
   @Input() fractal!: Fractal;
-  separator = ConstSeparator;
-  controlInputs = ConstControlInputs;
-  controlFormKeys = ConstControlFormKeys;
+  Separator = ConstSeparator;
+  ControlInputs = ConstControlInputs;
+  ControlFormKeys = ConstControlFormKeys;
 }

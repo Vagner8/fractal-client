@@ -1,14 +1,5 @@
 import { ConstSeparator } from '@constants';
 
-export const checkValue = <T>(value: T | null | undefined, message = 'no message'): T => {
-  if (value) return value;
-  else {
-    const errorMessage = `Failed check. Returned value: ${value}. Message: ${message}`;
-    console.error(errorMessage);
-    throw new Error(errorMessage);
-  }
-};
-
 export const constant = <T extends Readonly<string[]>>(
   values: T
 ): { [K in T[number]]: K } & { values: T; strings: string[]; record: { [K in T[number]]: string } } => {

@@ -4,7 +4,8 @@ import { TapComponent } from '@components/atoms';
 import { ConstEvents, ConstNavigationModifiers, ConstParams } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { EventService } from '@services';
-import { AbstractFractal, CollectionFractal, isCollection } from '@utils';
+import { Fractal, FractalCollection } from '@types';
+import { isCollection } from '@utils';
 
 @Component({
   selector: 'app-sidenav',
@@ -14,20 +15,20 @@ import { AbstractFractal, CollectionFractal, isCollection } from '@utils';
   styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
-  @Input() modifiers!: CollectionFractal;
-  @Input() collections!: CollectionFractal;
+  @Input() modifiers!: FractalCollection;
+  @Input() collections!: FractalCollection;
   es = inject(EventService);
   router = inject(Router);
 
   Events = ConstEvents;
 
-  onPageTouched(page: AbstractFractal): void {
+  onPageTouched(page: Fractal): void {
     isCollection(page.parent) && page.parent.unselectAllChildren();
     page.$selected.set(true);
-    this.router.navigate([page.controls.get('Cursor')]);
+    this.router.navigate([page.controls.getData('Cursor')]);
   }
 
-  onModifierTouched(modifier: AbstractFractal): void {
+  onModifierTouched(modifier: Fractal): void {
     if (modifier.is(ConstNavigationModifiers)) {
       this.router.navigate([], {
         queryParams: { [ConstParams.Modifiers]: ConstNavigationModifiers.Edit },

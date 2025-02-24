@@ -3,9 +3,9 @@ import { FractalService } from '@services';
 import { EditorComponent } from '../editor/editor.component';
 import { ApplicationComponent } from '../application/application.component';
 import { ConstEntities, ConstPages } from '@constants';
-import { AppParams } from '@types';
+import { AppParams, FractalCollection } from '@types';
 import { ChildrenControlsComponent } from '@components/molecules';
-import { CollectionFractal, isCollection } from '@utils';
+import { isCollection } from '@utils';
 
 @Component({
   selector: 'app-screen',
@@ -26,7 +26,7 @@ export class ScreenComponent implements OnInit, AppParams {
   fs = inject(FractalService);
 
   currentPage = computed(() => {
-    let page: CollectionFractal | null = null;
+    let page: FractalCollection | null = null;
     for (const fractal of this.fs.collections?.fractals.values || []) {
       page = fractal.$selected() && isCollection(fractal) ? fractal : null;
       if (page) return page;

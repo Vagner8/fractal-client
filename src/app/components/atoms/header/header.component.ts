@@ -1,6 +1,4 @@
-import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
-import { SelectService } from '@services';
-import { ConstModifiers } from '@constants';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -10,13 +8,4 @@ import { ConstModifiers } from '@constants';
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent {
-  ss = inject(SelectService);
-
-  title = computed<string>(() => {
-    const { New, Edit } = ConstModifiers;
-    const modifier = this.ss.modifiers.$value();
-    const modifierTitle = modifier === New ? Edit : modifier;
-    return `${this.ss.currentFractal.$value()?.cursor} ${modifierTitle || ''}`;
-  });
-}
+export class HeaderComponent {}
