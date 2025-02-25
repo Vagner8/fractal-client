@@ -1,7 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
-import { ConstEvents, ConstNavigationModifiers, ConstParams } from '@constants';
+import { ConstAppEvents, ConstNavigableModifiers, ConstAppParams } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { EventService } from '@services';
 import { Fractal, FractalCollection } from '@types';
@@ -20,7 +20,7 @@ export class SidenavComponent {
   es = inject(EventService);
   router = inject(Router);
 
-  Events = ConstEvents;
+  AppEvents = ConstAppEvents;
 
   onPageTouched(page: Fractal): void {
     isCollection(page.parent) && page.parent.unselectAllChildren();
@@ -29,9 +29,12 @@ export class SidenavComponent {
   }
 
   onModifierTouched(modifier: Fractal): void {
-    if (modifier.is(ConstNavigationModifiers)) {
+    modifier.parent.unselectAllChildren();
+    modifier.$selected.set(true);
+    modifier.parent.touchedChildren$.next(modifier);
+    if (modifier.is(ConstNavigableModifiers)) {
       this.router.navigate([], {
-        queryParams: { [ConstParams.Modifiers]: ConstNavigationModifiers.Edit },
+        queryParams: { [ConstAppParams.Modifiers]: ConstNavigableModifiers.Edit },
         queryParamsHandling: 'merge',
       });
     }

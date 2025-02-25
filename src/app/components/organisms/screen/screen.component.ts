@@ -1,11 +1,11 @@
-import { ChangeDetectionStrategy, Component, computed, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 import { FractalService } from '@services';
 import { EditorComponent } from '../editor/editor.component';
 import { ApplicationComponent } from '../application/application.component';
-import { ConstEntities, ConstPages } from '@constants';
-import { AppParams, FractalCollection } from '@types';
+import { ConstAppParams, ConstAppFractals, ConstAppPages } from '@constants';
 import { ChildrenControlsComponent } from '@components/molecules';
-import { isCollection } from '@utils';
+
+type Params = Record<keyof typeof ConstAppParams, string>;
 
 @Component({
   selector: 'app-screen',
@@ -14,32 +14,22 @@ import { isCollection } from '@utils';
   templateUrl: './screen.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ScreenComponent implements OnInit, AppParams {
+export class ScreenComponent implements OnInit, Params {
+  @Input() Page = '';
   @Input() Taps = '';
-  @Input() Pages = '';
   @Input() Manager = '';
   @Input() Selected = '';
   @Input() EditMode = '';
   @Input() Modifiers = '';
-  @Input() Collections = '';
 
   fs = inject(FractalService);
 
-  currentPage = computed(() => {
-    let page: FractalCollection | null = null;
-    for (const fractal of this.fs.collections?.fractals.values || []) {
-      page = fractal.$selected() && isCollection(fractal) ? fractal : null;
-      if (page) return page;
-    }
-    return null;
-  });
-
-  ConstPages = ConstPages;
+  AppPages = ConstAppPages;
 
   ngOnInit(): void {
     const app = this.fs.$app();
     if (!app) return;
-    const { Modifiers, Collections } = ConstEntities;
+    const { Modifiers, Collections } = ConstAppFractals;
     this.fs.modifiers?.$selected.set(this.Taps === Modifiers);
     this.fs.collections?.$selected.set(!this.Taps || this.Taps === Collections);
   }

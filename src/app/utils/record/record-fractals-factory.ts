@@ -1,21 +1,8 @@
 import { isCollection } from '../guards';
 import { Fractal, FractalCollection, RecordFractals } from '@types';
+import { RecordFactory } from './record-factory';
 
-export class RecordFractalsFactory implements RecordFractals {
-  record: Record<string, Fractal> = {};
-
-  get values(): Fractal[] {
-    return Object.values(this.record);
-  }
-
-  set(key: string, fractal: Fractal): void {
-    this.record[key] = fractal;
-  }
-
-  get(indicator: string): Fractal | null {
-    return this.values.find(fractal => fractal.is(indicator)) || null;
-  }
-
+export class RecordFractalsFactory extends RecordFactory<Fractal> implements RecordFractals {
   getCollection(test: string, fractals: RecordFractals = this): FractalCollection | null {
     const result = fractals.get(test);
     if (isCollection(result)) return result;

@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { ConstEntities } from '@constants';
+import { ConstAppFractals } from '@constants';
 import { FractalCollection } from '@types';
 
 @Injectable({
@@ -11,8 +11,8 @@ export class FractalService {
   collections: FractalCollection | null = null;
 
   init(app: FractalCollection): void {
-    this.modifiers = app.fractals.getCollection(ConstEntities.Modifiers);
-    this.collections = app.fractals.getCollection(ConstEntities.Collections);
+    this.modifiers = app.fractals.getCollection(ConstAppFractals.Modifiers);
+    this.collections = app.fractals.getCollection(ConstAppFractals.Collections);
     this.$app.set(app);
   }
 }

@@ -4,10 +4,10 @@
       @let dataForm = control.form.controls[ControlFormKeys.data];
       @switch (control.dto.input) {
         @case (ControlInputs.Select) {
-          <app-select [label]="indicator" [opts]="control.dto.data.split(Separator)" [formCtr]="dataForm" />
+          <app-select [label]="indicator" [opts]="control.dto.data.split(Separator)" [form]="dataForm" />
         }
         @default {
-          <app-input [label]="indicator" [formCtr]="dataForm" />
+          <app-input [label]="indicator" [form]="dataForm" />
         }
       }
     }

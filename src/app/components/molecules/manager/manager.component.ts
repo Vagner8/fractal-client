@@ -3,10 +3,10 @@ import { MatButtonModule } from '@mat';
 import { TapDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
 import { EventService, FractalService } from '@services';
-import { ConstEvents, ConstParams } from '@constants';
+import { ConstAppEvents, ConstAppParams } from '@constants';
 import { Router } from '@angular/router';
 
-const { Hold, Touch } = ConstEvents;
+const { Hold, Touch } = ConstAppEvents;
 
 @Component({
   selector: 'app-manager',
@@ -38,10 +38,10 @@ export class ManagerComponent {
     }
     this.prevEvent = Touch;
     this.es.$managerEvent.set(Touch);
-    this.navigate(ConstEvents.Touch);
+    this.navigate(Touch);
   }
 
   private navigate(event: string): void {
-    this.router.navigate([], { queryParams: { [ConstParams.Manager]: event }, queryParamsHandling: 'merge' });
+    this.router.navigate([], { queryParams: { [ConstAppParams.Manager]: event }, queryParamsHandling: 'merge' });
   }
 }

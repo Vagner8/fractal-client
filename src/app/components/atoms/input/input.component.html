@@ -1,14 +1,14 @@
 <mat-form-field class="app-form-field">
   <mat-label>{{ label }}</mat-label>
-  <input #inputElementRef [type]="label" matInput [formControl]="formCtr" />
-  @if (inputElementRef.value && !formCtr.disabled) {
+  <input #inputElementRef [type]="label" matInput [formControl]="form" />
+  @if (inputElementRef.value && !form.disabled) {
     <button
       type="button"
       matSuffix
       mat-icon-button
       i18n-aria-label
       aria-label="Clear input"
-      (click)="formCtr.setValue('')">
+      (click)="form.setValue('')">
       <mat-icon>close</mat-icon>
     </button>
   }

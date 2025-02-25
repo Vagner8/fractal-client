@@ -1,7 +1,6 @@
 import { Component, computed, Input, viewChild } from '@angular/core';
 import { MatAccordion, MatExpansionModule } from '@mat';
 import { ExpansionPanelComponent } from './expansion-panel/expansion-panel.component';
-import { ConstCollections } from '@constants';
 import { Fractal } from '@types';
 
 @Component({
@@ -15,11 +14,9 @@ export class ApplicationComponent {
   @Input() fractal!: Fractal;
   accordion = viewChild(MatAccordion);
 
-  Collections = ConstCollections;
-
   closed(): void {
     // const current = this.ss.currentFractal.value;
-    // if (current && !this.fractal.is(ConstEntities.App)) this.ss.currentFractal.set(current.parent);
+    // if (current && !this.fractal.is(ConstAppFractals.App)) this.ss.currentFractal.set(current.parent);
     // this.accordion()?.closeAll();
   }
 

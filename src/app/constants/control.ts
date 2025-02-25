@@ -1,6 +1,5 @@
-import { constant } from '@utils';
+export const ConstControlMutableKeys = { indicator: 'indicator', input: 'input', data: 'data' } as const;
+export const ConstControlImmutableKeys = { id: 'id', parentId: 'parentId' } as const;
+export const ConstControlKeys = { ...ConstControlMutableKeys, ...ConstControlImmutableKeys } as const;
 
-export const ConstControlFormKeys = constant(['indicator', 'input', 'data'] as const);
-export const ConstControlKeys = constant(['id', 'parentId'] as const);
-export const ConstControlDtoKeys = constant([...ConstControlFormKeys.values, ...ConstControlKeys.values] as const);
-export const ConstControlInputs = constant(['Text', 'Select', 'Organizer'] as const);
+export const ConstControlInputs = { Text: 'Text', Select: 'Select', Organizer: 'Organizer' } as const;

@@ -13,9 +13,9 @@ import { MatSelectModule } from '@mat';
 export class SelectComponent implements OnInit {
   @Input() opts: string[] = [];
   @Input() label: string = '';
-  @Input() formCtr!: FormControl;
+  @Input() form!: FormControl;
 
   ngOnInit(): void {
-    this.formCtr.setValue(this.opts[0]);
+    this.form.setValue(this.opts[0]);
   }
 }

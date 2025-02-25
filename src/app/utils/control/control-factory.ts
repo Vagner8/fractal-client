@@ -1,6 +1,6 @@
 import { signal } from '@angular/core';
 import { FormControl, FormRecord } from '@angular/forms';
-import { ConstControlFormKeys } from '@constants';
+import { ConstControlMutableKeys } from '@constants';
 import { Control, ControlDto, ControlForm } from '@types';
 
 export class ControlFactory implements Control {
@@ -10,7 +10,7 @@ export class ControlFactory implements Control {
 
   constructor(public dto: ControlDto) {
     this.form = new FormRecord(
-      Object.fromEntries(ConstControlFormKeys.values.map(key => [key, new FormControl(this.dto[key])]))
+      Object.fromEntries(Object.values(ConstControlMutableKeys).map(key => [key, new FormControl(this.dto[key])]))
     );
   }
 }

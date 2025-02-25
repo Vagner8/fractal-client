@@ -5,17 +5,18 @@
   @if (Modifiers && selectedCollection) {
     <app-editor [collection]="selectedCollection" />
   }
-  @if (!Modifiers) {
-    @switch (Pages) {
-      @case (ConstPages.Home) {
+
+  @if (Page && !Modifiers) {
+    @switch (Page) {
+      @case (AppPages.Home) {
         <h1>Home</h1>
       }
-      <!-- @case (ConstPages.App) {
+      <!-- @case (AppPages.App) {
         <app-application [fractal]="app" />
       } -->
       @default {
-        @if (currentPage(); as currentPage) {
-          <app-children-controls [fractal]="currentPage" />
+        @if (this.fs.collections?.getSelectedCollection(); as collection) {
+          <app-children-controls [fractal]="collection" />
         }
       }
     }
