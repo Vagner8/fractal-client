@@ -1,6 +1,6 @@
 <form>
-  <app-card [title]="title">
-    @for (indicator of fractal.parent.controls.get('Sort children controls')?.getDataAndSplit(); track indicator) {
+  <app-card [title]="isNewFractal ? 'New' : title">
+    @for (indicator of dataSource; track indicator) {
       @if (fractal.controls.get({ unsaveIndicator: indicator }); as control) {
         @let dataForm = control.getFormControl('data');
         @switch (control.get('input')) {

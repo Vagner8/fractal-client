@@ -1,18 +1,14 @@
-import { Fractal, FractalCollection, FractalsDto, RecordFractals } from '@types';
+import { Fractal, FractalsDto, FractalsRecord } from '@types';
+import { FractalsRecordFactory } from './fractals-record-factory';
 import { FractalFactory } from './fractal-factory';
-import { RecordFractalsFactory } from '../records/record-fractals-factory';
-import { isCollection } from '../guards';
-import { FractalCollectionFactory } from './fractal-collection-factory';
 
-export const fractalsFactory = (fractalsDto: FractalsDto | null, parent: FractalCollection): RecordFractals => {
-  const record = new RecordFractalsFactory();
+export const FractalsFactory = (fractalsDto: FractalsDto | null, parent: Fractal): FractalsRecord => {
+  const record = new FractalsRecordFactory();
   let fractal: Fractal;
   for (const indicator in fractalsDto) {
     const dto = fractalsDto[indicator];
-    fractal = dto.fractals ? new FractalCollectionFactory({ parent, dto }) : new FractalFactory({ parent, dto });
-    if (isCollection(fractal)) {
-      fractal.fractals = fractalsFactory(fractalsDto[indicator].fractals, fractal);
-    }
+    fractal = new FractalFactory(dto, parent);
+    fractal.fractals = FractalsFactory(fractalsDto[indicator].fractals, fractal);
     record.set(indicator, fractal);
   }
   return record;

@@ -1,10 +1,13 @@
-import { ControlsDto } from './control';
+import { ControlDto, ControlsDto, ControlsRecord } from './control';
 import { WritableSignal } from '@angular/core';
 import { FormRecord } from '@angular/forms';
-import { RecordControls, RecordFractals } from './records';
-import { BehaviorSubject } from 'rxjs';
+import { BaseRecord } from './common';
 
 export type FractalsDto = Record<string, FractalDto>;
+
+export interface FractalInitOptions {
+  syncFormWithDto: boolean;
+}
 
 export interface FractalDto {
   id: string;
@@ -13,32 +16,32 @@ export interface FractalDto {
   controls: ControlsDto;
 }
 
+export interface FractalDefaultSort {
+  sortChildren: string[];
+  sortOwnControls: string[];
+  sortChildrenControls: string[];
+}
+
+export interface FractalsRecord extends BaseRecord<Fractal> {
+  getRecursively(test: string, fractals?: FractalsRecord): Fractal | null;
+}
+
 export interface Fractal {
   dto: FractalDto;
   form: FormRecord;
-  parent: FractalCollection;
-  controls: RecordControls;
-  $selected: WritableSignal<boolean>;
+  parent: Fractal;
+  controls: ControlsRecord;
+  fractals: FractalsRecord;
 
-  get default(): {
-    sortOwnControls: string[];
-  };
+  $selected: WritableSignal<boolean>;
+  $newChildren: WritableSignal<Fractal[]>;
+  $selectedChildren: WritableSignal<Fractal[]>;
+
+  get default(): FractalDefaultSort;
 
   is(value: string | object): boolean;
-}
-
-export interface FractalCollection extends Fractal {
-  parent: FractalCollection;
-  fractals: RecordFractals;
-
-  heldChildren$: BehaviorSubject<Fractal | null>;
-  touchedChildren$: BehaviorSubject<Fractal | null>;
-
-  get default(): {
-    sortChildren: string[];
-    sortChildrenControls: string[];
-  } & Fractal['default'];
-
-  unselectAllChildren(): void;
-  getSelectedCollection(): FractalCollection | null;
+  update(): ControlDto[];
+  addNewChild(): void;
+  addChildren(): FractalDto[];
+  updateChildrenControls(): ControlDto[];
 }

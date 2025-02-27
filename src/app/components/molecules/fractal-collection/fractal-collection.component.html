@@ -3,7 +3,7 @@
     <ng-container [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
       <td mat-cell *matCellDef="let row">
-        {{ row.controls.get({ unsaveIndicator: column })?.dto?.data }}
+        {{ row.controls.get({ unsaveIndicator: column })?.get('data') }}
       </td>
     </ng-container>
   }
@@ -12,7 +12,7 @@
     mat-row
     *matRowDef="let row; columns: columns"
     appTap
-    (hold)="onHold(row)"
+    (hold)="onHold()"
     (touch)="onTouch(row)"
-    [class.clicked-row]="row.$selected()"></tr>
+    [class.clicked-row]="fractal.$selectedChildren().includes(row)"></tr>
 </table>

@@ -23,7 +23,6 @@ export class ScreenComponent implements OnInit, Params {
   @Input() Modifiers = '';
 
   fs = inject(FractalService);
-
   AppPages = ConstAppPages;
 
   ngOnInit(): void {

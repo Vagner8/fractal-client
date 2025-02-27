@@ -7,7 +7,7 @@
     position="end">
     @if (modifiers.$selected()) {
       @for (modifier of modifiers.fractals.values; track modifier.dto.id) {
-        <app-tap [tap]="modifier" (touch)="onModifierTouched(modifier)" />
+        <app-tap [tap]="modifier" (hold)="onModifierHeld(modifier)" (touch)="onModifierTouched(modifier)" />
       }
     }
     @if (collections.$selected()) {

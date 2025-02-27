@@ -1,5 +1,13 @@
+@let newFractals = fractal.$newChildren();
+@let selectedFractals = fractal.$selectedChildren();
+
 <div class="modifier">
-  <app-list [dataSource]="collection.fractals.values" [templateRef]="fractalForm" />
+  @if (selectedFractals.length > 0) {
+    <app-list [dataSource]="selectedFractals" [templateRef]="fractalForm" />
+  }
+  @if (newFractals.length > 0) {
+    <app-list [dataSource]="newFractals" [templateRef]="fractalForm" />
+  }
 </div>
 
 <ng-template #fractalForm let-fractal>

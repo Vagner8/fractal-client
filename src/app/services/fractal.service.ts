@@ -1,18 +1,18 @@
 import { Injectable, signal } from '@angular/core';
 import { ConstAppFractals } from '@constants';
-import { FractalCollection } from '@types';
+import { Fractal } from '@types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FractalService {
-  $app = signal<FractalCollection | null>(null);
-  modifiers: FractalCollection | null = null;
-  collections: FractalCollection | null = null;
+  $app = signal<Fractal | null>(null);
+  modifiers: Fractal | null = null;
+  collections: Fractal | null = null;
 
-  init(app: FractalCollection): void {
-    this.modifiers = app.fractals.getCollection(ConstAppFractals.Modifiers);
-    this.collections = app.fractals.getCollection(ConstAppFractals.Collections);
+  init(app: Fractal): void {
+    this.modifiers = app.fractals.getRecursively(ConstAppFractals.Modifiers);
+    this.collections = app.fractals.getRecursively(ConstAppFractals.Collections);
     this.$app.set(app);
   }
 }

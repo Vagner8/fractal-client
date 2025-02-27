@@ -1,6 +1,7 @@
 import { WritableSignal } from '@angular/core';
 import { FormControl, FormRecord } from '@angular/forms';
-import { ConstControlMutableKeys } from '@constants';
+import { ConstControlMutableKeys, ConstIndicators } from '@constants';
+import { BaseRecord } from './common';
 
 export type Controls = Record<string, Control>;
 export type ControlForm = FormRecord<FormControl>;
@@ -23,12 +24,18 @@ export interface ControlDto extends ControlMutableDto {
   parentId: string;
 }
 
+export interface ControlsRecord extends BaseRecord<Control> {
+  get getCursorData(): string;
+  get(indicator: keyof typeof ConstIndicators | { unsaveIndicator: string }): Control | null;
+}
+
 export interface Control {
   dto: ControlDto;
   form: ControlForm;
   $selected: WritableSignal<boolean>;
 
   get(key: keyof ControlDto): string;
-  getDataAndSplit(): string[];
+  update(): ControlDto;
   getFormControl(indictor: ControlMutableKeys): FormControl;
+  getDataAndSplit(): string[];
 }

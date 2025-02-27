@@ -3,8 +3,8 @@ import { Subscription } from 'rxjs';
 export abstract class BaseComponent {
   private subs: Subscription[] = [];
 
-  pushSub(sub: Subscription): void {
-    this.subs.push(sub);
+  pushSub(sub: Subscription | undefined): void {
+    sub && this.subs.push(sub);
   }
 
   clearSubs(): void {

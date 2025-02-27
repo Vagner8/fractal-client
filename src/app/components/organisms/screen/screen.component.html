@@ -1,9 +1,9 @@
 @let app = fs.$app();
-@let selectedCollection = fs.collections?.getSelectedCollection();
+@let selectedPage = fs.collections && fs.collections.$selectedChildren()[0];
 
 @if (app) {
-  @if (Modifiers && selectedCollection) {
-    <app-editor [collection]="selectedCollection" />
+  @if (Modifiers && selectedPage) {
+    <app-editor [fractal]="selectedPage" />
   }
 
   @if (Page && !Modifiers) {
@@ -15,8 +15,8 @@
         <app-application [fractal]="app" />
       } -->
       @default {
-        @if (this.fs.collections?.getSelectedCollection(); as collection) {
-          <app-fractal-collection [fractal]="collection" />
+        @if (selectedPage) {
+          <app-fractal-collection [fractal]="selectedPage" />
         }
       }
     }

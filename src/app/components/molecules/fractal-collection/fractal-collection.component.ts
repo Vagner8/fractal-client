@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { TapDirective } from '@directives';
 import { MatTableModule } from '@mat';
-import { Fractal, FractalCollection } from '@types';
+import { Fractal } from '@types';
+import { toggleList, toggleListAll } from '@utils';
 
 @Component({
   selector: 'app-fractal-collection',
@@ -11,19 +12,18 @@ import { Fractal, FractalCollection } from '@types';
   styleUrl: './fractal-collection.component.scss',
 })
 export class FractalCollectionComponent {
-  @Input() fractal!: FractalCollection;
+  @Input() fractal!: Fractal;
 
   get columns(): string[] {
     const sortChildrenControls = this.fractal.controls.get('Sort children controls');
     return sortChildrenControls ? sortChildrenControls.getDataAndSplit() : this.fractal.default.sortChildrenControls;
   }
 
-  onHold(row: Fractal): void {
-    const isSomeItemSelected = row.parent.fractals.values.some(fractal => fractal.$selected());
-    row.parent.fractals.values.forEach(fractal => fractal.$selected.set(isSomeItemSelected));
+  onHold(): void {
+    this.fractal.$selectedChildren.update(toggleListAll(this.fractal));
   }
 
   onTouch(row: Fractal): void {
-    row.$selected.update(prev => !prev);
+    this.fractal.$selectedChildren.update(toggleList(row));
   }
 }
