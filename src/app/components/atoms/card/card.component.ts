@@ -9,6 +9,6 @@ import { MatCardModule } from '@mat';
   styleUrl: './card.component.scss',
 })
 export class CardComponent {
-  @Input() title = '';
+  @Input() title: string | undefined = '';
   @Input() selected = false;
 }

@@ -1,13 +1,13 @@
 import { Component, Input, OnInit, output, viewChild } from '@angular/core';
 import { MatButtonModule, MatExpansionModule, MatExpansionPanel, MatIconModule } from '@mat';
 import { ConstAppFractals } from '@constants';
-import { ChildrenControlsComponent, ControlsComponent } from '@components/molecules';
+import { FractalCollectionComponent, ControlsComponent } from '@components/molecules';
 import { Fractal } from '@types';
 
 @Component({
   selector: 'app-expansion-panel',
   standalone: true,
-  imports: [MatExpansionModule, MatButtonModule, MatIconModule, ControlsComponent, ChildrenControlsComponent],
+  imports: [MatExpansionModule, MatButtonModule, MatIconModule, ControlsComponent, FractalCollectionComponent],
   templateUrl: './expansion-panel.component.html',
   styleUrl: './expansion-panel.component.scss',
 })

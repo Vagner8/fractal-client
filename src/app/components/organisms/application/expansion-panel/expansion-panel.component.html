@@ -6,10 +6,10 @@
   (afterExpand)="afterExpand(fractal)">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      @if (fractal.controls.getData('Icon'); as icon) {
+      @if (fractal.controls.get('Icon')?.dto?.data; as icon) {
         <mat-icon class="icon">{{ icon }}</mat-icon>
       }
-      {{ fractal.controls.getData('Cursor') }}</mat-panel-title
+      {{ fractal.controls.get('Cursor')?.dto?.data }}</mat-panel-title
     >
   </mat-expansion-panel-header>
   @if (panel.expanded) {

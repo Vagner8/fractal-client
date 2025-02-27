@@ -16,7 +16,7 @@
       } -->
       @default {
         @if (this.fs.collections?.getSelectedCollection(); as collection) {
-          <app-children-controls [fractal]="collection" />
+          <app-fractal-collection [fractal]="collection" />
         }
       }
     }

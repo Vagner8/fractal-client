@@ -26,10 +26,11 @@ export class EditorComponent extends BaseComponent implements OnInit {
   }
 
   onModifierTouched = (modifier: Fractal): void => {
+    const modifierCursor = modifier.controls.get('Cursor')?.dto?.data;
     const handler: Record<string, () => void> = {
       [New]: () => {},
       [Edit]: () => {},
     };
-    handler[modifier.controls.getData('Cursor')]?.();
+    modifierCursor && handler[modifierCursor]?.();
   };
 }

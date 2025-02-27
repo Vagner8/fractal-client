@@ -1,6 +1,6 @@
 import { Fractal, FractalCollection, FractalsDto, RecordFractals } from '@types';
 import { FractalFactory } from './fractal-factory';
-import { RecordFractalsFactory } from '../record/record-fractals-factory';
+import { RecordFractalsFactory } from '../records/record-fractals-factory';
 import { isCollection } from '../guards';
 import { FractalCollectionFactory } from './fractal-collection-factory';
 

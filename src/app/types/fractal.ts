@@ -19,6 +19,11 @@ export interface Fractal {
   parent: FractalCollection;
   controls: RecordControls;
   $selected: WritableSignal<boolean>;
+
+  get default(): {
+    sortOwnControls: string[];
+  };
+
   is(value: string | object): boolean;
 }
 
@@ -28,6 +33,11 @@ export interface FractalCollection extends Fractal {
 
   heldChildren$: BehaviorSubject<Fractal | null>;
   touchedChildren$: BehaviorSubject<Fractal | null>;
+
+  get default(): {
+    sortChildren: string[];
+    sortChildrenControls: string[];
+  } & Fractal['default'];
 
   unselectAllChildren(): void;
   getSelectedCollection(): FractalCollection | null;

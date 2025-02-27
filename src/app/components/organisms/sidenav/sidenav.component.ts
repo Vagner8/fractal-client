@@ -25,7 +25,7 @@ export class SidenavComponent {
   onPageTouched(page: Fractal): void {
     isCollection(page.parent) && page.parent.unselectAllChildren();
     page.$selected.set(true);
-    this.router.navigate([page.controls.getData('Cursor')]);
+    this.router.navigate([page.controls.get('Cursor')?.dto?.data]);
   }
 
   onModifierTouched(modifier: Fractal): void {

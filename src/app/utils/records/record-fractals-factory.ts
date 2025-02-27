@@ -3,6 +3,10 @@ import { Fractal, FractalCollection, RecordFractals } from '@types';
 import { RecordFactory } from './record-factory';
 
 export class RecordFractalsFactory extends RecordFactory<Fractal> implements RecordFractals {
+  override get(indicator: string): Fractal {
+    return this.record[indicator];
+  }
+
   getCollection(test: string, fractals: RecordFractals = this): FractalCollection | null {
     const result = fractals.get(test);
     if (isCollection(result)) return result;

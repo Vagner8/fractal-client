@@ -1,11 +1,13 @@
-import { Control, Indicators } from './control';
+import { ConstIndicators } from '@constants';
+import { Control } from './control';
 import { Fractal, FractalCollection } from './fractal';
 
 export interface BaseRecord<T> {
   record: Record<string, T>;
+  get keys(): string[];
   get values(): T[];
   set(key: string, fractal: T): void;
-  get(indicator: string): T | null;
+  get(indicator: unknown): T | null;
 }
 
 export interface RecordFractals extends BaseRecord<Fractal> {
@@ -13,5 +15,5 @@ export interface RecordFractals extends BaseRecord<Fractal> {
 }
 
 export interface RecordControls extends BaseRecord<Control> {
-  getData(value: Indicators | { string: string }): string;
+  get(indicator: keyof typeof ConstIndicators | { unsaveIndicator: string }): Control | null;
 }

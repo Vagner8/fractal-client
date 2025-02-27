@@ -2,8 +2,8 @@ import { FormRecord } from '@angular/forms';
 import { Fractal, FractalCollection, FractalDto, RecordControls } from '@types';
 import { signal } from '@angular/core';
 import { isFractal } from '../guards';
-import { RecordControlsFactory } from '../record/record-controls-factory';
-import { ControlFactory } from '../control/control-factory';
+import { RecordControlsFactory } from '../records/record-controls-factory';
+import { ControlFactory } from '../controls/control-factory';
 
 export class FractalFactory implements Fractal {
   dto: FractalDto;
@@ -18,8 +18,14 @@ export class FractalFactory implements Fractal {
     this.controls = this.createControls(this);
   }
 
+  get default(): { sortOwnControls: string[] } {
+    return {
+      sortOwnControls: this.controls.keys,
+    };
+  }
+
   is(value: string | object): boolean {
-    const cursor = this.controls.getData('Cursor');
+    const cursor = this.controls.get('Cursor')?.get('data');
     if (isFractal(value)) return this === value;
     if (typeof value === 'object') return Object.values(value).includes(cursor);
     return value === cursor;

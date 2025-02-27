@@ -3,14 +3,14 @@ import { FractalService } from '@services';
 import { EditorComponent } from '../editor/editor.component';
 import { ApplicationComponent } from '../application/application.component';
 import { ConstAppParams, ConstAppFractals, ConstAppPages } from '@constants';
-import { ChildrenControlsComponent } from '@components/molecules';
+import { FractalCollectionComponent } from '@components/molecules';
 
 type Params = Record<keyof typeof ConstAppParams, string>;
 
 @Component({
   selector: 'app-screen',
   standalone: true,
-  imports: [ApplicationComponent, EditorComponent, ChildrenControlsComponent],
+  imports: [ApplicationComponent, EditorComponent, FractalCollectionComponent],
   templateUrl: './screen.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

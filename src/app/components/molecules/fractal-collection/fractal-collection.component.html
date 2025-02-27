@@ -3,7 +3,7 @@
     <ng-container [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
       <td mat-cell *matCellDef="let row">
-        {{ row.controls.getData({ string: column }) }}
+        {{ row.controls.get({ unsaveIndicator: column })?.dto?.data }}
       </td>
     </ng-container>
   }

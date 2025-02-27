@@ -1,15 +1,17 @@
 <form>
-  @for (indicator of ['Email', 'Name', 'Position']; track indicator) {
-    @if (fractal.controls.get(indicator); as control) {
-      @let dataForm = control.form.controls[ControlFormKeys.data];
-      @switch (control.dto.input) {
-        @case (ControlInputs.Select) {
-          <app-select [label]="indicator" [opts]="control.dto.data.split(Separator)" [form]="dataForm" />
-        }
-        @default {
-          <app-input [label]="indicator" [form]="dataForm" />
+  <app-card [title]="title">
+    @for (indicator of fractal.parent.controls.get('Sort children controls')?.getDataAndSplit(); track indicator) {
+      @if (fractal.controls.get({ unsaveIndicator: indicator }); as control) {
+        @let dataForm = control.getFormControl('data');
+        @switch (control.get('input')) {
+          @case (ControlInputs.Select) {
+            <app-select [label]="indicator" [opts]="control.getDataAndSplit()" [form]="dataForm" />
+          }
+          @default {
+            <app-input [label]="indicator" [form]="dataForm" />
+          }
         }
       }
     }
-  }
+  </app-card>
 </form>
