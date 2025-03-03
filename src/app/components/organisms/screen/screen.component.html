@@ -1,5 +1,5 @@
 @let app = fs.$app();
-@let selectedPage = fs.collections && fs.collections.$selectedChildren()[0];
+@let selectedPage = fs.collections && fs.collections.selectedChild.$value();
 
 @if (app) {
   @if (Modifiers && selectedPage) {

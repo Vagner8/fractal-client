@@ -9,7 +9,7 @@
       @if (fractal.controls.get('Icon')?.get('data'); as icon) {
         <mat-icon class="icon">{{ icon }}</mat-icon>
       }
-      {{ fractal.controls.getCursorData }}</mat-panel-title
+      {{ fractal.controls.getDataOf('Cursor') }}</mat-panel-title
     >
   </mat-expansion-panel-header>
   @if (panel.expanded) {

@@ -14,7 +14,7 @@ export class FractalFormComponent {
   ControlInputs = ConstControlInputs;
 
   get title(): string | undefined {
-    return this.fractal.controls.get(this.fractal.fractals.values.length > 0 ? 'Cursor' : 'Position')?.get('data');
+    return this.fractal.controls.getDataOf('Cursor');
   }
 
   get dataSource(): string[] {

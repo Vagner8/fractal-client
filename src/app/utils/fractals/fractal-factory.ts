@@ -14,6 +14,7 @@ import { ControlFactory } from '../controls/control-factory';
 import { isFractal } from '../guards';
 import { FractalsRecordFactory } from './fractals-record-factory';
 import { NewFractalFactory } from './new-fractal-factory';
+import { FractalsStateFactory, FractalStateFactory } from '../states';
 
 export class FractalFactory implements Fractal {
   dto: FractalDto;
@@ -23,8 +24,10 @@ export class FractalFactory implements Fractal {
   fractals!: FractalsRecord;
 
   $selected = signal(false);
-  $newChildren = signal<Fractal[]>([]);
-  $selectedChildren = signal<Fractal[]>([]);
+  selectedChild = new FractalStateFactory();
+
+  newChildren = new FractalsStateFactory();
+  selectedChildren = new FractalsStateFactory();
 
   constructor(dto: FractalDto, parent?: Fractal | null, options?: FractalInitOptions) {
     this.dto = dto;
@@ -42,7 +45,7 @@ export class FractalFactory implements Fractal {
   }
 
   is(value: string | object): boolean {
-    const cursor = this.controls.getCursorData;
+    const cursor = this.controls.getDataOf('Cursor');
     if (isFractal(value)) return this === value;
     if (typeof value === 'object') return Object.values(value).includes(cursor);
     return value === cursor;
@@ -56,13 +59,13 @@ export class FractalFactory implements Fractal {
   }
 
   addNewChild(): void {
-    this.$newChildren.update(prev => [...prev, NewFractalFactory(this, { syncFormWithDto: true })]);
+    this.newChildren.push(NewFractalFactory(this, { syncFormWithDto: true }));
   }
 
   addChildren(): FractalDto[] {
-    return this.$newChildren().reduce((acc: FractalDto[], child) => {
+    return this.newChildren.$value().reduce((acc: FractalDto[], child) => {
       if (child.form.dirty) {
-        const position = child.controls.get('Position')?.get('data');
+        const position = child.controls.getDataOf('Cursor');
         position && this.fractals.set(position, child);
         acc.push(child.dto);
       }
@@ -70,8 +73,15 @@ export class FractalFactory implements Fractal {
     }, []);
   }
 
+  deleteChildren(): FractalDto[] {
+    return this.selectedChildren.$value().map(child => {
+      this.fractals.delete(child.controls.getDataOf('Cursor'));
+      return child.dto;
+    });
+  }
+
   updateChildrenControls(): ControlDto[] {
-    return this.$selectedChildren().reduce((acc: ControlDto[], fractal) => {
+    return this.selectedChildren.$value().reduce((acc: ControlDto[], fractal) => {
       if (fractal.form.dirty) acc = [...acc, ...fractal.update()];
       return acc;
     }, []);

@@ -6,4 +6,5 @@ export interface BaseRecord<T> {
   get values(): T[];
   set(key: string, fractal: T): void;
   get(indicator: unknown): T | null;
+  delete(key: string): void;
 }

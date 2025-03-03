@@ -3,8 +3,7 @@ import { MatButtonModule } from '@mat';
 import { TapDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
 import { EventService, FractalService } from '@services';
-import { ConstAppEvents, ConstAppParams } from '@constants';
-import { Router } from '@angular/router';
+import { ConstAppEvents } from '@constants';
 
 const { Hold, Touch } = ConstAppEvents;
 
@@ -17,16 +16,15 @@ const { Hold, Touch } = ConstAppEvents;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ManagerComponent {
-  prevEvent: string | null = null;
+  prevEvent: string = Touch;
 
   es = inject(EventService);
   private fs = inject(FractalService);
-  private router = inject(Router);
 
   onHold(): void {
     this.prevEvent = Hold;
     this.es.$managerEvent.set(Hold);
-    this.navigate(Hold);
+    this.fs.navigateManager(Hold);
   }
 
   onTouch(): void {
@@ -38,10 +36,6 @@ export class ManagerComponent {
     }
     this.prevEvent = Touch;
     this.es.$managerEvent.set(Touch);
-    this.navigate(Touch);
-  }
-
-  private navigate(event: string): void {
-    this.router.navigate([], { queryParams: { [ConstAppParams.Manager]: event }, queryParamsHandling: 'merge' });
+    this.fs.navigateManager(Touch);
   }
 }

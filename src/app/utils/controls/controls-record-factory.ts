@@ -3,8 +3,8 @@ import { RecordFactory } from '../record-factory';
 import { ConstIndicators } from '@constants';
 
 export class ControlsRecordFactory extends RecordFactory<Control> implements ControlsRecord {
-  get getCursorData(): string {
-    return this.get('Cursor')?.get('data') || '';
+  getDataOf(indicator: keyof typeof ConstIndicators): string {
+    return this.get(indicator)?.get('data') || '';
   }
 
   override get(indicator: keyof typeof ConstIndicators | { unsaveIndicator: string }): Control | null {

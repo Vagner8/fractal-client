@@ -25,8 +25,8 @@ export interface ControlDto extends ControlMutableDto {
 }
 
 export interface ControlsRecord extends BaseRecord<Control> {
-  get getCursorData(): string;
   get(indicator: keyof typeof ConstIndicators | { unsaveIndicator: string }): Control | null;
+  getDataOf(indicator: keyof typeof ConstIndicators): string;
 }
 
 export interface Control {

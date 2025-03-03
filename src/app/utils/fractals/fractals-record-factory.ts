@@ -6,11 +6,11 @@ export class FractalsRecordFactory extends RecordFactory<Fractal> implements Fra
     return this.record[indicator];
   }
 
-  getRecursively(test: string, fractals: FractalsRecord = this): Fractal | null {
+  getFractalRecursively(test: string, fractals: FractalsRecord = this): Fractal | null {
     const result = fractals.get(test);
     if (result) return result;
     for (const fractal of fractals.values) {
-      const nestedResult = this.getRecursively(test, fractal.fractals);
+      const nestedResult = this.getFractalRecursively(test, fractal.fractals);
       if (nestedResult) return nestedResult;
     }
     return null;

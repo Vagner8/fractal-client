@@ -8,5 +8,5 @@
   (hold)="hold.emit(tap)"
   (touch)="touch.emit(tap)">
   <mat-icon [hidden]="!icon" aria-hidden="false">{{ icon }}</mat-icon>
-  {{ tap.controls.getCursorData }}
+  {{ tap.controls.getDataOf('Cursor') }}
 </button>

@@ -16,4 +16,8 @@ export abstract class RecordFactory<T> implements BaseRecord<T> {
   set(key: string, fractal: T): void {
     this.record[key] = fractal;
   }
+
+  delete(key: string): void {
+    delete this.record[key];
+  }
 }

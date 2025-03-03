@@ -1,5 +1,5 @@
-@let newFractals = fractal.$newChildren();
-@let selectedFractals = fractal.$selectedChildren();
+@let newFractals = fractal.newChildren.$value();
+@let selectedFractals = fractal.selectedChildren.$value();
 
 <div class="modifier">
   @if (selectedFractals.length > 0) {

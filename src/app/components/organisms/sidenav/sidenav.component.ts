@@ -1,12 +1,12 @@
 import { Component, inject, Input } from '@angular/core';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
-import { ConstAppEvents, ConstNavigableModifiers, ConstAppParams, ConstModifiers } from '@constants';
+import { ConstAppEvents, ConstNavigableModifiers, ConstModifiers } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { DataService, EventService, FractalService } from '@services';
 import { Fractal } from '@types';
 
-const { New, Edit, Save } = ConstModifiers;
+const { New, Edit, Save, Delete } = ConstModifiers;
 
 @Component({
   selector: 'app-sidenav',
@@ -21,54 +21,58 @@ export class SidenavComponent {
   es = inject(EventService);
   private ds = inject(DataService);
   private fs = inject(FractalService);
-  private router = inject(Router);
 
   AppEvents = ConstAppEvents;
 
   onPageTouched(page: Fractal): void {
-    this.collections.$selectedChildren.set([page]);
-    this.router.navigate([page.controls.getCursorData]);
+    this.collections.selectedChild.set(page);
+    this.fs.navigatePage(page.controls.getDataOf('Cursor'));
   }
 
   onModifierHeld = (modifier: Fractal): void => {
-    const modifierCursor = modifier.controls.getCursorData;
+    const selectedChild = this.collections.selectedChild.$value();
+    if (!selectedChild) return;
+
     const handler: Record<string, () => void> = {
       [Save]: () => {
-        const selectedCollection = this.fs.collections && this.fs.collections?.$selectedChildren()[0];
-        if (!selectedCollection) return;
-
-        const controls = selectedCollection?.updateChildrenControls();
+        const controls = selectedChild.updateChildrenControls();
         controls.length > 0 && this.ds.updateControls(controls).subscribe();
 
-        const newFractalsDto = selectedCollection.addChildren();
+        const newFractalsDto = selectedChild.addChildren();
         newFractalsDto.length > 0 && this.ds.add(newFractalsDto).subscribe();
 
-        this.router.navigate([], {
-          queryParams: {
-            [ConstAppParams.Modifiers]: null,
-          },
-          queryParamsHandling: 'merge',
-        });
+        selectedChild.newChildren.clear();
+      },
+      [Delete]: () => {
+        const selectedChildren = selectedChild.selectedChildren.$value();
+        selectedChildren.length > 0 && this.ds.delete(selectedChildren.map(({ dto }) => dto)).subscribe();
+        this.collections.selectedChild.$value()?.deleteChildren();
+        selectedChild.newChildren.clear();
+        selectedChild.selectedChildren.clear();
       },
     };
-    modifierCursor && handler[modifierCursor]?.();
+
+    handler[modifier.controls.getDataOf('Cursor')]?.();
+    this.collections.selectedChild.refresh();
+    this.fs.navigateModifier(null);
   };
 
   onModifierTouched(modifier: Fractal): void {
-    const modifierCursor = modifier.controls.getCursorData;
+    const selectedChild = this.collections.selectedChild.$value();
+    if (!selectedChild) return;
+    const { newChildren, selectedChildren } = selectedChild;
+
     const handler: Record<string, () => void> = {
       [New]: () => {
-        this.fs.collections && this.fs.collections.$selectedChildren()[0].addNewChild();
+        selectedChild.addNewChild();
       },
       [Edit]: () => {},
       [Save]: () => {},
     };
-    modifierCursor && handler[modifierCursor]?.();
-    if (modifier.is(ConstNavigableModifiers)) {
-      this.router.navigate([], {
-        queryParams: { [ConstAppParams.Modifiers]: ConstNavigableModifiers.Edit },
-        queryParamsHandling: 'merge',
-      });
+
+    handler[modifier.controls.getDataOf('Cursor')]?.();
+    if (modifier.is(ConstNavigableModifiers) && (selectedChildren.$value().length || newChildren.$value().length)) {
+      this.fs.navigateModifier(ConstNavigableModifiers.Edit);
     }
   }
 }
