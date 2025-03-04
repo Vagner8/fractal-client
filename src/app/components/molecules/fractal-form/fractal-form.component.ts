@@ -14,12 +14,11 @@ export class FractalFormComponent {
   ControlInputs = ConstControlInputs;
 
   get title(): string | undefined {
-    return this.fractal.controls.getDataOf('Cursor');
+    return this.fractal.cursor;
   }
 
   get dataSource(): string[] {
-    const sort = this.fractal.parent.controls.get('Sort children controls');
-    return sort ? sort.getDataAndSplit() : this.fractal.parent.default.sortChildrenControls;
+    return this.fractal.parent.order('Order children controls');
   }
 
   get isNewFractal(): boolean {

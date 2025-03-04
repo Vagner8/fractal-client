@@ -1,4 +1,4 @@
-@let icon = tap.controls.get('Icon')?.get('data');
+@let icon = tap.controls.getControlData('Icon');
 
 <button
   mat-flat-button
@@ -8,5 +8,5 @@
   (hold)="hold.emit(tap)"
   (touch)="touch.emit(tap)">
   <mat-icon [hidden]="!icon" aria-hidden="false">{{ icon }}</mat-icon>
-  {{ tap.controls.getDataOf('Cursor') }}
+  {{ tap.cursor }}
 </button>

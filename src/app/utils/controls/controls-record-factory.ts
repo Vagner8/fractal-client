@@ -1,14 +1,18 @@
-import { Control, ControlsRecord } from '@types';
+import { Control, ControlsRecord, ControlsRecordGetProps } from '@types';
 import { RecordFactory } from '../record-factory';
-import { ConstIndicators } from '@constants';
 
 export class ControlsRecordFactory extends RecordFactory<Control> implements ControlsRecord {
-  getDataOf(indicator: keyof typeof ConstIndicators): string {
-    return this.get(indicator)?.get('data') || '';
+  override get(indicator: ControlsRecordGetProps): Control | null {
+    const control = this.record[typeof indicator === 'string' ? indicator : indicator.unknownIndicator];
+    return control ? control : null;
   }
 
-  override get(indicator: keyof typeof ConstIndicators | { unsaveIndicator: string }): Control | null {
-    const result = typeof indicator === 'string' ? this.record[indicator] : this.record[indicator.unsaveIndicator];
-    return result ? result : null;
+  getControlData(indicator: ControlsRecordGetProps): string {
+    return this.get(indicator)?.dto.data || '';
+  }
+
+  getControlDataAndSplit(indicator: ControlsRecordGetProps): string[] {
+    const result = this.getControlData(indicator).split(':');
+    return result.length > 0 ? result : [];
   }
 }

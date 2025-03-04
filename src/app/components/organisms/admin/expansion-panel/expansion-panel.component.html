@@ -6,21 +6,22 @@
   (afterExpand)="afterExpand(fractal)">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      @if (fractal.controls.get('Icon')?.get('data'); as icon) {
+      @if (fractal.controls.getControlData('Icon'); as icon) {
         <mat-icon class="icon">{{ icon }}</mat-icon>
       }
-      {{ fractal.controls.getDataOf('Cursor') }}</mat-panel-title
+      {{ fractal.cursor }}</mat-panel-title
     >
   </mat-expansion-panel-header>
   @if (panel.expanded) {
     <div class="children">
-      <!-- <app-controls [fractal]="fractal" [customColumns]="ControlFormKeys" class="controls" /> -->
-      <!-- @if (fractal.is(Collections)) {
-        <app-children-controls [fractal]="fractal" class="children-controls" />
+      <app-fractal-controls [fractal]="fractal" class="controls" />
+
+      <!-- @if (fractal.fractals.values.length) {
+        <app-fractal-collection [fractal]="fractal" class="children-controls" />
       } -->
-      <!-- @if (fractal.fractals) {
+      @if (fractal.fractals) {
         <ng-content />
-      } -->
+      }
     </div>
   }
 </mat-expansion-panel>

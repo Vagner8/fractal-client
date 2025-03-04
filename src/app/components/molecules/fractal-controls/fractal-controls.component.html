@@ -3,7 +3,9 @@
     <ng-container [matColumnDef]="column">
       <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
       <td class="td" mat-cell *matCellDef="let row">
-        {{ row.dto[column] }}
+        @if (fractal.controls.get({ unknownIndicator: row }); as control) {
+          {{ control.dto[column] }}
+        }
       </td>
     </ng-container>
   }

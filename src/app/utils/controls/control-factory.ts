@@ -1,7 +1,7 @@
 import { signal } from '@angular/core';
 import { FormControl, FormRecord } from '@angular/forms';
 import { ConstControlMutableKeys } from '@constants';
-import { Control, ControlDto, ControlForm, ControlMutableDto, ControlMutableKeys, FractalInitOptions } from '@types';
+import { Control, ControlDto, ControlForm, ControlMutableDto, FractalInitOptions } from '@types';
 
 export class ControlFactory implements Control {
   form: ControlForm;
@@ -23,10 +23,6 @@ export class ControlFactory implements Control {
     }
   }
 
-  get(key: keyof ControlDto): string {
-    return this.dto[key];
-  }
-
   update(): ControlDto {
     for (const key in ConstControlMutableKeys) {
       const form = this.form.controls[key];
@@ -35,11 +31,7 @@ export class ControlFactory implements Control {
     return this.dto;
   }
 
-  getFormControl(indictor: ControlMutableKeys): FormControl {
-    return this.form.controls[indictor];
-  }
-
-  getDataAndSplit(): string[] {
-    return this.dto.data.split(':');
+  getFromControl(name: keyof typeof ConstControlMutableKeys): FormControl {
+    return this.form.controls[name];
   }
 }

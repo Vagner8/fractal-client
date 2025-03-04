@@ -6,7 +6,6 @@ import { BaseRecord } from './common';
 export type Controls = Record<string, Control>;
 export type ControlForm = FormRecord<FormControl>;
 export type ControlsDto = Record<string, ControlDto>;
-export type ControlMutableKeys = keyof typeof ConstControlMutableKeys;
 
 export interface ControlData {
   value: string;
@@ -24,18 +23,18 @@ export interface ControlDto extends ControlMutableDto {
   parentId: string;
 }
 
+export type ControlsRecordGetProps = keyof typeof ConstIndicators | { unknownIndicator: string };
+
 export interface ControlsRecord extends BaseRecord<Control> {
-  get(indicator: keyof typeof ConstIndicators | { unsaveIndicator: string }): Control | null;
-  getDataOf(indicator: keyof typeof ConstIndicators): string;
+  get(indicator: ControlsRecordGetProps): Control | null;
+  getControlData(indicator: ControlsRecordGetProps): string;
+  getControlDataAndSplit(indicator: ControlsRecordGetProps): string[];
 }
 
 export interface Control {
   dto: ControlDto;
   form: ControlForm;
   $selected: WritableSignal<boolean>;
-
-  get(key: keyof ControlDto): string;
   update(): ControlDto;
-  getFormControl(indictor: ControlMutableKeys): FormControl;
-  getDataAndSplit(): string[];
+  getFromControl(name: keyof typeof ConstControlMutableKeys): FormControl;
 }

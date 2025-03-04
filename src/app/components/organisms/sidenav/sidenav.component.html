@@ -14,6 +14,9 @@
       @for (connection of collections.fractals.values; track connection.dto.id) {
         <app-tap [tap]="connection" [disableHoldEvent]="true" (touch)="onPageTouched($event)" />
       }
+      @if (fs.$app(); as app) {
+        <app-tap [tap]="app" [disableHoldEvent]="true" (touch)="onPageTouched($event)" />
+      }
     }
   </mat-drawer>
   <router-outlet></router-outlet>

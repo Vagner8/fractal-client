@@ -1,12 +1,10 @@
-@let children = fractal.fractals.values;
-
-@if (children.length > 0) {
-  <table mat-table [dataSource]="children" class="table">
+@if (fractal.fractals.values.length > 0) {
+  <table mat-table [dataSource]="dataSource" class="table">
     @for (column of columns; track column) {
       <ng-container [matColumnDef]="column">
         <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
         <td mat-cell *matCellDef="let row">
-          {{ row.controls.get({ unsaveIndicator: column })?.get('data') }}
+          {{ fractal.fractals.get(row)?.controls?.getControlData({ unknownIndicator: column }) }}
         </td>
       </ng-container>
     }
@@ -15,8 +13,8 @@
       mat-row
       *matRowDef="let row; columns: columns"
       appTap
-      (hold)="fractal.selectedChildren.toggleAll(row)"
-      (touch)="fractal.selectedChildren.toggle(row)"
-      [class.clicked-row]="fractal.selectedChildren.$value().includes(row)"></tr>
+      (hold)="fractal.selectedChildren.toggleAll(fractal.fractals.get(row))"
+      (touch)="fractal.selectedChildren.toggle(fractal.fractals.get(row))"
+      [class.clicked-row]="fractal.selectedChildren.has(fractal.fractals.get(row))"></tr>
   </table>
 }

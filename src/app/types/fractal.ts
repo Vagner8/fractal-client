@@ -3,6 +3,7 @@ import { WritableSignal } from '@angular/core';
 import { FormRecord } from '@angular/forms';
 import { BaseRecord } from './common';
 import { FractalsState, FractalState } from './states';
+import { ConstOrder } from '@constants';
 
 export type FractalsDto = Record<string, FractalDto>;
 
@@ -17,12 +18,6 @@ export interface FractalDto {
   controls: ControlsDto;
 }
 
-export interface FractalDefaultSort {
-  sortChildren: string[];
-  sortOwnControls: string[];
-  sortChildrenControls: string[];
-}
-
 export interface FractalsRecord extends BaseRecord<Fractal> {
   getFractalRecursively(test: string, fractals?: FractalsRecord): Fractal | null;
 }
@@ -30,6 +25,7 @@ export interface FractalsRecord extends BaseRecord<Fractal> {
 export interface Fractal {
   dto: FractalDto;
   form: FormRecord;
+  cursor: string;
   parent: Fractal;
   controls: ControlsRecord;
   fractals: FractalsRecord;
@@ -39,12 +35,10 @@ export interface Fractal {
   selectedChild: FractalState;
   selectedChildren: FractalsState;
 
-  get default(): FractalDefaultSort;
-
   is(value: string | object): boolean;
+  order(sort: keyof typeof ConstOrder): string[];
   update(): ControlDto[];
-  addNewChild(): void;
   addChildren(): FractalDto[];
-  deleteChildren(): FractalDto[];
-  updateChildrenControls(): ControlDto[];
+  deleteSelectedChildren(): FractalDto[];
+  updateSelectedChildren(): ControlDto[];
 }

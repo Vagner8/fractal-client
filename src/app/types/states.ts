@@ -12,9 +12,10 @@ export interface FractalState {
 export interface FractalsState {
   $value: WritableSignal<Fractal[]>;
 
+  has(fractal: Fractal | null): boolean;
   push(fractal: Fractal): void;
   clear(): void;
-  toggle(fractal: Fractal): void;
+  toggle(fractal: Fractal | null): void;
   refresh(): void;
-  toggleAll(fractal: Fractal): void;
+  toggleAll(fractal: Fractal | null): void;
 }

@@ -4,6 +4,11 @@ import { Fractal, FractalsState } from '@types';
 export class FractalsStateFactory implements FractalsState {
   $value = signal<Fractal[]>([]);
 
+  has(fractal: Fractal | null): boolean {
+    if (!fractal) return false;
+    return this.$value().includes(fractal);
+  }
+
   push(fractal: Fractal): void {
     this.$value.update(prev => [...prev, fractal]);
   }
@@ -12,7 +17,8 @@ export class FractalsStateFactory implements FractalsState {
     this.$value.set([]);
   }
 
-  toggle(fractal: Fractal): void {
+  toggle(fractal: Fractal | null): void {
+    if (!fractal) return;
     this.$value.update(prev => (prev.includes(fractal) ? prev.filter(item => item !== fractal) : [...prev, fractal]));
   }
 
@@ -20,7 +26,8 @@ export class FractalsStateFactory implements FractalsState {
     this.$value.update(prev => [...prev]);
   }
 
-  toggleAll(fractal: Fractal): void {
+  toggleAll(fractal: Fractal | null): void {
+    if (!fractal) return;
     this.$value.update(prev => (prev.length === 0 ? fractal.parent.fractals.values : []));
   }
 }

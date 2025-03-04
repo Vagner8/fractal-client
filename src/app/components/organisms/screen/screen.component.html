@@ -11,9 +11,9 @@
       @case (AppPages.Home) {
         <h1>Home</h1>
       }
-      <!-- @case (AppPages.App) {
-        <app-application [fractal]="app" />
-      } -->
+      @case (AppPages.App) {
+        <app-admin [fractal]="app" />
+      }
       @default {
         @if (selectedPage) {
           <app-fractal-collection [fractal]="selectedPage" />

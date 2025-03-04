@@ -1,0 +1,11 @@
+<mat-accordion>
+  <app-expansion-panel [fractal]="fractal" (closed)="closed()">
+    @if (fractal.is('App')) {
+      @for (cursor of fractal.controls.getControlDataAndSplit('Order children'); track cursor) {
+        @if (fractal.fractals.get(cursor); as fractal) {
+          <app-admin [fractal]="fractal" />
+        }
+      }
+    }
+  </app-expansion-panel>
+</mat-accordion>

@@ -1,7 +1,7 @@
-export const ConstSort = {
-  'Sort Children': 'Sort children',
-  'Sort own controls': 'Sort own controls',
-  'Sort children controls': 'Sort children controls',
+export const ConstOrder = {
+  'Order children': 'Order children',
+  'Order own controls': 'Order own controls',
+  'Order children controls': 'Order children controls',
 } as const;
-export const ConstIndicators = { Icon: 'Icon', Cursor: 'Cursor', ...ConstSort } as const;
-export const ConstSplitIndicators = { ...ConstSort } as const;
+export const ConstIndicators = { Icon: 'Icon', Cursor: 'Cursor', ...ConstOrder } as const;
+export const ConstSplitIndicators = { ...ConstOrder } as const;

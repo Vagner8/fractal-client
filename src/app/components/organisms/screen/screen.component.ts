@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 import { EventService, FractalService } from '@services';
 import { EditorComponent } from '../editor/editor.component';
-import { ApplicationComponent } from '../application/application.component';
 import { ConstAppParams, ConstAppPages } from '@constants';
 import { FractalCollectionComponent } from '@components/molecules';
+import { AdminComponent } from '../admin/admin.component';
 
 type Params = Record<keyof typeof ConstAppParams, string>;
 
 @Component({
   selector: 'app-screen',
   standalone: true,
-  imports: [ApplicationComponent, EditorComponent, FractalCollectionComponent],
+  imports: [AdminComponent, EditorComponent, FractalCollectionComponent],
   templateUrl: './screen.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

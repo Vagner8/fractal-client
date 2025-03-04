@@ -4,13 +4,13 @@ import { ExpansionPanelComponent } from './expansion-panel/expansion-panel.compo
 import { Fractal } from '@types';
 
 @Component({
-  selector: 'app-application',
+  selector: 'app-admin',
   standalone: true,
   imports: [MatExpansionModule, ExpansionPanelComponent],
-  templateUrl: './application.component.html',
-  styleUrl: './application.component.scss',
+  templateUrl: './admin.component.html',
+  styleUrl: './admin.component.scss',
 })
-export class ApplicationComponent {
+export class AdminComponent {
   @Input() fractal!: Fractal;
   accordion = viewChild(MatAccordion);
 

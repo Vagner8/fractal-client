@@ -14,7 +14,10 @@ export class FractalCollectionComponent {
   @Input() fractal!: Fractal;
 
   get columns(): string[] {
-    const sortChildrenControls = this.fractal.controls.get('Sort children controls');
-    return sortChildrenControls ? sortChildrenControls.getDataAndSplit() : this.fractal.default.sortChildrenControls;
+    return this.fractal.order('Order children controls');
+  }
+
+  get dataSource(): string[] {
+    return this.fractal.order('Order children');
   }
 }
