@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { TapDirective } from '@directives';
 import { MatTableModule } from '@mat';
-import { Fractal } from '@types';
+import { IFractal } from '@types';
 
 @Component({
   selector: 'app-fractal-collection',
@@ -11,7 +11,7 @@ import { Fractal } from '@types';
   styleUrl: './fractal-collection.component.scss',
 })
 export class FractalCollectionComponent {
-  @Input() fractal!: Fractal;
+  @Input() fractal!: IFractal;
 
   get columns(): string[] {
     return this.fractal.order('Order children controls');

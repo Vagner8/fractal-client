@@ -1,9 +1,9 @@
 import { signal } from '@angular/core';
 import { FormControl, FormRecord } from '@angular/forms';
 import { ConstControlMutableKeys } from '@constants';
-import { Control, ControlDto, ControlForm, ControlMutableDto, FractalInitOptions } from '@types';
+import { IControl, ControlDto, ControlForm, ControlMutableDto, FractalInitOptions } from '@types';
 
-export class ControlFactory implements Control {
+export class Control implements IControl {
   form: ControlForm;
   $selected = signal(false);
 

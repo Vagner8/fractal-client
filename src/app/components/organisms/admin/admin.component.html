@@ -1,11 +1,33 @@
-<mat-accordion>
-  <app-expansion-panel [fractal]="fractal" (closed)="closed()">
-    @if (fractal.is('App')) {
-      @for (cursor of fractal.controls.getControlDataAndSplit('Order children'); track cursor) {
-        @if (fractal.fractals.get(cursor); as fractal) {
-          <app-admin [fractal]="fractal" />
-        }
+<div class="admin">
+  <app-fractal-controls [fractal]="fractal" class="controls" />
+
+  <mat-accordion class="accordion">
+    @for (cursor of fractal.order('Order children'); track cursor) {
+      @if (fractal.fractals.get(cursor); as fractal) {
+        <mat-expansion-panel
+          #panel
+          [class.clicked]="fs.currentFractal.$value() === fractal"
+          (closed)="closed()"
+          (afterCollapse)="afterCollapse(fractal)"
+          (afterExpand)="afterExpand(fractal)">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              @if (fractal.controls.getControlData('Icon'); as icon) {
+                <mat-icon class="icon">{{ icon }}</mat-icon>
+              }
+              {{ fractal.cursor }}
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          @if (panel.expanded) {
+            @if (fractal.controls.has('Order children controls')) {
+              <app-fractal-collection [fractal]="fractal" />
+            } @else {
+              <app-admin [fractal]="fractal" />
+            }
+          }
+        </mat-expansion-panel>
       }
     }
-  </app-expansion-panel>
-</mat-accordion>
+  </mat-accordion>
+</div>

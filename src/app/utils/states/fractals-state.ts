@@ -1,15 +1,15 @@
 import { signal } from '@angular/core';
-import { Fractal, FractalsState } from '@types';
+import { IFractal, IFractalsState } from '@types';
 
-export class FractalsStateFactory implements FractalsState {
-  $value = signal<Fractal[]>([]);
+export class FractalsState implements IFractalsState {
+  $value = signal<IFractal[]>([]);
 
-  has(fractal: Fractal | null): boolean {
+  has(fractal: IFractal | null): boolean {
     if (!fractal) return false;
     return this.$value().includes(fractal);
   }
 
-  push(fractal: Fractal): void {
+  push(fractal: IFractal): void {
     this.$value.update(prev => [...prev, fractal]);
   }
 
@@ -17,7 +17,7 @@ export class FractalsStateFactory implements FractalsState {
     this.$value.set([]);
   }
 
-  toggle(fractal: Fractal | null): void {
+  toggle(fractal: IFractal | null): void {
     if (!fractal) return;
     this.$value.update(prev => (prev.includes(fractal) ? prev.filter(item => item !== fractal) : [...prev, fractal]));
   }
@@ -26,8 +26,8 @@ export class FractalsStateFactory implements FractalsState {
     this.$value.update(prev => [...prev]);
   }
 
-  toggleAll(fractal: Fractal | null): void {
+  toggleAll(fractal: IFractal | null): void {
     if (!fractal) return;
-    this.$value.update(prev => (prev.length === 0 ? fractal.parent.fractals.values : []));
+    this.$value.update(prev => (prev.length === 0 ? fractal.parent.fractals.arrValues : []));
   }
 }

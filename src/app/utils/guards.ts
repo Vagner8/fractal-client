@@ -1,4 +1,4 @@
-import { Fractal } from '@types';
-import { FractalFactory } from './fractals';
+import { IFractal } from '@types';
+import { Fractal } from './fractals';
 
-export const isFractal = (value: unknown): value is Fractal => value instanceof FractalFactory;
+export const isFractal = (value: unknown): value is IFractal => value instanceof Fractal;

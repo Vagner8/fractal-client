@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, TemplateRef } from '@angular/core';
-import { Control, Fractal } from '@types';
+import { IControl, IFractal } from '@types';
 import { isFractal } from '@utils';
 
-type DataSource = Fractal | Control | string;
+type DataSource = IFractal | IControl | string;
 
 @Component({
   selector: 'app-list',
@@ -20,7 +20,7 @@ export class ListComponent {
     return typeof data === 'string' ? data : data.dto.id;
   }
 
-  isFractal(data: DataSource): data is Fractal {
+  isFractal(data: DataSource): data is IFractal {
     return isFractal(data);
   }
 }

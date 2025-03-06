@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatButtonModule, MatCardModule } from '@mat';
 import { ListComponent } from '@components/atoms';
-import { Fractal } from '@types';
+import { IFractal } from '@types';
 import { FractalFormComponent } from '@components/molecules';
 
 @Component({
@@ -12,5 +12,5 @@ import { FractalFormComponent } from '@components/molecules';
   styleUrl: './editor.component.scss',
 })
 export class EditorComponent {
-  @Input() fractal!: Fractal;
+  @Input() fractal!: IFractal;
 }

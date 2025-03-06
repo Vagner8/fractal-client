@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { MatTableModule } from '@mat';
-import { ControlMutableDto, Fractal } from '@types';
+import { ControlMutableDto, IFractal } from '@types';
 
 @Component({
   selector: 'app-fractal-controls',
@@ -10,7 +10,7 @@ import { ControlMutableDto, Fractal } from '@types';
   styleUrl: './fractal-controls.component.scss',
 })
 export class FractalControlsComponent {
-  @Input() fractal!: Fractal;
+  @Input() fractal!: IFractal;
 
   get columns(): (keyof ControlMutableDto)[] {
     return ['indicator', 'data', 'input'];

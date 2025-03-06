@@ -1,13 +1,13 @@
 <form>
   <app-card [title]="isNewFractal ? 'New' : title">
     @for (indicator of dataSource; track indicator) {
-      @if (fractal.controls.get({ unknownIndicator: indicator }); as control) {
+      @if (fractal.controls.get(indicator); as control) {
         @let dataForm = control.getFromControl('data');
         @switch (control.dto.input) {
           @case (ControlInputs.Select) {
             <app-select
               [label]="indicator"
-              [opts]="fractal.controls.getControlDataAndSplit({ unknownIndicator: indicator })"
+              [opts]="fractal.controls.getControlDataAndSplit([indicator])"
               [form]="dataForm" />
           }
           @default {

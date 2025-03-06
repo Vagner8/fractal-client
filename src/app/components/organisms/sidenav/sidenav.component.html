@@ -5,19 +5,25 @@
     class="mat-drawer-app-sidenav"
     mode="side"
     position="end">
-    @if (modifiers.$selected()) {
-      @for (modifier of modifiers.fractals.values; track modifier.dto.id) {
-        <app-tap [tap]="modifier" (hold)="onModifierHeld(modifier)" (touch)="onModifierTouched(modifier)" />
+    <div>
+      @if (modifiers.$selected()) {
+        @for (indicator of modifiers.order('Order children'); track indicator) {
+          @if (modifiers.fractals.get(indicator); as modifier) {
+            <app-tap [tap]="modifier" (hold)="onModifierHeld(modifier)" (touch)="onModifierTouched(modifier)" />
+          }
+        }
       }
-    }
-    @if (collections.$selected()) {
-      @for (connection of collections.fractals.values; track connection.dto.id) {
-        <app-tap [tap]="connection" [disableHoldEvent]="true" (touch)="onPageTouched($event)" />
+      @if (collections.$selected()) {
+        @for (indicator of collections.order('Order children'); track indicator) {
+          @if (collections.fractals.get(indicator); as connection) {
+            <app-tap [tap]="connection" [disableHoldEvent]="true" (touch)="onPageTouched($event)" />
+          }
+        }
+        @if (fs.$app(); as app) {
+          <app-tap [tap]="app" [disableHoldEvent]="true" (touch)="onPageTouched($event)" />
+        }
       }
-      @if (fs.$app(); as app) {
-        <app-tap [tap]="app" [disableHoldEvent]="true" (touch)="onPageTouched($event)" />
-      }
-    }
+    </div>
   </mat-drawer>
   <router-outlet></router-outlet>
 </mat-drawer-container>

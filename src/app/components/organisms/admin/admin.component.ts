@@ -1,31 +1,41 @@
-import { Component, computed, Input, viewChild } from '@angular/core';
-import { MatAccordion, MatExpansionModule } from '@mat';
-import { ExpansionPanelComponent } from './expansion-panel/expansion-panel.component';
-import { Fractal } from '@types';
+import { ChangeDetectionStrategy, Component, inject, Input, OnInit, viewChild, viewChildren } from '@angular/core';
+import { MatExpansionModule, MatExpansionPanel, MatIconModule } from '@mat';
+import { IFractal } from '@types';
+import { FractalCollectionComponent, FractalControlsComponent } from '@components/molecules';
+import { FractalService } from '@services';
+import { ConstAppFractals } from '@constants';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [MatExpansionModule, ExpansionPanelComponent],
+  imports: [MatIconModule, MatExpansionModule, FractalControlsComponent, FractalCollectionComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdminComponent {
-  @Input() fractal!: Fractal;
-  accordion = viewChild(MatAccordion);
+export class AdminComponent implements OnInit {
+  @Input() fractal!: IFractal;
+  fs = inject(FractalService);
+  panel = viewChild(MatExpansionPanel);
+  children = viewChildren(AdminComponent);
 
-  closed(): void {
-    // const current = this.ss.currentFractal.value;
-    // if (current && !this.fractal.is(ConstAppFractals.App)) this.ss.currentFractal.set(current.parent);
-    // this.accordion()?.closeAll();
+  ngOnInit(): void {
+    this.fractal.cursor === ConstAppFractals.App && this.fs.currentFractal.set(this.fractal);
   }
 
-  shouldRender = computed(() => {
-    // let current = this.ss.currentFractal.$value();
-    // while (current) {
-    //   if (current === this.fractal) return true;
-    //   current = current.parent;
-    // }
-    return false;
-  });
+  close(): void {
+    this.panel()?.close();
+  }
+
+  closed(): void {
+    this.children().forEach(child => child.close());
+  }
+
+  afterExpand(fractal: IFractal): void {
+    this.fs.currentFractal.set(fractal);
+  }
+
+  afterCollapse(fractal: IFractal): void {
+    this.fs.currentFractal.set(fractal.parent);
+  }
 }

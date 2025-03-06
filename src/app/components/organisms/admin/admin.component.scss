@@ -1,1 +1,35 @@
+@use 'variables.scss' as *;
 
+.admin,
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: map-get($size, xs);
+}
+
+.icon {
+  margin-right: map-get($size, sm);
+}
+
+.mat-expansion-panel {
+  border: solid 1px map-get($color, border);
+  box-shadow: none !important;
+}
+
+.clicked {
+  background-color: map-get($color, secondary);
+}
+
+.controls {
+  overflow: auto;
+}
+
+@media (max-width: map-get($breakpoints, sm)) {
+  ::ng-deep {
+    mat-expansion-panel {
+      .mat-expansion-panel-body {
+        padding: 0 map-get($size, sm) map-get($size, sm);
+      }
+    }
+  }
+}

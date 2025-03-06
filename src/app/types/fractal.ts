@@ -1,9 +1,9 @@
-import { ControlDto, ControlsDto, ControlsRecord } from './control';
+import { ControlDto, ControlsDto, IControlMap } from './control';
 import { WritableSignal } from '@angular/core';
 import { FormRecord } from '@angular/forms';
-import { BaseRecord } from './common';
-import { FractalsState, FractalState } from './states';
+import { IFractalsState, IFractalState } from './states';
 import { ConstOrder } from '@constants';
+import { IAppMap } from './common';
 
 export type FractalsDto = Record<string, FractalDto>;
 
@@ -18,22 +18,22 @@ export interface FractalDto {
   controls: ControlsDto;
 }
 
-export interface FractalsRecord extends BaseRecord<Fractal> {
-  getFractalRecursively(test: string, fractals?: FractalsRecord): Fractal | null;
+export interface IFractalMap extends IAppMap<IFractal> {
+  getRecursively(test: string, fractals?: IFractalMap): IFractal | null;
 }
 
-export interface Fractal {
+export interface IFractal {
   dto: FractalDto;
   form: FormRecord;
   cursor: string;
-  parent: Fractal;
-  controls: ControlsRecord;
-  fractals: FractalsRecord;
+  parent: IFractal;
+  controls: IControlMap;
+  fractals: IFractalMap;
 
   $selected: WritableSignal<boolean>;
-  newChildren: FractalsState;
-  selectedChild: FractalState;
-  selectedChildren: FractalsState;
+  newChildren: IFractalsState;
+  selectedChild: IFractalState;
+  selectedChildren: IFractalsState;
 
   is(value: string | object): boolean;
   order(sort: keyof typeof ConstOrder): string[];

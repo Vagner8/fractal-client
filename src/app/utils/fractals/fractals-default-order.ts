@@ -1,11 +1,13 @@
 import { ConstOrder } from '@constants';
-import { Fractal } from '@types';
+import { IFractal } from '@types';
 
-export const fractalsDefaultOrder = ({ fractals, controls }: Fractal, sort: keyof typeof ConstOrder): string[] =>
-  (
-    ({
-      'Order children': fractals.keys,
-      'Order own controls': controls.keys,
-      'Order children controls': fractals.values.length > 0 ? fractals.values[0].controls.keys : [],
-    }) satisfies Record<keyof typeof ConstOrder, string[]>
+export const fractalsDefaultOrder = ({ fractals, controls }: IFractal, sort: keyof typeof ConstOrder): string[] => {
+  const firstFractal = fractals.first;
+  return (
+    {
+      'Order children': fractals.arrKeys,
+      'Order own controls': controls.arrKeys,
+      'Order children controls': firstFractal ? firstFractal.controls.arrKeys : [],
+    } satisfies Record<keyof typeof ConstOrder, string[]>
   )[sort];
+};

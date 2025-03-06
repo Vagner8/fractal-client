@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CardComponent, InputComponent, SelectComponent } from '@components/atoms';
 import { ConstControlInputs } from '@constants';
-import { Fractal } from '@types';
+import { IFractal } from '@types';
 
 @Component({
   selector: 'app-fractal-form',
@@ -10,7 +10,7 @@ import { Fractal } from '@types';
   templateUrl: './fractal-form.component.html',
 })
 export class FractalFormComponent {
-  @Input() fractal!: Fractal;
+  @Input() fractal!: IFractal;
   ControlInputs = ConstControlInputs;
 
   get title(): string | undefined {
@@ -22,6 +22,6 @@ export class FractalFormComponent {
   }
 
   get isNewFractal(): boolean {
-    return !this.fractal.parent.fractals.values.includes(this.fractal);
+    return !this.fractal.parent.fractals.has(this.fractal.cursor);
   }
 }

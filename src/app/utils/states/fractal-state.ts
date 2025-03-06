@@ -1,14 +1,14 @@
 import { signal } from '@angular/core';
-import { Fractal, FractalState } from '@types';
+import { IFractal, IFractalState } from '@types';
 
-export class FractalStateFactory implements FractalState {
-  $value = signal<Fractal | null>(null);
+export class FractalState implements IFractalState {
+  $value = signal<IFractal | null>(null);
 
-  set(fractal: Fractal | null): void {
+  set(fractal: IFractal | null): void {
     this.$value.set(fractal);
   }
 
-  toggle(fractal: Fractal): void {
+  toggle(fractal: IFractal): void {
     this.$value.update(prev => (prev === fractal ? null : fractal));
   }
 

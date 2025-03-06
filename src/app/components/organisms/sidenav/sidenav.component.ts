@@ -4,8 +4,8 @@ import { TapComponent } from '@components/atoms';
 import { ConstAppEvents, ConstNavigableModifiers, ConstModifiers } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { DataService, EventService, FractalService } from '@services';
-import { Fractal } from '@types';
-import { NewFractalFactory } from 'app/utils/fractals/new-fractal-factory';
+import { IFractal } from '@types';
+import { NewFractal } from 'app/utils/fractals/new-fractal';
 
 const { New, Edit, Save, Delete } = ConstModifiers;
 
@@ -17,20 +17,20 @@ const { New, Edit, Save, Delete } = ConstModifiers;
   styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
-  @Input() modifiers!: Fractal;
-  @Input() collections!: Fractal;
+  @Input() modifiers!: IFractal;
+  @Input() collections!: IFractal;
   es = inject(EventService);
   fs = inject(FractalService);
   private ds = inject(DataService);
 
   AppEvents = ConstAppEvents;
 
-  onPageTouched(page: Fractal): void {
+  onPageTouched(page: IFractal): void {
     this.collections.selectedChild.set(page);
     this.fs.navigatePage(page.cursor);
   }
 
-  onModifierHeld = (modifier: Fractal): void => {
+  onModifierHeld = (modifier: IFractal): void => {
     const selectedChild = this.collections.selectedChild.$value();
     if (!selectedChild) return;
 
@@ -58,14 +58,14 @@ export class SidenavComponent {
     this.fs.navigateModifier(null);
   };
 
-  onModifierTouched(modifier: Fractal): void {
+  onModifierTouched(modifier: IFractal): void {
     const selectedChild = this.collections.selectedChild.$value();
     if (!selectedChild) return;
     const { newChildren, selectedChildren } = selectedChild;
 
     const handler: Record<string, () => void> = {
       [New]: () => {
-        selectedChild.newChildren.push(NewFractalFactory(selectedChild, { syncFormWithDto: true }));
+        selectedChild.newChildren.push(NewFractal(selectedChild, { syncFormWithDto: true }));
       },
       [Edit]: () => {},
       [Save]: () => {},

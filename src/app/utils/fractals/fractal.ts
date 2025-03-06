@@ -1,30 +1,30 @@
-import { ControlDto, Fractal, FractalDto, FractalInitOptions, ControlsRecord, FractalsRecord } from '@types';
+import { ControlDto, IFractal, FractalDto, FractalInitOptions, IControlMap, IFractalMap } from '@types';
 import { signal } from '@angular/core';
 import { FormRecord } from '@angular/forms';
 import { isFractal } from '../guards';
-import { FractalsStateFactory, FractalStateFactory } from '../states';
+import { FractalsState, FractalState } from '../states';
 import { ConstOrder } from '@constants';
-import { ControlsFactory } from '../controls/controls-factory';
+import { Controls } from '../controls/controls';
 import { fractalsDefaultOrder } from './fractals-default-order';
 
-export class FractalFactory implements Fractal {
+export class Fractal implements IFractal {
   dto: FractalDto;
   form = new FormRecord({});
   cursor: string;
-  parent: Fractal;
-  controls: ControlsRecord;
-  fractals!: FractalsRecord;
+  parent: IFractal;
+  controls: IControlMap;
+  fractals!: IFractalMap;
 
   $selected = signal(false);
-  selectedChild = new FractalStateFactory();
+  selectedChild = new FractalState();
 
-  newChildren = new FractalsStateFactory();
-  selectedChildren = new FractalsStateFactory();
+  newChildren = new FractalsState();
+  selectedChildren = new FractalsState();
 
-  constructor(dto: FractalDto, parent?: Fractal | null, options?: FractalInitOptions) {
+  constructor(dto: FractalDto, parent?: IFractal | null, options?: FractalInitOptions) {
     this.dto = dto;
-    this.parent = parent ? parent : ({} as Fractal);
-    this.controls = ControlsFactory(this, options);
+    this.parent = parent ? parent : ({} as IFractal);
+    this.controls = Controls(this, options);
     this.cursor = this.controls.getControlData('Cursor');
   }
 
@@ -40,10 +40,11 @@ export class FractalFactory implements Fractal {
   }
 
   update(): ControlDto[] {
-    return this.controls.values.reduce((acc: ControlDto[], control) => {
+    const acc: ControlDto[] = [];
+    for (const control of this.controls.values()) {
       if (control.form.dirty) acc.push(control.update());
-      return acc;
-    }, []);
+    }
+    return acc;
   }
 
   addChildren(): FractalDto[] {
