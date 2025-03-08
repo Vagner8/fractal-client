@@ -1,14 +1,19 @@
-import { IControl, IControlMap } from '@types';
-import { ConstIndicators } from '@constants';
+import { IControl, IControlMap, IndicatorData } from '@types';
 import { AppMap } from './app-map';
+import { getIndicatorData } from '../common';
+import { ConstIndicators } from '@constants';
 
 export class ControlMap extends AppMap<IControl> implements IControlMap {
-  getControlData(indicator: keyof typeof ConstIndicators | string[]): string {
-    const control = this.get(typeof indicator === 'string' ? indicator : indicator[0]);
+  getKnown(indicator: keyof typeof ConstIndicators): IControl | undefined {
+    return this.get(indicator);
+  }
+
+  getControlData(indicator: IndicatorData): string {
+    const control = this.get(getIndicatorData(indicator));
     return control ? control.dto.data : '';
   }
 
-  getControlDataAndSplit(indicator: keyof typeof ConstIndicators | string[]): string[] {
+  getControlDataAndSplit(indicator: IndicatorData): string[] {
     const data = this.getControlData(indicator);
     return data ? data.split(':') : [];
   }

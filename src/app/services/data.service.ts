@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { ENV } from '@constants';
-import { ControlDto, FractalDto } from '@types';
+import { IControlDto, IFractalDto } from '@types';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,34 +12,34 @@ export class DataService {
   private fractalApi = `${ENV.API}fractal`;
   private controlApi = `${ENV.API}control`;
 
-  get(): Observable<FractalDto> {
-    return this.http.get<FractalDto>(`${this.fractalApi}?id=${ENV.ID}`);
+  get(): Observable<IFractalDto> {
+    return this.http.get<IFractalDto>(`${this.fractalApi}?id=${ENV.ID}`);
   }
 
-  add(dto: FractalDto[]): Observable<FractalDto> {
-    return this.http.post<FractalDto>(this.fractalApi, dto);
+  add(dto: IFractalDto[]): Observable<IFractalDto> {
+    return this.http.post<IFractalDto>(this.fractalApi, dto);
   }
 
-  addControls(dto: ControlDto[]): Observable<ControlDto[]> {
-    return this.http.post<ControlDto[]>(this.controlApi, dto);
+  addControls(dto: IControlDto[]): Observable<IControlDto[]> {
+    return this.http.post<IControlDto[]>(this.controlApi, dto);
   }
 
-  updateControls(dto: ControlDto[]): Observable<ControlDto[]> {
-    return this.http.put<ControlDto[]>(this.controlApi, dto);
+  updateControls(dto: IControlDto[]): Observable<IControlDto[]> {
+    return this.http.put<IControlDto[]>(this.controlApi, dto);
   }
 
-  deleteControls(body: ControlDto[]): Observable<ControlDto[]> {
-    return this.http.delete<ControlDto[]>(this.controlApi, {
+  deleteControls(body: IControlDto[]): Observable<IControlDto[]> {
+    return this.http.delete<IControlDto[]>(this.controlApi, {
       body,
     });
   }
 
-  update(dto: FractalDto[]): Observable<FractalDto> {
-    return this.http.put<FractalDto>(this.fractalApi, dto);
+  update(dto: IFractalDto[]): Observable<IFractalDto> {
+    return this.http.put<IFractalDto>(this.fractalApi, dto);
   }
 
-  delete(body: FractalDto[]): Observable<FractalDto[]> {
-    return this.http.delete<FractalDto[]>(this.fractalApi, {
+  delete(body: IFractalDto[]): Observable<IFractalDto[]> {
+    return this.http.delete<IFractalDto[]>(this.fractalApi, {
       body,
     });
   }

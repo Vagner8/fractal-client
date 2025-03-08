@@ -1,37 +1,32 @@
-import { WritableSignal } from '@angular/core';
 import { FormControl, FormRecord } from '@angular/forms';
 import { ConstControlMutableKeys, ConstIndicators } from '@constants';
-import { IAppMap } from './common';
+import { IAppMap, IndicatorData } from './common';
 
 export type Controls = Record<string, IControl>;
 export type ControlForm = FormRecord<FormControl>;
-export type ControlsDto = Record<string, ControlDto>;
+export type IControlsDto = Record<string, IControlDto>;
 
-export interface ControlData {
-  value: string;
-  get split(): string[];
-}
-
-export interface ControlMutableDto {
+export interface IControlMutableDto {
   data: string;
   input: string;
   indicator: string;
 }
 
-export interface ControlDto extends ControlMutableDto {
+export interface IControlDto extends IControlMutableDto {
   id: string;
   parentId: string;
 }
 
 export interface IControlMap extends IAppMap<IControl> {
-  getControlData(indicator: keyof typeof ConstIndicators | string[]): string;
-  getControlDataAndSplit(indicator: keyof typeof ConstIndicators | string[]): string[];
+  getKnown(indicator: keyof typeof ConstIndicators): IControl | undefined;
+  getControlData(indicator: IndicatorData): string;
+  getControlDataAndSplit(indicator: IndicatorData): string[];
 }
 
 export interface IControl {
-  dto: ControlDto;
+  dto: IControlDto;
   form: ControlForm;
-  $selected: WritableSignal<boolean>;
-  update(): ControlDto;
+  syncWithForm(): IControlDto;
   getFromControl(name: keyof typeof ConstControlMutableKeys): FormControl;
+  updateSplitData(value: string): IControl;
 }

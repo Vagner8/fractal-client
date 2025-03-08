@@ -28,11 +28,9 @@ export class ManagerComponent {
   }
 
   onTouch(): void {
+    const { modifiers, collections } = this.fs;
     if (this.prevEvent === Touch) {
-      this.fs.modifiers?.$selected.update(prev => {
-        this.fs.collections?.$selected.set(prev);
-        return !prev;
-      });
+      this.fs.sidenavTaps.$value.update(prev => (prev === collections ? modifiers : collections));
     }
     this.prevEvent = Touch;
     this.es.$managerEvent.set(Touch);

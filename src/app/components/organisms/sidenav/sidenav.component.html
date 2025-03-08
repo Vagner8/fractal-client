@@ -6,20 +6,20 @@
     mode="side"
     position="end">
     <div>
-      @if (modifiers.$selected()) {
-        @for (indicator of modifiers.order('Order children'); track indicator) {
-          @if (modifiers.fractals.get(indicator); as modifier) {
-            <app-tap [tap]="modifier" (hold)="onModifierHeld(modifier)" (touch)="onModifierTouched(modifier)" />
+      @if (fs.sidenavTaps.$value(); as taps) {
+        @let isModifiers = taps.cursor === AppFractals.Modifiers;
+
+        @for (indicator of taps.order('Order children'); track indicator) {
+          @if (taps.fractals.get(indicator); as tap) {
+            @if (isModifiers) {
+              <app-tap [tap]="tap" (hold)="onModifierHeld(tap)" (touch)="onModifierTouched(tap)" />
+            } @else {
+              <app-tap [tap]="tap" [disableHoldEvent]="true" (touch)="onPageTouched($event)" />
+            }
           }
         }
-      }
-      @if (collections.$selected()) {
-        @for (indicator of collections.order('Order children'); track indicator) {
-          @if (collections.fractals.get(indicator); as connection) {
-            <app-tap [tap]="connection" [disableHoldEvent]="true" (touch)="onPageTouched($event)" />
-          }
-        }
-        @if (fs.$app(); as app) {
+
+        @if (!isModifiers && fs.$app(); as app) {
           <app-tap [tap]="app" [disableHoldEvent]="true" (touch)="onPageTouched($event)" />
         }
       }

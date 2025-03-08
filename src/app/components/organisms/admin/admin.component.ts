@@ -3,7 +3,7 @@ import { MatExpansionModule, MatExpansionPanel, MatIconModule } from '@mat';
 import { IFractal } from '@types';
 import { FractalCollectionComponent, FractalControlsComponent } from '@components/molecules';
 import { FractalService } from '@services';
-import { ConstAppFractals } from '@constants';
+import { ConstAppFractals, ConstOrder } from '@constants';
 
 @Component({
   selector: 'app-admin',
@@ -18,6 +18,8 @@ export class AdminComponent implements OnInit {
   fs = inject(FractalService);
   panel = viewChild(MatExpansionPanel);
   children = viewChildren(AdminComponent);
+
+  Order = ConstOrder;
 
   ngOnInit(): void {
     this.fractal.cursor === ConstAppFractals.App && this.fs.currentFractal.set(this.fractal);

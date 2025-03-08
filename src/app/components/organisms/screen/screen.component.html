@@ -1,9 +1,9 @@
 @let app = fs.$app();
-@let selectedPage = fs.collections && fs.collections.selectedChild.$value();
+@let current = fs.currentFractal.$value();
 
 @if (app) {
-  @if (Modifiers && selectedPage) {
-    <app-editor [fractal]="selectedPage" />
+  @if (Modifiers && current) {
+    <app-editor [fractal]="current" />
   }
 
   @if (Page && !Modifiers) {
@@ -15,8 +15,8 @@
         <app-admin [fractal]="app" />
       }
       @default {
-        @if (selectedPage) {
-          <app-fractal-collection [fractal]="selectedPage" />
+        @if (current) {
+          <app-fractal-collection [fractal]="current" />
         }
       }
     }

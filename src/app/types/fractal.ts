@@ -1,21 +1,20 @@
-import { ControlDto, ControlsDto, IControlMap } from './control';
-import { WritableSignal } from '@angular/core';
+import { IControlDto, IControlsDto, IControlMap, IControl } from './control';
 import { FormRecord } from '@angular/forms';
-import { IFractalsState, IFractalState } from './states';
+import { IFractalsState } from './states';
 import { ConstOrder } from '@constants';
-import { IAppMap } from './common';
+import { IAppMap, IndicatorData } from './common';
 
-export type FractalsDto = Record<string, FractalDto>;
+export type FractalsDto = Record<string, IFractalDto>;
 
 export interface FractalInitOptions {
   syncFormWithDto: boolean;
 }
 
-export interface FractalDto {
+export interface IFractalDto {
   id: string;
   parentId: string;
   fractals: FractalsDto | null;
-  controls: ControlsDto;
+  controls: IControlsDto;
 }
 
 export interface IFractalMap extends IAppMap<IFractal> {
@@ -23,22 +22,22 @@ export interface IFractalMap extends IAppMap<IFractal> {
 }
 
 export interface IFractal {
-  dto: FractalDto;
+  dto: IFractalDto;
   form: FormRecord;
   cursor: string;
   parent: IFractal;
   controls: IControlMap;
   fractals: IFractalMap;
 
-  $selected: WritableSignal<boolean>;
+  isCollection: boolean;
+
   newChildren: IFractalsState;
-  selectedChild: IFractalState;
   selectedChildren: IFractalsState;
 
-  is(value: string | object): boolean;
   order(sort: keyof typeof ConstOrder): string[];
-  update(): ControlDto[];
-  addChildren(): FractalDto[];
-  deleteSelectedChildren(): FractalDto[];
-  updateSelectedChildren(): ControlDto[];
+  update(): IControlDto[];
+  addControl(indicatorData: IndicatorData): IControl;
+  updateNewChildren(): { newFractals: IFractalDto[]; ordersToAdd: IControlDto[]; ordersToUpdate: IControlDto[] };
+  deleteSelectedChildren(): IFractalDto[];
+  updateSelectedChildren(): IControlDto[];
 }

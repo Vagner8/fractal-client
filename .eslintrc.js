@@ -12,6 +12,7 @@ module.exports = {
         'plugin:prettier/recommended',
       ],
       rules: {
+        'no-console': ['error', { allow: ['error', 'info'] }],
         '@typescript-eslint/explicit-function-return-type': 'error',
         '@angular-eslint/directive-selector': [
           'error',

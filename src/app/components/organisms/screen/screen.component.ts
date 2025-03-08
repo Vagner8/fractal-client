@@ -27,8 +27,9 @@ export class ScreenComponent implements OnInit, Params {
   AppPages = ConstAppPages;
 
   ngOnInit(): void {
-    this.fs.setSidenavTaps(this.Taps);
+    this.fs.sidenavTaps.set(this.fs.collections);
     this.es.$managerEvent.set(this.Manager);
-    this.fs.collections?.selectedChild.set(this.fs.collections.fractals.get(this.Page));
+    const current = this.fs.collections?.fractals.get(this.Page);
+    current && this.fs.currentFractal.set(current);
   }
 }
