@@ -1,15 +1,13 @@
-@let hasOrderChildrenControls = fractal.controls.has(Order['Order children controls']);
-
 <div class="admin">
   <app-fractal-controls [fractal]="fractal" class="controls" />
 
-  @if (hasOrderChildrenControls) {
+  @if (fractal.isCollection) {
     <app-fractal-collection [fractal]="fractal" />
   }
 
-  @if (!hasOrderChildrenControls) {
+  @if (!fractal.isCollection) {
     <mat-accordion class="accordion">
-      @for (cursor of fractal.order('Order children'); track cursor) {
+      @for (cursor of fractal.controls.getAndSplitControlData('Oc'); track cursor) {
         @if (fractal.fractals.get(cursor); as child) {
           <mat-expansion-panel
             #panel

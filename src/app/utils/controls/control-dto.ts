@@ -1,7 +1,6 @@
 import { ConstControlInputs } from '@constants';
-import { IControlDto, IndicatorData } from '@types';
+import { IControlDto } from '@types';
 import { v4 } from 'uuid';
-import { getIndicatorData } from '../common';
 
 export class ControlDto implements IControlDto {
   id: string;
@@ -14,15 +13,5 @@ export class ControlDto implements IControlDto {
     this.data = '';
     this.input = ConstControlInputs.Text;
     this.indicator = '';
-  }
-
-  setInput(input: keyof typeof ConstControlInputs): ControlDto {
-    this.input = input;
-    return this;
-  }
-
-  setIndicator(indicatorData: IndicatorData): ControlDto {
-    this.indicator = getIndicatorData(indicatorData);
-    return this;
   }
 }

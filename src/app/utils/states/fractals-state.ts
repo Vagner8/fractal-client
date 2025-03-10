@@ -28,6 +28,6 @@ export class FractalsState implements IFractalsState {
 
   toggleAll(fractal: IFractal | null): void {
     if (!fractal) return;
-    this.$value.update(prev => (prev.length === 0 ? fractal.parent.fractals.arrValues : []));
+    this.$value.update(prev => (prev.length === 0 ? Array.from(fractal.parent.fractals.values()) : []));
   }
 }

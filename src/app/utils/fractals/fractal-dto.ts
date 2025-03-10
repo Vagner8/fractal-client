@@ -12,15 +12,22 @@ export class FractalDto implements IFractalDto {
   constructor(parent: IFractal) {
     this.id = v4();
     this.parentId = parent.dto.id;
-    this.controls = this.createControlsDto();
+    this.controls = this.createRequiredControls(parent);
     this.fractals = {};
   }
 
-  private createControlsDto(): IControlsDto {
-    const controlsDto = Object.fromEntries(
-      Object.values(ConstOrder).map(indicator => [indicator, new ControlDto(this.id).setIndicator([indicator])])
-    );
-    controlsDto[ConstIndicators.Cursor] = new ControlDto(this.id).setIndicator('Cursor');
-    return controlsDto;
+  private createControlDto(indicator: string): ControlDto {
+    const controlDto = new ControlDto(this.id);
+    controlDto.indicator = indicator;
+    if (indicator === ConstOrder.Occ) {
+      controlDto.data = ConstIndicators.Cursor;
+    }
+    return controlDto;
+  }
+
+  private createRequiredControls(parent: IFractal): IControlsDto {
+    const indicators = parent.controls.getAndSplitControlData('Occ');
+    indicators.push(ConstIndicators.Cursor);
+    return Object.fromEntries(indicators.map(indicator => [indicator, this.createControlDto(indicator)]));
   }
 }

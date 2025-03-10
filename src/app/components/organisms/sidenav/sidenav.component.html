@@ -8,8 +8,7 @@
     <div>
       @if (fs.sidenavTaps.$value(); as taps) {
         @let isModifiers = taps.cursor === AppFractals.Modifiers;
-
-        @for (indicator of taps.order('Order children'); track indicator) {
+        @for (indicator of taps.controls.getAndSplitControlData(['Oc']); track indicator) {
           @if (taps.fractals.get(indicator); as tap) {
             @if (isModifiers) {
               <app-tap [tap]="tap" (hold)="onModifierHeld(tap)" (touch)="onModifierTouched(tap)" />

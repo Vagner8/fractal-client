@@ -1,6 +1,8 @@
 import { Component, Input } from '@angular/core';
+import { ConstOrder } from '@constants';
 import { MatTableModule } from '@mat';
 import { IControlMutableDto, IFractal } from '@types';
+import { isConstOrderType } from '@utils';
 
 @Component({
   selector: 'app-fractal-controls',
@@ -17,6 +19,10 @@ export class FractalControlsComponent {
   }
 
   get dataSource(): string[] {
-    return this.fractal.order('Order own controls');
+    return this.fractal.controls.getAndSplitControlData('Ooc');
+  }
+
+  tdContent(indicator: string): string {
+    return isConstOrderType(indicator) ? ConstOrder[indicator] : indicator;
   }
 }

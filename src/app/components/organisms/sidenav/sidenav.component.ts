@@ -40,23 +40,24 @@ export class SidenavComponent {
         const controls = current.updateSelectedChildren();
         controls.length > 0 && this.ds.updateControls(controls).subscribe();
 
-        const { newFractals, ordersToAdd, ordersToUpdate } = current.updateNewChildren();
+        const newFractals = current.addNewChildren();
         newFractals.length > 0 && this.ds.add(newFractals).subscribe();
-        ordersToAdd.length > 0 && this.ds.addControls(ordersToAdd).subscribe();
-        ordersToUpdate.length > 0 && this.ds.updateControls(ordersToUpdate).subscribe();
-
-        current.newChildren.clear();
       },
+
       [Delete]: () => {
-        const selectedChildren = current.selectedChildren.$value();
-        selectedChildren.length > 0 && this.ds.delete(selectedChildren.map(({ dto }) => dto)).subscribe();
-        current.deleteSelectedChildren();
-        current.newChildren.clear();
-        current.selectedChildren.clear();
+        const deleteChildren = current.deleteSelectedChildren();
+        deleteChildren.length > 0 && this.ds.delete(deleteChildren).subscribe();
       },
     };
 
     handler[modifier.cursor]?.();
+
+    current.newChildren.clear();
+    current.selectedChildren.clear();
+
+    const oc = current.controls.getKnown('Oc')?.dto;
+    oc && this.ds.updateControls([oc]).subscribe();
+
     this.fs.currentFractal.refresh();
     this.fs.navigateModifier(null);
   };

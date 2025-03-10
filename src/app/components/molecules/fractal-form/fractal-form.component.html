@@ -7,7 +7,7 @@
           @case (ControlInputs.Select) {
             <app-select
               [label]="indicator"
-              [opts]="fractal.controls.getControlDataAndSplit([indicator])"
+              [opts]="fractal.controls.getAndSplitControlData([indicator])"
               [form]="dataForm" />
           }
           @default {

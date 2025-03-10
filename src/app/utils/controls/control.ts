@@ -1,6 +1,13 @@
 import { FormControl, FormRecord } from '@angular/forms';
-import { ConstControlMutableKeys, ConstSeparator } from '@constants';
-import { IControl, IControlDto, ControlForm, IControlMutableDto, FractalInitOptions } from '@types';
+import { ConstControlMutable } from '@constants';
+import {
+  IControl,
+  IControlDto,
+  ControlForm,
+  IControlMutableDto,
+  FractalInitOptions,
+  ConstControlMutableType,
+} from '@types';
 
 export class Control implements IControl {
   form: ControlForm;
@@ -10,11 +17,11 @@ export class Control implements IControl {
     option?: FractalInitOptions
   ) {
     this.form = new FormRecord(
-      Object.fromEntries(Object.values(ConstControlMutableKeys).map(key => [key, new FormControl(this.dto[key])]))
+      Object.fromEntries(Object.values(ConstControlMutable).map(key => [key, new FormControl(this.dto[key])]))
     );
     if (option?.syncFormWithDto) {
       this.form.valueChanges.subscribe(value => {
-        for (const key in ConstControlMutableKeys) {
+        for (const key in ConstControlMutable) {
           this.dto[key as keyof IControlMutableDto] = value[key];
         }
       });
@@ -22,28 +29,30 @@ export class Control implements IControl {
   }
 
   syncWithForm(): IControlDto {
-    for (const key in ConstControlMutableKeys) {
+    for (const key in ConstControlMutable) {
       const form = this.form.controls[key];
       if (form.dirty) this.dto[key as keyof IControlMutableDto] = form.value;
     }
     return this.dto;
   }
 
-  getFromControl(name: keyof typeof ConstControlMutableKeys): FormControl {
+  getFromControl(name: ConstControlMutableType): FormControl {
     return this.form.controls[name];
   }
 
-  updateSplitData(value: string): IControl {
-    let dataArr = this.dto.data.split(ConstSeparator);
-    if (dataArr.includes(value)) throw new Error(`Control with name ${value} already exist`);
-    if (this.dto.data) {
-      dataArr.push(value);
-    } else {
-      dataArr = [value];
-    }
-    const dataStr = dataArr.join(ConstSeparator);
-    this.dto.data = dataStr;
-    this.getFromControl('data').setValue(dataStr);
+  pushSplitData(data: string): IControl {
+    this.dto.data = this.dto.data ? `${this.dto.data}:${data}` : data;
+    this.getFromControl('data').setValue(this.dto.data);
+    return this;
+  }
+
+  deleteSplitData(data: string): IControl {
+    this.dto.data = this.dto.data
+      .split(':')
+      .filter(indicator => indicator !== data)
+      .join(':');
+    this.getFromControl('data').setValue(this.dto.data);
+
     return this;
   }
 }

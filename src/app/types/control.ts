@@ -1,6 +1,7 @@
 import { FormControl, FormRecord } from '@angular/forms';
-import { ConstControlMutableKeys, ConstIndicators } from '@constants';
-import { IAppMap, IndicatorData } from './common';
+import { IndicatorData } from './common';
+import { ConstControlMutableType, ConstIndicatorsType } from './constants';
+import { Control } from '@utils';
 
 export type Controls = Record<string, IControl>;
 export type ControlForm = FormRecord<FormControl>;
@@ -17,16 +18,17 @@ export interface IControlDto extends IControlMutableDto {
   parentId: string;
 }
 
-export interface IControlMap extends IAppMap<IControl> {
-  getKnown(indicator: keyof typeof ConstIndicators): IControl | undefined;
+export interface IControls extends Map<string, Control> {
+  getKnown(indicator: ConstIndicatorsType): IControl | undefined;
   getControlData(indicator: IndicatorData): string;
-  getControlDataAndSplit(indicator: IndicatorData): string[];
+  getAndSplitControlData(indicator: IndicatorData): string[];
 }
 
 export interface IControl {
   dto: IControlDto;
   form: ControlForm;
   syncWithForm(): IControlDto;
-  getFromControl(name: keyof typeof ConstControlMutableKeys): FormControl;
-  updateSplitData(value: string): IControl;
+  pushSplitData(value: string): IControl;
+  getFromControl(name: ConstControlMutableType): FormControl;
+  deleteSplitData(data: string): IControl;
 }

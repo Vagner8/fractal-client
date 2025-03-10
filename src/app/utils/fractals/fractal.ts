@@ -1,28 +1,16 @@
-import {
-  IControlDto,
-  IFractal,
-  IFractalDto,
-  FractalInitOptions,
-  IControlMap,
-  IFractalMap,
-  IControl,
-  IndicatorData,
-} from '@types';
+import { IControlDto, IFractal, IFractalDto, FractalInitOptions, IControls, IFractals } from '@types';
 import { FormRecord } from '@angular/forms';
 import { FractalsState } from '../states';
-import { ConstAppFractals, ConstIndicators, ConstOrder } from '@constants';
+import { ConstAppFractals } from '@constants';
 import { Controls } from '../controls/controls';
-import { fractalsDefaultOrder } from './fractals-default-order';
-import { Control, ControlDto } from '../controls';
-import { getIndicatorData } from '../common';
 
 export class Fractal implements IFractal {
   dto: IFractalDto;
   form: FormRecord;
   cursor: string;
   parent: IFractal;
-  controls: IControlMap;
-  fractals!: IFractalMap;
+  controls: IControls;
+  fractals!: IFractals;
   isCollection: boolean;
 
   newChildren = new FractalsState();
@@ -32,14 +20,9 @@ export class Fractal implements IFractal {
     this.dto = dto;
     this.form = new FormRecord({});
     this.parent = parent ? parent : ({} as IFractal);
-    this.controls = Controls(this, options);
+    this.controls = new Controls(this, options);
     this.cursor = this.controls.getControlData('Cursor');
     this.isCollection = parent?.cursor === ConstAppFractals.Collections;
-  }
-
-  order(sort: keyof typeof ConstOrder): string[] {
-    const result = this.controls.getControlDataAndSplit(sort);
-    return result && result.length > 0 ? result : fractalsDefaultOrder(this, sort);
   }
 
   update(): IControlDto[] {
@@ -50,49 +33,19 @@ export class Fractal implements IFractal {
     return acc;
   }
 
-  addControl(indicator: IndicatorData): IControl {
-    const order = new Control(new ControlDto(this.dto.id).setIndicator(indicator));
-    this.controls.set(getIndicatorData(indicator), order);
-    return order;
-  }
-
-  deleteSelectedChildren(): IFractalDto[] {
-    return this.selectedChildren.$value().map(child => {
-      this.fractals.delete(child.cursor);
-      return child.dto;
-    });
-  }
-
-  updateNewChildren(): { newFractals: IFractalDto[]; ordersToAdd: IControlDto[]; ordersToUpdate: IControlDto[] } {
-    const ordersToAdd: IControlDto[] = [];
-    const ordersToUpdate: IControlDto[] = [];
-
-    let orderChildren = this.controls.get(ConstOrder['Order children']);
-    let orderChildrenControls = this.controls.get(ConstOrder['Order children controls']);
-
-    if (!orderChildren) {
-      orderChildren = this.addControl('Order children');
-      ordersToAdd.push(orderChildren.dto);
-    } else {
-      ordersToUpdate.push(orderChildren.dto);
-    }
-
-    if (!orderChildrenControls) {
-      orderChildrenControls = this.addControl('Order children controls').updateSplitData(ConstIndicators.Cursor);
-      ordersToAdd.push(orderChildrenControls.dto);
-    }
-
-    const newFractals = this.newChildren.$value().reduce((acc: IFractalDto[], child) => {
+  addNewChildren(): IFractalDto[] {
+    return this.newChildren.$value().reduce((acc: IFractalDto[], child) => {
       if (child.form.dirty) {
-        child.cursor = child.form.controls[ConstIndicators.Cursor].value.data;
-        this.fractals.set(child.cursor, child);
-        acc.push(child.dto);
-        orderChildren.updateSplitData(child.cursor);
+        const cursor = child.controls.getKnown('Cursor')?.getFromControl('data').value;
+        const oc = this.controls.getKnown('Oc');
+        if (cursor && oc) {
+          this.fractals.set(cursor, child);
+          oc.pushSplitData(cursor);
+          acc.push(child.dto);
+        }
       }
       return acc;
     }, []);
-
-    return { newFractals, ordersToAdd, ordersToUpdate };
   }
 
   updateSelectedChildren(): IControlDto[] {
@@ -100,5 +53,13 @@ export class Fractal implements IFractal {
       if (fractal.form.dirty) acc = [...acc, ...fractal.update()];
       return acc;
     }, []);
+  }
+
+  deleteSelectedChildren(): IFractalDto[] {
+    return this.selectedChildren.$value().map(({ dto, cursor }) => {
+      this.controls.getKnown('Oc')?.deleteSplitData(cursor);
+      this.fractals.delete(cursor);
+      return dto;
+    });
   }
 }

@@ -20,10 +20,10 @@ export class FractalCollectionComponent implements OnInit {
   }
 
   get columns(): string[] {
-    return this.fractal.order('Order children controls');
+    return this.fractal.controls.getAndSplitControlData('Occ');
   }
 
   get dataSource(): string[] {
-    return this.fractal.order('Order children');
+    return this.fractal.controls.getAndSplitControlData('Oc');
   }
 }

@@ -4,7 +4,7 @@
       <th mat-header-cell *matHeaderCellDef>{{ column }}</th>
       <td class="td" mat-cell *matCellDef="let row">
         @if (fractal.controls.get(row); as control) {
-          {{ control.dto[column] }}
+          {{ tdContent(control.dto[column]) }}
         }
       </td>
     </ng-container>

@@ -21,7 +21,7 @@ export class FractalService {
   init(dto: IFractalDto): void {
     try {
       const app = new Fractal(dto);
-      app.fractals = Fractals(app.dto.fractals, app);
+      app.fractals = new Fractals(app.dto.fractals, app);
       this.modifiers = app.fractals.getRecursively(ConstAppFractals.Modifiers);
       this.collections = app.fractals.getRecursively(ConstAppFractals.Collections);
       this.$app.set(app);
