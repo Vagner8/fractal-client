@@ -52,7 +52,6 @@ export class Control implements IControl {
       .filter(indicator => indicator !== data)
       .join(':');
     this.getFromControl('data').setValue(this.dto.data);
-
     return this;
   }
 }

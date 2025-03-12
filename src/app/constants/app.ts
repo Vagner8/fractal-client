@@ -1,5 +1,3 @@
-export const ConstSeparator = ':';
-
 export const ConstAppPages = { App: 'App', Home: 'Home' } as const;
 export const ConstAppEvents = { Hold: 'Hold', Touch: 'Touch' } as const;
 export const ConstSidenavTaps = { Modifiers: 'Modifiers', Collections: 'Collections' } as const;

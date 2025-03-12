@@ -1,5 +1,5 @@
 import { IFractal, FractalsDto, IFractals } from '@types';
-import { Fractal } from './fractal';
+import { Fractal } from '../fractal';
 
 export class Fractals extends Map<string, IFractal> implements IFractals {
   constructor(fractalsDto: FractalsDto | null, parent: IFractal) {

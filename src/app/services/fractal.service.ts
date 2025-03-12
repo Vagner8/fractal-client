@@ -2,8 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ConstAppFractals, ConstAppParams } from '@constants';
 import { IFractal, IFractalDto } from '@types';
-import { Fractal, Fractals } from '@utils';
-import { FractalState } from 'app/utils/states';
+import { Fractal, Fractals, FractalState } from '@utils';
 
 @Injectable({
   providedIn: 'root',

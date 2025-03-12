@@ -1,7 +1,6 @@
 import { FormControl, FormRecord } from '@angular/forms';
 import { IndicatorData } from './common';
 import { ConstControlMutableType, ConstIndicatorsType } from './constants';
-import { Control } from '@utils';
 
 export type Controls = Record<string, IControl>;
 export type ControlForm = FormRecord<FormControl>;
@@ -18,7 +17,7 @@ export interface IControlDto extends IControlMutableDto {
   parentId: string;
 }
 
-export interface IControls extends Map<string, Control> {
+export interface IControls extends Map<string, IControl> {
   getKnown(indicator: ConstIndicatorsType): IControl | undefined;
   getControlData(indicator: IndicatorData): string;
   getAndSplitControlData(indicator: IndicatorData): string[];

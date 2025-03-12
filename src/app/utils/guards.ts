@@ -1,5 +1,5 @@
 import { ConstOrderType, IFractal } from '@types';
-import { Fractal } from './fractals';
+import { Fractal } from './fractal';
 import { ConstOrder } from '@constants';
 
 export const isFractal = (value: unknown): value is IFractal => value instanceof Fractal;

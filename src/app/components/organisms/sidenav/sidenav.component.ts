@@ -5,7 +5,8 @@ import { ConstAppEvents, ConstNavigableModifiers, ConstModifiers, ConstAppFracta
 import { MatListModule, MatSidenavModule } from '@mat';
 import { DataService, EventService, FractalService } from '@services';
 import { IFractal } from '@types';
-import { NewFractal } from 'app/utils/fractals/new-fractal';
+import { Fractal } from '@utils';
+import { FractalDto } from 'app/utils/fractal/dto/fractal-dto';
 
 const { New, Edit, Save, Delete } = ConstModifiers;
 
@@ -28,6 +29,7 @@ export class SidenavComponent {
 
   onPageTouched(page: IFractal): void {
     this.fs.currentFractal.set(page);
+    this.fs.currentFractal.$value()?.selectedChildren.clear();
     this.fs.navigatePage(page.cursor);
   }
 
@@ -51,34 +53,38 @@ export class SidenavComponent {
     };
 
     handler[modifier.cursor]?.();
+    this.afterModifierHeld(current);
+  };
 
+  private afterModifierHeld(current: IFractal): void {
     current.newChildren.clear();
     current.selectedChildren.clear();
-
     const oc = current.controls.getKnown('Oc')?.dto;
     oc && this.ds.updateControls([oc]).subscribe();
-
     this.fs.currentFractal.refresh();
     this.fs.navigateModifier(null);
-  };
+  }
 
   onModifierTouched(modifier: IFractal): void {
     const current = this.fs.currentFractal.$value();
     if (!current) return;
-    const { newChildren, selectedChildren } = current;
 
     const handler: Record<string, () => void> = {
       [New]: () => {
-        current.newChildren.push(NewFractal(current, { syncFormWithDto: true }));
+        current.newChildren.push(new Fractal(new FractalDto(current), current, { syncFormWithDto: true }));
       },
       [Edit]: () => {},
       [Save]: () => {},
     };
 
     handler[modifier.cursor]?.();
+    this.afterModifierTouched(modifier, current);
+  }
+
+  private afterModifierTouched({ cursor }: IFractal, { newChildren, selectedChildren }: IFractal): void {
     if (
-      Object.prototype.hasOwnProperty.call(ConstNavigableModifiers, modifier.cursor) &&
-      (selectedChildren.$value().length || newChildren.$value().length)
+      Object.prototype.hasOwnProperty.call(ConstNavigableModifiers, cursor) &&
+      (!selectedChildren.isEmpty || !newChildren.isEmpty)
     ) {
       this.fs.navigateModifier(ConstNavigableModifiers.Edit);
     }

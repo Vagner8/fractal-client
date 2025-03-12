@@ -1,6 +1,6 @@
 import { IFractal, FractalInitOptions, ConstIndicatorsType, IControl, IndicatorData, IControls } from '@types';
-import { Control } from './control';
-import { getIndicatorData } from '../common';
+import { Control } from '../control';
+import { getIndicatorData } from '../../common';
 
 export class Controls extends Map<string, Control> implements IControls {
   constructor(fractal: IFractal, options: FractalInitOptions = { syncFormWithDto: false }) {

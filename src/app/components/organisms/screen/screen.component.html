@@ -12,7 +12,7 @@
         <h1>Home</h1>
       }
       @case (AppPages.App) {
-        <app-admin [fractal]="app" />
+        <app-admin [fractal]="fs.collections!.fractals!.getRecursively('Products')!" />
       }
       @default {
         @if (current) {

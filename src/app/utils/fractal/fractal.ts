@@ -1,8 +1,8 @@
 import { IControlDto, IFractal, IFractalDto, FractalInitOptions, IControls, IFractals } from '@types';
 import { FormRecord } from '@angular/forms';
-import { FractalsState } from '../states';
 import { ConstAppFractals } from '@constants';
-import { Controls } from '../controls/controls';
+import { Controls } from './maps/controls';
+import { FractalsState } from './states/fractals-state';
 
 export class Fractal implements IFractal {
   dto: IFractalDto;
@@ -37,6 +37,7 @@ export class Fractal implements IFractal {
     return this.newChildren.$value().reduce((acc: IFractalDto[], child) => {
       if (child.form.dirty) {
         const cursor = child.controls.getKnown('Cursor')?.getFromControl('data').value;
+        child.cursor = cursor;
         const oc = this.controls.getKnown('Oc');
         if (cursor && oc) {
           this.fractals.set(cursor, child);

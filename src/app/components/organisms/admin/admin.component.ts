@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, Component, inject, Input, OnInit, viewChild, viewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, Input, viewChild, viewChildren } from '@angular/core';
 import { MatExpansionModule, MatExpansionPanel, MatIconModule } from '@mat';
 import { IFractal } from '@types';
 import { FractalCollectionComponent, FractalControlsComponent } from '@components/molecules';
 import { FractalService } from '@services';
-import { ConstAppFractals, ConstOrder } from '@constants';
+import { ConstOrder } from '@constants';
 
 @Component({
   selector: 'app-admin',
@@ -13,17 +13,13 @@ import { ConstAppFractals, ConstOrder } from '@constants';
   styleUrl: './admin.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent {
   @Input() fractal!: IFractal;
   fs = inject(FractalService);
   panel = viewChild(MatExpansionPanel);
   children = viewChildren(AdminComponent);
 
   Order = ConstOrder;
-
-  ngOnInit(): void {
-    this.fractal.cursor === ConstAppFractals.App && this.fs.currentFractal.set(this.fractal);
-  }
 
   close(): void {
     this.panel()?.close();

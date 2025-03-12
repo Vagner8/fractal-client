@@ -4,6 +4,10 @@ import { IFractal, IFractalState } from '@types';
 export class FractalState implements IFractalState {
   $value = signal<IFractal | null>(null);
 
+  get isEmpty(): boolean {
+    return Boolean(this.$value());
+  }
+
   set(fractal: IFractal | null): void {
     this.$value.set(fractal);
   }
