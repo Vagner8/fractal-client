@@ -12,4 +12,15 @@ export class Fractals extends Map<string, IFractal> implements IFractals {
       this.set(indicator, fractal);
     }
   }
+
+  getFractalRecursively(cursor: string | undefined, fractals: IFractals = this): IFractal | null {
+    if (!cursor) return null;
+    const result = fractals.get(cursor);
+    if (result) return result;
+    for (const fractal of fractals.values()) {
+      const nestedResult = this.getFractalRecursively(cursor, fractal.fractals);
+      if (nestedResult) return nestedResult;
+    }
+    return null;
+  }
 }

@@ -15,7 +15,9 @@ export interface IFractalDto {
   controls: IControlsDto;
 }
 
-export interface IFractals extends Map<string, IFractal> {}
+export interface IFractals extends Map<string, IFractal> {
+  getFractalRecursively(cursor: string | undefined, fractals?: IFractals): IFractal | null;
+}
 
 export interface IFractal {
   dto: IFractalDto;
@@ -34,7 +36,6 @@ export interface IFractal {
 
   update(): IControlDto[];
   addNewChildren(): IFractalDto[];
-  getFractalRecursively(cursor: string | undefined, fractals?: IFractals): IFractal | null;
   deleteSelectedChildren(): IFractalDto[];
   updateSelectedChildren(): IControlDto[];
 }

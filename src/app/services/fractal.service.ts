@@ -20,8 +20,8 @@ export class FractalService {
   init(dto: IFractalDto): void {
     try {
       const app = new Fractal(dto);
-      this.modifiers = app.getFractalRecursively(ConstAppFractals.Modifiers);
-      this.collections = app.getFractalRecursively(ConstAppFractals.Collections);
+      this.modifiers = app.fractals.getFractalRecursively(ConstAppFractals.Modifiers);
+      this.collections = app.fractals.getFractalRecursively(ConstAppFractals.Collections);
       this.$app.set(app);
       console.info('🚀 ~ app:', app);
     } catch (err) {

@@ -29,11 +29,7 @@ export class Fractal implements IFractal {
 
   get ancestors(): IFractal[] {
     const ancestors: IFractal[] = [];
-    let current = this.parent;
-    while (current) {
-      ancestors.unshift(current);
-      current = current.parent;
-    }
+    for (let current = this.parent; current; current = current.parent) ancestors.push(current);
     return ancestors;
   }
 
@@ -59,18 +55,6 @@ export class Fractal implements IFractal {
       }
       return acc;
     }, []);
-  }
-
-  getFractalRecursively(cursor: string | undefined, fractals: IFractals = this.fractals): IFractal | null {
-    if (!cursor) return null;
-    if (cursor === this.cursor) return this;
-    const result = fractals.get(cursor);
-    if (result) return result;
-    for (const fractal of fractals.values()) {
-      const nestedResult = this.getFractalRecursively(cursor, fractal.fractals);
-      if (nestedResult) return nestedResult;
-    }
-    return null;
   }
 
   updateSelectedChildren(): IControlDto[] {
