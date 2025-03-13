@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 import { EventService, FractalService } from '@services';
 import { EditorComponent } from '../editor/editor.component';
-import { ConstAppParams, ConstAppPages } from '@constants';
+import { ConstAppParams, ConstAppPages, ConstAppFractals } from '@constants';
 import { FractalCollectionComponent } from '@components/molecules';
 import { AdminComponent } from '../admin/admin.component';
 
@@ -22,14 +22,15 @@ export class ScreenComponent implements OnInit, Params {
   @Input() EditMode = '';
   @Input() Modifiers = '';
 
-  private es = inject(EventService);
   fs = inject(FractalService);
+  private es = inject(EventService);
+
   AppPages = ConstAppPages;
 
   ngOnInit(): void {
     this.fs.sidenavTaps.set(this.fs.collections);
     this.es.$managerEvent.set(this.Manager);
-    const current = this.fs.collections?.fractals.get(this.Page);
+    const current = this.Page === ConstAppFractals.App ? this.fs.$app() : this.fs.collections?.fractals.get(this.Page);
     current && this.fs.currentFractal.set(current);
   }
 }

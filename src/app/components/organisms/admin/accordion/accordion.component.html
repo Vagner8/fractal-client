@@ -1,0 +1,26 @@
+<div class="container">
+  <app-fractal-controls class="controls" [fractal]="fractal" />
+
+  @if (fractal.isCollection) {
+    <app-fractal-collection [fractal]="fractal" />
+  }
+
+  @if (!fractal.isCollection) {
+    <mat-accordion class="accordion">
+      @for (cursor of fractal.controls.getAndSplitControlData('Oc'); track cursor) {
+        @if (fractal.fractals.get(cursor); as child) {
+          <app-panel
+            #panel
+            [fractal]="child"
+            [ancestors]="ancestors"
+            (afterExpand)="afterExpand(child)"
+            (afterCollapse)="afterCollapse(child)">
+            @if (panel.expansionPanel()?.expanded) {
+              <app-accordion [fractal]="child" [ancestors]="ancestors" />
+            }
+          </app-panel>
+        }
+      }
+    </mat-accordion>
+  }
+</div>

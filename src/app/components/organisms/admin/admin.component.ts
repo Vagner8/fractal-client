@@ -1,14 +1,12 @@
-import { ChangeDetectionStrategy, Component, inject, Input, viewChild, viewChildren } from '@angular/core';
-import { MatExpansionModule, MatExpansionPanel, MatIconModule } from '@mat';
+import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { IFractal } from '@types';
-import { FractalCollectionComponent, FractalControlsComponent } from '@components/molecules';
+import { AccordionComponent } from './accordion/accordion.component';
 import { FractalService } from '@services';
-import { ConstOrder } from '@constants';
 
 @Component({
   selector: 'app-admin',
   standalone: true,
-  imports: [MatIconModule, MatExpansionModule, FractalControlsComponent, FractalCollectionComponent],
+  imports: [AccordionComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -16,24 +14,4 @@ import { ConstOrder } from '@constants';
 export class AdminComponent {
   @Input() fractal!: IFractal;
   fs = inject(FractalService);
-  panel = viewChild(MatExpansionPanel);
-  children = viewChildren(AdminComponent);
-
-  Order = ConstOrder;
-
-  close(): void {
-    this.panel()?.close();
-  }
-
-  closed(): void {
-    this.children().forEach(child => child.close());
-  }
-
-  afterExpand(fractal: IFractal): void {
-    this.fs.currentFractal.set(fractal);
-  }
-
-  afterCollapse(fractal: IFractal): void {
-    this.fs.currentFractal.set(fractal.parent);
-  }
 }

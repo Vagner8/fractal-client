@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ConstAppFractals, ConstAppParams } from '@constants';
 import { IFractal, IFractalDto } from '@types';
-import { Fractal, Fractals, FractalState } from '@utils';
+import { Fractal, FractalState } from '@utils';
 
 @Injectable({
   providedIn: 'root',
@@ -20,9 +20,8 @@ export class FractalService {
   init(dto: IFractalDto): void {
     try {
       const app = new Fractal(dto);
-      app.fractals = new Fractals(app.dto.fractals, app);
-      this.modifiers = app.fractals.getRecursively(ConstAppFractals.Modifiers);
-      this.collections = app.fractals.getRecursively(ConstAppFractals.Collections);
+      this.modifiers = app.getFractalRecursively(ConstAppFractals.Modifiers);
+      this.collections = app.getFractalRecursively(ConstAppFractals.Collections);
       this.$app.set(app);
       console.info('🚀 ~ app:', app);
     } catch (err) {

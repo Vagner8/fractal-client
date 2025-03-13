@@ -1,36 +1,3 @@
-<div class="admin">
-  <app-fractal-controls [fractal]="fractal" class="controls" />
-
-  @if (fractal.isCollection) {
-    <app-fractal-collection [fractal]="fractal" />
-  }
-
-  @if (!fractal.isCollection) {
-    <mat-accordion class="accordion">
-      @for (cursor of fractal.controls.getAndSplitControlData('Oc'); track cursor) {
-        @if (fractal.fractals.get(cursor); as child) {
-          <mat-expansion-panel
-            #panel
-            [class.clicked]="fs.currentFractal.$value() === child"
-            (closed)="closed()"
-            (afterCollapse)="afterCollapse(child)"
-            (afterExpand)="afterExpand(child)">
-            <mat-expansion-panel-header>
-              <mat-panel-title>
-                @if (fractal.controls.getControlData('Icon'); as icon) {
-                  <mat-icon class="icon">{{ icon }}</mat-icon>
-                }
-                {{ child.cursor }}
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-
-            @if (panel.expanded) {
-              <app-admin [fractal]="child" />
-            }
-            <ng-container />
-          </mat-expansion-panel>
-        }
-      }
-    </mat-accordion>
-  }
-</div>
+@if (fs.currentFractal.$value(); as currentFractal) {
+  <app-accordion [fractal]="fractal" [ancestors]="currentFractal.ancestors" />
+}

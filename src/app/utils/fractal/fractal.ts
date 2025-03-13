@@ -3,6 +3,7 @@ import { FormRecord } from '@angular/forms';
 import { ConstAppFractals } from '@constants';
 import { Controls } from './maps/controls';
 import { FractalsState } from './states/fractals-state';
+import { Fractals } from './maps/fractals';
 
 export class Fractal implements IFractal {
   dto: IFractalDto;
@@ -10,7 +11,7 @@ export class Fractal implements IFractal {
   cursor: string;
   parent: IFractal;
   controls: IControls;
-  fractals!: IFractals;
+  fractals: IFractals;
   isCollection: boolean;
 
   newChildren = new FractalsState();
@@ -21,8 +22,19 @@ export class Fractal implements IFractal {
     this.form = new FormRecord({});
     this.parent = parent ? parent : ({} as IFractal);
     this.controls = new Controls(this, options);
+    this.fractals = new Fractals(dto.fractals, this);
     this.cursor = this.controls.getControlData('Cursor');
     this.isCollection = parent?.cursor === ConstAppFractals.Collections;
+  }
+
+  get ancestors(): IFractal[] {
+    const ancestors: IFractal[] = [];
+    let current = this.parent;
+    while (current) {
+      ancestors.unshift(current);
+      current = current.parent;
+    }
+    return ancestors;
   }
 
   update(): IControlDto[] {
@@ -47,6 +59,18 @@ export class Fractal implements IFractal {
       }
       return acc;
     }, []);
+  }
+
+  getFractalRecursively(cursor: string | undefined, fractals: IFractals = this.fractals): IFractal | null {
+    if (!cursor) return null;
+    if (cursor === this.cursor) return this;
+    const result = fractals.get(cursor);
+    if (result) return result;
+    for (const fractal of fractals.values()) {
+      const nestedResult = this.getFractalRecursively(cursor, fractal.fractals);
+      if (nestedResult) return nestedResult;
+    }
+    return null;
   }
 
   updateSelectedChildren(): IControlDto[] {

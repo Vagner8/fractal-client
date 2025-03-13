@@ -1,0 +1,15 @@
+<mat-expansion-panel
+  [class.clicked]="fs.currentFractal.$value() === fractal"
+  (closed)="closed.emit()"
+  (afterExpand)="afterExpand.emit(fractal)"
+  (afterCollapse)="afterCollapse.emit(fractal)">
+  <mat-expansion-panel-header>
+    <mat-panel-title>
+      @if (fractal.controls.getControlData('Icon'); as icon) {
+        <mat-icon class="icon">{{ icon }}</mat-icon>
+      }
+      {{ fractal.cursor }}
+    </mat-panel-title>
+  </mat-expansion-panel-header>
+  <ng-content />
+</mat-expansion-panel>
