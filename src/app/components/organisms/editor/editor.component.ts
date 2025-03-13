@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { MatButtonModule, MatCardModule } from '@mat';
 import { ListComponent } from '@components/atoms';
 import { IFractal } from '@types';
 import { FractalFormComponent } from '@components/molecules';
+import { FractalService } from '@services';
 
 @Component({
   selector: 'app-editor',
@@ -13,4 +14,5 @@ import { FractalFormComponent } from '@components/molecules';
 })
 export class EditorComponent {
   @Input() fractal!: IFractal;
+  fs = inject(FractalService);
 }

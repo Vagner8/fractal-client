@@ -1,13 +1,17 @@
-@let newFractals = fractal.newChildren.$value();
-@let selectedFractals = fractal.selectedChildren.$value();
+@let isNewChildrenEmpty = fractal.newChildren.isEmpty;
+@let isSelectedChildrenEmpty = fractal.selectedChildren.isEmpty;
 
 <div class="modifier">
-  @if (selectedFractals.length > 0) {
-    <app-list [dataSource]="selectedFractals" [templateRef]="fractalForm" />
+  @if (isNewChildrenEmpty && isSelectedChildrenEmpty && fs.currentFractal.$value(); as currentFractal) {
+    <app-fractal-form [fractal]="currentFractal" />
   }
 
-  @if (newFractals.length > 0) {
-    <app-list [dataSource]="newFractals" [templateRef]="fractalForm" />
+  @if (!isSelectedChildrenEmpty) {
+    <app-list [dataSource]="fractal.selectedChildren.$value()" [templateRef]="fractalForm" />
+  }
+
+  @if (!isNewChildrenEmpty) {
+    <app-list [dataSource]="fractal.newChildren.$value()" [templateRef]="fractalForm" />
   }
 </div>
 

@@ -84,7 +84,7 @@ export class SidenavComponent {
   private afterModifierTouched({ cursor }: IFractal, { newChildren, selectedChildren }: IFractal): void {
     if (
       Object.prototype.hasOwnProperty.call(ConstNavigableModifiers, cursor) &&
-      (!selectedChildren.isEmpty || !newChildren.isEmpty)
+      (!selectedChildren.isEmpty || !newChildren.isEmpty || !this.fs.currentFractal.isEmpty)
     ) {
       this.fs.navigateModifier(ConstNavigableModifiers.Edit);
     }

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CardComponent, InputComponent, SelectComponent } from '@components/atoms';
-import { ConstControlInputs, ConstIndicators } from '@constants';
+import { ConstAppFractals, ConstControlInputs } from '@constants';
 import { IFractal } from '@types';
 
 @Component({
@@ -18,11 +18,12 @@ export class FractalFormComponent {
   }
 
   get dataSource(): string[] {
-    const occ = this.fractal.parent.controls.getAndSplitControlData('Occ');
-    return occ.length > 0 ? occ : [ConstIndicators.Cursor];
+    return this.fractal.parent.isCollection
+      ? this.fractal.parent.controls.getAndSplitControlData('Occ')
+      : this.fractal.controls.getAndSplitControlData('Ooc');
   }
 
   get isNewFractal(): boolean {
-    return !this.fractal.parent.fractals.has(this.fractal.cursor);
+    return this.fractal.cursor !== ConstAppFractals.App && !this.fractal.parent.fractals.has(this.fractal.cursor);
   }
 }

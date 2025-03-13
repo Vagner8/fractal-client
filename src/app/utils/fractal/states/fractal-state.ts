@@ -5,7 +5,7 @@ export class FractalState implements IFractalState {
   $value = signal<IFractal | null>(null);
 
   get isEmpty(): boolean {
-    return Boolean(this.$value());
+    return this.$value() === null;
   }
 
   set(fractal: IFractal | null): void {
