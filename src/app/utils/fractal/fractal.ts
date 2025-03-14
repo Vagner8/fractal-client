@@ -16,6 +16,7 @@ export class Fractal implements IFractal {
 
   newChildren = new FractalsState();
   selectedChildren = new FractalsState();
+  selectedChildrenForms = new FractalsState();
 
   constructor(dto: IFractalDto, parent?: IFractal | null, options?: FractalInitOptions) {
     this.dto = dto;

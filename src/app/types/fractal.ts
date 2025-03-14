@@ -31,6 +31,7 @@ export interface IFractal {
 
   newChildren: IFractalsState;
   selectedChildren: IFractalsState;
+  selectedChildrenForms: IFractalsState;
 
   get ancestors(): IFractal[];
 
