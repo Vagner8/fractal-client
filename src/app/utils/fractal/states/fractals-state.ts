@@ -8,7 +8,7 @@ export class FractalsState implements IFractalsState {
     return this.$value().length === 0;
   }
 
-  has(fractal: IFractal | null): boolean {
+  has(fractal: IFractal | undefined | null): boolean {
     if (!fractal) return false;
     return this.$value().includes(fractal);
   }
@@ -21,7 +21,7 @@ export class FractalsState implements IFractalsState {
     this.$value.set([]);
   }
 
-  toggle(fractal: IFractal | null): void {
+  toggle(fractal: IFractal | undefined | null): void {
     if (!fractal) return;
     this.$value.update(prev => (prev.includes(fractal) ? prev.filter(item => item !== fractal) : [...prev, fractal]));
   }
@@ -30,7 +30,7 @@ export class FractalsState implements IFractalsState {
     this.$value.update(prev => [...prev]);
   }
 
-  toggleAll(fractal: IFractal | null): void {
+  toggleAll(fractal: IFractal | undefined | null): void {
     if (!fractal) return;
     this.$value.update(prev => (prev.length === 0 ? Array.from(fractal.parent.fractals.values()) : []));
   }

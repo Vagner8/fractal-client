@@ -2,7 +2,6 @@ import { IControlDto, IFractal, IFractalDto, FractalInitOptions, IControls, IFra
 import { FormRecord } from '@angular/forms';
 import { ConstAppFractals } from '@constants';
 import { Controls } from './maps/controls';
-import { FractalsState } from './states/fractals-state';
 import { Fractals } from './maps/fractals';
 
 export class Fractal implements IFractal {
@@ -13,10 +12,6 @@ export class Fractal implements IFractal {
   controls: IControls;
   fractals: IFractals;
   isCollection: boolean;
-
-  newChildren = new FractalsState();
-  selectedChildren = new FractalsState();
-  selectedChildrenForms = new FractalsState();
 
   constructor(dto: IFractalDto, parent?: IFractal | null, options?: FractalInitOptions) {
     this.dto = dto;
@@ -43,33 +38,36 @@ export class Fractal implements IFractal {
   }
 
   addNewChildren(): IFractalDto[] {
-    return this.newChildren.$value().reduce((acc: IFractalDto[], child) => {
-      if (child.form.dirty) {
-        const cursor = child.controls.getKnown('Cursor')?.getFromControl('data').value;
-        child.cursor = cursor;
-        const oc = this.controls.getKnown('Oc');
-        if (cursor && oc) {
-          this.fractals.set(cursor, child);
-          oc.pushSplitData(cursor);
-          acc.push(child.dto);
-        }
-      }
-      return acc;
-    }, []);
+    return [];
+    // return this.newChildren.$value().reduce((acc: IFractalDto[], child) => {
+    //   if (child.form.dirty) {
+    //     const cursor = child.controls.getKnown('Cursor')?.getFromControl('data').value;
+    //     child.cursor = cursor;
+    //     const oc = this.controls.getKnown('Oc');
+    //     if (cursor && oc) {
+    //       this.fractals.set(cursor, child);
+    //       oc.pushSplitData(cursor);
+    //       acc.push(child.dto);
+    //     }
+    //   }
+    //   return acc;
+    // }, []);
   }
 
   updateSelectedChildren(): IControlDto[] {
-    return this.selectedChildren.$value().reduce((acc: IControlDto[], fractal) => {
-      if (fractal.form.dirty) acc = [...acc, ...fractal.update()];
-      return acc;
-    }, []);
+    return [];
+    // return this.selectedChildren.$value().reduce((acc: IControlDto[], fractal) => {
+    //   if (fractal.form.dirty) acc = [...acc, ...fractal.update()];
+    //   return acc;
+    // }, []);
   }
 
   deleteSelectedChildren(): IFractalDto[] {
-    return this.selectedChildren.$value().map(({ dto, cursor }) => {
-      this.controls.getKnown('Oc')?.deleteSplitData(cursor);
-      this.fractals.delete(cursor);
-      return dto;
-    });
+    return [];
+    // return this.selectedChildren.$value().map(({ dto, cursor }) => {
+    //   this.controls.getKnown('Oc')?.deleteSplitData(cursor);
+    //   this.fractals.delete(cursor);
+    //   return dto;
+    // });
   }
 }

@@ -29,7 +29,7 @@ export class SidenavComponent {
 
   onPageTouched(page: IFractal): void {
     this.fs.currentFractal.set(page);
-    this.fs.currentFractal.$value()?.selectedChildren.clear();
+    this.fs.selectedChildren.clear();
     this.fs.navigatePage(page.cursor);
   }
 
@@ -57,8 +57,8 @@ export class SidenavComponent {
   };
 
   private afterModifierHeld(current: IFractal): void {
-    current.newChildren.clear();
-    current.selectedChildren.clear();
+    this.fs.newChildren.clear();
+    this.fs.selectedChildren.clear();
     const oc = current.controls.getKnown('Oc')?.dto;
     oc && this.ds.updateControls([oc]).subscribe();
     this.fs.currentFractal.refresh();
@@ -71,20 +71,20 @@ export class SidenavComponent {
 
     const handler: Record<string, () => void> = {
       [New]: () => {
-        current.newChildren.push(new Fractal(new FractalDto(current), current, { syncFormWithDto: true }));
+        this.fs.newChildren.push(new Fractal(new FractalDto(current), current, { syncFormWithDto: true }));
       },
       [Edit]: () => {},
       [Save]: () => {},
     };
 
     handler[modifier.cursor]?.();
-    this.afterModifierTouched(modifier, current);
+    this.afterModifierTouched(modifier);
   }
 
-  private afterModifierTouched({ cursor }: IFractal, { newChildren, selectedChildren }: IFractal): void {
+  private afterModifierTouched({ cursor }: IFractal): void {
     if (
       Object.prototype.hasOwnProperty.call(ConstNavigableModifiers, cursor) &&
-      (!selectedChildren.isEmpty || !newChildren.isEmpty || !this.fs.currentFractal.isEmpty)
+      (!this.fs.selectedChildren.isEmpty || !this.fs.newChildren.isEmpty || !this.fs.currentFractal.isEmpty)
     ) {
       this.fs.navigateModifier(ConstNavigableModifiers.Edit);
     }

@@ -1,9 +1,7 @@
-@let selectedChildrenForms = fs.currentFractal.$value()?.selectedChildrenForms;
-
 <button
   type="button"
-  (click)="selectedChildrenForms?.toggle(fractal)"
-  [class.selected]="selectedChildrenForms?.has(fractal)">
+  (click)="fs.selectedChildrenForms.toggle(fractal)"
+  [class.selected]="fs.selectedChildrenForms.has(fractal)">
   <form>
     <app-card [title]="isNewFractal ? 'New' : title">
       @for (indicator of dataSource; track indicator) {
