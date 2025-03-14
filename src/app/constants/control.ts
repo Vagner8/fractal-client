@@ -2,4 +2,4 @@ export const ConstControlMutable = { indicator: 'indicator', field: 'field', dat
 export const ConstControlImmutable = { id: 'id', parentId: 'parentId' } as const;
 export const ConstControlKeys = { ...ConstControlMutable, ...ConstControlImmutable } as const;
 
-export const ConstControlInputs = { Text: 'Text', Select: 'Select', Organizer: 'Organizer' } as const;
+export const ConstControlFields = { Text: 'Text', Select: 'Select', Organizer: 'Organizer' } as const;

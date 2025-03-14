@@ -1,16 +1,21 @@
 <button type="button" (click)="ss.selectedChildrenForms.toggle(fractal)">
   <form>
     <app-card [title]="isNewFractal ? 'New' : title" [selected]="ss.selectedChildrenForms.has(fractal)">
-      @for (indicator of dataSource; track indicator) {
-        @if (fractal.controls.get(indicator); as control) {
-          <app-data-field
-            [field]="control.dto.field"
-            [fractal]="fractal"
-            [dataForm]="control.getFromControl('data')"
-            [indicator]="indicator" />
-          <app-all-field />
-        }
-      }
+      <app-list [dataSource]="dataSource" [templateRef]="fields"> </app-list>
     </app-card>
   </form>
 </button>
+
+<ng-template #fields let-indicator>
+  @if (fractal.controls.get(indicator); as control) {
+    @if (ss.$fullEditMode()) {
+      <app-all-field [control]="control" />
+    } @else {
+      <app-data-field
+        [field]="control.dto.field"
+        [fractal]="fractal"
+        [dataForm]="control.getFromControl('data')"
+        [indicator]="indicator" />
+    }
+  }
+</ng-template>

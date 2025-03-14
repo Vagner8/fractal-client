@@ -1,4 +1,4 @@
-import { ConstControlInputs } from '@constants';
+import { ConstControlFields } from '@constants';
 import { IControlDto, IControlMutableDto } from '@types';
 import { v4 } from 'uuid';
 
@@ -14,7 +14,7 @@ export class ControlDto implements IControlDto {
   ) {
     this.id = v4();
     this.data = values?.data || '';
-    this.field = values?.field || ConstControlInputs.Text;
+    this.field = values?.field || ConstControlFields.Text;
     this.indicator = values?.indicator || '';
   }
 }

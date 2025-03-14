@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { InputComponent, SelectComponent } from '@components/atoms';
-import { ConstControlInputs } from '@constants';
+import { ConstControlFields } from '@constants';
 import { IFractal } from '@types';
 
 @Component({
@@ -15,5 +15,5 @@ export class DataFieldComponent {
   @Input() fractal!: IFractal;
   @Input() dataForm!: FormControl;
   @Input() indicator!: string;
-  ControlInputs = ConstControlInputs;
+  ControlInputs = ConstControlFields;
 }

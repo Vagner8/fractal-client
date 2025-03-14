@@ -1,9 +1,7 @@
-import { signal } from '@angular/core';
 import { IFractal, IFractalsState } from '@types';
+import { BaseState } from './abstract-states/base-state';
 
-export class FractalsState implements IFractalsState {
-  $value = signal<IFractal[]>([]);
-
+export class FractalsState extends BaseState<IFractal[]> implements IFractalsState {
   get isEmpty(): boolean {
     return this.$value().length === 0;
   }

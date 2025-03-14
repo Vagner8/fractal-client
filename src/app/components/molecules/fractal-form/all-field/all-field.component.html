@@ -1,1 +1,5 @@
-<p>all-field works!</p>
+<app-card>
+  <app-input [label]="ControlMutable.indicator" [form]="control.getFromControl('indicator')" />
+  <app-select [label]="ControlMutable.field" [opts]="opts" [form]="control.getFromControl('field')" />
+  <app-input [label]="ControlMutable.data" [form]="control.getFromControl('data')" />
+</app-card>

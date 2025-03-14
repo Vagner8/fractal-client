@@ -39,22 +39,26 @@ export class SidenavComponent {
     if (!current) return;
 
     const handler: Record<string, () => void> = {
+      [Edit]: () => {
+        this.ss.$fullEditMode.update(prev => !prev);
+      },
       [Save]: () => {
         const controls = current.updateSelectedChildren();
         controls.length > 0 && this.ds.updateControls(controls).subscribe();
 
         const newFractals = current.addNewChildren();
         newFractals.length > 0 && this.ds.add(newFractals).subscribe();
+        this.afterModifierHeld(current);
       },
 
       [Delete]: () => {
         const deleteChildren = current.deleteSelectedChildren();
         deleteChildren.length > 0 && this.ds.delete(deleteChildren).subscribe();
+        this.afterModifierHeld(current);
       },
     };
 
     handler[modifier.cursor]?.();
-    this.afterModifierHeld(current);
   };
 
   private afterModifierHeld(current: IFractal): void {
