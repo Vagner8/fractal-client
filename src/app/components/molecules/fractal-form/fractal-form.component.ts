@@ -2,19 +2,21 @@ import { Component, inject, Input } from '@angular/core';
 import { MatRippleModule } from '@angular/material/core';
 import { CardComponent, InputComponent, SelectComponent } from '@components/atoms';
 import { ConstAppFractals, ConstControlInputs } from '@constants';
-import { FractalService } from '@services';
+import { StatesService } from '@services';
 import { IFractal } from '@types';
+import { DataFieldComponent } from './data-field/data-field.component';
+import { AllFieldComponent } from './all-field/all-field.component';
 
 @Component({
   selector: 'app-fractal-form',
   standalone: true,
-  imports: [SelectComponent, InputComponent, CardComponent, MatRippleModule],
+  imports: [CardComponent, MatRippleModule, DataFieldComponent, AllFieldComponent, SelectComponent, InputComponent],
   styleUrl: './fractal-form.component.scss',
   templateUrl: './fractal-form.component.html',
 })
 export class FractalFormComponent {
   @Input() fractal!: IFractal;
-  fs = inject(FractalService);
+  ss = inject(StatesService);
   ControlInputs = ConstControlInputs;
 
   get title(): string | undefined {

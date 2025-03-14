@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { ConstAppFractals, ConstAppParams } from '@constants';
 import { IFractal, IFractalDto } from '@types';
-import { Fractal, FractalState, FractalsState } from '@utils';
+import { Fractal } from '@utils';
 
 @Injectable({
   providedIn: 'root',
@@ -10,13 +10,6 @@ import { Fractal, FractalState, FractalsState } from '@utils';
 export class FractalService {
   private router = inject(Router);
   $app = signal<IFractal | null>(null);
-
-  sidenavTaps = new FractalState();
-  currentFractal = new FractalState();
-
-  newChildren = new FractalsState();
-  selectedChildren = new FractalsState();
-  selectedChildrenForms = new FractalsState();
 
   modifiers: IFractal | null = null;
   collections: IFractal | null = null;

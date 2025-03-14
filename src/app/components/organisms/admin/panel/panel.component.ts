@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit, output, viewChild } from '@angular/core';
 import { MatExpansionModule, MatExpansionPanel, MatIconModule } from '@mat';
-import { FractalService } from '@services';
+import { FractalService, StatesService } from '@services';
 import { IFractal } from '@types';
 
 @Component({
@@ -14,6 +14,7 @@ import { IFractal } from '@types';
 export class PanelComponent implements OnInit {
   @Input() fractal!: IFractal;
   @Input() ancestors!: IFractal[];
+  ss = inject(StatesService);
   fs = inject(FractalService);
 
   expansionPanel = viewChild(MatExpansionPanel);
@@ -24,6 +25,6 @@ export class PanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.ancestors.includes(this.fractal) && this.expansionPanel()?.open();
-    this.fs.currentFractal.$value() === this.fractal && this.expansionPanel()?.open();
+    this.ss.currentFractal.$value() === this.fractal && this.expansionPanel()?.open();
   }
 }

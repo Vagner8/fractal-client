@@ -1,7 +1,7 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { TapDirective } from '@directives';
 import { MatTableModule } from '@mat';
-import { FractalService } from '@services';
+import { StatesService } from '@services';
 import { IFractal } from '@types';
 
 @Component({
@@ -13,10 +13,10 @@ import { IFractal } from '@types';
 })
 export class FractalCollectionComponent implements OnInit {
   @Input() fractal!: IFractal;
-  fs = inject(FractalService);
+  ss = inject(StatesService);
 
   ngOnInit(): void {
-    this.fs.currentFractal.$value() === this.fractal;
+    this.ss.currentFractal.$value() === this.fractal;
   }
 
   get columns(): string[] {

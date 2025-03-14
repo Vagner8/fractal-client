@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, Input } from '@angular/core';
 import { IFractal } from '@types';
 import { AccordionComponent } from './accordion/accordion.component';
-import { FractalService } from '@services';
+import { StatesService } from '@services';
 
 @Component({
   selector: 'app-admin',
@@ -13,5 +13,5 @@ import { FractalService } from '@services';
 })
 export class AdminComponent {
   @Input() fractal!: IFractal;
-  fs = inject(FractalService);
+  ss = inject(StatesService);
 }

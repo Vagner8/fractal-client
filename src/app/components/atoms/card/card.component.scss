@@ -5,5 +5,5 @@
 }
 
 .selected {
-  border-color: #3f51b5;
+  border-color: map-get($color, manager);
 }

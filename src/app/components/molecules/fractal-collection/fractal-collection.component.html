@@ -15,8 +15,8 @@
       mat-row
       *matRowDef="let row; columns: columns"
       appTap
-      (hold)="fs.selectedChildren.toggleAll(fractal.fractals.get(row))"
-      (touch)="fs.selectedChildren.toggle(fractal.fractals.get(row))"
-      [class.clicked-row]="fs.selectedChildren.has(fractal.fractals.get(row))"></tr>
+      (hold)="ss.selectedChildren.toggleAll(fractal.fractals.get(row))"
+      (touch)="ss.selectedChildren.toggle(fractal.fractals.get(row))"
+      [class.clicked-row]="ss.selectedChildren.has(fractal.fractals.get(row))"></tr>
   </table>
 }

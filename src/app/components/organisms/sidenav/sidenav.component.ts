@@ -3,7 +3,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { ConstAppEvents, ConstNavigableModifiers, ConstModifiers, ConstAppFractals } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { DataService, EventService, FractalService } from '@services';
+import { DataService, EventService, FractalService, StatesService } from '@services';
 import { IFractal } from '@types';
 import { Fractal } from '@utils';
 import { FractalDto } from 'app/utils/fractal/dto/fractal-dto';
@@ -21,6 +21,7 @@ export class SidenavComponent {
   @Input() modifiers!: IFractal;
   @Input() collections!: IFractal;
   es = inject(EventService);
+  ss = inject(StatesService);
   fs = inject(FractalService);
   private ds = inject(DataService);
 
@@ -28,13 +29,13 @@ export class SidenavComponent {
   AppFractals = ConstAppFractals;
 
   onPageTouched(page: IFractal): void {
-    this.fs.currentFractal.set(page);
-    this.fs.selectedChildren.clear();
+    this.ss.currentFractal.set(page);
+    this.ss.selectedChildren.clear();
     this.fs.navigatePage(page.cursor);
   }
 
   onModifierHeld = (modifier: IFractal): void => {
-    const current = this.fs.currentFractal.$value();
+    const current = this.ss.currentFractal.$value();
     if (!current) return;
 
     const handler: Record<string, () => void> = {
@@ -57,21 +58,21 @@ export class SidenavComponent {
   };
 
   private afterModifierHeld(current: IFractal): void {
-    this.fs.newChildren.clear();
-    this.fs.selectedChildren.clear();
+    this.ss.newChildren.clear();
+    this.ss.selectedChildren.clear();
     const oc = current.controls.getKnown('Oc')?.dto;
     oc && this.ds.updateControls([oc]).subscribe();
-    this.fs.currentFractal.refresh();
+    this.ss.currentFractal.refresh();
     this.fs.navigateModifier(null);
   }
 
   onModifierTouched(modifier: IFractal): void {
-    const current = this.fs.currentFractal.$value();
+    const current = this.ss.currentFractal.$value();
     if (!current) return;
 
     const handler: Record<string, () => void> = {
       [New]: () => {
-        this.fs.newChildren.push(new Fractal(new FractalDto(current), current, { syncFormWithDto: true }));
+        this.ss.newChildren.push(new Fractal(new FractalDto(current), current, { syncFormWithDto: true }));
       },
       [Edit]: () => {},
       [Save]: () => {},
@@ -84,7 +85,7 @@ export class SidenavComponent {
   private afterModifierTouched({ cursor }: IFractal): void {
     if (
       Object.prototype.hasOwnProperty.call(ConstNavigableModifiers, cursor) &&
-      (!this.fs.selectedChildren.isEmpty || !this.fs.newChildren.isEmpty || !this.fs.currentFractal.isEmpty)
+      (!this.ss.selectedChildren.isEmpty || !this.ss.newChildren.isEmpty || !this.ss.currentFractal.isEmpty)
     ) {
       this.fs.navigateModifier(ConstNavigableModifiers.Edit);
     }

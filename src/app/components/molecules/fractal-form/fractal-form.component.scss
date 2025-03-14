@@ -3,12 +3,5 @@
 button {
   all: unset;
   cursor: pointer;
-  margin: map-get($size, xs) / 2;
-}
-
-.selected {
-  position: relative;
-  border-radius: 4px;
-  overflow: hidden;
-  outline: 2px solid map-get($color, manager);
+  width: 100%;
 }

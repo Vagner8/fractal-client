@@ -3,7 +3,7 @@ import { FractalCollectionComponent, FractalControlsComponent } from '@component
 import { MatExpansionModule, MatIconModule } from '@mat';
 import { PanelComponent } from '../panel/panel.component';
 import { IFractal } from '@types';
-import { FractalService } from '@services';
+import { StatesService } from '@services';
 
 @Component({
   selector: 'app-accordion',
@@ -15,13 +15,13 @@ import { FractalService } from '@services';
 export class AccordionComponent {
   @Input() fractal!: IFractal;
   @Input() ancestors!: IFractal[];
-  fs = inject(FractalService);
+  ss = inject(StatesService);
 
   afterExpand(fractal: IFractal): void {
-    this.fs.currentFractal.set(fractal);
+    this.ss.currentFractal.set(fractal);
   }
 
   afterCollapse(fractal: IFractal): void {
-    this.fs.currentFractal.set(fractal.parent);
+    this.ss.currentFractal.set(fractal.parent);
   }
 }

@@ -3,7 +3,7 @@ import { MatButtonModule, MatCardModule } from '@mat';
 import { ListComponent } from '@components/atoms';
 import { IFractal } from '@types';
 import { FractalFormComponent } from '@components/molecules';
-import { FractalService } from '@services';
+import { StatesService } from '@services';
 
 @Component({
   selector: 'app-editor',
@@ -14,5 +14,5 @@ import { FractalService } from '@services';
 })
 export class EditorComponent {
   @Input() fractal!: IFractal;
-  fs = inject(FractalService);
+  ss = inject(StatesService);
 }
