@@ -30,11 +30,4 @@ export class FractalFormComponent {
   get isNewFractal(): boolean {
     return this.fractal.cursor !== ConstAppFractals.App && !this.fractal.parent.fractals.has(this.fractal.cursor);
   }
-
-  centered = false;
-  disabled = false;
-  unbounded = false;
-
-  radius: number = 10;
-  color: string = '#f5f5f5';
 }

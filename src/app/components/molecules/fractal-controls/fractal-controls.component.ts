@@ -15,7 +15,7 @@ export class FractalControlsComponent {
   @Input() fractal!: IFractal;
 
   get columns(): (keyof IControlMutableDto)[] {
-    return ['indicator', 'data', 'input'];
+    return ['indicator', 'data', 'field'];
   }
 
   get dataSource(): string[] {

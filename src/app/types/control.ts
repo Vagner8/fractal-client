@@ -8,7 +8,7 @@ export type IControlsDto = Record<string, IControlDto>;
 
 export interface IControlMutableDto {
   data: string;
-  input: string;
+  field: string;
   indicator: string;
 }
 

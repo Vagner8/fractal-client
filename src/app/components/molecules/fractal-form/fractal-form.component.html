@@ -7,7 +7,7 @@
       @for (indicator of dataSource; track indicator) {
         @if (fractal.controls.get(indicator); as control) {
           @let dataForm = control.getFromControl('data');
-          @switch (control.dto.input) {
+          @switch (control.dto.field) {
             @case (ControlInputs.Select) {
               <app-select
                 [label]="indicator"

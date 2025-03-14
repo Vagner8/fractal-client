@@ -5,7 +5,7 @@ import { v4 } from 'uuid';
 export class ControlDto implements IControlDto {
   id: string;
   data: string;
-  input: string;
+  field: string;
   indicator: string;
 
   constructor(
@@ -14,7 +14,7 @@ export class ControlDto implements IControlDto {
   ) {
     this.id = v4();
     this.data = values?.data || '';
-    this.input = values?.input || ConstControlInputs.Text;
+    this.field = values?.field || ConstControlInputs.Text;
     this.indicator = values?.indicator || '';
   }
 }
