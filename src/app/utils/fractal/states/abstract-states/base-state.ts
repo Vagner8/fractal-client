@@ -6,4 +6,8 @@ export abstract class BaseState<T> {
   constructor(private initValue: T) {
     this.$value = signal(initValue);
   }
+
+  clear(): void {
+    this.$value.set(this.initValue);
+  }
 }

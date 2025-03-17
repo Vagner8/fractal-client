@@ -1,7 +1,7 @@
-import { IFractal, IFractalState } from '@types';
+import { IFractal } from '@types';
 import { BaseState } from './abstract-states/base-state';
 
-export class FractalState extends BaseState<IFractal | null> implements IFractalState {
+export class FractalState extends BaseState<IFractal | null> {
   get isEmpty(): boolean {
     return this.$value() === null;
   }

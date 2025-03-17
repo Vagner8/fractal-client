@@ -1,10 +1,11 @@
-<button type="button" (click)="ss.selectedChildrenForms.toggle(fractal)">
-  <form>
-    <app-card [title]="isNewFractal ? 'New' : title" [selected]="ss.selectedChildrenForms.has(fractal)">
-      <app-list [dataSource]="dataSource" [templateRef]="fields"> </app-list>
-    </app-card>
-  </form>
-</button>
+<form>
+  <app-card
+    [title]="isNewFractal ? 'New' : title"
+    [selected]="ss.selectedForm.$value() === fractal"
+    (cardHeaderClicked)="formClicked($event)">
+    <app-list [dataSource]="dataSource" [templateRef]="fields"> </app-list>
+  </app-card>
+</form>
 
 <ng-template #fields let-indicator>
   @if (fractal.controls.get(indicator); as control) {

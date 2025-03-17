@@ -37,37 +37,34 @@ export class Fractal implements IFractal {
     return acc;
   }
 
-  addNewChildren(): IFractalDto[] {
-    return [];
-    // return this.newChildren.$value().reduce((acc: IFractalDto[], child) => {
-    //   if (child.form.dirty) {
-    //     const cursor = child.controls.getKnown('Cursor')?.getFromControl('data').value;
-    //     child.cursor = cursor;
-    //     const oc = this.controls.getKnown('Oc');
-    //     if (cursor && oc) {
-    //       this.fractals.set(cursor, child);
-    //       oc.pushSplitData(cursor);
-    //       acc.push(child.dto);
-    //     }
-    //   }
-    //   return acc;
-    // }, []);
+  addNewChildren(newFractals: IFractal[]): IFractalDto[] {
+    return newFractals.reduce((acc: IFractalDto[], child) => {
+      if (child.form.dirty) {
+        const cursor = child.controls.getKnown('Cursor')?.getFromControl('data').value;
+        child.cursor = cursor;
+        const oc = this.controls.getKnown('Oc');
+        if (cursor && oc) {
+          this.fractals.set(cursor, child);
+          oc.pushSplitData(cursor);
+          acc.push(child.dto);
+        }
+      }
+      return acc;
+    }, []);
   }
 
-  updateSelectedChildren(): IControlDto[] {
-    return [];
-    // return this.selectedChildren.$value().reduce((acc: IControlDto[], fractal) => {
-    //   if (fractal.form.dirty) acc = [...acc, ...fractal.update()];
-    //   return acc;
-    // }, []);
+  updateSelectedChildren(selectedFractals: IFractal[]): IControlDto[] {
+    return selectedFractals.reduce((acc: IControlDto[], fractal) => {
+      if (fractal.form.dirty) acc = [...acc, ...fractal.update()];
+      return acc;
+    }, []);
   }
 
-  deleteSelectedChildren(): IFractalDto[] {
-    return [];
-    // return this.selectedChildren.$value().map(({ dto, cursor }) => {
-    //   this.controls.getKnown('Oc')?.deleteSplitData(cursor);
-    //   this.fractals.delete(cursor);
-    //   return dto;
-    // });
+  deleteSelectedChildren(selectedFractals: IFractal[]): IFractalDto[] {
+    return selectedFractals.map(({ dto, cursor }) => {
+      this.controls.getKnown('Oc')?.deleteSplitData(cursor);
+      this.fractals.delete(cursor);
+      return dto;
+    });
   }
 }

@@ -9,8 +9,8 @@
   box-shadow: none !important;
 }
 
-.clicked {
-  background-color: map-get($color, secondary);
+.selected {
+  border-color: map-get($color, manager);
 }
 
 @media (max-width: map-get($breakpoints, sm)) {

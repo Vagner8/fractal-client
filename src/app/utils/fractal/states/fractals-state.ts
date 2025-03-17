@@ -1,29 +1,7 @@
-import { IFractal, IFractalsState } from '@types';
-import { BaseState } from './abstract-states/base-state';
+import { IFractal } from '@types';
+import { ArrayState } from './abstract-states/array-state';
 
-export class FractalsState extends BaseState<IFractal[]> implements IFractalsState {
-  get isEmpty(): boolean {
-    return this.$value().length === 0;
-  }
-
-  has(fractal: IFractal | undefined | null): boolean {
-    if (!fractal) return false;
-    return this.$value().includes(fractal);
-  }
-
-  push(fractal: IFractal): void {
-    this.$value.update(prev => [...prev, fractal]);
-  }
-
-  clear(): void {
-    this.$value.set([]);
-  }
-
-  toggle(fractal: IFractal | undefined | null): void {
-    if (!fractal) return;
-    this.$value.update(prev => (prev.includes(fractal) ? prev.filter(item => item !== fractal) : [...prev, fractal]));
-  }
-
+export class FractalsState extends ArrayState<IFractal> {
   refresh(): void {
     this.$value.update(prev => [...prev]);
   }
@@ -31,5 +9,9 @@ export class FractalsState extends BaseState<IFractal[]> implements IFractalsSta
   toggleAll(fractal: IFractal | undefined | null): void {
     if (!fractal) return;
     this.$value.update(prev => (prev.length === 0 ? Array.from(fractal.parent.fractals.values()) : []));
+  }
+
+  delete(fractal: IFractal | null): void {
+    this.$value.update(prev => prev.filter(prevFractal => prevFractal !== fractal));
   }
 }

@@ -1,9 +1,11 @@
 <mat-card appearance="outlined" [class.selected]="selected">
-  <mat-card-header>
-    <mat-card-title-group class="mat-card-title-group">
-      <mat-card-title>{{ title }}</mat-card-title>
-    </mat-card-title-group>
-  </mat-card-header>
+  <app-default-button (clicked)="cardHeaderClicked.emit($event)">
+    <mat-card-header>
+      <mat-card-title-group class="mat-card-title-group">
+        <mat-card-title>{{ title }}</mat-card-title>
+      </mat-card-title-group>
+    </mat-card-header>
+  </app-default-button>
   <mat-card-content>
     <ng-content />
   </mat-card-content>

@@ -30,6 +30,7 @@ export class SidenavComponent {
 
   onPageTouched(page: IFractal): void {
     this.ss.currentFractal.set(page);
+    this.ss.newChildren.clear();
     this.ss.selectedChildren.clear();
     this.fs.navigatePage(page.cursor);
   }
@@ -39,20 +40,19 @@ export class SidenavComponent {
     if (!current) return;
 
     const handler: Record<string, () => void> = {
-      [Edit]: () => {
-        this.ss.$fullEditMode.update(prev => !prev);
-      },
+      [Edit]: () => {},
       [Save]: () => {
-        const controls = current.updateSelectedChildren();
+        current.form.dirty && this.ss.selectedChildren.push(current);
+        const controls = current.updateSelectedChildren(this.ss.selectedChildren.$value());
         controls.length > 0 && this.ds.updateControls(controls).subscribe();
 
-        const newFractals = current.addNewChildren();
+        const newFractals = current.addNewChildren(this.ss.newChildren.$value());
         newFractals.length > 0 && this.ds.add(newFractals).subscribe();
         this.afterModifierHeld(current);
       },
 
       [Delete]: () => {
-        const deleteChildren = current.deleteSelectedChildren();
+        const deleteChildren = current.deleteSelectedChildren(this.ss.selectedChildren.$value());
         deleteChildren.length > 0 && this.ds.delete(deleteChildren).subscribe();
         this.afterModifierHeld(current);
       },
@@ -63,6 +63,7 @@ export class SidenavComponent {
 
   private afterModifierHeld(current: IFractal): void {
     this.ss.newChildren.clear();
+    this.ss.selectedForm.clear();
     this.ss.selectedChildren.clear();
     const oc = current.controls.getKnown('Oc')?.dto;
     oc && this.ds.updateControls([oc]).subscribe();
@@ -77,13 +78,20 @@ export class SidenavComponent {
     const handler: Record<string, () => void> = {
       [New]: () => {
         this.ss.newChildren.push(new Fractal(new FractalDto(current), current, { syncFormWithDto: true }));
+        this.afterModifierTouched(modifier);
       },
-      [Edit]: () => {},
+      [Edit]: () => {
+        this.afterModifierTouched(modifier);
+      },
       [Save]: () => {},
+      [Delete]: () => {
+        const selectedForm = this.ss.selectedForm.$value();
+        this.ss.newChildren.delete(selectedForm);
+        this.ss.selectedChildren.delete(selectedForm);
+      },
     };
 
     handler[modifier.cursor]?.();
-    this.afterModifierTouched(modifier);
   }
 
   private afterModifierTouched({ cursor }: IFractal): void {

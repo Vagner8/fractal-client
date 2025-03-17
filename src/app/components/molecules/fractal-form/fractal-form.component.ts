@@ -32,4 +32,14 @@ export class FractalFormComponent {
   get isNewFractal(): boolean {
     return this.fractal.cursor !== ConstAppFractals.App && !this.fractal.parent.fractals.has(this.fractal.cursor);
   }
+
+  formClicked({ target }: Event): void {
+    if (target instanceof HTMLElement) {
+      if (target.closest('[data-control-btn]')) return;
+    }
+    if (!this.ss.selectedControls.isEmpty) {
+      this.ss.selectedControls.clear();
+    }
+    this.ss.selectedForm.toggle(this.fractal);
+  }
 }

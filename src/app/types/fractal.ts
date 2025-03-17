@@ -30,7 +30,7 @@ export interface IFractal {
   get ancestors(): IFractal[];
 
   update(): IControlDto[];
-  addNewChildren(): IFractalDto[];
-  deleteSelectedChildren(): IFractalDto[];
-  updateSelectedChildren(): IControlDto[];
+  addNewChildren(newFractals: IFractal[]): IFractalDto[];
+  deleteSelectedChildren(selectedFractals: IFractal[]): IFractalDto[];
+  updateSelectedChildren(selectedFractals: IFractal[]): IControlDto[];
 }
