@@ -18,4 +18,13 @@ export abstract class ArrayState<T> extends BaseState<T[]> {
     if (!item) return;
     this.$value.update(prev => (prev.includes(item) ? prev.filter(prevItem => prevItem !== item) : [...prev, item]));
   }
+
+  pushBunch(items: T[]): void {
+    this.$value.update(prev => [...prev, ...items]);
+  }
+
+  deleteBunch(items: T[]): void {
+    const set = new Set(items);
+    this.$value.update(prev => prev.filter(fractal => !set.has(fractal)));
+  }
 }

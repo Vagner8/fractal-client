@@ -13,8 +13,8 @@
             #panel
             [fractal]="child"
             [ancestors]="ancestors"
-            (afterExpand)="afterExpand(child)"
-            (afterCollapse)="afterCollapse(child)">
+            (closed)="closed(child)"
+            (afterExpand)="afterExpand(child)">
             @if (panel.expansionPanel()?.expanded) {
               <app-accordion [fractal]="child" [ancestors]="ancestors" />
             }

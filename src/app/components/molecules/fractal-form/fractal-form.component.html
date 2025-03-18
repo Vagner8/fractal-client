@@ -1,9 +1,9 @@
 <form>
   <app-card
     [title]="isNewFractal ? 'New' : title"
-    [selected]="ss.selectedForm.$value() === fractal"
+    [selected]="ss.selectedForms.has(fractal)"
     (cardHeaderClicked)="formClicked($event)">
-    <app-list [dataSource]="dataSource" [templateRef]="fields"> </app-list>
+    <app-list [dataSource]="dataSource" [templateRef]="fields" [threeColumns]="false" />
   </app-card>
 </form>
 

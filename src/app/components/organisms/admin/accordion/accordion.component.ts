@@ -17,11 +17,11 @@ export class AccordionComponent {
   @Input() ancestors!: IFractal[];
   ss = inject(StatesService);
 
-  afterExpand(fractal: IFractal): void {
-    this.ss.currentFractal.set(fractal);
+  closed(fractal: IFractal): void {
+    this.ss.currentFractal.set(fractal.parent);
   }
 
-  afterCollapse(fractal: IFractal): void {
-    this.ss.currentFractal.set(fractal.parent);
+  afterExpand(fractal: IFractal): void {
+    this.ss.currentFractal.set(fractal);
   }
 }

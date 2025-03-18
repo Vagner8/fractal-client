@@ -18,8 +18,8 @@ export class AllFieldComponent {
   ControlMutable = ConstControlMutable;
 
   controlClicked(): void {
-    if (!this.ss.selectedForm.isEmpty) {
-      this.ss.selectedForm.clear();
+    if (!this.ss.selectedForms.isEmpty) {
+      this.ss.selectedForms.clear();
     }
     this.ss.selectedControls.toggle(this.control);
   }

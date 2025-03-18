@@ -4,6 +4,7 @@ import { EditorComponent } from '../editor/editor.component';
 import { ConstAppParams, ConstAppPages, ConstAppFractals } from '@constants';
 import { FractalCollectionComponent } from '@components/molecules';
 import { AdminComponent } from '../admin/admin.component';
+import { ActivatedRoute } from '@angular/router';
 
 type Params = Record<keyof typeof ConstAppParams, string>;
 
@@ -25,10 +26,12 @@ export class ScreenComponent implements OnInit, Params {
   ss = inject(StatesService);
   fs = inject(FractalService);
   private es = inject(EventService);
+  private route = inject(ActivatedRoute);
 
   AppPages = ConstAppPages;
 
   ngOnInit(): void {
+    this.route.queryParamMap.subscribe(params => this.ss.$paramMap.set(params));
     this.ss.sidenavTaps.set(this.fs.collections);
     this.es.$managerEvent.set(this.Manager);
     const current = this.Page === ConstAppFractals.App ? this.fs.$app() : this.fs.collections?.fractals.get(this.Page);

@@ -40,6 +40,7 @@ export class Fractal implements IFractal {
   addNewChildren(newFractals: IFractal[]): IFractalDto[] {
     return newFractals.reduce((acc: IFractalDto[], child) => {
       if (child.form.dirty) {
+        child.form.markAsPristine();
         const cursor = child.controls.getKnown('Cursor')?.getFromControl('data').value;
         child.cursor = cursor;
         const oc = this.controls.getKnown('Oc');

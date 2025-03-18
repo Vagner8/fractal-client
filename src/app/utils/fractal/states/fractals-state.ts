@@ -10,8 +10,4 @@ export class FractalsState extends ArrayState<IFractal> {
     if (!fractal) return;
     this.$value.update(prev => (prev.length === 0 ? Array.from(fractal.parent.fractals.values()) : []));
   }
-
-  delete(fractal: IFractal | null): void {
-    this.$value.update(prev => prev.filter(prevFractal => prevFractal !== fractal));
-  }
 }

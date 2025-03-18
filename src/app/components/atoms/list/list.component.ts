@@ -15,6 +15,7 @@ type DataSource = IFractal | IControl | string;
 export class ListComponent {
   @Input() dataSource: DataSource[] = [];
   @Input() templateRef!: TemplateRef<unknown>;
+  @Input() threeColumns = true;
 
   trackFn(data: DataSource): string {
     return typeof data === 'string' ? data : data.dto.id;

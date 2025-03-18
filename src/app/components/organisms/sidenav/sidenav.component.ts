@@ -29,69 +29,105 @@ export class SidenavComponent {
   AppFractals = ConstAppFractals;
 
   onPageTouched(page: IFractal): void {
+    this.ss.clearAll();
     this.ss.currentFractal.set(page);
-    this.ss.newChildren.clear();
-    this.ss.selectedChildren.clear();
     this.fs.navigatePage(page.cursor);
   }
 
   onModifierHeld = (modifier: IFractal): void => {
-    const current = this.ss.currentFractal.$value();
-    if (!current) return;
+    const currentFractal = this.ss.currentFractal.$value();
+    if (!currentFractal) return;
 
     const handler: Record<string, () => void> = {
-      [Edit]: () => {},
-      [Save]: () => {
-        current.form.dirty && this.ss.selectedChildren.push(current);
-        const controls = current.updateSelectedChildren(this.ss.selectedChildren.$value());
-        controls.length > 0 && this.ds.updateControls(controls).subscribe();
+      [Edit]: () => {
+        this.ss.$fullEditMode.update(prev => !prev);
+      },
 
-        const newFractals = current.addNewChildren(this.ss.newChildren.$value());
-        newFractals.length > 0 && this.ds.add(newFractals).subscribe();
-        this.afterModifierHeld(current);
+      [Save]: () => {
+        this.updateControls(currentFractal);
+        this.addNewFractals(currentFractal);
       },
 
       [Delete]: () => {
-        const deleteChildren = current.deleteSelectedChildren(this.ss.selectedChildren.$value());
-        deleteChildren.length > 0 && this.ds.delete(deleteChildren).subscribe();
-        this.afterModifierHeld(current);
+        if (this.ss.$paramMap()?.get(ConstAppFractals.Modifiers)) {
+          this.deleteFractalsFromSelectedForms(currentFractal);
+        } else {
+          this.deleteFractalsFromSelectedChildren(currentFractal);
+        }
       },
     };
 
     handler[modifier.cursor]?.();
   };
 
-  private afterModifierHeld(current: IFractal): void {
-    this.ss.newChildren.clear();
-    this.ss.selectedForm.clear();
-    this.ss.selectedChildren.clear();
-    const oc = current.controls.getKnown('Oc')?.dto;
-    oc && this.ds.updateControls([oc]).subscribe();
-    this.ss.currentFractal.refresh();
-    this.fs.navigateModifier(null);
-  }
-
   onModifierTouched(modifier: IFractal): void {
-    const current = this.ss.currentFractal.$value();
-    if (!current) return;
+    const currentFractal = this.ss.currentFractal.$value();
+    if (!currentFractal) return;
 
     const handler: Record<string, () => void> = {
       [New]: () => {
-        this.ss.newChildren.push(new Fractal(new FractalDto(current), current, { syncFormWithDto: true }));
+        this.ss.newChildren.push(
+          new Fractal(new FractalDto(currentFractal), currentFractal, { syncFormWithDto: true })
+        );
         this.afterModifierTouched(modifier);
       },
       [Edit]: () => {
         this.afterModifierTouched(modifier);
       },
-      [Save]: () => {},
       [Delete]: () => {
-        const selectedForm = this.ss.selectedForm.$value();
-        this.ss.newChildren.delete(selectedForm);
-        this.ss.selectedChildren.delete(selectedForm);
+        const selectedForms = this.ss.selectedForms.$value();
+        if (selectedForms.length > 0) {
+          this.ss.selectedForms.clear();
+          this.ss.newChildren.deleteBunch(selectedForms);
+          this.ss.selectedChildren.deleteBunch(selectedForms);
+        }
       },
     };
 
     handler[modifier.cursor]?.();
+  }
+
+  private updateControls(currentFractal: IFractal): void {
+    const controlsToUpdate = [
+      ...currentFractal.update(),
+      ...currentFractal.updateSelectedChildren(this.ss.selectedChildren.$value()),
+    ];
+    controlsToUpdate.length > 0 && this.ds.updateControls(controlsToUpdate).subscribe();
+  }
+
+  private addNewFractals(currentFractal: IFractal): void {
+    const newChildren = this.ss.newChildren.$value();
+    if (newChildren.length > 0) {
+      this.ss.newChildren.clear();
+      this.ss.selectedChildren.pushBunch(newChildren);
+      this.ds.add(currentFractal.addNewChildren(newChildren)).subscribe();
+      const oc = currentFractal.controls.getKnown('Oc')?.dto;
+      oc && this.ds.updateControls([oc]).subscribe();
+    }
+  }
+
+  private deleteFractals(currentFractal: IFractal, fractalsToDelete: IFractal[]): void {
+    this.ds.delete(currentFractal.deleteSelectedChildren(fractalsToDelete)).subscribe();
+    const oc = currentFractal.controls.getKnown('Oc');
+    oc && this.ds.updateControls([oc.dto]).subscribe();
+  }
+
+  private deleteFractalsFromSelectedForms(currentFractal: IFractal): void {
+    const selectedForms = this.ss.selectedForms.$value();
+    if (selectedForms.length > 0) {
+      this.ss.newChildren.deleteBunch(selectedForms);
+      this.ss.selectedChildren.deleteBunch(selectedForms);
+      this.deleteFractals(currentFractal, selectedForms);
+    }
+  }
+
+  private deleteFractalsFromSelectedChildren(currentFractal: IFractal): void {
+    const selectedChildren = this.ss.selectedChildren.$value();
+    if (selectedChildren.length > 0) {
+      this.ss.selectedChildren.clear();
+      this.ss.currentFractal.refresh();
+      this.deleteFractals(currentFractal, selectedChildren);
+    }
   }
 
   private afterModifierTouched({ cursor }: IFractal): void {
