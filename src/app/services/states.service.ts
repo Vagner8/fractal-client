@@ -10,16 +10,15 @@ export class StatesService {
   currentFractal = new FractalState(null);
 
   newChildren = new FractalsState([]);
-  selectedForms = new FractalsState([]);
   selectedControls = new ControlsState([]);
   selectedChildren = new FractalsState([]);
+  selectedChildrenForms = new FractalsState([]);
 
   $paramMap = signal<ParamMap | null>(null);
-  $fullEditMode = signal(false);
 
   clearAll(): void {
     this.newChildren.clear();
-    this.selectedForms.clear();
     this.selectedChildren.clear();
+    this.selectedChildrenForms.clear();
   }
 }

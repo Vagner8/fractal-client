@@ -1,7 +1,7 @@
 <form>
   <app-card
     [title]="isNewFractal ? 'New' : title"
-    [selected]="ss.selectedForms.has(fractal)"
+    [selected]="ss.selectedChildrenForms.has(fractal)"
     (cardHeaderClicked)="formClicked($event)">
     <app-list [dataSource]="dataSource" [templateRef]="fields" [threeColumns]="false" />
   </app-card>
@@ -9,7 +9,7 @@
 
 <ng-template #fields let-indicator>
   @if (fractal.controls.get(indicator); as control) {
-    @if (ss.$fullEditMode()) {
+    @if (fractal.$fullEditMode()) {
       <app-all-field [control]="control" />
     } @else {
       <app-data-field

@@ -1,4 +1,5 @@
-import { IControlDto, IControlsDto, IControls } from './control';
+import { WritableSignal } from '@angular/core';
+import { IControlsDto, IControls } from './control';
 import { FormRecord } from '@angular/forms';
 
 export type FractalsDto = Record<string, IFractalDto>;
@@ -27,10 +28,7 @@ export interface IFractal {
   fractals: IFractals;
   isCollection: boolean;
 
-  get ancestors(): IFractal[];
+  $fullEditMode: WritableSignal<boolean>;
 
-  update(): IControlDto[];
-  addNewChildren(newFractals: IFractal[]): IFractalDto[];
-  deleteSelectedChildren(selectedFractals: IFractal[]): IFractalDto[];
-  updateSelectedChildren(selectedFractals: IFractal[]): IControlDto[];
+  get ancestors(): IFractal[];
 }

@@ -16,6 +16,6 @@ export class AppComponent implements OnInit {
   private ds = inject(DataService);
 
   ngOnInit(): void {
-    this.ds.get().subscribe(dto => this.fs.init(dto));
+    this.ds.getFractal().subscribe(dto => this.fs.init(dto));
   }
 }

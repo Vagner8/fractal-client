@@ -26,7 +26,6 @@ export interface IControls extends Map<string, IControl> {
 export interface IControl {
   dto: IControlDto;
   form: ControlForm;
-  syncWithForm(): IControlDto;
   pushSplitData(value: string): IControl;
   getFromControl(name: ConstControlMutableType): FormControl;
   deleteSplitData(data: string): IControl;

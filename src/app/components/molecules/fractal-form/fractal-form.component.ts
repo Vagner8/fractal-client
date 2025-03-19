@@ -40,6 +40,6 @@ export class FractalFormComponent {
     if (!this.ss.selectedControls.isEmpty) {
       this.ss.selectedControls.clear();
     }
-    this.ss.selectedForms.toggle(this.fractal);
+    this.ss.selectedChildrenForms.toggle(this.fractal);
   }
 }

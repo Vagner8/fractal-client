@@ -12,12 +12,18 @@ export class DataService {
   private fractalApi = `${ENV.API}fractal`;
   private controlApi = `${ENV.API}control`;
 
-  get(): Observable<IFractalDto> {
+  getFractal(): Observable<IFractalDto> {
     return this.http.get<IFractalDto>(`${this.fractalApi}?id=${ENV.ID}`);
   }
 
-  add(dto: IFractalDto[]): Observable<IFractalDto> {
+  addFractals(dto: IFractalDto[]): Observable<IFractalDto> {
     return this.http.post<IFractalDto>(this.fractalApi, dto);
+  }
+
+  deleteFractals(body: IFractalDto[]): Observable<IFractalDto[]> {
+    return this.http.delete<IFractalDto[]>(this.fractalApi, {
+      body,
+    });
   }
 
   addControls(dto: IControlDto[]): Observable<IControlDto[]> {
@@ -30,16 +36,6 @@ export class DataService {
 
   deleteControls(body: IControlDto[]): Observable<IControlDto[]> {
     return this.http.delete<IControlDto[]>(this.controlApi, {
-      body,
-    });
-  }
-
-  update(dto: IFractalDto[]): Observable<IFractalDto> {
-    return this.http.put<IFractalDto>(this.fractalApi, dto);
-  }
-
-  delete(body: IFractalDto[]): Observable<IFractalDto[]> {
-    return this.http.delete<IFractalDto[]>(this.fractalApi, {
       body,
     });
   }

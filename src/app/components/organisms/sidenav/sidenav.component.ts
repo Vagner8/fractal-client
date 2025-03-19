@@ -5,7 +5,7 @@ import { ConstAppEvents, ConstNavigableModifiers, ConstModifiers, ConstAppFracta
 import { MatListModule, MatSidenavModule } from '@mat';
 import { DataService, EventService, FractalService, StatesService } from '@services';
 import { IFractal } from '@types';
-import { Fractal } from '@utils';
+import { addFractals, deleteFractals, Fractal, updateFractals } from '@utils';
 import { FractalDto } from 'app/utils/fractal/dto/fractal-dto';
 
 const { New, Edit, Save, Delete } = ConstModifiers;
@@ -40,19 +40,19 @@ export class SidenavComponent {
 
     const handler: Record<string, () => void> = {
       [Edit]: () => {
-        this.ss.$fullEditMode.update(prev => !prev);
+        this.ss.selectedChildrenForms.$value().forEach(fractal => fractal.$fullEditMode.update(prev => !prev));
       },
 
       [Save]: () => {
-        this.updateControls(currentFractal);
-        this.addNewFractals(currentFractal);
+        this.updateFractals(currentFractal);
+        this.addFractals(currentFractal);
       },
 
       [Delete]: () => {
         if (this.ss.$paramMap()?.get(ConstAppFractals.Modifiers)) {
-          this.deleteFractalsFromSelectedForms(currentFractal);
+          this.deleteSelectedChildrenForms(currentFractal);
         } else {
-          this.deleteFractalsFromSelectedChildren(currentFractal);
+          this.deleteSelectedChildren(currentFractal);
         }
       },
     };
@@ -75,11 +75,11 @@ export class SidenavComponent {
         this.afterModifierTouched(modifier);
       },
       [Delete]: () => {
-        const selectedForms = this.ss.selectedForms.$value();
-        if (selectedForms.length > 0) {
-          this.ss.selectedForms.clear();
-          this.ss.newChildren.deleteBunch(selectedForms);
-          this.ss.selectedChildren.deleteBunch(selectedForms);
+        const selectedChildrenForms = this.ss.selectedChildrenForms.$value();
+        if (selectedChildrenForms.length > 0) {
+          this.ss.selectedChildrenForms.clear();
+          this.ss.newChildren.deleteBunch(selectedChildrenForms);
+          this.ss.selectedChildren.deleteBunch(selectedChildrenForms);
         }
       },
     };
@@ -87,41 +87,38 @@ export class SidenavComponent {
     handler[modifier.cursor]?.();
   }
 
-  private updateControls(currentFractal: IFractal): void {
-    const controlsToUpdate = [
-      ...currentFractal.update(),
-      ...currentFractal.updateSelectedChildren(this.ss.selectedChildren.$value()),
-    ];
+  private updateFractals(currentFractal: IFractal): void {
+    const controlsToUpdate = [...updateFractals([currentFractal, ...this.ss.selectedChildren.$value()])];
     controlsToUpdate.length > 0 && this.ds.updateControls(controlsToUpdate).subscribe();
   }
 
-  private addNewFractals(currentFractal: IFractal): void {
+  private addFractals(currentFractal: IFractal): void {
     const newChildren = this.ss.newChildren.$value();
     if (newChildren.length > 0) {
       this.ss.newChildren.clear();
       this.ss.selectedChildren.pushBunch(newChildren);
-      this.ds.add(currentFractal.addNewChildren(newChildren)).subscribe();
-      const oc = currentFractal.controls.getKnown('Oc')?.dto;
-      oc && this.ds.updateControls([oc]).subscribe();
+      const { fractalsToAdd, orderChildren } = addFractals(currentFractal, newChildren);
+      this.ds.addFractals(fractalsToAdd).subscribe();
+      orderChildren && this.ds.updateControls([orderChildren]).subscribe();
     }
   }
 
-  private deleteFractals(currentFractal: IFractal, fractalsToDelete: IFractal[]): void {
-    this.ds.delete(currentFractal.deleteSelectedChildren(fractalsToDelete)).subscribe();
-    const oc = currentFractal.controls.getKnown('Oc');
-    oc && this.ds.updateControls([oc.dto]).subscribe();
+  private deleteFractals(currentFractal: IFractal, fractals: IFractal[]): void {
+    const { fractalsToDelete, orderChildren } = deleteFractals(currentFractal, fractals);
+    this.ds.deleteFractals(fractalsToDelete).subscribe();
+    orderChildren && this.ds.updateControls([orderChildren]).subscribe();
   }
 
-  private deleteFractalsFromSelectedForms(currentFractal: IFractal): void {
-    const selectedForms = this.ss.selectedForms.$value();
-    if (selectedForms.length > 0) {
-      this.ss.newChildren.deleteBunch(selectedForms);
-      this.ss.selectedChildren.deleteBunch(selectedForms);
-      this.deleteFractals(currentFractal, selectedForms);
+  private deleteSelectedChildrenForms(currentFractal: IFractal): void {
+    const selectedChildrenForms = this.ss.selectedChildrenForms.$value();
+    if (selectedChildrenForms.length > 0) {
+      this.ss.newChildren.deleteBunch(selectedChildrenForms);
+      this.ss.selectedChildren.deleteBunch(selectedChildrenForms);
+      this.deleteFractals(currentFractal, selectedChildrenForms);
     }
   }
 
-  private deleteFractalsFromSelectedChildren(currentFractal: IFractal): void {
+  private deleteSelectedChildren(currentFractal: IFractal): void {
     const selectedChildren = this.ss.selectedChildren.$value();
     if (selectedChildren.length > 0) {
       this.ss.selectedChildren.clear();

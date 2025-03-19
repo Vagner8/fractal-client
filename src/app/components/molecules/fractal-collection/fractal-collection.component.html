@@ -5,8 +5,8 @@
         <th mat-header-cell *matHeaderCellDef>
           {{ column }}
         </th>
-        <td mat-cell *matCellDef="let row">
-          {{ fractal.fractals.get(row)?.controls?.getControlData([column]) }}
+        <td mat-cell *matCellDef="let cursor">
+          {{ tdValue(cursor, column) }}
         </td>
       </ng-container>
     }

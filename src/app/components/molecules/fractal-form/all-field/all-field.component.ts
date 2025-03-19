@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { CardComponent, InputComponent, SelectComponent } from '@components/atoms';
 import { ConstControlFields, ConstControlMutable } from '@constants';
 import { StatesService } from '@services';
@@ -11,15 +11,21 @@ import { IControl } from '@types';
   styleUrl: './all-field.component.scss',
   templateUrl: './all-field.component.html',
 })
-export class AllFieldComponent {
+export class AllFieldComponent implements OnInit {
   @Input() control!: IControl;
   ss = inject(StatesService);
   opts = Object.values(ConstControlFields);
   ControlMutable = ConstControlMutable;
 
+  ngOnInit(): void {
+    if (this.control.getFromControl('field').value === ConstControlFields.Select) {
+      this.control.getFromControl('data').setValue(this.control.dto.data);
+    }
+  }
+
   controlClicked(): void {
-    if (!this.ss.selectedForms.isEmpty) {
-      this.ss.selectedForms.clear();
+    if (!this.ss.selectedChildrenForms.isEmpty) {
+      this.ss.selectedChildrenForms.clear();
     }
     this.ss.selectedControls.toggle(this.control);
   }

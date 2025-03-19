@@ -1,13 +1,8 @@
 import { FormControl, FormRecord } from '@angular/forms';
 import { ConstControlMutable } from '@constants';
-import {
-  IControl,
-  IControlDto,
-  ControlForm,
-  IControlMutableDto,
-  FractalInitOptions,
-  ConstControlMutableType,
-} from '@types';
+import { IControl, IControlDto, ControlForm, FractalInitOptions, ConstControlMutableType } from '@types';
+import { isConstControlMutableType } from '../guards';
+import { deleteSubstring } from '../common';
 
 export class Control implements IControl {
   form: ControlForm;
@@ -22,18 +17,12 @@ export class Control implements IControl {
     if (option?.syncFormWithDto) {
       this.form.valueChanges.subscribe(value => {
         for (const key in ConstControlMutable) {
-          this.dto[key as keyof IControlMutableDto] = value[key];
+          if (isConstControlMutableType(key)) {
+            this.dto[key] = value[key];
+          }
         }
       });
     }
-  }
-
-  syncWithForm(): IControlDto {
-    for (const key in ConstControlMutable) {
-      const form = this.form.controls[key];
-      if (form.dirty) this.dto[key as keyof IControlMutableDto] = form.value;
-    }
-    return this.dto;
   }
 
   getFromControl(name: ConstControlMutableType): FormControl {
@@ -47,10 +36,7 @@ export class Control implements IControl {
   }
 
   deleteSplitData(data: string): IControl {
-    this.dto.data = this.dto.data
-      .split(':')
-      .filter(indicator => indicator !== data)
-      .join(':');
+    this.dto.data = deleteSubstring(this.dto.data, data);
     this.getFromControl('data').setValue(this.dto.data);
     return this;
   }
