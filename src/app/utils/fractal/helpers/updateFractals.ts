@@ -1,23 +1,33 @@
 import { ConstControlFields, ConstControlMutable } from '@constants';
-import { IControl, IControlDto, IFractal } from '@types';
+import { IControl, IControlDto, IFractal, IFractalDto } from '@types';
 import { deleteSubstring } from 'app/utils/common';
 import { isConstControlMutableType } from 'app/utils/guards';
+import { addFractal } from './addFractal';
 
-export const updateFractals = (fractals: IFractal[]): IControlDto[] => {
-  const acc: IControlDto[] = [];
-  fractals.forEach(fractal => {
+export const updateFractals = (
+  parent: IFractal,
+  fractals: IFractal[]
+): { orderChildren: IControlDto | undefined; fractalsToAdd: IFractalDto[]; controlsToUpdate: IControlDto[] } => {
+  const orderChildren = parent.controls.getKnown('Oc');
+  const fractalsToAdd: IFractalDto[] = [];
+  const controlsToUpdate: IControlDto[] = [];
+  [parent, ...fractals].forEach(fractal => {
+    if (!fractal.form.dirty) return;
+    if (fractal.isNew && orderChildren) {
+      fractalsToAdd.push(addFractal({ parent, fractal, orderChildren }));
+    }
     for (const control of fractal.controls.values()) {
       if (control.form.dirty) {
         if (fractal.$fullEditMode()) {
-          acc.push(updateAllControlFields(control));
+          controlsToUpdate.push(updateAllControlFields(control));
         } else {
-          control.getFromControl('data').dirty && acc.push(updateControlDataField(control));
+          control.getFromControl('data').dirty && controlsToUpdate.push(updateControlDataField(control));
         }
         control.form.markAsPristine();
       }
     }
   });
-  return acc;
+  return { orderChildren: orderChildren?.dto, fractalsToAdd, controlsToUpdate };
 };
 
 const updateControlDataField = (control: IControl): IControlDto => {

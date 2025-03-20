@@ -1,3 +1,3 @@
-export * from './addFractals';
+export * from './addFractal';
 export * from './updateFractals';
 export * from './deleteFractals';

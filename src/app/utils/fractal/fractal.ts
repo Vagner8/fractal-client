@@ -15,6 +15,7 @@ export class Fractal implements IFractal {
   isCollection: boolean;
 
   $fullEditMode: WritableSignal<boolean>;
+  $formSelected: WritableSignal<boolean>;
 
   constructor(dto: IFractalDto, parent?: IFractal | null, options?: FractalInitOptions) {
     this.dto = dto;
@@ -26,6 +27,11 @@ export class Fractal implements IFractal {
     this.isCollection = parent?.cursor === ConstAppFractals.Collections;
 
     this.$fullEditMode = signal(false);
+    this.$formSelected = signal(false);
+  }
+
+  get isNew(): boolean {
+    return !this.cursor;
   }
 
   get ancestors(): IFractal[] {

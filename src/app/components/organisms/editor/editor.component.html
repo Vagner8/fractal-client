@@ -1,14 +1,12 @@
+@let selectedChildren = ss.selectedChildren.$value();
+
 <div class="modifier">
   @if (ss.currentFractal.$value(); as currentFractal) {
     <app-fractal-form [fractal]="currentFractal" />
   }
 
-  @if (!ss.selectedChildren.isEmpty) {
-    <app-list [dataSource]="ss.selectedChildren.$value()" [templateRef]="fractalForm" />
-  }
-
-  @if (!ss.newChildren.isEmpty) {
-    <app-list [dataSource]="ss.newChildren.$value()" [templateRef]="fractalForm" />
+  @if (selectedChildren.length > 0) {
+    <app-list [dataSource]="selectedChildren" [templateRef]="fractalForm" />
   }
 </div>
 

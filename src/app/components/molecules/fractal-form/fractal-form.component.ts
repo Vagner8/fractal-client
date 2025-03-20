@@ -1,7 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import { MatRippleModule } from '@angular/material/core';
 import { CardComponent, ListComponent } from '@components/atoms';
-import { ConstAppFractals, ConstControlFields } from '@constants';
+import { ConstControlFields } from '@constants';
 import { StatesService } from '@services';
 import { IFractal } from '@types';
 import { DataFieldComponent } from './data-field/data-field.component';
@@ -29,17 +29,9 @@ export class FractalFormComponent {
       : this.fractal.controls.getAndSplitControlData('Ooc');
   }
 
-  get isNewFractal(): boolean {
-    return this.fractal.cursor !== ConstAppFractals.App && !this.fractal.parent.fractals.has(this.fractal.cursor);
-  }
-
   formClicked({ target }: Event): void {
-    if (target instanceof HTMLElement) {
-      if (target.closest('[data-control-btn]')) return;
-    }
-    if (!this.ss.selectedControls.isEmpty) {
-      this.ss.selectedControls.clear();
-    }
-    this.ss.selectedChildrenForms.toggle(this.fractal);
+    if (target instanceof HTMLElement && target.closest('[data-control-btn]')) return;
+    if (!this.ss.selectedControls.isEmpty) this.ss.selectedControls.clear();
+    this.fractal.$formSelected.update(prev => !prev);
   }
 }

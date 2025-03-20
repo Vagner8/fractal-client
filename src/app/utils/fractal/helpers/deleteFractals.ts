@@ -2,15 +2,21 @@ import { IControlDto, IFractal, IFractalDto } from '@types';
 
 export const deleteFractals = (
   parent: IFractal,
-  fractals: IFractal[]
-): { fractalsToDelete: IFractalDto[]; orderChildren: IControlDto | undefined } => {
+  fractals: IFractal[],
+  isEditPage: boolean
+): { orderChildren: IControlDto | undefined; fractalsToDelete: IFractal[]; fractalsDtoToDelete: IFractalDto[] } => {
   const orderChildren = parent.controls.getKnown('Oc');
+  const fractalsToDelete: IFractal[] = [];
+  const fractalsDtoToDelete: IFractalDto[] = [];
 
-  const fractalsToDelete = fractals.map(({ dto, cursor }) => {
-    orderChildren?.deleteSplitData(cursor);
-    parent.fractals.delete(cursor);
-    return dto;
-  });
+  for (const fractal of fractals) {
+    if (!isEditPage || fractal.$formSelected()) {
+      orderChildren?.deleteSplitData(fractal.cursor);
+      parent.fractals.delete(fractal.cursor);
+      fractalsToDelete.push(fractal);
+      fractalsDtoToDelete.push(fractal.dto);
+    }
+  }
 
-  return { fractalsToDelete, orderChildren: orderChildren?.dto };
+  return { fractalsDtoToDelete, orderChildren: orderChildren?.dto, fractalsToDelete };
 };

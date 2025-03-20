@@ -26,9 +26,12 @@ export interface IFractal {
   parent: IFractal;
   controls: IControls;
   fractals: IFractals;
+
   isCollection: boolean;
 
+  $formSelected: WritableSignal<boolean>;
   $fullEditMode: WritableSignal<boolean>;
 
+  get isNew(): boolean;
   get ancestors(): IFractal[];
 }

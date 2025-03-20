@@ -9,16 +9,8 @@ export class StatesService {
   sidenavTaps = new FractalState(null);
   currentFractal = new FractalState(null);
 
-  newChildren = new FractalsState([]);
   selectedControls = new ControlsState([]);
   selectedChildren = new FractalsState([]);
-  selectedChildrenForms = new FractalsState([]);
 
   $paramMap = signal<ParamMap | null>(null);
-
-  clearAll(): void {
-    this.newChildren.clear();
-    this.selectedChildren.clear();
-    this.selectedChildrenForms.clear();
-  }
 }

@@ -19,8 +19,8 @@ export abstract class ArrayState<T> extends BaseState<T[]> {
     this.$value.update(prev => (prev.includes(item) ? prev.filter(prevItem => prevItem !== item) : [...prev, item]));
   }
 
-  pushBunch(items: T[]): void {
-    this.$value.update(prev => [...prev, ...items]);
+  refresh(): void {
+    this.$value.update(prev => [...prev]);
   }
 
   deleteBunch(items: T[]): void {

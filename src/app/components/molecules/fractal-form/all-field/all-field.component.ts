@@ -24,9 +24,6 @@ export class AllFieldComponent implements OnInit {
   }
 
   controlClicked(): void {
-    if (!this.ss.selectedChildrenForms.isEmpty) {
-      this.ss.selectedChildrenForms.clear();
-    }
     this.ss.selectedControls.toggle(this.control);
   }
 }

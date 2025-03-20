@@ -1,7 +1,7 @@
 <form>
   <app-card
-    [title]="isNewFractal ? 'New' : title"
-    [selected]="ss.selectedChildrenForms.has(fractal)"
+    [title]="fractal.isNew ? 'New' : title"
+    [selected]="fractal.$formSelected()"
     (cardHeaderClicked)="formClicked($event)">
     <app-list [dataSource]="dataSource" [templateRef]="fields" [threeColumns]="false" />
   </app-card>
