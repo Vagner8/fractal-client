@@ -1,7 +1,8 @@
+@let currentFractal = ss.currentFractal.$value();
 @let selectedChildren = ss.selectedChildren.$value();
 
 <div class="modifier">
-  @if (ss.currentFractal.$value(); as currentFractal) {
+  @if (currentFractal && currentFractal.visible.$value()) {
     <app-fractal-form [fractal]="currentFractal" />
   }
 

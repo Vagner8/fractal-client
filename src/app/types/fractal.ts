@@ -1,6 +1,6 @@
-import { WritableSignal } from '@angular/core';
 import { IControlsDto, IControls } from './control';
 import { FormRecord } from '@angular/forms';
+import { IBoolState } from './states';
 
 export type FractalsDto = Record<string, IFractalDto>;
 
@@ -29,8 +29,9 @@ export interface IFractal {
 
   isCollection: boolean;
 
-  $formSelected: WritableSignal<boolean>;
-  $fullEditMode: WritableSignal<boolean>;
+  visible: IBoolState;
+  formSelected: IBoolState;
+  fullEditMode: IBoolState;
 
   get isNew(): boolean;
   get ancestors(): IFractal[];

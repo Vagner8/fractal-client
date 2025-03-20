@@ -10,7 +10,7 @@ export const deleteFractals = (
   const fractalsDtoToDelete: IFractalDto[] = [];
 
   for (const fractal of fractals) {
-    if (!isEditPage || fractal.$formSelected()) {
+    if (!isEditPage || fractal.formSelected.$value()) {
       orderChildren?.deleteSplitData(fractal.cursor);
       parent.fractals.delete(fractal.cursor);
       fractalsToDelete.push(fractal);

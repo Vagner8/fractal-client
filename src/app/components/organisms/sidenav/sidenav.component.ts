@@ -40,7 +40,7 @@ export class SidenavComponent {
     const selectedChildren = this.ss.selectedChildren.$value();
     const handler: Record<string, () => void> = {
       [Edit]: () => {
-        selectedChildren.forEach(fractal => fractal.$formSelected() && fractal.$fullEditMode.update(prev => !prev));
+        this.editPageActivated && currentFractal.visible.toggle();
       },
 
       [Save]: () => {
@@ -58,20 +58,27 @@ export class SidenavComponent {
   onModifierTouched(modifier: IFractal): void {
     const currentFractal = this.ss.currentFractal.$value();
     if (!currentFractal) return;
+    const selectedChildren = this.ss.selectedChildren.$value();
 
     const handler: Record<string, () => void> = {
       [New]: () => {
         this.ss.selectedChildren.push(
           new Fractal(new FractalDto(currentFractal), currentFractal, { syncFormWithDto: true })
         );
-        this.afterModifierTouched(modifier);
+        this.navigateToEditPage(modifier);
       },
       [Edit]: () => {
-        this.afterModifierTouched(modifier);
+        if (!this.editPageActivated) {
+          this.navigateToEditPage(modifier);
+        } else {
+          [currentFractal, ...selectedChildren].forEach(
+            fractal => fractal.formSelected.$value() && fractal.fullEditMode.toggle()
+          );
+        }
       },
       [Delete]: () => {
         if (this.editPageActivated) {
-          this.ss.selectedChildren.$value.update(prev => prev.filter(fractal => !fractal.$formSelected()));
+          this.ss.selectedChildren.$value.update(prev => prev.filter(fractal => !fractal.formSelected.$value()));
         }
       },
     };
@@ -106,11 +113,8 @@ export class SidenavComponent {
     orderChildren && this.ds.updateControls([orderChildren]).subscribe();
   }
 
-  private afterModifierTouched({ cursor }: IFractal): void {
-    if (
-      Object.hasOwn(ConstNavigableModifiers, cursor) &&
-      (!this.ss.selectedChildren.isEmpty || !this.ss.currentFractal.isEmpty)
-    ) {
+  private navigateToEditPage({ cursor }: IFractal): void {
+    if (Object.hasOwn(ConstNavigableModifiers, cursor) && !this.ss.selectedChildren.isEmpty) {
       this.fs.navigateModifier(ConstNavigableModifiers.Edit);
     }
   }

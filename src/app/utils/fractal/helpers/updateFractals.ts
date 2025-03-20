@@ -18,7 +18,7 @@ export const updateFractals = (
     }
     for (const control of fractal.controls.values()) {
       if (control.form.dirty) {
-        if (fractal.$fullEditMode()) {
+        if (fractal.fullEditMode.$value()) {
           controlsToUpdate.push(updateAllControlFields(control));
         } else {
           control.getFromControl('data').dirty && controlsToUpdate.push(updateControlDataField(control));

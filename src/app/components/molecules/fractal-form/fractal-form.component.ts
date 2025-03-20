@@ -32,6 +32,6 @@ export class FractalFormComponent {
   formClicked({ target }: Event): void {
     if (target instanceof HTMLElement && target.closest('[data-control-btn]')) return;
     if (!this.ss.selectedControls.isEmpty) this.ss.selectedControls.clear();
-    this.fractal.$formSelected.update(prev => !prev);
+    this.fractal.formSelected.toggle();
   }
 }
