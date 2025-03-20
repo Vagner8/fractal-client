@@ -23,7 +23,7 @@ export class SidenavComponent {
   es = inject(EventService);
   ss = inject(StatesService);
   fs = inject(FractalService);
-  private ds = inject(DataService);
+  private readonly ds = inject(DataService);
 
   AppEvents = ConstAppEvents;
   AppFractals = ConstAppFractals;
@@ -108,7 +108,7 @@ export class SidenavComponent {
 
   private afterModifierTouched({ cursor }: IFractal): void {
     if (
-      Object.prototype.hasOwnProperty.call(ConstNavigableModifiers, cursor) &&
+      Object.hasOwn(ConstNavigableModifiers, cursor) &&
       (!this.ss.selectedChildren.isEmpty || !this.ss.currentFractal.isEmpty)
     ) {
       this.fs.navigateModifier(ConstNavigableModifiers.Edit);

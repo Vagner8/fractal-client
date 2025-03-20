@@ -1,12 +1,12 @@
 import { IControl, IFractal, IFractalDto } from '@types';
 
-interface addFractalProps {
+interface AddFractalProps {
   parent: IFractal;
   fractal: IFractal;
   orderChildren: IControl;
 }
 
-export const addFractal = ({ parent, fractal, orderChildren }: addFractalProps): IFractalDto => {
+export const addFractal = ({ parent, fractal, orderChildren }: AddFractalProps): IFractalDto => {
   const cursor = fractal.controls.getKnown('Cursor')?.getFromControl('data').value;
   fractal.form.markAsPristine();
   fractal.cursor = cursor;

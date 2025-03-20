@@ -1,4 +1,4 @@
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { ConstControlFields } from '@constants';
 import { TapDirective } from '@directives';
 import { MatTableModule } from '@mat';
@@ -12,13 +12,9 @@ import { IFractal } from '@types';
   templateUrl: './fractal-collection.component.html',
   styleUrl: './fractal-collection.component.scss',
 })
-export class FractalCollectionComponent implements OnInit {
+export class FractalCollectionComponent {
   @Input() fractal!: IFractal;
   ss = inject(StatesService);
-
-  ngOnInit(): void {
-    this.ss.currentFractal.$value() === this.fractal;
-  }
 
   get columns(): string[] {
     return this.fractal.controls.getAndSplitControlData('Occ');

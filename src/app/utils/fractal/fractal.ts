@@ -20,7 +20,7 @@ export class Fractal implements IFractal {
   constructor(dto: IFractalDto, parent?: IFractal | null, options?: FractalInitOptions) {
     this.dto = dto;
     this.form = new FormRecord({});
-    this.parent = parent ? parent : ({} as IFractal);
+    this.parent = parent || ({} as IFractal);
     this.controls = new Controls(this, options);
     this.fractals = new Fractals(dto.fractals, this);
     this.cursor = this.controls.getControlData('Cursor');
