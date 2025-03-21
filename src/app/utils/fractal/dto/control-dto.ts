@@ -13,8 +13,8 @@ export class ControlDto implements IControlDto {
     values?: Partial<IControlMutableDto>
   ) {
     this.id = v4();
-    this.data = values?.data || '';
-    this.field = values?.field || ConstControlFields.Text;
-    this.indicator = values?.indicator || '';
+    this.data = values?.data ?? '';
+    this.field = values?.field ?? ConstControlFields.Text;
+    this.indicator = values?.indicator ?? '';
   }
 }

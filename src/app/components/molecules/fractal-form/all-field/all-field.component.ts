@@ -2,7 +2,7 @@ import { Component, inject, Input, OnInit } from '@angular/core';
 import { CardComponent, InputComponent, SelectComponent } from '@components/atoms';
 import { ConstControlFields, ConstControlMutable } from '@constants';
 import { StatesService } from '@services';
-import { IControl, IFractal } from '@types';
+import { IControl } from '@types';
 
 @Component({
   selector: 'app-all-field',
@@ -12,7 +12,6 @@ import { IControl, IFractal } from '@types';
   templateUrl: './all-field.component.html',
 })
 export class AllFieldComponent implements OnInit {
-  @Input() fractal!: IFractal;
   @Input() control!: IControl;
   ss = inject(StatesService);
   opts = Object.values(ConstControlFields);

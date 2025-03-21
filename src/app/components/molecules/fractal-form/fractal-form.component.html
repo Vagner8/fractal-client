@@ -3,14 +3,17 @@
     [title]="fractal.isNew ? 'New' : title"
     [selected]="ss.selectedForm.$value() === fractal"
     (cardHeaderClicked)="formClicked()">
-    <app-list [dataSource]="dataSource" [templateRef]="fields" [threeColumns]="false" />
+    <div class="lists">
+      <app-list [dataSource]="dataSource" [templateRef]="fields" [threeColumns]="false" />
+      <app-list [dataSource]="fractal.newControls.$value()" [templateRef]="newControls" [threeColumns]="false" />
+    </div>
   </app-card>
 </form>
 
 <ng-template #fields let-indicator>
   @if (fractal.controls.get(indicator); as control) {
     @if (fractal.fullEditMode.$value()) {
-      <app-all-field [control]="control" [fractal]="fractal" />
+      <app-all-field [control]="control" />
     } @else {
       <app-data-field
         [field]="control.dto.field"
@@ -19,4 +22,8 @@
         [indicator]="indicator" />
     }
   }
+</ng-template>
+
+<ng-template #newControls let-control>
+  <app-all-field [control]="control" />
 </ng-template>

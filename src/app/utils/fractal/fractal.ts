@@ -1,9 +1,9 @@
-import { IFractal, IFractalDto, FractalInitOptions, IControls, IFractals, IBoolState } from '@types';
+import { IFractal, IFractalDto, FractalInitOptions, IControls, IFractals, IBoolState, IControlsState } from '@types';
 import { FormRecord } from '@angular/forms';
 import { ConstAppFractals } from '@constants';
 import { Controls } from './maps/controls';
 import { Fractals } from './maps/fractals';
-import { BoolState } from './states';
+import { BoolState, ControlsState } from './states';
 
 export class Fractal implements IFractal {
   dto: IFractalDto;
@@ -14,6 +14,7 @@ export class Fractal implements IFractal {
   fractals: IFractals;
   isCollection: boolean;
 
+  newControls: IControlsState;
   fullEditMode: IBoolState;
 
   constructor(dto: IFractalDto, parent?: IFractal | null, options?: FractalInitOptions) {
@@ -25,6 +26,7 @@ export class Fractal implements IFractal {
     this.cursor = this.controls.getControlData('Cursor');
     this.isCollection = parent?.cursor === ConstAppFractals.Collections;
 
+    this.newControls = new ControlsState([]);
     this.fullEditMode = new BoolState(false);
   }
 

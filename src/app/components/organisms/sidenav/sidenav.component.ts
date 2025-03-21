@@ -6,6 +6,8 @@ import { MatListModule, MatSidenavModule } from '@mat';
 import { DataService, EventService, FractalService, StatesService } from '@services';
 import { IFractal } from '@types';
 import { deleteFractals, Fractal, updateFractals } from '@utils';
+import { Control } from 'app/utils/fractal/control';
+import { ControlDto } from 'app/utils/fractal/dto/control-dto';
 import { FractalDto } from 'app/utils/fractal/dto/fractal-dto';
 
 const { New, Edit, Save, Delete } = ConstModifiers;
@@ -65,10 +67,14 @@ export class SidenavComponent {
 
     const handler: Record<string, () => void> = {
       [New]: () => {
-        this.ss.selectedChildren.push(
-          new Fractal(new FractalDto(currentFractal), currentFractal, { syncFormWithDto: true })
-        );
-        this.navigateToEditPage(modifier);
+        if (selectedForm) {
+          selectedForm.newControls.push(new Control(new ControlDto(selectedForm.dto.id), { syncFormWithDto: true }));
+        } else {
+          this.ss.selectedChildren.push(
+            new Fractal(new FractalDto(currentFractal), currentFractal, { syncFormWithDto: true })
+          );
+          this.navigateToEditPage(modifier);
+        }
       },
       [Edit]: () => {
         if (!this.editPageActivated) {
