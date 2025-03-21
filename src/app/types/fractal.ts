@@ -29,8 +29,6 @@ export interface IFractal {
 
   isCollection: boolean;
 
-  visible: IBoolState;
-  formSelected: IBoolState;
   fullEditMode: IBoolState;
 
   get isNew(): boolean;

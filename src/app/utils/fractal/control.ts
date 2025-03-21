@@ -11,18 +11,8 @@ export class Control implements IControl {
     public dto: IControlDto,
     option?: FractalInitOptions
   ) {
-    this.form = new FormRecord(
-      Object.fromEntries(Object.values(ConstControlMutable).map(key => [key, new FormControl(this.dto[key])]))
-    );
-    if (option?.syncFormWithDto) {
-      this.form.valueChanges.subscribe(value => {
-        for (const key in ConstControlMutable) {
-          if (isConstControlMutableType(key)) {
-            this.dto[key] = value[key];
-          }
-        }
-      });
-    }
+    this.form = this.createForm();
+    option?.syncFormWithDto && this.syncFormWithDto();
   }
 
   getFromControl(name: ConstControlMutableType): FormControl {
@@ -39,5 +29,21 @@ export class Control implements IControl {
     this.dto.data = deleteSubstring(this.dto.data, data);
     this.getFromControl('data').setValue(this.dto.data);
     return this;
+  }
+
+  private createForm(): ControlForm {
+    return new FormRecord(
+      Object.fromEntries(Object.values(ConstControlMutable).map(key => [key, new FormControl(this.dto[key])]))
+    );
+  }
+
+  private syncFormWithDto(): void {
+    this.form.valueChanges.subscribe(value => {
+      for (const key in ConstControlMutable) {
+        if (isConstControlMutableType(key)) {
+          this.dto[key] = value[key];
+        }
+      }
+    });
   }
 }

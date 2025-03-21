@@ -29,26 +29,29 @@ export class SidenavComponent {
   AppFractals = ConstAppFractals;
 
   onPageTouched(page: IFractal): void {
-    this.ss.selectedChildren.clear();
     this.ss.currentFractal.set(page);
+    this.ss.markSelectedFractalsPristine();
     this.fs.navigatePage(page.cursor);
   }
 
   onModifierHeld = (modifier: IFractal): void => {
     const currentFractal = this.ss.currentFractal.$value();
     if (!currentFractal) return;
+    const selectedForm = this.ss.selectedForm.$value();
     const selectedChildren = this.ss.selectedChildren.$value();
     const handler: Record<string, () => void> = {
-      [Edit]: () => {
-        this.editPageActivated && currentFractal.visible.toggle();
-      },
+      [Edit]: () => {},
 
       [Save]: () => {
         selectedChildren.length > 0 && this.updateFractals(currentFractal);
       },
 
       [Delete]: () => {
-        selectedChildren.length > 0 && this.deleteFractals(currentFractal, selectedChildren);
+        if (this.editPageActivated) {
+          selectedForm && this.deleteFractals(currentFractal, [selectedForm]);
+        } else {
+          selectedChildren.length > 0 && this.deleteFractals(currentFractal, selectedChildren);
+        }
       },
     };
 
@@ -58,7 +61,7 @@ export class SidenavComponent {
   onModifierTouched(modifier: IFractal): void {
     const currentFractal = this.ss.currentFractal.$value();
     if (!currentFractal) return;
-    const selectedChildren = this.ss.selectedChildren.$value();
+    const selectedForm = this.ss.selectedForm.$value();
 
     const handler: Record<string, () => void> = {
       [New]: () => {
@@ -71,14 +74,12 @@ export class SidenavComponent {
         if (!this.editPageActivated) {
           this.navigateToEditPage(modifier);
         } else {
-          [currentFractal, ...selectedChildren].forEach(
-            fractal => fractal.formSelected.$value() && fractal.fullEditMode.toggle()
-          );
+          selectedForm?.fullEditMode.toggle();
         }
       },
       [Delete]: () => {
         if (this.editPageActivated) {
-          this.ss.selectedChildren.$value.update(prev => prev.filter(fractal => !fractal.formSelected.$value()));
+          selectedForm && this.ss.selectedChildren.deleteBunch([selectedForm]);
         }
       },
     };
@@ -103,18 +104,17 @@ export class SidenavComponent {
   }
 
   private deleteFractals(currentFractal: IFractal, fractals: IFractal[]): void {
-    const { orderChildren, fractalsToDelete, fractalsDtoToDelete } = deleteFractals(
-      currentFractal,
-      fractals,
-      this.editPageActivated
-    );
+    const { orderChildren, fractalsToDelete, fractalsDtoToDelete } = deleteFractals(currentFractal, fractals);
     this.ss.selectedChildren.deleteBunch(fractalsToDelete);
     fractalsToDelete.length > 0 && this.ds.deleteFractals(fractalsDtoToDelete).subscribe();
     orderChildren && this.ds.updateControls([orderChildren]).subscribe();
   }
 
   private navigateToEditPage({ cursor }: IFractal): void {
-    if (Object.hasOwn(ConstNavigableModifiers, cursor) && !this.ss.selectedChildren.isEmpty) {
+    if (
+      Object.hasOwn(ConstNavigableModifiers, cursor) &&
+      (!this.ss.selectedChildren.isEmpty || !this.ss.currentFractal.isEmpty)
+    ) {
       this.fs.navigateModifier(ConstNavigableModifiers.Edit);
     }
   }

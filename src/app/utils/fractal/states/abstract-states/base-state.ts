@@ -8,7 +8,11 @@ export abstract class BaseState<T> implements IBaseState<T> {
     this.$value = signal(initValue);
   }
 
+  set(value: T): void {
+    this.$value.set(value);
+  }
+
   clear(): void {
-    this.$value.set(this.initValue);
+    this.set(this.initValue);
   }
 }

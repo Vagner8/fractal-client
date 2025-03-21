@@ -14,9 +14,7 @@ export class Fractal implements IFractal {
   fractals: IFractals;
   isCollection: boolean;
 
-  visible: IBoolState;
   fullEditMode: IBoolState;
-  formSelected: IBoolState;
 
   constructor(dto: IFractalDto, parent?: IFractal | null, options?: FractalInitOptions) {
     this.dto = dto;
@@ -27,9 +25,7 @@ export class Fractal implements IFractal {
     this.cursor = this.controls.getControlData('Cursor');
     this.isCollection = parent?.cursor === ConstAppFractals.Collections;
 
-    this.visible = new BoolState(false);
     this.fullEditMode = new BoolState(false);
-    this.formSelected = new BoolState(false);
   }
 
   get isNew(): boolean {

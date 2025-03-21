@@ -7,10 +7,18 @@ import { ControlsState, FractalsState, FractalState } from '@utils';
 })
 export class StatesService {
   sidenavTaps = new FractalState(null);
+  selectedForm = new FractalState(null);
   currentFractal = new FractalState(null);
 
-  selectedControls = new ControlsState([]);
   selectedChildren = new FractalsState([]);
+  selectedControls = new ControlsState([]);
 
   $paramMap = signal<ParamMap | null>(null);
+
+  markSelectedFractalsPristine(): void {
+    this.currentFractal.$value()?.fullEditMode.clear();
+    this.selectedChildren.forEach(fractal => fractal.fullEditMode.clear());
+    this.selectedForm.clear();
+    this.selectedChildren.clear();
+  }
 }
