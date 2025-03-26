@@ -8,6 +8,7 @@ export class Controls extends Map<string, Control> implements IControls {
     const { dto, form } = fractal;
     Object.entries(dto.controls).forEach(([key, controlDto]) => {
       const control = new Control(controlDto, options);
+      control.parent = fractal;
       this.set(key, control);
       form.addControl(key, control.form);
     });

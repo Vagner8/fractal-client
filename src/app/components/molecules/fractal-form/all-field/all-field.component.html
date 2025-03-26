@@ -1,5 +1,5 @@
 <app-card [selected]="ss.selectedControls.has(control)" (cardHeaderClicked)="controlClicked()">
-  <app-input [label]="ControlMutable.indicator" [form]="control.getFromControl('indicator')" />
+  <app-input [form]="control.getFromControl('indicator')" [label]="ControlMutable.indicator" />
   <app-select [label]="ControlMutable.field" [opts]="opts" [form]="control.getFromControl('field')" />
-  <app-input [label]="ControlMutable.data" [form]="control.getFromControl('data')" />
+  <app-input [form]="control.getFromControl('data')" [label]="ControlMutable.data" />
 </app-card>

@@ -1,6 +1,7 @@
 import { FormControl, FormRecord } from '@angular/forms';
 import { IndicatorData } from './common';
 import { ConstControlMutableType, ConstIndicatorsType } from './constants';
+import { IFractal } from './fractal';
 
 export type Controls = Record<string, IControl>;
 export type ControlForm = FormRecord<FormControl>;
@@ -26,6 +27,7 @@ export interface IControls extends Map<string, IControl> {
 export interface IControl {
   dto: IControlDto;
   form: ControlForm;
+  parent?: IFractal;
   pushSplitData(value: string): IControl;
   getFromControl(name: ConstControlMutableType): FormControl;
   deleteSplitData(data: string): IControl;

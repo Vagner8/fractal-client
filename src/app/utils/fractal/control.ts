@@ -1,11 +1,12 @@
 import { FormControl, FormRecord } from '@angular/forms';
 import { ConstControlMutable } from '@constants';
-import { IControl, IControlDto, ControlForm, FractalInitOptions, ConstControlMutableType } from '@types';
+import { IControl, IControlDto, ControlForm, FractalInitOptions, ConstControlMutableType, IFractal } from '@types';
 import { isConstControlMutableType } from '../guards';
 import { deleteSubstring } from '../common';
 
 export class Control implements IControl {
   form: ControlForm;
+  parent?: IFractal;
 
   constructor(
     public dto: IControlDto,

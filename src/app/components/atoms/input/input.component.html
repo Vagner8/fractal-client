@@ -1,6 +1,6 @@
 <mat-form-field class="app-form-field">
   <mat-label>{{ label }}</mat-label>
-  <input #inputElementRef [type]="label" matInput [formControl]="form" />
+  <input #inputElementRef matInput [type]="label" [formControl]="form" />
   <button
     [class.hidden-button]="!inputElementRef.value || form.disabled"
     type="button"
