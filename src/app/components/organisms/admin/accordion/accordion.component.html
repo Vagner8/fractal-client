@@ -1,8 +1,8 @@
 <div class="container">
-  <app-fractal-controls class="controls" [fractal]="fractal" />
+  <app-controls-table class="controls-table" [fractal]="fractal" />
 
   @if (fractal.isCollection) {
-    <app-fractal-collection [fractal]="fractal" />
+    <app-collection-table [fractal]="fractal" />
   }
 
   @if (!fractal.isCollection) {

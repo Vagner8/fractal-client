@@ -6,13 +6,13 @@ import { StatesService } from '@services';
 import { IFractal } from '@types';
 
 @Component({
-  selector: 'app-fractal-collection',
+  selector: 'app-collection-table',
   standalone: true,
   imports: [MatTableModule, TapDirective],
-  templateUrl: './fractal-collection.component.html',
-  styleUrl: './fractal-collection.component.scss',
+  templateUrl: './collection-table.component.html',
+  styleUrl: './collection-table.component.scss',
 })
-export class FractalCollectionComponent {
+export class CollectionTableComponent {
   @Input() fractal!: IFractal;
   ss = inject(StatesService);
 

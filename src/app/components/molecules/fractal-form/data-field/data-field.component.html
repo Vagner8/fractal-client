@@ -1,8 +1,0 @@
-@switch (field) {
-  @case (ControlInputs.Select) {
-    <app-select [label]="indicator" [opts]="fractal.controls.getAndSplitControlData([indicator])" [form]="dataForm" />
-  }
-  @default {
-    <app-input [label]="indicator" [form]="dataForm" />
-  }
-}

@@ -5,13 +5,13 @@ import { IControlMutableDto, IFractal } from '@types';
 import { isConstOrderType } from '@utils';
 
 @Component({
-  selector: 'app-fractal-controls',
+  selector: 'app-controls-table',
   standalone: true,
   imports: [MatTableModule],
-  templateUrl: './fractal-controls.component.html',
-  styleUrl: './fractal-controls.component.scss',
+  templateUrl: './controls-table.component.html',
+  styleUrl: './controls-table.component.scss',
 })
-export class FractalControlsComponent {
+export class ControlsTableComponent {
   @Input() fractal!: IFractal;
 
   get columns(): (keyof IControlMutableDto)[] {

@@ -6,3 +6,5 @@ export * from './header/header.component';
 export * from './select/select.component';
 export * from './spinner/spinner.component';
 export * from './default-button/default-button.component';
+export * from './controls-table/controls-table.component';
+export * from './collection-table/collection-table.component';

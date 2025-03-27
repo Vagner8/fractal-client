@@ -1,11 +1,20 @@
 @let selectedChildren = ss.selectedChildren.$value();
 
-<div class="modifier">
+<div class="editor">
   @if (selectedChildren.length > 0) {
-    <app-list [dataSource]="selectedChildren" [templateRef]="fractalForm" />
+    <app-list [dataSource]="selectedChildren" [templateRef]="controls" />
   }
 </div>
 
-<ng-template #fractalForm let-fractal>
-  <app-fractal-form [fractal]="fractal" />
+<ng-template #controls let-fractal>
+  <app-card
+    [title]="fractal.isNew ? 'New' : fractal.cursor"
+    [selected]="ss.selectedForm.$value() === fractal"
+    (cardHeaderClicked)="formClicked(fractal)">
+    <div class="controls">
+      @for (indicator of dataSource; track $index) {
+        <app-control [control]="fractal.controls.get(indicator)" />
+      }
+    </div>
+  </app-card>
 </ng-template>
