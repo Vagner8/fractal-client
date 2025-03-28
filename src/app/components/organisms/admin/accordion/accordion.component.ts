@@ -3,12 +3,12 @@ import { MatExpansionModule, MatIconModule } from '@mat';
 import { PanelComponent } from '../panel/panel.component';
 import { IFractal } from '@types';
 import { StatesService } from '@services';
-import { CollectionTableComponent, ControlsTableComponent } from '@components/atoms';
+import { TableComponent } from '@components/atoms';
 
 @Component({
   selector: 'app-accordion',
   standalone: true,
-  imports: [MatIconModule, MatExpansionModule, ControlsTableComponent, CollectionTableComponent, PanelComponent],
+  imports: [MatIconModule, MatExpansionModule, TableComponent, PanelComponent],
   templateUrl: './accordion.component.html',
   styleUrl: './accordion.component.scss',
 })

@@ -4,14 +4,14 @@ import { EditorComponent } from '../editor/editor.component';
 import { ConstAppParams, ConstAppPages, ConstAppFractals } from '@constants';
 import { AdminComponent } from '../admin/admin.component';
 import { ActivatedRoute } from '@angular/router';
-import { CollectionTableComponent } from '@components/atoms';
+import { TableComponent } from '@components/atoms';
 
 type Params = Record<keyof typeof ConstAppParams, string>;
 
 @Component({
   selector: 'app-screen',
   standalone: true,
-  imports: [AdminComponent, EditorComponent, CollectionTableComponent],
+  imports: [AdminComponent, EditorComponent, TableComponent],
   templateUrl: './screen.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -25,8 +25,8 @@ export class ScreenComponent implements OnInit, Params {
 
   ss = inject(StatesService);
   fs = inject(FractalService);
-  private es = inject(EventService);
-  private route = inject(ActivatedRoute);
+  private readonly es = inject(EventService);
+  private readonly route = inject(ActivatedRoute);
 
   AppPages = ConstAppPages;
 
