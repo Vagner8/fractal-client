@@ -13,7 +13,10 @@
     (cardHeaderClicked)="formClicked(fractal)">
     <div class="controls">
       @for (indicator of dataSource; track $index) {
-        <app-control [control]="fractal.controls.get(indicator)" />
+        <app-control [fullEditMode]="fractal.fullEditMode.$value()" [control]="fractal.controls.get(indicator)" />
+      }
+      @for (control of fractal.newControls.$value(); track control.dto.id) {
+        <app-control [fullEditMode]="true" [control]="control" />
       }
     </div>
   </app-card>

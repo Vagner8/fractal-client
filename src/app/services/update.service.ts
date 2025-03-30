@@ -21,18 +21,21 @@ export class UpdateService {
     this.controlsToAdd = [];
     this.controlsToUpdate = [];
 
-    const currentFractal = this.ss.currentFractal.$value();
+    const currentFractal = this.ss.currentFractal.value;
     const orderChildren = currentFractal?.controls.getKnown('Oc');
     if (currentFractal) {
       this.ss.selectedChildren.forEach(fractal => {
+        if (!fractal.newControls.isEmpty) {
+          this.addControls(fractal);
+          fractal.newControls.clear();
+        }
         if (!fractal.form.dirty) return;
-        !fractal.newControls.isEmpty && this.addControls(fractal);
         if (fractal.isNew && orderChildren) {
           this.fractalsToAdd.push(this.addFractal(currentFractal, fractal, orderChildren));
         }
         for (const control of fractal.controls.values()) {
           if (control.form.dirty) {
-            if (fractal.fullEditMode.$value()) {
+            if (fractal.fullEditMode.value) {
               this.controlsToUpdate.push(this.updateAllControlFields(control));
             } else {
               this.controlsToUpdate.push(this.updateControlDataField(control));
@@ -43,11 +46,11 @@ export class UpdateService {
       });
     }
 
+    this.ss.selectedChildren.refresh();
     if (this.fractalsToAdd.length > 0) {
       orderChildren && this.ds.updateControls([orderChildren.dto]).subscribe();
       this.ds.addFractals(this.fractalsToAdd).subscribe();
     }
-    this.controlsToAdd.length > 0 && this.ds.addControls(this.controlsToAdd).subscribe();
     this.controlsToUpdate.length > 0 && this.ds.updateControls(this.controlsToUpdate).subscribe();
   }
 
@@ -61,15 +64,18 @@ export class UpdateService {
   }
 
   private addControls(fractal: IFractal): void {
-    const newControls = fractal.newControls.$value();
-    newControls.forEach(control => {
+    const orderChildrenControls = this.ss.currentFractal.value?.controls.getKnown('Occ');
+    fractal.newControls.value.forEach(control => {
       if (control.form.dirty) {
         const { value } = control.getFromControl('indicator');
         fractal.controls.set(value, control);
         this.controlsToAdd.push(control.dto);
+        orderChildrenControls?.pushSplitData(value);
         control.form.markAsPristine();
       }
     });
+    orderChildrenControls && this.ds.updateControls([orderChildrenControls.dto]).subscribe();
+    this.ds.addControls(this.controlsToAdd).subscribe();
   }
 
   private updateControlDataField(control: IControl): IControlDto {

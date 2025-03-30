@@ -3,6 +3,6 @@ import { BaseState } from './abstract-states/base-state';
 
 export class BoolState extends BaseState<boolean> implements IBoolState {
   toggle(): void {
-    this.$value.update(prev => !prev);
+    this.set(!this.value);
   }
 }
