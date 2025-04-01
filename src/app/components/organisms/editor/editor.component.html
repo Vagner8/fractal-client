@@ -10,10 +10,12 @@
   <app-card
     [title]="fractal.isNew ? 'New' : fractal.cursor"
     [selected]="ss.selectedForm.$value() === fractal"
-    (cardHeaderClicked)="formClicked(fractal)">
+    (clicked)="formCardClicked(fractal)">
     <div class="controls">
       @for (indicator of dataSource; track $index) {
-        <app-control [fullEditMode]="fractal.fullEditMode.$value()" [control]="fractal.controls.get(indicator)" />
+        @if (fractal.controls.get(indicator); as control) {
+          <app-control [fullEditMode]="fractal.fullEditMode.$value()" [control]="control" />
+        }
       }
       @for (control of fractal.newControls.$value(); track control.dto.id) {
         <app-control [fullEditMode]="true" [control]="control" />

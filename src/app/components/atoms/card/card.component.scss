@@ -7,3 +7,25 @@
 .selected {
   border-color: map-get($color, manager);
 }
+
+.card {
+  overflow: hidden;
+}
+
+.card-container {
+  display: flex;
+}
+
+.card-body {
+  width: 100%;
+}
+
+.button {
+  width: 30px;
+  cursor: pointer;
+  border: none;
+  background-color: map-get($color, common);
+  &:hover {
+    background-color: map-get($color, secondary);
+  }
+}

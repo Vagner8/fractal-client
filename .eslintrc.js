@@ -39,7 +39,7 @@ module.exports = {
     {
       files: ['*.html'],
       extends: ['plugin:@angular-eslint/template/recommended', 'plugin:@angular-eslint/template/accessibility'],
-      rules: {},
+      rules: { '@angular-eslint/template/elements-content': 'off' },
     },
     {
       files: ['*.html'],

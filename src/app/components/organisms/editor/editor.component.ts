@@ -19,7 +19,7 @@ export class EditorComponent {
     return this.fractal.controls.getAndSplitControlData(this.fractal.isCollection ? 'Occ' : 'Ooc');
   }
 
-  formClicked(fractal: IFractal): void {
+  formCardClicked(fractal: IFractal): void {
     this.ss.selectedForm.toggle(fractal);
     this.ss.selectedControls.clear();
   }

@@ -12,7 +12,7 @@ import { IControl } from '@types';
   styleUrl: './control.component.scss',
 })
 export class ControlComponent {
-  @Input() control?: IControl;
+  @Input() control!: IControl;
   @Input() fullEditMode = false;
   ss = inject(StatesService);
   ControlFields = ConstControlFields;
