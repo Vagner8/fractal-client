@@ -29,3 +29,8 @@
     background-color: map-get($color, secondary);
   }
 }
+
+.card-content,
+mat-card-header.card-heder {
+  padding: 0 16px 0 0 !important;
+}

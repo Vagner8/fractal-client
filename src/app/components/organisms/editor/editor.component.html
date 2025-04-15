@@ -8,7 +8,7 @@
 
 <ng-template #controls let-fractal>
   <app-card
-    [title]="fractal.isNew ? 'New' : fractal.cursor"
+    [title]="fractal.cursor ? fractal.cursor : 'New'"
     [selected]="ss.selectedForm.$value() === fractal"
     (clicked)="formCardClicked(fractal)">
     <div class="controls">

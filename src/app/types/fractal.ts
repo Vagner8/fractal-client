@@ -1,4 +1,4 @@
-import { IControlsDto, IControls } from './control';
+import { IControlsDto, IControls, IControlDto, IControl } from './control';
 import { FormRecord } from '@angular/forms';
 import { IBoolState, IControlsState } from './states';
 
@@ -28,10 +28,15 @@ export interface IFractal {
   fractals: IFractals;
 
   isCollection: boolean;
-
   newControls: IControlsState;
+
   fullEditMode: IBoolState;
 
-  get isNew(): boolean;
   get ancestors(): IFractal[];
+
+  deleteFractals(fractals: IFractal[]): IFractalDto[];
+
+  addControls(): IControlDto[];
+  updateControls(): IControlDto[];
+  deleteControls(controls: IControl[]): IControlDto[];
 }

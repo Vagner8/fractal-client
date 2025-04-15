@@ -3,12 +3,9 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { ConstAppEvents, ConstNavigableModifiers, ConstModifiers, ConstAppFractals } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { DeleteService, EventService, FractalService, StatesService, UpdateService } from '@services';
+import { EventService, FractalService, StatesService, UpdateService } from '@services';
 import { IFractal } from '@types';
-import { Fractal } from '@utils';
-import { Control } from 'app/utils/fractal/control';
-import { ControlDto } from 'app/utils/fractal/dto/control-dto';
-import { FractalDto } from 'app/utils/fractal/dto/fractal-dto';
+import { ControlFactory, FractalFactory } from '@utils';
 
 const { New, Edit, Save, Delete } = ConstModifiers;
 
@@ -26,7 +23,6 @@ export class SidenavComponent {
   ss = inject(StatesService);
   fs = inject(FractalService);
   private readonly us = inject(UpdateService);
-  private readonly des = inject(DeleteService);
 
   AppEvents = ConstAppEvents;
   AppFractals = ConstAppFractals;
@@ -38,56 +34,47 @@ export class SidenavComponent {
   }
 
   onModifierHeld = (modifier: IFractal): void => {
-    const handler: Record<string, () => void> = {
-      [Edit]: () => {},
+    const current = this.ss.currentFractal.value;
+    if (!current) return;
 
-      [Save]: () => {
-        this.us.update();
-      },
+    switch (modifier.cursor) {
+      case Save:
+        this.us.save(current);
+        break;
+      case Delete:
+        this.us.delete(current);
+        break;
+    }
 
-      [Delete]: () => {
-        this.des.delete();
-      },
-    };
-
-    handler[modifier.cursor]?.();
+    this.ss.currentFractal.refresh();
   };
 
   onModifierTouched(modifier: IFractal): void {
-    const currentFractal = this.ss.currentFractal.$value();
-    if (!currentFractal) return;
-    const selectedForm = this.ss.selectedForm.$value();
+    const current = this.ss.currentFractal.value;
+    const selectedForm = this.ss.selectedForm.value;
 
-    const handler: Record<string, () => void> = {
-      [New]: () => {
+    switch (modifier.cursor) {
+      case New:
         if (selectedForm) {
-          selectedForm.newControls.push(new Control(new ControlDto(selectedForm.dto.id), { syncFormWithDto: true }));
+          selectedForm.newControls.push(ControlFactory(selectedForm.dto.id));
         } else {
-          this.ss.selectedChildren.push(
-            new Fractal(new FractalDto(currentFractal), currentFractal, { syncFormWithDto: true })
-          );
+          current && this.ss.selectedChildren.push(FractalFactory(current));
           this.navigateToEditPage(modifier);
         }
-      },
-      [Edit]: () => {
-        if (!this.editPageActivated) {
+        break;
+      case Edit:
+        if (!this.ss.$editPageActivated()) {
           this.navigateToEditPage(modifier);
         } else {
           selectedForm?.fullEditMode.toggle();
         }
-      },
-      [Delete]: () => {
-        if (this.editPageActivated) {
+        break;
+      case Delete:
+        if (this.ss.$editPageActivated()) {
           selectedForm && this.ss.selectedChildren.deleteBunch([selectedForm]);
         }
-      },
-    };
-
-    handler[modifier.cursor]?.();
-  }
-
-  private get editPageActivated(): boolean {
-    return !!this.ss.$paramMap()?.get(ConstAppFractals.Modifiers);
+        break;
+    }
   }
 
   private navigateToEditPage({ cursor }: IFractal): void {

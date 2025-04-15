@@ -55,7 +55,7 @@ export class TableComponent implements Tables {
       const value = this.fractal.controls.get(indicator)?.dto[column as keyof IControlMutableDto];
       return value && isConstOrderType(value) ? ConstOrder[value] : (value ?? '');
     },
-    dataSource: () => this.fractal.controls.getAndSplitControlData('Ooc'),
+    dataSource: () => this.fractal.controls.getAndSplitControlData('Occ'),
   };
 
   private addPositionColumn(columns: string[]): string[] {

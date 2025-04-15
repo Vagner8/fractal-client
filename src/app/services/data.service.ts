@@ -9,15 +9,15 @@ import { Observable } from 'rxjs';
 })
 export class DataService {
   http = inject(HttpClient);
-  private fractalApi = `${ENV.API}fractal`;
-  private controlApi = `${ENV.API}control`;
+  private readonly fractalApi = `${ENV.API}fractal`;
+  private readonly controlApi = `${ENV.API}control`;
 
   getFractal(): Observable<IFractalDto> {
     return this.http.get<IFractalDto>(`${this.fractalApi}?id=${ENV.ID}`);
   }
 
-  addFractals(dto: IFractalDto[]): Observable<IFractalDto> {
-    return this.http.post<IFractalDto>(this.fractalApi, dto);
+  addFractals(dto: IFractalDto[]): Observable<IFractalDto[]> {
+    return this.http.post<IFractalDto[]>(this.fractalApi, dto);
   }
 
   deleteFractals(body: IFractalDto[]): Observable<IFractalDto[]> {

@@ -1,6 +1,11 @@
 <mat-form-field class="app-form-field">
   <mat-label>{{ label }}</mat-label>
   <input #inputElementRef matInput [type]="label" [formControl]="form" />
+
+  <mat-error *ngFor="let error of errors">
+    {{ error }}
+  </mat-error>
+
   <button
     [class.hidden-button]="!inputElementRef.value || form.disabled"
     type="button"

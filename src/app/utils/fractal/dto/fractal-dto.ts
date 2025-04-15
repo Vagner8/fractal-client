@@ -1,7 +1,7 @@
 import { IControlsDto, IFractalDto, FractalsDto, IFractal } from '@types';
 import { v4 } from 'uuid';
 import { ControlDto } from './control-dto';
-import { ConstControlsOrder, ConstIndicators, ConstOrder } from '@constants';
+import { ConstControlFields } from '@constants';
 
 export class FractalDto implements IFractalDto {
   id: string;
@@ -12,19 +12,28 @@ export class FractalDto implements IFractalDto {
   constructor(parent: IFractal) {
     this.id = v4();
     this.parentId = parent.dto.id;
-    this.controls = this.createRequiredControlsDto(parent);
+    this.controls = this.createControlsDto(parent);
     this.fractals = {};
   }
 
-  private createControlDto(indicator: string): ControlDto {
-    const data = Object.keys(ConstControlsOrder).includes(indicator)
-      ? [...Object.keys(ConstOrder), ConstIndicators.Cursor].join(':')
-      : '';
-    return new ControlDto(this.id, { data, indicator });
-  }
+  private createControlsDto(parent: IFractal): IControlsDto {
+    const parentOcc = parent.controls.getAndSplitControlData('Occ');
+    const controls: IControlsDto = Object.fromEntries(
+      parentOcc.map(indicator => [indicator, new ControlDto(this.id, { indicator })])
+    );
 
-  private createRequiredControlsDto(parent: IFractal): IControlsDto {
-    const indicators = parent.controls.getAndSplitControlData('Occ');
-    return Object.fromEntries(indicators.map(indicator => [indicator, this.createControlDto(indicator)]));
+    controls['Oc'] = new ControlDto(this.id, {
+      data: '',
+      field: ConstControlFields.Text,
+      indicator: 'Oc',
+    });
+
+    controls['Occ'] = new ControlDto(this.id, {
+      data: '',
+      field: ConstControlFields.Text,
+      indicator: 'Occ',
+    });
+
+    return controls;
   }
 }
