@@ -8,7 +8,7 @@
     <div>
       @if (ss.sidenavTaps.$value(); as taps) {
         @let isModifiers = taps.cursor === AppFractals.Modifiers;
-        @for (indicator of taps.controls.getAndSplitControlData(['Oc']); track indicator) {
+        @for (indicator of taps.controls.getSplitData(['Oc']).strings; track indicator) {
           @if (taps.fractals.get(indicator); as tap) {
             @if (isModifiers) {
               <app-tap [tap]="tap" (hold)="onModifierHeld(tap)" (touch)="onModifierTouched(tap)" />
@@ -19,7 +19,7 @@
         }
 
         @if (!isModifiers && fs.$app(); as app) {
-          <app-tap [tap]="app" [disableHoldEvent]="true" (touch)="onPageTouched($event)" />
+          <app-tap [tap]="app" [title]="app.cursor" [disableHoldEvent]="true" (touch)="onPageTouched($event)" />
         }
       }
     </div>

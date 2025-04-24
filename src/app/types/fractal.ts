@@ -1,4 +1,4 @@
-import { IControlsDto, IControls, IControlDto, IControl } from './control';
+import { IControlsDto, IControls, IControl } from './control';
 import { FormRecord } from '@angular/forms';
 import { IBoolState, IControlsState } from './states';
 
@@ -16,7 +16,7 @@ export interface IFractalDto {
 }
 
 export interface IFractals extends Map<string, IFractal> {
-  getFractalRecursively(cursor: string | undefined, fractals?: IFractals): IFractal | null;
+  getByCursor(cursor: string | undefined, fractals?: IFractals): IFractal | null;
 }
 
 export interface IFractal {
@@ -26,17 +26,11 @@ export interface IFractal {
   parent: IFractal;
   controls: IControls;
   fractals: IFractals;
-
   isCollection: boolean;
-  newControls: IControlsState;
+  touchedControls: Set<IControl>;
 
+  newControls: IControlsState;
   fullEditMode: IBoolState;
 
   get ancestors(): IFractal[];
-
-  deleteFractals(fractals: IFractal[]): IFractalDto[];
-
-  addControls(): IControlDto[];
-  updateControls(): IControlDto[];
-  deleteControls(controls: IControl[]): IControlDto[];
 }

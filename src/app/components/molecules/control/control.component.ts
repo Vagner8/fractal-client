@@ -1,6 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
 import { CardComponent, InputComponent, SelectComponent } from '@components/atoms';
-import { ConstControlFields, ConstControlMutable } from '@constants';
+import { ConstControlFields, CControlMutable } from '@constants';
 import { StatesService } from '@services';
 import { IControl } from '@types';
 
@@ -16,7 +16,7 @@ export class ControlComponent {
   @Input() fullEditMode = false;
   ss = inject(StatesService);
   ControlFields = ConstControlFields;
-  ControlMutable = ConstControlMutable;
+  ControlMutable = CControlMutable;
   ControlFieldsValues = Object.values(ConstControlFields);
 
   controlClicked(): void {

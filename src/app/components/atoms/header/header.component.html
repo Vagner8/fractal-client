@@ -1,1 +1,3 @@
-<h1>{{ ss.currentFractal.$value()?.cursor }}</h1>
+@let current = ss.currentFractal.$value();
+
+<h1>{{ current?.controls?.getData('Name') || current?.cursor }}</h1>

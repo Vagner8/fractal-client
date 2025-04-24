@@ -1,13 +1,15 @@
 <div class="container">
-  <app-table class="controls-table" like="controls" [fractal]="fractal" />
+  @if (fractal.cursor !== AppFractals.App) {
+    <app-table class="controls-table" like="controls" [fractal]="fractal" />
+  }
 
-  @if (fractal.isCollection) {
+  @if (fractal.isCollection && fractal.fractals.size) {
     <app-table [fractal]="fractal" />
   }
 
   @if (!fractal.isCollection) {
     <mat-accordion class="accordion">
-      @for (cursor of fractal.controls.getAndSplitControlData('Oc'); track cursor) {
+      @for (cursor of fractal.controls.getSplitData('Oc').strings; track cursor) {
         @if (fractal.fractals.get(cursor); as child) {
           <app-panel
             #panel

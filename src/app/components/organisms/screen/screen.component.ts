@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 import { EventService, FractalService, StatesService } from '@services';
 import { EditorComponent } from '../editor/editor.component';
-import { ConstAppParams, ConstAppPages, ConstAppFractals } from '@constants';
+import { ConstAppParams, ConstAppPages, CAppFractals } from '@constants';
 import { AdminComponent } from '../admin/admin.component';
 import { ActivatedRoute } from '@angular/router';
 import { TableComponent } from '@components/atoms';
@@ -34,7 +34,7 @@ export class ScreenComponent implements OnInit, Params {
     this.route.queryParamMap.subscribe(params => this.ss.$paramMap.set(params));
     this.ss.sidenavTaps.set(this.fs.collections);
     this.es.$managerEvent.set(this.Manager);
-    const current = this.Page === ConstAppFractals.App ? this.fs.$app() : this.fs.collections?.fractals.get(this.Page);
+    const current = this.Page === CAppFractals.App ? this.fs.$app() : this.fs.collections?.fractals.get(this.Page);
     current && this.ss.currentFractal.set(current);
   }
 }

@@ -1,15 +1,15 @@
 import { FormControl, FormRecord } from '@angular/forms';
-import { ConstControlMutable } from '@constants';
+import { CControlMutable } from '@constants';
 import { IControl, IControlDto, ControlForm, FractalInitOptions, ConstControlMutableType, IFractal } from '@types';
 import { isConstControlMutableType } from '../guards';
 import { deleteSubstring } from '../common';
 
 export class Control implements IControl {
   form: ControlForm;
-  parent?: IFractal;
 
   constructor(
     public dto: IControlDto,
+    public parent: IFractal,
     option?: FractalInitOptions
   ) {
     this.form = this.createForm();
@@ -32,15 +32,40 @@ export class Control implements IControl {
     return this;
   }
 
+  map<T>(func: (value: string) => T): T[] {
+    const result: T[] = [];
+    this.forEach(value => result.push(func(value)));
+    return result;
+  }
+
+  reduce<T>(func: (acc: T, value: string) => T, initialValue: T): T {
+    let result: T = initialValue;
+    this.forEach(value => (result = func(result, value)));
+    return result;
+  }
+
+  forEach(func: (value: string) => void): void {
+    const { data } = this.dto;
+    const length = data.length;
+    let start = 0;
+    for (let i = 0; i <= length; i++) {
+      if (data[i] === ':' || i === length) {
+        func(data.slice(start, i));
+        start = i + 1;
+      }
+    }
+  }
+
   private createForm(): ControlForm {
     return new FormRecord(
-      Object.fromEntries(Object.values(ConstControlMutable).map(key => [key, new FormControl(this.dto[key])]))
+      Object.fromEntries(Object.values(CControlMutable).map(key => [key, new FormControl(this.dto[key])]))
     );
   }
 
   private syncFormWithDto(): void {
     this.form.valueChanges.subscribe(value => {
-      for (const key in ConstControlMutable) {
+      this.parent.touchedControls.add(this);
+      for (const key in CControlMutable) {
         if (isConstControlMutableType(key)) {
           this.dto[key] = value[key];
         }

@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { ConstControlFields, ConstControlMutable, ConstOrder } from '@constants';
+import { ConstControlFields, CControlMutable, COrders } from '@constants';
 import { TapDirective } from '@directives';
 import { MatTableModule } from '@mat';
 import { StatesService } from '@services';
@@ -35,14 +35,15 @@ export class TableComponent implements Tables {
   positionColumn = 'No.';
 
   children: TableData = {
-    columns: () => this.addPositionColumn(this.fractal.controls.getAndSplitControlData('Occ')),
+    columns: () => this.fractal.controls.getSplitData('Occ').strings,
+    dataSource: () => this.fractal.controls.getSplitData('Oc').strings,
+
     tdContent: (indicator: string, column: string) => {
       const control = this.fractal.fractals.get(indicator)?.controls.get(column);
       return control?.dto.field === ConstControlFields.Select
         ? control.dto.data.split(':')[0]
         : (control?.dto.data ?? '');
     },
-    dataSource: () => this.fractal.controls.getAndSplitControlData('Oc'),
 
     onHold: row => this.ss.selectedChildren.toggleAll(this.fractal.fractals.get(row)),
     onTouch: row => this.ss.selectedChildren.toggle(this.fractal.fractals.get(row)),
@@ -50,15 +51,12 @@ export class TableComponent implements Tables {
   };
 
   controls: TableData = {
-    columns: () => this.addPositionColumn(Object.values(ConstControlMutable)),
+    columns: () => [this.positionColumn, ...Object.values(CControlMutable)],
+    dataSource: () => this.fractal.parent.controls.getSplitData('Occ').strings,
+
     tdContent: (indicator: string, column: string) => {
       const value = this.fractal.controls.get(indicator)?.dto[column as keyof IControlMutableDto];
-      return value && isConstOrderType(value) ? ConstOrder[value] : (value ?? '');
+      return value && isConstOrderType(value) ? COrders[value] : (value ?? '');
     },
-    dataSource: () => this.fractal.controls.getAndSplitControlData('Occ'),
   };
-
-  private addPositionColumn(columns: string[]): string[] {
-    return [this.positionColumn, ...columns];
-  }
 }

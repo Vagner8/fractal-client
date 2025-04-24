@@ -1,4 +1,4 @@
-import { IControl, IFractal, IndicatorData } from '@types';
+import { IControl, IControlMutableDto, IControlsDto, IFractal, IndicatorData } from '@types';
 import { Control } from './fractal/control';
 import { ControlDto } from './fractal/dto/control-dto';
 import { Fractal } from './fractal';
@@ -14,8 +14,28 @@ export const deleteSubstring = (str: string, substr: string): string => {
     .join(':');
 };
 
-export const ControlFactory = (parentId: string): IControl =>
-  new Control(new ControlDto(parentId), { syncFormWithDto: true });
+export const ControlFactory = (parent: IFractal, values?: Partial<IControlMutableDto>): IControl =>
+  new Control(new ControlDto(parent.dto.id, values), parent, { syncFormWithDto: true });
 
-export const FractalFactory = (parent: IFractal): IFractal =>
-  new Fractal(new FractalDto(parent), parent, { syncFormWithDto: true });
+export const FractalFactory = (parent: IFractal): IFractal => {
+  const controlsDto: IControlsDto = {};
+  const occ = parent.controls.getKnown('Occ');
+  const fractal = new Fractal(new FractalDto(parent.dto.id, controlsDto), parent, { syncFormWithDto: true });
+
+  if (occ) {
+    const controls: IControl[] = [];
+    const firstChild = parent.fractals.values().next().value;
+    if (firstChild) {
+      for (const { dto } of firstChild.controls.values()) {
+        const { field, indicator } = dto;
+        controls.push(ControlFactory(fractal, { field, indicator }));
+      }
+    }
+    fractal.newControls.set(controls);
+  } else {
+    fractal.newControls.push(ControlFactory(fractal));
+    fractal.fullEditMode.set(true);
+  }
+
+  return fractal;
+};

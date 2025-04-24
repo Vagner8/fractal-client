@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, output } from '@angular/core';
 import { MatButtonModule, MatIconModule } from '@mat';
 import { TapDirective } from '@directives';
-import { ConstIndicators } from '@constants';
+import { CIndicators } from '@constants';
 import { IFractal } from '@types';
 
 @Component({
@@ -14,10 +14,11 @@ import { IFractal } from '@types';
 })
 export class TapComponent {
   @Input() tap!: IFractal;
+  @Input() title?: string;
   @Input() disableHoldEvent = false;
 
   hold = output<IFractal>();
   touch = output<IFractal>();
 
-  indicators = ConstIndicators;
+  indicators = CIndicators;
 }

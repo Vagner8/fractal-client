@@ -18,7 +18,7 @@
         }
       }
       @for (control of fractal.newControls.$value(); track control.dto.id) {
-        <app-control [fullEditMode]="true" [control]="control" />
+        <app-control [fullEditMode]="fractal.fullEditMode.$value()" [control]="control" />
       }
     </div>
   </app-card>

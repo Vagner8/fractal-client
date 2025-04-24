@@ -1,23 +1,26 @@
 @let data = this[like];
 @let columns = data.columns();
+@let dataSource = data.dataSource();
 
-<table mat-table [dataSource]="data.dataSource()" class="table">
-  @for (column of columns; track column) {
-    <ng-container [matColumnDef]="column">
-      <th mat-header-cell *matHeaderCellDef>
-        {{ column }}
-      </th>
-      <td mat-cell *matCellDef="let indicator; let i = index">
-        {{ column === positionColumn ? i + 1 : data.tdContent(indicator, column) }}
-      </td>
-    </ng-container>
-  }
-  <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
-  <tr
-    mat-row
-    *matRowDef="let row; columns: columns"
-    appTap
-    (hold)="data?.onHold?.(row)"
-    (touch)="data?.onTouch?.(row)"
-    [class.selected-row]="data?.selected?.(row)"></tr>
-</table>
+@if (columns && dataSource) {
+  <table mat-table [dataSource]="dataSource" class="table">
+    @for (column of columns; track column) {
+      <ng-container [matColumnDef]="column">
+        <th mat-header-cell *matHeaderCellDef>
+          {{ column }}
+        </th>
+        <td mat-cell *matCellDef="let indicator; let i = index">
+          {{ column === positionColumn ? i + 1 : data.tdContent(indicator, column) }}
+        </td>
+      </ng-container>
+    }
+    <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: columns"
+      appTap
+      (hold)="data?.onHold?.(row)"
+      (touch)="data?.onTouch?.(row)"
+      [class.selected-row]="data?.selected?.(row)"></tr>
+  </table>
+}

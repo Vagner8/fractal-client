@@ -13,7 +13,7 @@ import { DataService, FractalService } from '@services';
 })
 export class AppComponent implements OnInit {
   fs = inject(FractalService);
-  private ds = inject(DataService);
+  private readonly ds = inject(DataService);
 
   ngOnInit(): void {
     this.ds.getFractal().subscribe(dto => this.fs.init(dto));

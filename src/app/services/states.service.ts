@@ -1,6 +1,6 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { ParamMap } from '@angular/router';
-import { ConstAppFractals } from '@constants';
+import { CAppFractals } from '@constants';
 import { ControlsState, FractalsState, FractalState } from '@utils';
 
 @Injectable({
@@ -15,7 +15,7 @@ export class StatesService {
   selectedControls = new ControlsState([]);
 
   $paramMap = signal<ParamMap | null>(null);
-  $editPageActivated = computed<boolean>(() => !!this.$paramMap()?.get(ConstAppFractals.Modifiers));
+  $editPageActivated = computed<boolean>(() => !!this.$paramMap()?.get(CAppFractals.Modifiers));
 
   markSelectedFractalsPristine(): void {
     this.currentFractal.$value()?.fullEditMode.clear();

@@ -15,7 +15,7 @@
         <app-admin [fractal]="app" />
       }
       @default {
-        @if (current) {
+        @if (current && current.fractals.size) {
           <app-table [fractal]="current" />
         }
       }

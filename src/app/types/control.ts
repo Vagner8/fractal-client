@@ -1,5 +1,5 @@
 import { FormControl, FormRecord } from '@angular/forms';
-import { IndicatorData } from './common';
+import { AppError, IndicatorData } from './common';
 import { ConstControlMutableType, ConstIndicatorsType } from './constants';
 import { IFractal } from './fractal';
 
@@ -19,15 +19,21 @@ export interface IControlDto extends IControlMutableDto {
 }
 
 export interface IControls extends Map<string, IControl> {
+  parent: IFractal;
+  setNew(control: IControl): [IControl, AppError | null];
+  getData(indicator: IndicatorData): string;
   getKnown(indicator: ConstIndicatorsType): IControl | undefined;
-  getControlData(indicator: IndicatorData): string;
-  getAndSplitControlData(indicator: IndicatorData): string[];
+  getOrCreate(indicator: string): [IControl, boolean];
+  getSplitData(indicator: IndicatorData): { strings: string[]; numbers: number[] };
 }
 
 export interface IControl {
   dto: IControlDto;
   form: ControlForm;
   parent?: IFractal;
+  map<T>(func: (value: string) => T): T[];
+  reduce<T>(func: (acc: T, value: string) => T, initialValue: T): T;
+  forEach(func: (value: string) => void): void;
   pushSplitData(value: string): IControl;
   getFromControl(name: ConstControlMutableType): FormControl;
   deleteSplitData(data: string): IControl;

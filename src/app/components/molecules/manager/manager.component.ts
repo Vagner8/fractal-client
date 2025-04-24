@@ -19,8 +19,8 @@ export class ManagerComponent {
   prevEvent: string = Touch;
 
   es = inject(EventService);
-  private ss = inject(StatesService);
-  private fs = inject(FractalService);
+  private readonly ss = inject(StatesService);
+  private readonly fs = inject(FractalService);
 
   onHold(): void {
     this.prevEvent = Hold;

@@ -1,3 +1,3 @@
-export const ConstOrder = { Oc: 'Order children', Occ: 'Order children controls' } as const;
-export const ConstIndicators = { Icon: 'Icon', Cursor: 'Cursor', ...ConstOrder } as const;
-export const ConstSplitIndicators = { ...ConstOrder } as const;
+export const COrders = { Oc: 'Oc', Occ: 'Occ' } as const;
+export const CIndicators = { Icon: 'Icon', Name: 'Name', Cursor: 'Cursor', ...COrders } as const;
+export const CSplitIndicators = { ...COrders } as const;
