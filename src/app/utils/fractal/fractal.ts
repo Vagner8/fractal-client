@@ -9,7 +9,7 @@ import {
   IControl,
 } from '@types';
 import { FormRecord } from '@angular/forms';
-import { CAppFractals } from '@constants';
+import { CAppFractals, CWords } from '@constants';
 import { Controls } from './maps/controls';
 import { Fractals } from './maps/fractals';
 import { BoolState, ControlsState } from './states';
@@ -33,7 +33,7 @@ export class Fractal implements IFractal {
     this.parent = parent || ({} as IFractal);
     this.controls = new Controls(this, options);
     this.fractals = new Fractals(dto.fractals, this);
-    this.cursor = this.controls.getData('Cursor');
+    this.cursor = this.controls.getOne('Cursor')?.dto.data ?? CWords.New;
     this.isCollection = parent?.cursor === CAppFractals.Collections;
 
     this.fullEditMode = new BoolState(false);

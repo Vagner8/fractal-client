@@ -9,7 +9,7 @@
 
   @if (!fractal.isCollection) {
     <mat-accordion class="accordion">
-      @for (cursor of fractal.controls.getSplitData('Oc').strings; track cursor) {
+      @for (cursor of fractal.controls.getOneLikeStrings('Oc'); track cursor) {
         @if (fractal.fractals.get(cursor); as child) {
           <app-panel
             #panel

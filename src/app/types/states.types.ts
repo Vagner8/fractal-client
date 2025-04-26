@@ -1,6 +1,6 @@
 import { WritableSignal } from '@angular/core';
-import { IControl } from './control';
-import { IFractal } from './fractal';
+import { IControl } from './control.types';
+import { IFractal } from './fractal.types';
 
 export interface IBaseState<T> {
   value: T;

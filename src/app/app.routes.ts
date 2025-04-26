@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 import { ScreenComponent } from '@components/organisms';
-import { ConstAppPages, ConstAppParams } from '@constants';
+import { CAppPages, CAppParams } from '@constants';
 
 export const routes: Routes = [
   {
-    path: `:${ConstAppParams.Page}`,
+    path: `:${CAppParams.Page}`,
     component: ScreenComponent,
   },
-  { path: '**', redirectTo: ConstAppPages.Home },
+  { path: '**', redirectTo: CAppPages.Home },
 ];

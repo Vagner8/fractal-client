@@ -1,15 +1,7 @@
-import {
-  IFractal,
-  FractalInitOptions,
-  ConstIndicatorsType,
-  IControl,
-  IndicatorData,
-  IControls,
-  AppError,
-} from '@types';
+import { IFractal, FractalInitOptions, IControl, SearchControlData, IControls, AppError } from '@types';
 import { Control } from '../control';
-import { ControlFactory, getIndicatorData } from '../../common';
 import { CIndicatorDuplicationError } from '@constants';
+import { ControlFactory } from 'app/utils/common';
 
 export class Controls extends Map<string, IControl> implements IControls {
   parent: IFractal;
@@ -25,7 +17,7 @@ export class Controls extends Map<string, IControl> implements IControls {
     });
   }
 
-  setNew(control: IControl): [IControl, AppError | null] {
+  setOne(control: IControl): [IControl, AppError | null] {
     const { dto, form } = control;
     if (this.has(dto.indicator)) {
       return [control, CIndicatorDuplicationError];
@@ -37,7 +29,23 @@ export class Controls extends Map<string, IControl> implements IControls {
     }
   }
 
-  getOrCreate(indicator: string): [IControl, boolean] {
+  getOne(search: SearchControlData): IControl | undefined {
+    return this.get(typeof search === 'string' ? search : search[0]);
+  }
+
+  getOneData(search: SearchControlData): string {
+    return this.getOne(search)?.dto.data ?? '';
+  }
+
+  getOneLikeStrings(search: SearchControlData): string[] {
+    return this.getOne(search)?.toStrings ?? [];
+  }
+
+  getOneLikeNumbers(search: SearchControlData): number[] {
+    return this.getOne(search)?.toNumbers ?? [];
+  }
+
+  getOneAutoCreation(indicator: string): [IControl, boolean] {
     const existedControl = this.get(indicator);
     if (existedControl) {
       return [existedControl, false];
@@ -46,30 +54,5 @@ export class Controls extends Map<string, IControl> implements IControls {
       this.set(indicator, newControl);
       return [newControl, true];
     }
-  }
-
-  getData(indicator: IndicatorData): string {
-    const control = this.get(getIndicatorData(indicator));
-    return control ? control.dto.data : '';
-  }
-
-  getKnown(indicator: ConstIndicatorsType): IControl | undefined {
-    return this.get(indicator);
-  }
-
-  getSplitData(indicator: IndicatorData): { strings: string[]; numbers: number[] } {
-    const data = this.getData(indicator);
-    const strings: string[] = [];
-    const numbers: number[] = [];
-    let start = 0;
-    for (let i = 0; i <= data.length; i++) {
-      if (data[i] === ':' || i === data.length) {
-        const cursor = data.slice(start, i);
-        strings.push(cursor);
-        numbers.push(Number(cursor));
-        start = i + 1;
-      }
-    }
-    return { strings, numbers };
   }
 }

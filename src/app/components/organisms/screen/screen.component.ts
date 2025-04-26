@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit } from '@angular/core';
 import { EventService, FractalService, StatesService } from '@services';
 import { EditorComponent } from '../editor/editor.component';
-import { ConstAppParams, ConstAppPages, CAppFractals } from '@constants';
+import { CAppParams, CAppPages, CAppFractals } from '@constants';
 import { AdminComponent } from '../admin/admin.component';
 import { ActivatedRoute } from '@angular/router';
 import { TableComponent } from '@components/atoms';
 
-type Params = Record<keyof typeof ConstAppParams, string>;
+type Params = Record<keyof typeof CAppParams, string>;
 
 @Component({
   selector: 'app-screen',
@@ -28,7 +28,7 @@ export class ScreenComponent implements OnInit, Params {
   private readonly es = inject(EventService);
   private readonly route = inject(ActivatedRoute);
 
-  AppPages = ConstAppPages;
+  AppPages = CAppPages;
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(params => this.ss.$paramMap.set(params));

@@ -1,7 +1,7 @@
-import { ConstIndicatorsType } from './constants';
+import { ConstIndicatorsType } from './constants.types';
 
 export type Timeout = ReturnType<typeof setTimeout>;
-export type IndicatorData = ConstIndicatorsType | [string];
+export type SearchControlData = ConstIndicatorsType | [string];
 
 export interface AppError {
   name: string;

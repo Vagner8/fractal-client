@@ -4,7 +4,7 @@ import { IControl, IControlDto, IFractal, IFractalDto } from '@types';
 import { DataService } from './data.service';
 import { ControlFactory, FractalFactory } from '@utils';
 import { FractalService } from './fractal.service';
-import { CNavigableModifiers } from '@constants';
+import { CIndicators, CNavigableModifiers, CWords } from '@constants';
 
 @Injectable({
   providedIn: 'root',
@@ -16,8 +16,10 @@ export class UpdateService {
 
   private current!: IFractal;
 
-  private oc!: [IControl, boolean];
-  private occ!: [IControl, boolean];
+  private oc!: IControl;
+  private ocCreated = false;
+  private occ!: IControl;
+  private occCreated = false;
 
   private newFractals: IFractalDto[] = [];
   private newControls: IControlDto[] = [];
@@ -44,35 +46,31 @@ export class UpdateService {
 
   private saveInit(current: IFractal): void {
     this.current = current;
-    this.newFractals = [];
-    this.newControls = [];
-    this.oc = current.controls.getOrCreate('Oc');
-    this.occ = current.controls.getOrCreate('Occ');
-    const [oc, ocCreated] = this.oc;
-    const [occ, occCreated] = this.occ;
-    ocCreated && this.newControls.push(oc.dto);
-    occCreated && this.newControls.push(occ.dto);
+    this.newFractals = this.newControls = this.updateControls = [];
+    [this.oc, this.ocCreated] = current.controls.getOneAutoCreation('Oc');
+    [this.occ, this.occCreated] = current.controls.getOneAutoCreation('Occ');
+    this.ocCreated && this.newControls.push(this.oc.dto);
+    this.occCreated && this.newControls.push(this.occ.dto);
   }
 
   private saveControls(fractal: IFractal): void {
-    const [occ] = this.occ;
     for (const control of fractal.newControls.value) {
       if (control.form.dirty) {
-        const [newControl, error] = fractal.controls.setNew(control);
+        const [newControl, error] = fractal.controls.setOne(control);
         if (error) {
           newControl.form.setErrors(error.formError);
         } else {
-          occ.pushSplitData(newControl.dto.indicator);
-          !fractal.cursor || this.newControls.push(newControl.dto);
+          this.occ.push(newControl.dto.indicator);
+          fractal.cursor === CWords.New && this.newControls.push(newControl.dto);
         }
       }
     }
   }
 
   private saveNewFractals(fractal: IFractal): void {
-    const [oc] = this.oc;
-    fractal.cursor = this.createCursor(oc);
-    oc.pushSplitData(fractal.cursor);
+    fractal.cursor = this.createCursor(this.oc);
+    fractal.controls.setOne(ControlFactory(fractal, { indicator: CIndicators.Cursor, data: fractal.cursor }));
+    this.oc.push(fractal.cursor);
     this.current.fractals.set(fractal.cursor, fractal);
     this.newFractals.push(fractal.dto);
     fractal.fullEditMode.set(false);
@@ -84,50 +82,41 @@ export class UpdateService {
 
     for (const fractal of this.ss.selectedChildren.value) {
       this.saveControls(fractal);
-      if (!fractal.cursor && fractal.controls.size) {
+      if (fractal.cursor === CWords.New && fractal.controls.size) {
         this.saveNewFractals(fractal);
       }
     }
 
-    console.log('🚀 ~ newFractals:', this.newFractals);
-    console.log('🚀 ~ newControls:', this.newControls);
-
-    if (this.newFractals.length > 0) {
-      this.ss.currentFractal.refresh();
-      this.ss.selectedChildren.refresh();
+    if (this.newFractals) {
+      this.ocCreated || this.updateControls.push(this.oc.dto);
+      this.occCreated || this.updateControls.push(this.occ.dto);
+      console.log('🚀 ~ this.newFractals:', this.newFractals);
+      // this.newFractals.length && this.ds.addFractals(this.newFractals).subscribe();
     }
+
+    if (this.newControls) {
+      console.log('🚀 ~ this.newControls:', this.newControls);
+      // this.newControls.length && this.ds.addControls(this.newControls).subscribe();
+    }
+
+    if (this.updateControls) {
+      console.log('🚀 ~ this.updateControls:', this.updateControls);
+      // this.updateControls.length && this.ds.addControls(this.updateControls).subscribe();
+    }
+
+    this.ss.currentFractal.refresh();
+    this.ss.selectedChildren.refresh();
   }
 
   private createCursor(oc: IControl): string {
     return String(
-      oc.reduce((acc, cursor) => {
-        const cursorNumber = Number(cursor);
-        if (cursorNumber > acc) {
-          acc = cursorNumber;
+      oc.toNumbers.reduce((acc, cursor) => {
+        if (cursor > acc) {
+          acc = cursor;
         }
         return acc;
       }, 0) + 1
     );
-  }
-
-  delete(current: IFractal): void {
-    // const toDelete: IFractalDto[] = [];
-    // const selectedForm = this.ss.selectedForm.value;
-    // const selectedChildren = this.ss.selectedChildren.value;
-    // let source: IFractal[] = [];
-    // if (selectedForm) source = [selectedForm];
-    // if (!selectedForm && selectedChildren.length > 0) source = selectedChildren;
-    // for (const fractal of source) {
-    //   this.orderChildren?.deleteSplitData(fractal.cursor);
-    //   current.fractals.delete(fractal.cursor);
-    //   toDelete.push(fractal.dto);
-    // }
-    // if (toDelete.length > 0) {
-    //   this.ds.deleteFractals(toDelete).subscribe();
-    //   this.orderChildren && this.ds.updateControls([this.orderChildren.dto]).subscribe();
-    //   this.ss.currentFractal.refresh();
-    //   this.ss.selectedChildren.refresh();
-    // }
   }
 
   private navigateToEditPage({ cursor }: IFractal): void {

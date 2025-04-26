@@ -1,6 +1,6 @@
-import { IControlsDto, IControls, IControl } from './control';
+import { IControlsDto, IControls, IControl } from './control.types';
 import { FormRecord } from '@angular/forms';
-import { IBoolState, IControlsState } from './states';
+import { IBoolState, IControlsState } from './states.types';
 
 export type FractalsDto = Record<string, IFractalDto>;
 

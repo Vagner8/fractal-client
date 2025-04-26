@@ -3,9 +3,9 @@ import { MatButtonModule } from '@mat';
 import { TapDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
 import { EventService, FractalService, StatesService } from '@services';
-import { ConstAppEvents } from '@constants';
+import { CAppEvents } from '@constants';
 
-const { Hold, Touch } = ConstAppEvents;
+const { Hold, Touch } = CAppEvents;
 
 @Component({
   selector: 'app-manager',

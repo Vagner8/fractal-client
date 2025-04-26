@@ -7,7 +7,7 @@ export class FractalDto implements IFractalDto {
 
   constructor(
     public parentId: string,
-    public controls: IControlsDto
+    public controls: IControlsDto = {}
   ) {
     this.id = v4();
     this.fractals = {};

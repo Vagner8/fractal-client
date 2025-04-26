@@ -35,8 +35,8 @@ export class TableComponent implements Tables {
   positionColumn = 'No.';
 
   children: TableData = {
-    columns: () => this.fractal.controls.getSplitData('Occ').strings,
-    dataSource: () => this.fractal.controls.getSplitData('Oc').strings,
+    columns: () => [this.positionColumn, ...this.fractal.controls.getOneLikeStrings('Occ')],
+    dataSource: () => this.fractal.controls.getOneLikeStrings('Oc'),
 
     tdContent: (indicator: string, column: string) => {
       const control = this.fractal.fractals.get(indicator)?.controls.get(column);
@@ -52,7 +52,7 @@ export class TableComponent implements Tables {
 
   controls: TableData = {
     columns: () => [this.positionColumn, ...Object.values(CControlMutable)],
-    dataSource: () => this.fractal.parent.controls.getSplitData('Occ').strings,
+    dataSource: () => this.fractal.parent.controls.getOneLikeStrings('Occ'),
 
     tdContent: (indicator: string, column: string) => {
       const value = this.fractal.controls.get(indicator)?.dto[column as keyof IControlMutableDto];

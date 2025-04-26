@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { CAppFractals, ConstAppParams } from '@constants';
+import { CAppFractals, CAppParams } from '@constants';
 import { IFractal, IFractalDto } from '@types';
 import { Fractal } from '@utils';
 
@@ -27,15 +27,15 @@ export class FractalService {
   }
 
   async navigatePage(page: string): Promise<void> {
-    this.navigate([page], { [ConstAppParams.Modifiers]: null });
+    this.navigate([page], { [CAppParams.Modifiers]: null });
   }
 
   async navigateManager(param: string | null): Promise<void> {
-    this.navigate([], { [ConstAppParams.Manager]: param });
+    this.navigate([], { [CAppParams.Manager]: param });
   }
 
   async navigateModifier(param: string | null): Promise<void> {
-    this.navigate([], { [ConstAppParams.Modifiers]: param });
+    this.navigate([], { [CAppParams.Modifiers]: param });
   }
 
   async navigate(commands: unknown[], queryParams?: NavigationExtras['queryParams']): Promise<void> {

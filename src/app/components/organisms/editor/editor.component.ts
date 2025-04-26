@@ -16,7 +16,7 @@ export class EditorComponent {
   ss = inject(StatesService);
 
   get dataSource(): string[] {
-    return this.fractal.controls.getSplitData('Occ').strings;
+    return this.fractal.controls.getOneLikeStrings('Occ');
   }
 
   formCardClicked(fractal: IFractal): void {

@@ -1,12 +1,12 @@
 import { Component, inject, Input } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
-import { ConstAppEvents, ConstModifiers, CAppFractals } from '@constants';
+import { CAppEvents, CModifiers, CAppFractals } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { EventService, FractalService, StatesService, UpdateService } from '@services';
 import { IFractal } from '@types';
 
-const { New, Edit, Save, Delete } = ConstModifiers;
+const { New, Edit, Save, Delete } = CModifiers;
 
 @Component({
   selector: 'app-sidenav',
@@ -23,7 +23,7 @@ export class SidenavComponent {
   fs = inject(FractalService);
   private readonly us = inject(UpdateService);
 
-  AppEvents = ConstAppEvents;
+  AppEvents = CAppEvents;
   AppFractals = CAppFractals;
 
   onPageTouched(page: IFractal): void {
@@ -41,7 +41,7 @@ export class SidenavComponent {
         this.us.save(current);
         break;
       case Delete:
-        this.us.delete(current);
+        // this.us.delete(current);
         break;
     }
 
