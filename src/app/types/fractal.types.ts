@@ -1,6 +1,6 @@
 import { IControlsDto, IControls, IControl } from './control.types';
 import { FormRecord } from '@angular/forms';
-import { IBoolState, IControlsState } from './states.types';
+import { IControlsState } from './states.types';
 
 export type FractalsDto = Record<string, IFractalDto>;
 
@@ -28,9 +28,6 @@ export interface IFractal {
   fractals: IFractals;
   isCollection: boolean;
   touchedControls: Set<IControl>;
-
   newControls: IControlsState;
-  fullEditMode: IBoolState;
-
   get ancestors(): IFractal[];
 }

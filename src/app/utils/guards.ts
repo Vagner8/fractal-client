@@ -1,6 +1,6 @@
 import { ConstControlMutableType, ConstOrderType, IFractal } from '@types';
-import { Fractal } from './fractal';
 import { CControlMutable, COrders } from '@constants';
+import { Fractal } from './fractal';
 
 export const isFractal = (value: unknown): value is IFractal => value instanceof Fractal;
 export const isConstOrderType = (value: string): value is ConstOrderType => Object.hasOwn(COrders, value);

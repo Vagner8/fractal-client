@@ -1,7 +1,7 @@
 import { IFractal, FractalInitOptions, IControl, SearchControlData, IControls, AppError } from '@types';
-import { Control } from '../control';
 import { CIndicatorDuplicationError } from '@constants';
-import { ControlFactory } from 'app/utils/common';
+import { Control } from '../factories/control';
+import { ControlFactory } from '../factories/control-factory';
 
 export class Controls extends Map<string, IControl> implements IControls {
   parent: IFractal;

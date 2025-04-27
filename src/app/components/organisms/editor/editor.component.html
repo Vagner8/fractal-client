@@ -14,11 +14,11 @@
     <div class="controls">
       @for (indicator of dataSource; track $index) {
         @if (fractal.controls.get(indicator); as control) {
-          <app-control [fullEditMode]="fractal.fullEditMode.$value()" [control]="control" />
+          <app-control [fullEditMode]="control.fullEditMode.$value()" [control]="control" />
         }
       }
       @for (control of fractal.newControls.$value(); track control.dto.id) {
-        <app-control [fullEditMode]="fractal.fullEditMode.$value()" [control]="control" />
+        <app-control [fullEditMode]="control.fullEditMode.$value()" [control]="control" />
       }
     </div>
   </app-card>

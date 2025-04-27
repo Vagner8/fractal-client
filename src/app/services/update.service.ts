@@ -28,7 +28,9 @@ export class UpdateService {
   new(current: IFractal, modifier: IFractal): void {
     const selectedForm = this.ss.selectedForm.value;
     if (selectedForm) {
-      selectedForm.newControls.push(ControlFactory(selectedForm));
+      const newControl = ControlFactory(selectedForm);
+      newControl.fullEditMode.set(true);
+      selectedForm.newControls.push(newControl);
     } else {
       this.ss.selectedChildren.push(FractalFactory(current));
       this.navigateToEditPage(modifier);
@@ -36,17 +38,16 @@ export class UpdateService {
   }
 
   edit(modifier: IFractal): void {
-    const selectedForm = this.ss.selectedForm.value;
     if (!this.ss.$editPageActivated()) {
       this.navigateToEditPage(modifier);
-    } else {
-      selectedForm?.fullEditMode.toggle();
     }
   }
 
   private saveInit(current: IFractal): void {
     this.current = current;
-    this.newFractals = this.newControls = this.updateControls = [];
+    this.newFractals = [];
+    this.newControls = [];
+    this.updateControls = [];
     [this.oc, this.ocCreated] = current.controls.getOneAutoCreation('Oc');
     [this.occ, this.occCreated] = current.controls.getOneAutoCreation('Occ');
     this.ocCreated && this.newControls.push(this.oc.dto);
@@ -57,11 +58,12 @@ export class UpdateService {
     for (const control of fractal.newControls.value) {
       if (control.form.dirty) {
         const [newControl, error] = fractal.controls.setOne(control);
+        newControl.fullEditMode.set(false);
         if (error) {
           newControl.form.setErrors(error.formError);
         } else {
           this.occ.push(newControl.dto.indicator);
-          fractal.cursor === CWords.New && this.newControls.push(newControl.dto);
+          fractal.cursor !== CWords.New && this.newControls.push(newControl.dto);
         }
       }
     }
@@ -73,7 +75,6 @@ export class UpdateService {
     this.oc.push(fractal.cursor);
     this.current.fractals.set(fractal.cursor, fractal);
     this.newFractals.push(fractal.dto);
-    fractal.fullEditMode.set(false);
     fractal.newControls.clear();
   }
 
@@ -87,24 +88,34 @@ export class UpdateService {
       }
     }
 
-    if (this.newFractals) {
+    if (this.newFractals.length) {
       this.ocCreated || this.updateControls.push(this.oc.dto);
       this.occCreated || this.updateControls.push(this.occ.dto);
       console.log('🚀 ~ this.newFractals:', this.newFractals);
-      // this.newFractals.length && this.ds.addFractals(this.newFractals).subscribe();
     }
 
-    if (this.newControls) {
+    if (this.newControls.length) {
       console.log('🚀 ~ this.newControls:', this.newControls);
-      // this.newControls.length && this.ds.addControls(this.newControls).subscribe();
     }
 
-    if (this.updateControls) {
+    if (this.updateControls.length) {
       console.log('🚀 ~ this.updateControls:', this.updateControls);
-      // this.updateControls.length && this.ds.addControls(this.updateControls).subscribe();
     }
 
-    this.ss.currentFractal.refresh();
+    // if (this.newFractals.length) {
+    //   this.ocCreated || this.updateControls.push(this.oc.dto);
+    //   this.occCreated || this.updateControls.push(this.occ.dto);
+    //   this.ds.addFractals(this.newFractals).subscribe();
+    // }
+
+    // if (this.newControls.length) {
+    //   this.ds.addControls(this.newControls).subscribe();
+    // }
+
+    // if (this.updateControls.length) {
+    //   this.ds.updateControls(this.updateControls).subscribe();
+    // }
+
     this.ss.selectedChildren.refresh();
   }
 

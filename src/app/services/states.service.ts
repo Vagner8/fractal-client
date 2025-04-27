@@ -18,8 +18,6 @@ export class StatesService {
   $editPageActivated = computed<boolean>(() => !!this.$paramMap()?.get(CAppFractals.Modifiers));
 
   markSelectedFractalsPristine(): void {
-    this.currentFractal.$value()?.fullEditMode.clear();
-    this.selectedChildren.forEach(fractal => fractal.fullEditMode.clear());
     this.selectedForm.clear();
     this.selectedChildren.clear();
   }

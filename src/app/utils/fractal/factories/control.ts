@@ -1,10 +1,20 @@
 import { FormControl, FormRecord } from '@angular/forms';
 import { CControlMutable } from '@constants';
-import { IControl, IControlDto, ControlForm, FractalInitOptions, ConstControlMutableType, IFractal } from '@types';
-import { isConstControlMutableType } from '../guards';
+import {
+  IControl,
+  IControlDto,
+  ControlForm,
+  FractalInitOptions,
+  ConstControlMutableType,
+  IFractal,
+  IBoolState,
+} from '@types';
+import { BoolState } from '../states';
+import { isConstControlMutableType } from 'app/utils/guards';
 
 export class Control implements IControl {
   form: ControlForm;
+  fullEditMode: IBoolState;
   private readonly dataSet: Set<string>;
 
   constructor(
@@ -13,6 +23,7 @@ export class Control implements IControl {
     option?: FractalInitOptions
   ) {
     this.form = this.createForm();
+    this.fullEditMode = new BoolState(false);
     option?.syncFormWithDto && this.syncFormWithDto();
     this.dataSet = new Set(this.toStrings);
   }

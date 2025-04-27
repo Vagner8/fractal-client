@@ -2,6 +2,7 @@ import { FormControl, FormRecord } from '@angular/forms';
 import { AppError, SearchControlData } from './common.types';
 import { ConstControlMutableType } from './constants.types';
 import { IFractal } from './fractal.types';
+import { IBoolState } from './states.types';
 
 export type Controls = Record<string, IControl>;
 export type ControlForm = FormRecord<FormControl>;
@@ -32,10 +33,9 @@ export interface IControl {
   dto: IControlDto;
   form: ControlForm;
   parent?: IFractal;
-
+  fullEditMode: IBoolState;
   get toStrings(): string[];
   get toNumbers(): number[];
-
   push(data: string): IControl;
   getFromControl(name: ConstControlMutableType): FormControl;
 }
