@@ -6,7 +6,7 @@ import { ControlFactory } from './control-factory';
 
 export const FractalFactory = (parent: IFractal): IFractal => {
   const occ = parent.controls.getOne('Occ');
-  const fractal = new Fractal(new FractalDto(parent.dto.id), parent, { syncFormWithDto: true });
+  const fractal = new Fractal(new FractalDto(parent.dto.id), parent);
 
   if (occ) {
     const newControls: IControl[] = [];

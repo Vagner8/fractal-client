@@ -1,4 +1,4 @@
-import { IFractal, FractalInitOptions, IControl, SearchControlData, IControls, AppError } from '@types';
+import { IFractal, IControl, SearchControlData, IControls, AppError } from '@types';
 import { CIndicatorDuplicationError } from '@constants';
 import { Control } from '../factories/control';
 import { ControlFactory } from '../factories/control-factory';
@@ -6,12 +6,12 @@ import { ControlFactory } from '../factories/control-factory';
 export class Controls extends Map<string, IControl> implements IControls {
   parent: IFractal;
 
-  constructor(fractal: IFractal, options: FractalInitOptions = { syncFormWithDto: false }) {
+  constructor(fractal: IFractal) {
     super();
     const { dto, form } = fractal;
     this.parent = fractal;
     Object.entries(dto.controls).forEach(([key, controlDto]) => {
-      const control = new Control(controlDto, fractal, options);
+      const control = new Control(controlDto, fractal);
       this.set(key, control);
       form.addControl(key, control.form);
     });

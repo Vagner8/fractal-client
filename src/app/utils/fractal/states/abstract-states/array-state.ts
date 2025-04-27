@@ -31,6 +31,10 @@ export abstract class ArrayState<T> extends BaseState<T[]> {
     this.value.forEach(fn);
   }
 
+  pushUnique(item: T): void {
+    !this.has(item) && this.push(item);
+  }
+
   deleteBunch(items: T[]): void {
     const set = new Set(items);
     this.set(this.value.filter(fractal => !set.has(fractal)));

@@ -27,6 +27,9 @@ export class UpdateService {
 
   new(current: IFractal, modifier: IFractal): void {
     const selectedForm = this.ss.selectedForm.value;
+    if (!this.ss.$editPageActivated()) {
+      this.ss.selectedChildren.clear();
+    }
     if (selectedForm) {
       const newControl = ControlFactory(selectedForm);
       newControl.fullEditMode.set(true);
@@ -55,18 +58,24 @@ export class UpdateService {
   }
 
   private saveControls(fractal: IFractal): void {
-    for (const control of fractal.newControls.value) {
-      if (control.form.dirty) {
-        const [newControl, error] = fractal.controls.setOne(control);
+    for (const newControl of fractal.newControls.value) {
+      if (newControl.form.dirty) {
         newControl.fullEditMode.set(false);
+        const [control, error] = fractal.controls.setOne(newControl);
+        control.fullEditMode.set(false);
         if (error) {
-          newControl.form.setErrors(error.formError);
+          control.form.setErrors(error.formError);
         } else {
-          this.occ.push(newControl.dto.indicator);
-          fractal.cursor !== CWords.New && this.newControls.push(newControl.dto);
+          this.occ.push(control.dto.indicator);
+          if (fractal.cursor !== CWords.New) {
+            this.newControls.push(control.dto);
+          }
         }
       }
     }
+    this.updateControls = [...this.updateControls, ...fractal.updateControls.value];
+    fractal.newControls.clear();
+    fractal.updateControls.clear();
   }
 
   private saveNewFractals(fractal: IFractal): void {
@@ -75,7 +84,6 @@ export class UpdateService {
     this.oc.push(fractal.cursor);
     this.current.fractals.set(fractal.cursor, fractal);
     this.newFractals.push(fractal.dto);
-    fractal.newControls.clear();
   }
 
   save(current: IFractal): void {
@@ -88,33 +96,33 @@ export class UpdateService {
       }
     }
 
-    if (this.newFractals.length) {
-      this.ocCreated || this.updateControls.push(this.oc.dto);
-      this.occCreated || this.updateControls.push(this.occ.dto);
-      console.log('🚀 ~ this.newFractals:', this.newFractals);
-    }
-
-    if (this.newControls.length) {
-      console.log('🚀 ~ this.newControls:', this.newControls);
-    }
-
-    if (this.updateControls.length) {
-      console.log('🚀 ~ this.updateControls:', this.updateControls);
-    }
-
     // if (this.newFractals.length) {
     //   this.ocCreated || this.updateControls.push(this.oc.dto);
     //   this.occCreated || this.updateControls.push(this.occ.dto);
-    //   this.ds.addFractals(this.newFractals).subscribe();
+    //   console.log('🚀 ~ this.newFractals:', this.newFractals);
     // }
 
     // if (this.newControls.length) {
-    //   this.ds.addControls(this.newControls).subscribe();
+    //   console.log('🚀 ~ this.newControls:', this.newControls);
     // }
 
     // if (this.updateControls.length) {
-    //   this.ds.updateControls(this.updateControls).subscribe();
+    //   console.log('🚀 ~ this.updateControls:', this.updateControls);
     // }
+
+    if (this.newFractals.length) {
+      this.ocCreated || this.updateControls.push(this.oc.dto);
+      this.occCreated || this.updateControls.push(this.occ.dto);
+      this.ds.addFractals(this.newFractals).subscribe();
+    }
+
+    if (this.newControls.length) {
+      this.ds.addControls(this.newControls).subscribe();
+    }
+
+    if (this.updateControls.length) {
+      this.ds.updateControls(this.updateControls).subscribe();
+    }
 
     this.ss.selectedChildren.refresh();
   }

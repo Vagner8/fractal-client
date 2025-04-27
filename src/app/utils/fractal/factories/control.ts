@@ -1,14 +1,6 @@
 import { FormControl, FormRecord } from '@angular/forms';
 import { CControlMutable } from '@constants';
-import {
-  IControl,
-  IControlDto,
-  ControlForm,
-  FractalInitOptions,
-  ConstControlMutableType,
-  IFractal,
-  IBoolState,
-} from '@types';
+import { IControl, IControlDto, ControlForm, ConstControlMutableType, IFractal, IBoolState } from '@types';
 import { BoolState } from '../states';
 import { isConstControlMutableType } from 'app/utils/guards';
 
@@ -19,12 +11,11 @@ export class Control implements IControl {
 
   constructor(
     public dto: IControlDto,
-    public parent: IFractal,
-    option?: FractalInitOptions
+    public parent: IFractal
   ) {
     this.form = this.createForm();
     this.fullEditMode = new BoolState(false);
-    option?.syncFormWithDto && this.syncFormWithDto();
+    this.syncFormWithDto();
     this.dataSet = new Set(this.toStrings);
   }
 
@@ -65,7 +56,7 @@ export class Control implements IControl {
 
   private syncFormWithDto(): void {
     this.form.valueChanges.subscribe(value => {
-      this.parent.touchedControls.add(this);
+      this.parent.updateControls.pushUnique(this.dto);
       for (const key in CControlMutable) {
         if (isConstControlMutableType(key)) {
           this.dto[key] = value[key];

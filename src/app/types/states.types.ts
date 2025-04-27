@@ -1,5 +1,5 @@
 import { WritableSignal } from '@angular/core';
-import { IControl } from './control.types';
+import { IControl, IControlDto } from './control.types';
 import { IFractal } from './fractal.types';
 
 export interface IBaseState<T> {
@@ -17,6 +17,7 @@ export interface IArrayState<T> extends IBaseState<T[]> {
   toggle(item: T | undefined | null): void;
   filter(fn: (item: T) => boolean): void;
   forEach(fn: (item: T) => void): void;
+  pushUnique(item: T): void;
   deleteBunch(items: T[]): void;
 }
 
@@ -25,6 +26,7 @@ export interface IBoolState extends IBaseState<boolean> {
 }
 
 export interface IControlsState extends IArrayState<IControl> {}
+export interface IControlsDtoState extends IArrayState<IControlDto> {}
 
 export interface IFractalsState extends IArrayState<IFractal> {
   toggleAll(fractal: IFractal | undefined | null): void;

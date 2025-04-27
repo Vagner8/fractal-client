@@ -1,12 +1,8 @@
-import { IControlsDto, IControls, IControl } from './control.types';
+import { IControlsDto, IControls } from './control.types';
 import { FormRecord } from '@angular/forms';
-import { IControlsState } from './states.types';
+import { IControlsDtoState, IControlsState } from './states.types';
 
 export type FractalsDto = Record<string, IFractalDto>;
-
-export interface FractalInitOptions {
-  syncFormWithDto: boolean;
-}
 
 export interface IFractalDto {
   id: string;
@@ -27,7 +23,7 @@ export interface IFractal {
   controls: IControls;
   fractals: IFractals;
   isCollection: boolean;
-  touchedControls: Set<IControl>;
   newControls: IControlsState;
+  updateControls: IControlsDtoState;
   get ancestors(): IFractal[];
 }
