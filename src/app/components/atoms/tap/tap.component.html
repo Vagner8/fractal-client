@@ -1,6 +1,7 @@
 @let icon = tap.controls.getOneData('Icon');
 
 <button
+  [disabled]="disabled"
   mat-flat-button
   extended
   [disableHoldEvent]="disableHoldEvent"

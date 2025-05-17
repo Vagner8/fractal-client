@@ -15,6 +15,7 @@ import { IFractal } from '@types';
 export class TapComponent {
   @Input() tap!: IFractal;
   @Input() title?: string;
+  @Input() disabled = false;
   @Input() disableHoldEvent = false;
 
   hold = output<IFractal>();

@@ -15,8 +15,6 @@ export interface IArrayState<T> extends IBaseState<T[]> {
   has(item: T | undefined | null): boolean;
   push(item: T): void;
   toggle(item: T | undefined | null): void;
-  filter(fn: (item: T) => boolean): void;
-  forEach(fn: (item: T) => void): void;
   pushUnique(item: T): void;
   deleteBunch(items: T[]): void;
 }
@@ -30,4 +28,9 @@ export interface IControlsDtoState extends IArrayState<IControlDto> {}
 
 export interface IFractalsState extends IArrayState<IFractal> {
   toggleAll(fractal: IFractal | undefined | null): void;
+}
+
+export interface IDataSplitState {
+  strings: string[];
+  set(value: string): void;
 }

@@ -1,5 +1,5 @@
 import { IFractal } from '@types';
-import { BaseState } from './abstract-states/base-state';
+import { BaseState } from './base-state';
 
 export class FractalState extends BaseState<IFractal | null> {
   toggle(fractal: IFractal): void {

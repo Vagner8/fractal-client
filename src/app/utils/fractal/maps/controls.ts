@@ -38,14 +38,10 @@ export class Controls extends Map<string, IControl> implements IControls {
   }
 
   getOneLikeStrings(search: SearchControlData): string[] {
-    return this.getOne(search)?.toStrings ?? [];
+    return this.getOne(search)?.dataSplit.strings ?? [];
   }
 
-  getOneLikeNumbers(search: SearchControlData): number[] {
-    return this.getOne(search)?.toNumbers ?? [];
-  }
-
-  getOneAutoCreation(indicator: string): [IControl, boolean] {
+  getOneWithAutoCreation(indicator: string): [IControl, boolean] {
     const existedControl = this.get(indicator);
     if (existedControl) {
       return [existedControl, false];

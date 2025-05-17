@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, computed, inject, Input, Signal } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { CAppEvents, CModifiers, CAppFractals } from '@constants';
@@ -26,6 +26,31 @@ export class SidenavComponent {
   AppEvents = CAppEvents;
   AppFractals = CAppFractals;
 
+  disabled(tapCursor: string): { signal: Signal<boolean> } {
+    const signal = computed(() => {
+      if (this.ss.$editPageActivated()) {
+        switch (tapCursor) {
+          case CModifiers.Edit:
+            return this.ss.selectedForm.isEmpty;
+          case CModifiers.Delete:
+            return this.ss.selectedForm.isEmpty;
+          default:
+            return false;
+        }
+      } else {
+        switch (tapCursor) {
+          case CModifiers.Edit:
+            return this.ss.selectedChildren.isEmpty;
+          case CModifiers.Delete:
+            return this.ss.selectedChildren.isEmpty;
+          default:
+            return false;
+        }
+      }
+    });
+    return { signal };
+  }
+
   onPageTouched(page: IFractal): void {
     this.ss.currentFractal.set(page);
     this.ss.markSelectedFractalsPristine();
@@ -33,12 +58,9 @@ export class SidenavComponent {
   }
 
   onModifierHeld = (modifier: IFractal): void => {
-    const current = this.ss.currentFractal.value;
-    if (!current) return;
-
     switch (modifier.cursor) {
       case Save:
-        this.us.save(current);
+        this.us.save();
         break;
       case Delete:
         // this.us.delete(current);
@@ -49,16 +71,20 @@ export class SidenavComponent {
   };
 
   onModifierTouched(modifier: IFractal): void {
-    const current = this.ss.currentFractal.value;
-    if (!current) return;
     const selectedForm = this.ss.selectedForm.value;
 
     switch (modifier.cursor) {
       case New:
-        this.us.new(current, modifier);
+        this.us.new();
+        if (!this.ss.$editPageActivated()) {
+          this.fs.navigateModifier(modifier.cursor);
+        }
         break;
       case Edit:
-        this.us.edit(modifier);
+        this.us.edit();
+        if (!this.ss.$editPageActivated()) {
+          this.fs.navigateModifier(modifier.cursor);
+        }
         break;
       case Delete:
         if (this.ss.$editPageActivated()) {

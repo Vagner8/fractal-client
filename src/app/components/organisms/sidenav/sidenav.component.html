@@ -11,7 +11,11 @@
         @for (indicator of taps.controls.getOneLikeStrings('Oc'); track indicator) {
           @if (taps.fractals.get(indicator); as tap) {
             @if (isModifiers) {
-              <app-tap [tap]="tap" (hold)="onModifierHeld(tap)" (touch)="onModifierTouched(tap)" />
+              <app-tap
+                [tap]="tap"
+                [disabled]="disabled(tap.cursor).signal()"
+                (hold)="onModifierHeld(tap)"
+                (touch)="onModifierTouched(tap)" />
             } @else {
               <app-tap [tap]="tap" [disableHoldEvent]="true" (touch)="onPageTouched($event)" />
             }

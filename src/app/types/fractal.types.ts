@@ -1,8 +1,19 @@
-import { IControlsDto, IControls } from './control.types';
+import { IControlsDto, IControls, ControlData } from './control.types';
 import { FormRecord } from '@angular/forms';
 import { IControlsDtoState, IControlsState } from './states.types';
+import { AppError } from './common.types';
 
 export type FractalsDto = Record<string, IFractalDto>;
+
+interface FractalData {
+  controlsData: ControlData[];
+}
+
+export interface FractalFactoryOptions {
+  indicators?: string[];
+  fractalsData?: FractalData[];
+  controlsData?: ControlData[];
+}
 
 export interface IFractalDto {
   id: string;
@@ -12,6 +23,8 @@ export interface IFractalDto {
 }
 
 export interface IFractals extends Map<string, IFractal> {
+  parent: IFractal;
+  setOne(cursor: string, fractal: IFractal): [IFractal, AppError | null];
   getByCursor(cursor: string | undefined, fractals?: IFractals): IFractal | null;
 }
 

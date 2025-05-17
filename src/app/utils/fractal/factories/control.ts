@@ -1,46 +1,35 @@
 import { FormControl, FormRecord } from '@angular/forms';
-import { CControlMutable } from '@constants';
-import { IControl, IControlDto, ControlForm, ConstControlMutableType, IFractal, IBoolState } from '@types';
+import { CControlMutable, CWords } from '@constants';
+import {
+  IControl,
+  IControlDto,
+  ControlForm,
+  IFractal,
+  ConstControlMutableType,
+  IDataSplitState,
+  IBoolState,
+} from '@types';
 import { BoolState } from '../states';
 import { isConstControlMutableType } from 'app/utils/guards';
+import { DataSplitState } from '../states/data-split-state';
 
 export class Control implements IControl {
-  form: ControlForm;
+  form = this.createForm();
+  dataSplit: IDataSplitState;
   fullEditMode: IBoolState;
-  private readonly dataSet: Set<string>;
 
   constructor(
     public dto: IControlDto,
     public parent: IFractal
   ) {
-    this.form = this.createForm();
-    this.fullEditMode = new BoolState(false);
     this.syncFormWithDto();
-    this.dataSet = new Set(this.toStrings);
+    this.dataSplit = new DataSplitState(this);
+    this.fullEditMode = new BoolState(false);
   }
 
-  get toStrings(): string[] {
-    return this.dto.data.split(':');
-  }
-
-  get toNumbers(): number[] {
-    const numbers: number[] = [];
-    const { data } = this.dto;
-    let start = 0;
-    for (let i = 0; i <= data.length; i++) {
-      if (data[i] === ':' || i === data.length) {
-        numbers.push(Number(data.slice(start, i)));
-        start = i + 1;
-      }
-    }
-    return numbers;
-  }
-
-  push(value: string): IControl {
-    this.dataSet.add(value);
-    const data = Array.from(this.dataSet).join(':');
-    this.dto.data = data;
-    this.getFromControl('data').setValue(data);
+  set(value: string): IControl {
+    this.dto.data = value;
+    this.getFromControl('data').setValue(value);
     return this;
   }
 
@@ -56,7 +45,7 @@ export class Control implements IControl {
 
   private syncFormWithDto(): void {
     this.form.valueChanges.subscribe(value => {
-      this.parent.updateControls.pushUnique(this.dto);
+      this.parent.cursor !== CWords.New && this.parent.updateControls.pushUnique(this.dto);
       for (const key in CControlMutable) {
         if (isConstControlMutableType(key)) {
           this.dto[key] = value[key];

@@ -7,6 +7,7 @@ import { ControlsState, FractalsState, FractalState } from '@utils';
   providedIn: 'root',
 })
 export class StatesService {
+  modifier = new FractalState(null);
   sidenavTaps = new FractalState(null);
   selectedForm = new FractalState(null);
   currentFractal = new FractalState(null);

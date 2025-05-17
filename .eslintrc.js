@@ -49,5 +49,11 @@ module.exports = {
         'prettier/prettier': ['error', { parser: 'angular' }],
       },
     },
+    {
+      files: ['*.spec.ts'],
+      rules: {
+        '@typescript-eslint/no-explicit-any': 'off',
+      },
+    },
   ],
 };

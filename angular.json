@@ -82,7 +82,10 @@
             "tsConfig": "tsconfig.spec.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/scss/styles.scss", "@angular/material/prebuilt-themes/indigo-pink.css"],
-            "scripts": []
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/scss"]
+            }
           }
         },
         "lint": {
