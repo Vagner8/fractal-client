@@ -1,3 +1,4 @@
+export * from './control';
 export * from './fractal';
-export * from './control-factory';
-export * from './fractal-factory';
+export * from './fractal-dto';
+export * from './control-dto';

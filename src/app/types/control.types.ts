@@ -4,14 +4,9 @@ import { ConstControlMutableType } from './constants.types';
 import { IFractal } from './fractal.types';
 import { IBoolState, IDataSplitState } from './states.types';
 
-export type Controls = Record<string, IControl>;
+export type ControlsMap = Record<string, IControl>;
 export type ControlForm = FormRecord<FormControl>;
 export type IControlsDto = Record<string, IControlDto>;
-
-export interface ControlData {
-  data: string;
-  indicator: string;
-}
 
 export interface IControlMutableDto {
   data: string;
@@ -36,7 +31,7 @@ export interface IControls extends Map<string, IControl> {
 export interface IControl {
   dto: IControlDto;
   form: ControlForm;
-  parent?: IFractal;
+  parent: IFractal;
   dataSplit: IDataSplitState;
   fullEditMode: IBoolState;
   set(value: string): IControl;

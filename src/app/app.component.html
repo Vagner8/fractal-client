@@ -1,8 +1,6 @@
 @if (fs.$app()) {
   <app-header />
-  @if (fs.modifiers && fs.collections) {
-    <app-sidenav [modifiers]="fs.modifiers" [collections]="fs.collections" />
-  }
+  <app-sidenav />
   <app-toolbar />
 } @else {
   <div class="spinner">

@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CardComponent, ListComponent } from '@components/atoms';
 import { IFractal } from '@types';
 import { StatesService } from '@services';
@@ -12,11 +12,10 @@ import { ControlComponent } from '@components/molecules';
   styleUrl: './editor.component.scss',
 })
 export class EditorComponent {
-  @Input() fractal!: IFractal;
   ss = inject(StatesService);
 
   get dataSource(): string[] {
-    return this.fractal.controls.getOneLikeStrings('Occ');
+    return this.ss.currentFractal.value?.controls.getOneLikeStrings('Occ') || [];
   }
 
   formCardClicked(fractal: IFractal): void {

@@ -2,8 +2,8 @@
 @let current = ss.currentFractal.$value();
 
 @if (app) {
-  @if (Modifiers && current) {
-    <app-editor [fractal]="current" />
+  @if (Modifiers) {
+    <app-editor />
   }
 
   @if (Page && !Modifiers) {

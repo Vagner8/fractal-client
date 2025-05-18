@@ -1,9 +1,8 @@
 import { IFractal, IControl, SearchControlData, IControls, AppError } from '@types';
 import { CIndicatorDuplicationError } from '@constants';
-import { Control } from '../factories/control';
-import { ControlFactory } from '../factories/control-factory';
+import { Control } from '../factories';
 
-export class Controls extends Map<string, IControl> implements IControls {
+export class ControlsMap extends Map<string, IControl> implements IControls {
   parent: IFractal;
 
   constructor(fractal: IFractal) {
@@ -11,7 +10,7 @@ export class Controls extends Map<string, IControl> implements IControls {
     const { dto, form } = fractal;
     this.parent = fractal;
     Object.entries(dto.controls).forEach(([key, controlDto]) => {
-      const control = new Control(controlDto, fractal);
+      const control = new Control({ parent: fractal, dto: controlDto });
       this.set(key, control);
       form.addControl(key, control.form);
     });
@@ -46,7 +45,10 @@ export class Controls extends Map<string, IControl> implements IControls {
     if (existedControl) {
       return [existedControl, false];
     } else {
-      const newControl = ControlFactory(this.parent, { indicator });
+      const newControl = new Control({
+        parent: this.parent,
+        mutableFields: { indicator },
+      });
       this.set(indicator, newControl);
       return [newControl, true];
     }

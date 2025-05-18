@@ -2,9 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { StatesService } from './states.service';
 import { IControl, IControlDto, IFractal, IFractalDto } from '@types';
 import { DataService } from './data.service';
-import { ControlFactory, FractalFactory } from '@utils';
 import { FractalService } from './fractal.service';
-import { CIndicators, CWords } from '@constants';
+import { CIndicators, CModifiers, CWords } from '@constants';
+import { Control, ControlDto, Fractal, FractalDto } from '@utils';
 
 @Injectable({
   providedIn: 'root',
@@ -28,29 +28,32 @@ export class UpdateService {
   new(): void {
     this.init();
     if (this.ss.$editPageActivated()) {
-      this.ss.selectedForm.value && this.newControl(this.ss.selectedForm.value);
+      if (this.ss.selectedForm.value) {
+        this.newControl(this.ss.selectedForm.value);
+      } else {
+        this.newFractal();
+      }
     } else {
+      this.ss.selectedChildren.retainNewChildren();
       this.newFractal();
+      this.fs.navigateModifier(CModifiers.New);
     }
   }
 
   private newFractal(): void {
-    this.ss.selectedChildren.clear();
-
-    const newFractal = FractalFactory(this.current, {
-      indicators: this.current.controls.getOne('Occ')?.dataSplit.strings,
-    });
+    const newFractal = new Fractal({ parent: this.current, options: { populateFromOcc: true } });
     this.ss.selectedChildren.push(newFractal);
   }
 
   private newControl(selectedForm: IFractal): void {
-    const newControl = ControlFactory(selectedForm);
+    const newControl = new Control({ parent: selectedForm });
     newControl.fullEditMode.set(true);
     selectedForm.newControls.push(newControl);
   }
 
   edit(): void {
     this.init();
+    this.fs.navigateModifier(CModifiers.Edit);
   }
 
   save(): void {
@@ -117,7 +120,9 @@ export class UpdateService {
 
   private saveFractals(fractal: IFractal): void {
     fractal.cursor = String(this.oc.dataSplit.strings.length + 1);
-    fractal.controls.setOne(ControlFactory(fractal, { indicator: CIndicators.Cursor, data: fractal.cursor }));
+    fractal.controls.setOne(
+      new Control({ parent: fractal, mutableFields: { indicator: CIndicators.Cursor, data: fractal.cursor } })
+    );
     this.oc.dataSplit.set(fractal.cursor);
     this.current.fractals.set(fractal.cursor, fractal);
     this.newFractals.push(fractal.dto);

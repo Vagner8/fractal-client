@@ -10,11 +10,11 @@ export class ControlDto implements IControlDto {
 
   constructor(
     public parentId: string,
-    values?: Partial<IControlMutableDto>
+    mutableFields?: Partial<IControlMutableDto>
   ) {
     this.id = v4();
-    this.data = values?.data ?? '';
-    this.field = values?.field ?? ConstControlFields.Text;
-    this.indicator = values?.indicator ?? '';
+    this.data = mutableFields?.data ?? '';
+    this.field = mutableFields?.field ?? ConstControlFields.Text;
+    this.indicator = mutableFields?.indicator ?? '';
   }
 }

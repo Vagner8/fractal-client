@@ -1,18 +1,16 @@
-import { IFractal, FractalsDto, IFractals, AppError } from '@types';
+import { IFractal, IFractals, AppError } from '@types';
 import { Fractal } from '../factories/fractal';
 import { CIndicatorDuplicationError } from '@constants';
 
-export class Fractals extends Map<string, IFractal> implements IFractals {
-  constructor(
-    fractalsDto: FractalsDto | null,
-    public parent: IFractal
-  ) {
+export class FractalsMap extends Map<string, IFractal> implements IFractals {
+  constructor(public parent: IFractal) {
     super();
     let fractal: IFractal;
-    for (const indicator in fractalsDto) {
-      const dto = fractalsDto[indicator];
-      fractal = new Fractal(dto, parent);
-      fractal.fractals = new Fractals(fractalsDto[indicator].fractals, fractal);
+    const parentFractalsDto = parent.dto.fractals;
+    for (const indicator in parentFractalsDto) {
+      const dto = parentFractalsDto[indicator];
+      fractal = new Fractal({ dto, parent });
+      fractal.fractals = new FractalsMap(fractal);
       this.set(indicator, fractal);
     }
   }

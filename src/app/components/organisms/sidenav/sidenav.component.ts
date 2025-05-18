@@ -1,4 +1,4 @@
-import { Component, computed, inject, Input, Signal } from '@angular/core';
+import { Component, computed, inject, Signal } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { CAppEvents, CModifiers, CAppFractals } from '@constants';
@@ -16,8 +16,6 @@ const { New, Edit, Save, Delete } = CModifiers;
   styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
-  @Input() modifiers!: IFractal;
-  @Input() collections!: IFractal;
   es = inject(EventService);
   ss = inject(StatesService);
   fs = inject(FractalService);
@@ -30,6 +28,8 @@ export class SidenavComponent {
     const signal = computed(() => {
       if (this.ss.$editPageActivated()) {
         switch (tapCursor) {
+          case CModifiers.Save:
+            return true;
           case CModifiers.Edit:
             return this.ss.selectedForm.isEmpty;
           case CModifiers.Delete:
@@ -39,6 +39,8 @@ export class SidenavComponent {
         }
       } else {
         switch (tapCursor) {
+          case CModifiers.Save:
+            return true;
           case CModifiers.Edit:
             return this.ss.selectedChildren.isEmpty;
           case CModifiers.Delete:
@@ -71,25 +73,12 @@ export class SidenavComponent {
   };
 
   onModifierTouched(modifier: IFractal): void {
-    const selectedForm = this.ss.selectedForm.value;
-
     switch (modifier.cursor) {
       case New:
         this.us.new();
-        if (!this.ss.$editPageActivated()) {
-          this.fs.navigateModifier(modifier.cursor);
-        }
         break;
       case Edit:
         this.us.edit();
-        if (!this.ss.$editPageActivated()) {
-          this.fs.navigateModifier(modifier.cursor);
-        }
-        break;
-      case Delete:
-        if (this.ss.$editPageActivated()) {
-          selectedForm && this.ss.selectedChildren.deleteBunch([selectedForm]);
-        }
         break;
     }
   }

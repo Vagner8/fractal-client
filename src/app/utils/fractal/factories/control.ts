@@ -8,20 +8,30 @@ import {
   ConstControlMutableType,
   IDataSplitState,
   IBoolState,
+  IControlMutableDto,
 } from '@types';
 import { BoolState } from '../states';
 import { isConstControlMutableType } from 'app/utils/guards';
-import { DataSplitState } from '../states/data-split-state';
+import { DataSplitState } from '../states/data-split.state';
+import { ControlDto } from './control-dto';
+
+interface ControlProps {
+  parent: IFractal;
+  dto?: ControlDto;
+  mutableFields?: Partial<IControlMutableDto>;
+}
 
 export class Control implements IControl {
-  form = this.createForm();
+  dto: IControlDto;
+  form: ControlForm;
+  parent: IFractal;
   dataSplit: IDataSplitState;
   fullEditMode: IBoolState;
 
-  constructor(
-    public dto: IControlDto,
-    public parent: IFractal
-  ) {
+  constructor({ dto, parent, mutableFields }: ControlProps) {
+    this.dto = dto || new ControlDto(parent.dto.id, mutableFields);
+    this.form = this.createForm();
+    this.parent = parent;
     this.syncFormWithDto();
     this.dataSplit = new DataSplitState(this);
     this.fullEditMode = new BoolState(false);

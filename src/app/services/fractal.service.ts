@@ -15,15 +15,11 @@ export class FractalService {
   collections: IFractal | null = null;
 
   init(dto: IFractalDto): void {
-    try {
-      const app = new Fractal(dto);
-      this.modifiers = app.fractals.getByCursor(CAppFractals.Modifiers);
-      this.collections = app.fractals.getByCursor(CAppFractals.Collections);
-      this.$app.set(app);
-      console.info('🚀 ~ app:', app);
-    } catch (err) {
-      console.error(err);
-    }
+    const app = new Fractal({ dto });
+    this.modifiers = app.fractals.getByCursor(CAppFractals.Modifiers);
+    this.collections = app.fractals.getByCursor(CAppFractals.Collections);
+    this.$app.set(app);
+    console.info('🚀 ~ app:', app);
   }
 
   async navigatePage(page: string): Promise<void> {

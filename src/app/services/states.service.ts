@@ -1,7 +1,7 @@
 import { computed, Injectable, signal } from '@angular/core';
 import { ParamMap } from '@angular/router';
 import { CAppFractals } from '@constants';
-import { ControlsState, FractalsState, FractalState } from '@utils';
+import { ControlsState, FractalState, SelectedChildrenState } from '@utils';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +12,7 @@ export class StatesService {
   selectedForm = new FractalState(null);
   currentFractal = new FractalState(null);
 
-  selectedChildren = new FractalsState([]);
+  selectedChildren = new SelectedChildrenState([]);
   selectedControls = new ControlsState([]);
 
   $paramMap = signal<ParamMap | null>(null);
