@@ -13,3 +13,5 @@ export const CAppParams = {
 } as const;
 
 export const CWords = { New: 'New' } as const;
+
+export const CHoldThreshold = 820;

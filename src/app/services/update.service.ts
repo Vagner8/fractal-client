@@ -4,7 +4,7 @@ import { IControl, IControlDto, IFractal, IFractalDto } from '@types';
 import { DataService } from './data.service';
 import { FractalService } from './fractal.service';
 import { CIndicators, CModifiers, CWords } from '@constants';
-import { Control, ControlDto, Fractal, FractalDto } from '@utils';
+import { Control, Fractal } from '@utils';
 
 @Injectable({
   providedIn: 'root',
@@ -57,6 +57,7 @@ export class UpdateService {
   }
 
   save(): void {
+    console.log('🚀 ~ save:');
     for (const fractal of this.ss.selectedChildren.value) {
       this.saveControls(fractal);
       if (fractal.cursor === CWords.New && fractal.controls.size) {
@@ -64,33 +65,33 @@ export class UpdateService {
       }
     }
 
-    if (this.newFractals.length) {
-      this.ocCreated || this.updateControls.push(this.oc.dto);
-      this.occCreated || this.updateControls.push(this.occ.dto);
-      console.log('🚀 ~ this.newFractals:', this.newFractals);
-    }
-
-    if (this.newControls.length) {
-      console.log('🚀 ~ this.newControls:', this.newControls);
-    }
-
-    if (this.updateControls.length) {
-      console.log('🚀 ~ this.updateControls:', this.updateControls);
-    }
-
     // if (this.newFractals.length) {
     //   this.ocCreated || this.updateControls.push(this.oc.dto);
     //   this.occCreated || this.updateControls.push(this.occ.dto);
-    //   this.ds.addFractals(this.newFractals).subscribe();
+    //   console.log('🚀 ~ this.newFractals:', this.newFractals);
     // }
 
     // if (this.newControls.length) {
-    //   this.ds.addControls(this.newControls).subscribe();
+    //   console.log('🚀 ~ this.newControls:', this.newControls);
     // }
 
     // if (this.updateControls.length) {
-    //   this.ds.updateControls(this.updateControls).subscribe();
+    //   console.log('🚀 ~ this.updateControls:', this.updateControls);
     // }
+
+    if (this.newFractals.length) {
+      this.ocCreated || this.updateControls.push(this.oc.dto);
+      this.occCreated || this.updateControls.push(this.occ.dto);
+      this.ds.addFractals(this.newFractals).subscribe();
+    }
+
+    if (this.newControls.length) {
+      this.ds.addControls(this.newControls).subscribe();
+    }
+
+    if (this.updateControls.length) {
+      this.ds.updateControls(this.updateControls).subscribe();
+    }
 
     this.ss.currentFractal.refresh();
     this.ss.selectedChildren.refresh();

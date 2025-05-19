@@ -1,8 +1,8 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { SidenavComponent } from './sidenav.component';
 import { IFractal } from '@types';
 import { appMock, Fractal } from '@utils';
-import { Component, provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { Component, provideExperimentalZonelessChangeDetection, signal } from '@angular/core';
 import { EventService, FractalService, StatesService, UpdateService } from '@services';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -10,7 +10,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
-import { CAppFractals, CModifiers } from '@constants';
+import { CAppFractals, CHoldThreshold, CModifiers } from '@constants';
 import { Location } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 
@@ -19,9 +19,9 @@ import { Router, RouterModule } from '@angular/router';
   standalone: true,
   template: '<div>DummyComponent</div>',
 })
-export class DummyComponent {}
+class DummyComponent {}
 
-describe('SidenavComponent', () => {
+describe('SidenavComponent #', () => {
   let component: SidenavComponent;
   let fixture: ComponentFixture<SidenavComponent>;
   let loader: HarnessLoader;
@@ -29,6 +29,7 @@ describe('SidenavComponent', () => {
   let router: Router;
   let location: Location;
 
+  let current: IFractal;
   let modifiesMock: IFractal;
   let collectionsMock: IFractal;
 
@@ -65,16 +66,16 @@ describe('SidenavComponent', () => {
     router.initialNavigation();
   });
 
-  beforeEach(() => {
-    const parent = new Fractal();
-    component.ss.currentFractal.set(parent);
-    modifiesMock = new Fractal({ dto: appMock.fractals.Modifiers, parent });
-    collectionsMock = new Fractal({ dto: appMock.fractals.Collections, parent });
+  beforeEach(async () => {
+    current = new Fractal();
+    component.ss.currentFractal.set(current);
+    modifiesMock = new Fractal({ dto: appMock.fractals.Modifiers, parent: current });
+    collectionsMock = new Fractal({ dto: appMock.fractals.Collections, parent: current });
+    component.ss.sidenavTaps.set(modifiesMock);
   });
 
-  describe('edit page is not activated', () => {
-    it('should render the modifiers taps and the collections taps', async () => {
-      component.ss.sidenavTaps.set(modifiesMock);
+  describe('Edit page is not activated #', () => {
+    it('Should render the modifiers taps and the collections taps', async () => {
       const modifiersTaps = await loader.getAllHarnesses(MatButtonHarness);
       expect(modifiersTaps.length).toBe(4);
 
@@ -83,79 +84,76 @@ describe('SidenavComponent', () => {
       expect(collectionsTaps.length).toBe(2);
     });
 
-    it('should disable the Edit, Delete and Save modifiers until some action happens', async () => {
-      component.ss.sidenavTaps.set(modifiesMock);
-      const modifiersTaps = await loader.getAllHarnesses(MatButtonHarness);
-      for (const tap of modifiersTaps) {
-        const text = await tap.getText();
-        switch (text) {
-          case CModifiers.New:
-            expect(await tap.isDisabled()).toBeFalse();
-            break;
-          case CModifiers.Edit:
-            expect(await tap.isDisabled()).toBeTrue();
-            break;
-          case CModifiers.Save:
-            expect(await tap.isDisabled()).toBeTrue();
-            break;
-          case CModifiers.Delete:
-            expect(await tap.isDisabled()).toBeTrue();
-            break;
-        }
-      }
+    it('Should disable the Edit, Save and Delete modifiers until some action happens', async () => {
+      const newTap = await loader.getHarness(MatButtonHarness.with({ text: /new/i }));
+      const editTap = await loader.getHarness(MatButtonHarness.with({ text: /edit/i }));
+      const saveTap = await loader.getHarness(MatButtonHarness.with({ text: /save/i }));
+      const deleteTap = await loader.getHarness(MatButtonHarness.with({ text: /delete/i }));
+      expect(await newTap.isDisabled()).toBeFalse();
+      expect(await editTap.isDisabled()).toBeTrue();
+      expect(await saveTap.isDisabled()).toBeTrue();
+      expect(await deleteTap.isDisabled()).toBeTrue();
     });
 
-    it('should activate the Edit and Delete modifiers when some children selected', async () => {
-      component.ss.sidenavTaps.set(modifiesMock);
+    it('Should activate the Edit and Delete modifiers when some children selected', async () => {
       component.ss.selectedChildren.set([
-        new Fractal({ dto: appMock.fractals.Collections.fractals.Users.fractals[1] }),
+        new Fractal({ dto: appMock.fractals.Collections.fractals.Collections_2.fractals[1] }),
       ]);
-      const modifiersTaps = await loader.getAllHarnesses(MatButtonHarness);
-      for (const tap of modifiersTaps) {
-        const text = await tap.getText();
-        switch (text) {
-          case CModifiers.New:
-            expect(await tap.isDisabled()).toBeFalse();
-            break;
-          case CModifiers.Edit:
-            expect(await tap.isDisabled()).toBeFalse();
-            break;
-          case CModifiers.Save:
-            expect(await tap.isDisabled()).toBeTrue();
-            break;
-          case CModifiers.Delete:
-            expect(await tap.isDisabled()).toBeFalse();
-            break;
-        }
-      }
+      const newTap = await loader.getHarness(MatButtonHarness.with({ text: /new/i }));
+      const editTap = await loader.getHarness(MatButtonHarness.with({ text: /edit/i }));
+      const saveTap = await loader.getHarness(MatButtonHarness.with({ text: /save/i }));
+      const deleteTap = await loader.getHarness(MatButtonHarness.with({ text: /delete/i }));
+      expect(await newTap.isDisabled()).toBeFalse();
+      expect(await editTap.isDisabled()).toBeFalse();
+      expect(await saveTap.isDisabled()).toBeTrue();
+      expect(await deleteTap.isDisabled()).toBeFalse();
     });
 
-    it('should navigate to the edit page', async () => {
-      component.ss.sidenavTaps.set(modifiesMock);
+    it('Should navigate to the edit page', async () => {
       component.ss.selectedChildren.set([
-        new Fractal({ dto: appMock.fractals.Collections.fractals.Users.fractals[1] }),
+        new Fractal({ dto: appMock.fractals.Collections.fractals.Collections_2.fractals[1] }),
       ]);
-      const modifiersTaps = await loader.getAllHarnesses(MatButtonHarness);
-      const taps: Record<string, MatButtonHarness> = {};
-
-      for (const tap of modifiersTaps) {
-        const text = await tap.getText();
-        taps[text] = tap;
-      }
-
-      await taps[CModifiers.Edit].click();
+      const editTap = await loader.getHarness(MatButtonHarness.with({ text: /edit/i }));
+      await editTap.click();
 
       expect(location.path()).toContain(CModifiers.Edit);
       expect(location.path()).toContain(CAppFractals.Modifiers);
 
-      await taps[CModifiers.New].click();
+      const newTap = await loader.getHarness(MatButtonHarness.with({ text: /new/i }));
+      await newTap.click();
 
       expect(location.path()).toContain(CModifiers.New);
       expect(location.path()).toContain(CAppFractals.Modifiers);
     });
   });
 
-  // describe('edit page is activated', () => {
+  describe('Edit page is activated #', () => {
+    beforeEach(() => {
+      component.ss.$paramMap = signal({ get: () => CAppFractals.Modifiers } as any);
+    });
 
-  // })
+    describe('New fractals #', () => {
+      it('Should activate the Save modifier and run the saving process when any field is dirty', async () => {
+        const saveSpy = spyOn(component['us'], 'save');
+        const saveTap = await loader.getHarness(MatButtonHarness.with({ text: /save/i }));
+        expect(await saveTap.isDisabled()).toBeTrue();
+        component.ss.selectedChildren.dirtyFractals.push(new Fractal());
+        const host = await saveTap.host();
+        await host.dispatchEvent('pointerdown');
+        await new Promise(resolve => setTimeout(resolve, CHoldThreshold));
+        await host.dispatchEvent('pointerup');
+        expect(saveSpy).toHaveBeenCalled();
+      });
+
+      it('', fakeAsync(() => {
+        let a = 0;
+
+        setTimeout(() => (a = 10), 1000);
+
+        tick(1000);
+
+        expect(a).toBe(10);
+      }));
+    });
+  });
 });

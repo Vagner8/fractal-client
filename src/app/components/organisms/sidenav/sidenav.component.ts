@@ -29,7 +29,7 @@ export class SidenavComponent {
       if (this.ss.$editPageActivated()) {
         switch (tapCursor) {
           case CModifiers.Save:
-            return true;
+            return this.ss.selectedChildren.dirtyFractals.$value().length === 0;
           case CModifiers.Edit:
             return this.ss.selectedForm.isEmpty;
           case CModifiers.Delete:

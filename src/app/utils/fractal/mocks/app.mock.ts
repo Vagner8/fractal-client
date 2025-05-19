@@ -126,15 +126,15 @@ export const appMock = {
       id: 'a2615e56-d20e-4cae-a4f5-e2b84cc37aa3',
       parentId: '64b00984-f7b1-498d-a10a-44511f8212da',
       fractals: {
-        Products: {
-          id: '8334b99a-97e2-4031-bab9-0765323bdc22',
+        Collections_1: {
+          id: '1',
           parentId: 'a2615e56-d20e-4cae-a4f5-e2b84cc37aa3',
           fractals: null,
           controls: {
             Cursor: {
               id: '25ca5f3d-eea6-46e0-a261-297da78c142c',
               parentId: '8334b99a-97e2-4031-bab9-0765323bdc22',
-              data: 'Products',
+              data: 'Collections_1',
               field: 'Text',
               indicator: 'Cursor',
             },
@@ -154,8 +154,8 @@ export const appMock = {
             },
           },
         },
-        Users: {
-          id: 'ca86b5ce-fff0-4b3f-b83f-69b580baec1d',
+        Collections_2: {
+          id: '2',
           parentId: 'a2615e56-d20e-4cae-a4f5-e2b84cc37aa3',
           fractals: {
             '1': {
@@ -163,19 +163,26 @@ export const appMock = {
               parentId: 'ca86b5ce-fff0-4b3f-b83f-69b580baec1d',
               fractals: null,
               controls: {
-                '1': {
+                indicator_1: {
                   id: '40c4d998-63b4-4c59-8aa3-370c5d0b5f01',
+                  parentId: '3838b28d-ed00-4782-b709-19caadab2182',
+                  data: 'data_1',
+                  field: 'Text',
+                  indicator: 'indicator_1',
+                },
+                indicator_2: {
+                  id: '14dab86e-66d9-44db-9b4c-3aebac39e97c',
+                  parentId: '3838b28d-ed00-4782-b709-19caadab2182',
+                  data: 'data_2',
+                  field: 'Text',
+                  indicator: 'indicator_2',
+                },
+                Cursor: {
+                  id: '14dab86e-66d9-44db-9b4c-3aebac39e97c',
                   parentId: '3838b28d-ed00-4782-b709-19caadab2182',
                   data: '1',
                   field: 'Text',
-                  indicator: '1',
-                },
-                '2': {
-                  id: '14dab86e-66d9-44db-9b4c-3aebac39e97c',
-                  parentId: '3838b28d-ed00-4782-b709-19caadab2182',
-                  data: '2',
-                  field: 'Text',
-                  indicator: '2',
+                  indicator: 'Cursor',
                 },
               },
             },
@@ -184,19 +191,26 @@ export const appMock = {
               parentId: 'ca86b5ce-fff0-4b3f-b83f-69b580baec1d',
               fractals: null,
               controls: {
-                '1': {
+                indicator_1: {
                   id: '40c4d998-63b4-4c59-8aa3-370c5d0b5f01',
                   parentId: '3838b28d-ed00-4782-b709-19caadab2182',
-                  data: '1',
+                  data: 'data_1',
                   field: 'Text',
-                  indicator: '1',
+                  indicator: 'indicator_1',
                 },
-                '2': {
+                indicator_2: {
+                  id: '14dab86e-66d9-44db-9b4c-3aebac39e97c',
+                  parentId: '3838b28d-ed00-4782-b709-19caadab2182',
+                  data: 'data_2',
+                  field: 'Text',
+                  indicator: 'indicator_2',
+                },
+                Cursor: {
                   id: '14dab86e-66d9-44db-9b4c-3aebac39e97c',
                   parentId: '3838b28d-ed00-4782-b709-19caadab2182',
                   data: '2',
                   field: 'Text',
-                  indicator: '2',
+                  indicator: 'Cursor',
                 },
               },
             },
@@ -205,19 +219,26 @@ export const appMock = {
               parentId: 'ca86b5ce-fff0-4b3f-b83f-69b580baec1d',
               fractals: null,
               controls: {
-                '1': {
+                indicator_1: {
                   id: '40c4d998-63b4-4c59-8aa3-370c5d0b5f01',
                   parentId: '3838b28d-ed00-4782-b709-19caadab2182',
-                  data: '1',
+                  data: 'data_1',
                   field: 'Text',
-                  indicator: '1',
+                  indicator: 'indicator_1',
                 },
-                '2': {
+                indicator_2: {
                   id: '14dab86e-66d9-44db-9b4c-3aebac39e97c',
                   parentId: '3838b28d-ed00-4782-b709-19caadab2182',
-                  data: '2',
+                  data: 'data_2',
                   field: 'Text',
-                  indicator: '2',
+                  indicator: 'indicator_2',
+                },
+                Cursor: {
+                  id: '14dab86e-66d9-44db-9b4c-3aebac39e97c',
+                  parentId: '3838b28d-ed00-4782-b709-19caadab2182',
+                  data: '3',
+                  field: 'Text',
+                  indicator: 'Cursor',
                 },
               },
             },
@@ -226,21 +247,21 @@ export const appMock = {
             Name: {
               id: 'cf5660de-bc5a-4987-b1d0-28f00b3518c6',
               parentId: 'ca86b5ce-fff0-4b3f-b83f-69b580baec1d',
-              data: 'Users',
+              data: 'Collections_2',
               field: 'Text',
               indicator: 'Name',
             },
             Occ: {
               id: 'd895d5fa-84d0-4beb-9676-a2f81dbd084e',
               parentId: 'ca86b5ce-fff0-4b3f-b83f-69b580baec1d',
-              data: '1:2',
+              data: 'indicator_1:indicator_2',
               field: 'Text',
               indicator: 'Occ',
             },
             Cursor: {
               id: '53e7e0bc-2273-4c13-b78c-bdb0e5a77896',
               parentId: 'ca86b5ce-fff0-4b3f-b83f-69b580baec1d',
-              data: 'Users',
+              data: 'Collections_2',
               field: 'Text',
               indicator: 'Cursor',
             },
@@ -272,7 +293,7 @@ export const appMock = {
         Oc: {
           id: '1b2e3dab-bf4f-4aba-b733-7c071957252a',
           parentId: 'a2615e56-d20e-4cae-a4f5-e2b84cc37aa3',
-          data: 'Products:Users',
+          data: 'Collections_1:Collections_2',
           field: 'text',
           indicator: 'Oc',
         },

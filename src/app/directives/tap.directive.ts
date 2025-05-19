@@ -1,4 +1,5 @@
 import { Directive, HostListener, inject, Input, OnDestroy, OnInit, output } from '@angular/core';
+import { CHoldThreshold } from '@constants';
 import { EventService } from '@services';
 import { Timeout } from '@types';
 
@@ -16,8 +17,8 @@ export class TapDirective implements OnInit, OnDestroy {
 
   private isHoldSucceed = false;
 
-  private holdDelay = 150;
-  private holdThreshold = 820;
+  private readonly holdDelay = 150;
+  private readonly holdThreshold = CHoldThreshold;
 
   private holdTimeout: Timeout | null = null;
   private holdDelayTimeout: Timeout | null = null;
@@ -54,7 +55,7 @@ export class TapDirective implements OnInit, OnDestroy {
     this.cancel();
   }
 
-  private onContextmenu = (event: Event): void => {
+  private readonly onContextmenu = (event: Event): void => {
     event.preventDefault();
   };
 

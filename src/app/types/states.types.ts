@@ -1,7 +1,6 @@
 import { WritableSignal } from '@angular/core';
 import { IControl, IControlDto } from './control.types';
 import { IFractal } from './fractal.types';
-import { FormArray, FormRecord } from '@angular/forms';
 
 export interface IBaseState<T> {
   value: T;
@@ -32,6 +31,8 @@ export interface IFractalsState extends IArrayState<IFractal> {
 }
 
 export interface ISelectedChildrenState extends IFractalsState {
+  dirtyFractals: IFractalsState;
+  dirtyControls: IControlsState;
   retainNewChildren(): void;
 }
 
