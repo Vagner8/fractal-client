@@ -5,7 +5,6 @@ import { interval, map, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-spinner',
-  standalone: true,
   imports: [AsyncPipe, MatProgressSpinnerModule],
   templateUrl: './spinner.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

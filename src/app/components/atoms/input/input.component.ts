@@ -5,7 +5,6 @@ import { MatButtonModule, MatFormFieldModule, MatIcon, MatInputModule } from '@m
 
 @Component({
   selector: 'app-input',
-  standalone: true,
   imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIcon, NgFor],
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',

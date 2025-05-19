@@ -6,7 +6,6 @@ import { ControlComponent } from '@components/molecules';
 
 @Component({
   selector: 'app-editor',
-  standalone: true,
   imports: [CardComponent, ControlComponent, ListComponent],
   templateUrl: './editor.component.html',
   styleUrl: './editor.component.scss',

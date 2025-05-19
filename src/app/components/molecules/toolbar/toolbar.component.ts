@@ -4,7 +4,6 @@ import { ManagerComponent } from '../manager/manager.component';
 
 @Component({
   selector: 'app-toolbar',
-  standalone: true,
   imports: [MatToolbar, ManagerComponent],
   templateUrl: './toolbar.component.html',
   styleUrl: './toolbar.component.scss',

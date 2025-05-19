@@ -57,7 +57,6 @@ export class UpdateService {
   }
 
   save(): void {
-    console.log('🚀 ~ save:');
     for (const fractal of this.ss.selectedChildren.value) {
       this.saveControls(fractal);
       if (fractal.cursor === CWords.New && fractal.controls.size) {

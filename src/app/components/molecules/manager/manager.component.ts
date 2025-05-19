@@ -9,7 +9,6 @@ const { Hold, Touch } = CAppEvents;
 
 @Component({
   selector: 'app-manager',
-  standalone: true,
   imports: [MatButtonModule, SpinnerComponent, TapDirective],
   templateUrl: './manager.component.html',
   styleUrl: './manager.component.scss',

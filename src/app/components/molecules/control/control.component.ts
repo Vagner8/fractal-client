@@ -7,7 +7,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-control',
-  standalone: true,
   imports: [CardComponent, InputComponent, SelectComponent],
   templateUrl: './control.component.html',
   styleUrl: './control.component.scss',

@@ -5,7 +5,6 @@ import { IFractal } from '@types';
 
 @Component({
   selector: 'app-panel',
-  standalone: true,
   imports: [MatIconModule, MatExpansionModule],
   templateUrl: './panel.component.html',
   styleUrl: './panel.component.scss',

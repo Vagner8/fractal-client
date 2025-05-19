@@ -10,7 +10,6 @@ type Params = Record<keyof typeof CAppParams, string>;
 
 @Component({
   selector: 'app-screen',
-  standalone: true,
   imports: [AdminComponent, EditorComponent, TableComponent],
   templateUrl: './screen.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

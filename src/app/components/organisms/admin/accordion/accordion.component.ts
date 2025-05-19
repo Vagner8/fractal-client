@@ -8,7 +8,6 @@ import { CAppFractals } from '@constants';
 
 @Component({
   selector: 'app-accordion',
-  standalone: true,
   imports: [MatIconModule, MatExpansionModule, TableComponent, PanelComponent],
   templateUrl: './accordion.component.html',
   styleUrl: './accordion.component.scss',

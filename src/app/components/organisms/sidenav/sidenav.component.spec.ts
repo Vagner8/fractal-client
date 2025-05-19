@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SidenavComponent } from './sidenav.component';
 import { IFractal } from '@types';
 import { appMock, Fractal } from '@utils';
@@ -144,16 +144,6 @@ describe('SidenavComponent #', () => {
         await host.dispatchEvent('pointerup');
         expect(saveSpy).toHaveBeenCalled();
       });
-
-      it('', fakeAsync(() => {
-        let a = 0;
-
-        setTimeout(() => (a = 10), 1000);
-
-        tick(1000);
-
-        expect(a).toBe(10);
-      }));
     });
   });
 });

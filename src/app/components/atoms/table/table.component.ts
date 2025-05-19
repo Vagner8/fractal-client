@@ -23,7 +23,6 @@ interface Tables {
 
 @Component({
   selector: 'app-table',
-  standalone: true,
   imports: [MatTableModule, TapDirective],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',

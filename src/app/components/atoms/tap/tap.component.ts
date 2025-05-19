@@ -6,7 +6,6 @@ import { IFractal } from '@types';
 
 @Component({
   selector: 'app-tap',
-  standalone: true,
   imports: [MatIconModule, MatButtonModule, TapDirective],
   templateUrl: './tap.component.html',
   styleUrl: './tap.component.scss',

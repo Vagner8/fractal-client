@@ -5,7 +5,6 @@ import { StatesService } from '@services';
 
 @Component({
   selector: 'app-admin',
-  standalone: true,
   imports: [AccordionComponent],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',

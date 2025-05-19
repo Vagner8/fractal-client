@@ -10,7 +10,6 @@ const { New, Edit, Save, Delete } = CModifiers;
 
 @Component({
   selector: 'app-sidenav',
-  standalone: true,
   imports: [RouterModule, MatSidenavModule, RouterOutlet, MatListModule, TapComponent],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',

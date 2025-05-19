@@ -3,7 +3,6 @@ import { MatCardModule } from '@mat';
 
 @Component({
   selector: 'app-card',
-  standalone: true,
   imports: [MatCardModule],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',

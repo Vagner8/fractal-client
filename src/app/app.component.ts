@@ -6,7 +6,6 @@ import { DataService, FractalService } from '@services';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [SidenavComponent, ToolbarComponent, HeaderComponent, SpinnerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',

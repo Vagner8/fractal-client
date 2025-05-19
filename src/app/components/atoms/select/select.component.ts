@@ -4,7 +4,6 @@ import { MatSelectModule } from '@mat';
 
 @Component({
   selector: 'app-select',
-  standalone: true,
   imports: [MatSelectModule, ReactiveFormsModule],
   templateUrl: './select.component.html',
   styleUrl: './select.component.scss',
