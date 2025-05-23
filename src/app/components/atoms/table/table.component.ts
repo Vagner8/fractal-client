@@ -44,9 +44,9 @@ export class TableComponent implements Tables {
         : (control?.dto.data ?? '');
     },
 
-    onHold: row => this.ss.selectedChildren.toggleAll(this.fractal.fractals.get(row)),
-    onTouch: row => this.ss.selectedChildren.toggle(this.fractal.fractals.get(row)),
-    selected: row => this.ss.selectedChildren.has(this.fractal.fractals.get(row)),
+    onHold: row => this.ss.selectedChildrenFractals.toggleAll(this.fractal.fractals.get(row)),
+    onTouch: row => this.ss.selectedChildrenFractals.toggle(this.fractal.fractals.get(row)),
+    selected: row => this.ss.selectedChildrenFractals.has(this.fractal.fractals.get(row)),
   };
 
   controls: TableData = {

@@ -14,11 +14,11 @@ export class EditorComponent {
   ss = inject(StatesService);
 
   get dataSource(): string[] {
-    return this.ss.currentFractal.value?.controls.getOneLikeStrings('Occ') || [];
+    return this.ss.selectedParentFractal.value?.controls.getOneLikeStrings('Occ') || [];
   }
 
   formCardClicked(fractal: IFractal): void {
-    this.ss.selectedForm.toggle(fractal);
+    this.ss.selectedFractalForm.toggle(fractal);
     this.ss.selectedControls.clear();
   }
 }

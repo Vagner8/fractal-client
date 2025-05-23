@@ -30,7 +30,7 @@ export class ManagerComponent {
   onTouch(): void {
     const { modifiers, collections } = this.fs;
     if (this.prevEvent === Touch) {
-      this.ss.sidenavTaps.$value.update(prev => (prev === collections ? modifiers : collections));
+      this.ss.selectedSidenavTaps.$value.update(prev => (prev === collections ? modifiers : collections));
     }
     this.prevEvent = Touch;
     this.es.$managerEvent.set(Touch);

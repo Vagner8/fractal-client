@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EditorComponent } from './editor.component';
 import { StatesService } from '@services';
-import { appMock, Fractal } from '@utils';
+import { collectionsMock } from '@utils';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { provideExperimentalZonelessChangeDetection } from '@angular/core';
@@ -10,7 +10,6 @@ import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 import { IFractal } from '@types';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputHarness } from '@angular/material/input/testing';
-import { CWords } from '@constants';
 
 describe('EditorComponent #', () => {
   let fixture: ComponentFixture<EditorComponent>;
@@ -18,7 +17,7 @@ describe('EditorComponent #', () => {
 
   let loader: HarnessLoader;
 
-  let current: IFractal;
+  let populatedCollection: IFractal;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -35,38 +34,33 @@ describe('EditorComponent #', () => {
   });
 
   beforeEach(() => {
-    current = new Fractal({ dto: appMock.fractals.Collections.fractals.Collections_2 });
-    component.ss.currentFractal.set(current);
-    component.ss.selectedChildren.push(new Fractal({ parent: current, options: { populateFromOcc: true } }));
-    component.ss.selectedChildren.push(new Fractal({ parent: current, options: { populateFromOcc: true } }));
-    component.ss.selectedChildren.push(new Fractal({ parent: current, options: { populateFromOcc: true } }));
+    populatedCollection = collectionsMock().populatedCollection;
+    component.ss.selectedParentFractal.set(populatedCollection);
   });
 
   it('should render the fractals forms', async () => {
+    component.ss.selectedChildrenFractals.set([
+      populatedCollection.fractals.get('1')!,
+      populatedCollection.fractals.get('2')!,
+    ]);
     const fractalsFormsCards = await loader.getAllHarnesses(MatCardHarness);
-    expect(fractalsFormsCards.length).toBe(3);
-    expect(await fractalsFormsCards[0].getTitleText()).toBe(CWords.New);
-    expect(await fractalsFormsCards[1].getTitleText()).toBe(CWords.New);
-    expect(await fractalsFormsCards[2].getTitleText()).toBe(CWords.New);
+    expect(fractalsFormsCards.length).toBe(2);
   });
 
   it('Should render fractal forms with controls created by the parent Occ', async () => {
+    component.ss.selectedChildrenFractals.set([
+      populatedCollection.fractals.get('1')!,
+      populatedCollection.fractals.get('2')!,
+    ]);
+
     const controlsInputs = await loader.getAllHarnesses(MatInputHarness);
     const controlsFields = await loader.getAllHarnesses(MatFormFieldHarness);
 
-    expect(controlsFields.length).toBe(6);
-    expect(controlsInputs.length).toBe(6);
+    expect(controlsFields.length).toBe(4);
+    expect(controlsInputs.length).toBe(4);
     expect(await controlsFields[0].getLabel()).toBe('indicator_1');
-    expect(await controlsInputs[0].getValue()).toBe('');
+    expect(await controlsInputs[0].getValue()).toBe('data_1');
     expect(await controlsFields[1].getLabel()).toBe('indicator_2');
-    expect(await controlsInputs[1].getValue()).toBe('');
-  });
-
-  it('should set the dirty controls and the dirty fractals when an field value was changed', async () => {
-    const inputs = await loader.getAllHarnesses(MatInputHarness);
-    await inputs[0].setValue('value');
-
-    expect(component.ss.selectedChildren.dirtyControls.isEmpty).toBeFalsy();
-    expect(component.ss.selectedChildren.dirtyFractals.isEmpty).toBeFalsy();
+    expect(await controlsInputs[1].getValue()).toBe('data_2');
   });
 });

@@ -3,7 +3,7 @@ import { RouterModule, RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { CAppEvents, CModifiers, CAppFractals } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { EventService, FractalService, StatesService, UpdateService } from '@services';
+import { EventService, FractalService, StatesService, ModifiersService } from '@services';
 import { IFractal } from '@types';
 
 const { New, Edit, Save, Delete } = CModifiers;
@@ -18,21 +18,21 @@ export class SidenavComponent {
   es = inject(EventService);
   ss = inject(StatesService);
   fs = inject(FractalService);
-  private readonly us = inject(UpdateService);
+  private readonly ms = inject(ModifiersService);
 
   AppEvents = CAppEvents;
   AppFractals = CAppFractals;
 
   disabled(tapCursor: string): { signal: Signal<boolean> } {
     const signal = computed(() => {
-      if (this.ss.$editPageActivated()) {
+      if (this.ss.$onEditPage()) {
         switch (tapCursor) {
           case CModifiers.Save:
-            return this.ss.selectedChildren.dirtyFractals.$value().length === 0;
+            return this.ss.dirtyFractals.$value().length === 0;
           case CModifiers.Edit:
-            return this.ss.selectedForm.isEmpty;
+            return this.ss.selectedFractalForm.isEmpty;
           case CModifiers.Delete:
-            return this.ss.selectedForm.isEmpty;
+            return this.ss.selectedFractalForm.isEmpty;
           default:
             return false;
         }
@@ -41,9 +41,9 @@ export class SidenavComponent {
           case CModifiers.Save:
             return true;
           case CModifiers.Edit:
-            return this.ss.selectedChildren.isEmpty;
+            return this.ss.selectedChildrenFractals.isEmpty;
           case CModifiers.Delete:
-            return this.ss.selectedChildren.isEmpty;
+            return this.ss.selectedChildrenFractals.isEmpty;
           default:
             return false;
         }
@@ -53,31 +53,31 @@ export class SidenavComponent {
   }
 
   onPageTouched(page: IFractal): void {
-    this.ss.currentFractal.set(page);
-    this.ss.markSelectedFractalsPristine();
+    this.ss.selectedParentFractal.set(page);
+    this.ss.clearSelectedFractals();
     this.fs.navigatePage(page.cursor);
   }
 
   onModifierHeld = (modifier: IFractal): void => {
     switch (modifier.cursor) {
       case Save:
-        this.us.save();
+        this.ms.save();
         break;
       case Delete:
-        // this.us.delete(current);
+        // this.ms.delete(current);
         break;
     }
 
-    this.ss.currentFractal.refresh();
+    this.ss.selectedParentFractal.refresh();
   };
 
   onModifierTouched(modifier: IFractal): void {
     switch (modifier.cursor) {
       case New:
-        this.us.new();
+        this.ms.newTouched();
         break;
       case Edit:
-        this.us.edit();
+        this.ms.edit();
         break;
     }
   }

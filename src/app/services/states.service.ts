@@ -1,25 +1,35 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, effect, Injectable, signal } from '@angular/core';
 import { ParamMap } from '@angular/router';
 import { CAppFractals } from '@constants';
-import { ControlsState, FractalState, SelectedChildrenState } from '@utils';
+import { ControlsState, FractalsState, FractalState, NewFractalsState } from '@utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StatesService {
-  modifier = new FractalState(null);
-  sidenavTaps = new FractalState(null);
-  selectedForm = new FractalState(null);
-  currentFractal = new FractalState(null);
-
-  selectedChildren = new SelectedChildrenState([]);
   selectedControls = new ControlsState([]);
+  selectedSidenavTaps = new FractalState(null);
+  selectedFractalForm = new FractalState(null);
+  selectedParentFractal = new FractalState(null);
+  selectedChildrenFractals = new FractalsState([]);
+
+  newFractals = new NewFractalsState([]);
+
+  dirtyFractals = new FractalsState([]);
+  dirtyControls = new ControlsState([]);
 
   $paramMap = signal<ParamMap | null>(null);
-  $editPageActivated = computed<boolean>(() => !!this.$paramMap()?.get(CAppFractals.Modifiers));
+  $onEditPage = computed<boolean>(() => !!this.$paramMap()?.get(CAppFractals.Modifiers));
 
-  markSelectedFractalsPristine(): void {
-    this.selectedForm.clear();
-    this.selectedChildren.clear();
+  constructor() {
+    effect(() => {
+      this.newFractals.selectedParentFractal = this.selectedParentFractal.$value();
+    });
+  }
+
+  clearSelectedFractals(): void {
+    this.newFractals.clear();
+    this.selectedFractalForm.clear();
+    this.selectedChildrenFractals.clear();
   }
 }

@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class DataService {
   http = inject(HttpClient);
-  private readonly fractalApi = `${ENV.API}fractal`;
-  private readonly controlApi = `${ENV.API}control`;
+  private readonly fractalApi = `${ENV.API}/fractal`;
+  private readonly controlApi = `${ENV.API}/control`;
 
   getFractal(): Observable<IFractalDto> {
     return this.http.get<IFractalDto>(`${this.fractalApi}?id=${ENV.ID}`);

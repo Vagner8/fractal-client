@@ -19,7 +19,6 @@ export class FractalService {
     this.modifiers = app.fractals.getByCursor(CAppFractals.Modifiers);
     this.collections = app.fractals.getByCursor(CAppFractals.Collections);
     this.$app.set(app);
-    console.info('🚀 ~ app:', app);
   }
 
   async navigatePage(page: string): Promise<void> {

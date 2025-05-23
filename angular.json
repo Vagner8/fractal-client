@@ -24,15 +24,16 @@
             "outputPath": "dist/fractal-client",
             "index": "src/index.html",
             "browser": "src/main.ts",
-            "polyfills": [
-              "@angular/localize/init"
-            ],
+            "polyfills": ["@angular/localize/init"],
             "tsConfig": "tsconfig.app.json",
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/scss/styles.scss", "@angular/material/prebuilt-themes/indigo-pink.css"],
             "scripts": [],
             "stylePreprocessorOptions": {
-              "includePaths": ["src/scss"]
+              "includePaths": ["src/scss"],
+              "sass": {
+                "silenceDeprecations": ["mixed-decls", "color-functions", "global-builtin", "import"]
+              }
             }
           },
           "configurations": {

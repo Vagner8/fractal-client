@@ -29,11 +29,16 @@ export class ScreenComponent implements OnInit, Params {
 
   AppPages = CAppPages;
 
+  ngOnChanges(): void {
+    console.log('🚀 ~ ngOnChanges:', this.Page);
+  }
+
   ngOnInit(): void {
+    console.log('🚀 ~ ngOnInit:', this.Page);
     this.route.queryParamMap.subscribe(params => this.ss.$paramMap.set(params));
-    this.ss.sidenavTaps.set(this.fs.collections);
+    this.ss.selectedSidenavTaps.set(this.fs.collections);
     this.es.$managerEvent.set(this.Manager);
     const current = this.Page === CAppFractals.App ? this.fs.$app() : this.fs.collections?.fractals.get(this.Page);
-    current && this.ss.currentFractal.set(current);
+    current && this.ss.selectedParentFractal.set(current);
   }
 }

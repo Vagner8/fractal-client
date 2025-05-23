@@ -1,5 +1,5 @@
 <mat-expansion-panel
-  [class.selected]="ss.currentFractal.$value() === fractal"
+  [class.selected]="ss.selectedParentFractal.$value() === fractal"
   (closed)="closed.emit()"
   (afterExpand)="afterExpand.emit(fractal)"
   (afterCollapse)="afterCollapse.emit(fractal)">

@@ -30,10 +30,9 @@ export interface IFractalsState extends IArrayState<IFractal> {
   toggleAll(fractal: IFractal | undefined | null): void;
 }
 
-export interface ISelectedChildrenState extends IFractalsState {
-  dirtyFractals: IFractalsState;
-  dirtyControls: IControlsState;
-  retainNewChildren(): void;
+export interface INewFractalsState extends IFractalsState {
+  pushNew(): void;
+  setCopies(fractals: IFractal[]): void;
 }
 
 export interface IDataSplitState {

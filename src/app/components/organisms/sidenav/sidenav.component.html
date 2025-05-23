@@ -6,7 +6,7 @@
     mode="side"
     position="end">
     <div>
-      @if (ss.sidenavTaps.$value(); as taps) {
+      @if (ss.selectedSidenavTaps.$value(); as taps) {
         @let isModifiers = taps.cursor === AppFractals.Modifiers;
         @for (indicator of taps.controls.getOneLikeStrings('Oc'); track indicator) {
           @if (taps.fractals.get(indicator); as tap) {
