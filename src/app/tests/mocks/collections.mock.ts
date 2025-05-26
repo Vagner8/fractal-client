@@ -1,22 +1,12 @@
-import { IFractal, IFractalDto } from '@types';
+import { CMockCollections } from '@constants';
+import { IFractalDto } from '@types';
 import { v4 } from 'uuid';
-import { Fractal } from '../fractal';
 
 interface CollectionsMockProps {
   appId?: string;
 }
 
-interface CollectionsMockReturnValue {
-  fractalDto: IFractalDto;
-  emptyCollectionDto: IFractalDto;
-  populatedCollectionDto: IFractalDto;
-
-  fractal: IFractal;
-  emptyCollection: IFractal;
-  populatedCollection: IFractal;
-}
-
-export const collectionsMock = (props: CollectionsMockProps = {}): CollectionsMockReturnValue => {
+export const collectionsMock = (props: CollectionsMockProps = {}): IFractalDto => {
   const { appId = v4() } = props;
 
   const parentId = v4();
@@ -48,7 +38,7 @@ export const collectionsMock = (props: CollectionsMockProps = {}): CollectionsMo
       Oc: {
         id: v4(),
         parentId,
-        data: 'EmptyCollection:PopulatedCollection',
+        data: `${CMockCollections.EmptyCollection}:${CMockCollections.PopulatedCollection}`,
         field: 'text',
         indicator: 'Oc',
       },
@@ -61,7 +51,7 @@ export const collectionsMock = (props: CollectionsMockProps = {}): CollectionsMo
       },
     },
     fractals: {
-      EmptyCollection: {
+      [CMockCollections.EmptyCollection]: {
         id: emptyCollectionId,
         parentId,
         fractals: null,
@@ -69,7 +59,7 @@ export const collectionsMock = (props: CollectionsMockProps = {}): CollectionsMo
           Cursor: {
             id: v4(),
             parentId: emptyCollectionId,
-            data: 'EmptyCollection',
+            data: CMockCollections.EmptyCollection,
             field: 'Text',
             indicator: 'Cursor',
           },
@@ -89,14 +79,14 @@ export const collectionsMock = (props: CollectionsMockProps = {}): CollectionsMo
           },
         },
       },
-      PopulatedCollection: {
+      [CMockCollections.PopulatedCollection]: {
         id: populatedCollectionId,
         parentId,
         controls: {
           Name: {
             id: v4(),
             parentId: populatedCollectionId,
-            data: 'PopulatedCollection',
+            data: CMockCollections.PopulatedCollection,
             field: 'Text',
             indicator: 'Name',
           },
@@ -110,7 +100,7 @@ export const collectionsMock = (props: CollectionsMockProps = {}): CollectionsMo
           Occ: {
             id: v4(),
             parentId: populatedCollectionId,
-            data: 'indicator-1:indicator-2',
+            data: 'indicator_1:indicator_2',
             field: 'Text',
             indicator: 'Occ',
           },
@@ -212,15 +202,5 @@ export const collectionsMock = (props: CollectionsMockProps = {}): CollectionsMo
     },
   };
 
-  const emptyCollectionDto = fractalDto.fractals!['EmptyCollection'];
-  const populatedCollectionDto = fractalDto.fractals!['PopulatedCollection'];
-
-  return {
-    fractalDto,
-    emptyCollectionDto,
-    populatedCollectionDto,
-    fractal: new Fractal({ dto: fractalDto }),
-    emptyCollection: new Fractal({ dto: emptyCollectionDto }),
-    populatedCollection: new Fractal({ dto: populatedCollectionDto }),
-  };
+  return fractalDto;
 };

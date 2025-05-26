@@ -28,7 +28,7 @@ export class SidenavComponent {
       if (this.ss.$onEditPage()) {
         switch (tapCursor) {
           case CModifiers.Save:
-            return this.ss.dirtyFractals.$value().length === 0;
+            return this.ss.dirtyFractals.$value().length === 0 && this.ss.newFractals.$value().length === 0;
           case CModifiers.Edit:
             return this.ss.selectedFractalForm.isEmpty;
           case CModifiers.Delete:

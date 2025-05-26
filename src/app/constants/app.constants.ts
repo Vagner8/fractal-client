@@ -15,3 +15,4 @@ export const CAppParams = {
 export const CWords = { New: 'New' } as const;
 
 export const CHoldThreshold = 820;
+export const CTouchThreshold = 150;

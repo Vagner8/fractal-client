@@ -1,4 +1,4 @@
-import { FractalDto } from '../fractal';
+import { FractalDto } from '@utils';
 import { collectionsMock } from './collections.mock';
 import { modifiersMock } from './modifiers.mock';
 import { v4 } from 'uuid';
@@ -33,6 +33,6 @@ export const appMock: FractalDto = {
   },
   fractals: {
     Modifiers: modifiersMock({ appId }),
-    Collections: collectionsMock({ appId }).fractalDto,
+    Collections: collectionsMock({ appId }),
   },
 };

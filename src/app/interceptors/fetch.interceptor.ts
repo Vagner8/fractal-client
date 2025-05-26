@@ -6,6 +6,5 @@ export const fetchInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn)
 };
 
 export const handleError = (error: HttpErrorResponse): Observable<never> => {
-  console.error('🚀 ~ Error:', error.error);
   return throwError(() => new Error(error.error));
 };

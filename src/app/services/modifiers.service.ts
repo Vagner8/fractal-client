@@ -50,45 +50,12 @@ export class ModifiersService {
   }
 
   save(): void {
-    // for (const fractal of this.ss.selectedChildrenFractals.value) {
-    //   this.saveControls(fractal);
-    //   if (fractal.cursor === CWords.New && fractal.controls.size) {
-    //     this.saveFractals(fractal);
-    //   }
-    // }
+    console.log('🚀 ~ newFractals:', this.ss.newFractals.value);
+    console.log('🚀 ~ selectedChildrenFractals:', this.ss.selectedChildrenFractals.value);
+    console.log('🚀 ~ selectedFractalForm:', this.ss.selectedFractalForm.value);
 
-    this.ds.addFractals([]).subscribe();
-
-    // if (this.newFractals.length) {
-    //   this.ocCreated || this.updateControls.push(this.oc.dto);
-    //   this.occCreated || this.updateControls.push(this.occ.dto);
-    //   console.log('🚀 ~ this.newFractals:', this.newFractals);
-    // }
-
-    // if (this.newControls.length) {
-    //   console.log('🚀 ~ this.newControls:', this.newControls);
-    // }
-
-    // if (this.updateControls.length) {
-    //   console.log('🚀 ~ this.updateControls:', this.updateControls);
-    // }
-
-    // if (this.newFractals.length) {
-    //   this.ocCreated || this.updateControls.push(this.oc.dto);
-    //   this.occCreated || this.updateControls.push(this.occ.dto);
-    //   this.ds.addFractals(this.newFractals).subscribe();
-    // }
-
-    // if (this.newControls.length) {
-    //   this.ds.addControls(this.newControls).subscribe();
-    // }
-
-    // if (this.updateControls.length) {
-    //   this.ds.updateControls(this.updateControls).subscribe();
-    // }
-
-    // this.ss.selectedParentFractal.refresh();
-    // this.ss.selectedChildrenFractals.refresh();
+    this.ss.selectedParentFractal.refresh();
+    this.ss.selectedChildrenFractals.refresh();
   }
 
   private init(): void {
