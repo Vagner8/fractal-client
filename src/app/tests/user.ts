@@ -45,6 +45,9 @@ export class User {
 
   async heldModifier(text: keyof typeof CModifiers): Promise<void> {
     const modifier = await this.loader.getHarness(MatButtonHarness.with({ text }));
+    if (await modifier.isDisabled()) {
+      throw new Error(`The button with the text: ${text} is disabled`);
+    }
     const host = await modifier.host();
     await this.hold(host);
   }
@@ -54,8 +57,8 @@ export class User {
     await modifier.click();
   }
 
-  async touchedCollection(name: keyof typeof CMockCollections): Promise<void> {
-    const collectionTap = await this.loader.getHarness(MatButtonHarness.with({ text: name }));
+  async touchedCollection(text: keyof typeof CMockCollections): Promise<void> {
+    const collectionTap = await this.loader.getHarness(MatButtonHarness.with({ text: new RegExp(text, 'i') }));
     await collectionTap.click();
   }
 
@@ -63,10 +66,5 @@ export class User {
     this.fixture.detectChanges();
     const req = this.httpTesting.expectOne(`${ENV.API}/fractal?id=${ENV.ID}`);
     req.flush(appMock);
-  }
-
-  async goesToCollections(name: keyof typeof CMockCollections): Promise<void> {
-    await this.touchedManager();
-    await this.touchedCollection(name);
   }
 }

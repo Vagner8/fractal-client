@@ -56,6 +56,13 @@ export const collectionsMock = (props: CollectionsMockProps = {}): IFractalDto =
         parentId,
         fractals: null,
         controls: {
+          Name: {
+            id: v4(),
+            parentId: emptyCollectionId,
+            data: CMockCollections.EmptyCollection,
+            field: 'Text',
+            indicator: 'Name',
+          },
           Cursor: {
             id: v4(),
             parentId: emptyCollectionId,
@@ -69,13 +76,6 @@ export const collectionsMock = (props: CollectionsMockProps = {}): IFractalDto =
             data: 'data-icon',
             field: 'Text',
             indicator: 'Icon',
-          },
-          Name: {
-            id: v4(),
-            parentId: emptyCollectionId,
-            data: 'EmptyCollection',
-            field: 'Text',
-            indicator: 'Name',
           },
         },
       },
@@ -107,7 +107,7 @@ export const collectionsMock = (props: CollectionsMockProps = {}): IFractalDto =
           Cursor: {
             id: v4(),
             parentId: populatedCollectionId,
-            data: 'PopulatedCollection',
+            data: CMockCollections.PopulatedCollection,
             field: 'Text',
             indicator: 'Cursor',
           },

@@ -1,5 +1,5 @@
 import { FormControl, FormRecord } from '@angular/forms';
-import { CControlMutable, CWords } from '@constants';
+import { CControlMutable } from '@constants';
 import {
   IControl,
   IControlDto,
@@ -55,7 +55,6 @@ export class Control implements IControl {
 
   private syncFormWithDto(): void {
     this.form.valueChanges.subscribe(value => {
-      this.parent.cursor !== CWords.New && this.parent.updateControls.pushUnique(this.dto);
       for (const key in CControlMutable) {
         if (isConstControlMutableType(key)) {
           this.dto[key] = value[key];

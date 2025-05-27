@@ -1,7 +1,7 @@
 import { IControlsDto, IControls } from './control.types';
 import { FormRecord } from '@angular/forms';
-import { IControlsDtoState, IControlsState } from './states.types';
 import { AppError } from './common.types';
+import { INewControlsState } from './states.types';
 
 export type FractalsDto = Record<string, IFractalDto>;
 
@@ -26,7 +26,8 @@ export interface IFractal {
   controls: IControls;
   fractals: IFractals;
   isCollection: boolean;
-  newControls: IControlsState;
-  updateControls: IControlsDtoState;
+
+  newControls: INewControlsState;
+
   get ancestors(): IFractal[];
 }

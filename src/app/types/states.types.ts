@@ -31,9 +31,10 @@ export interface IFractalsState extends IArrayState<IFractal> {
 }
 
 export interface INewFractalsState extends IFractalsState {
-  pushNew(): void;
   setCopies(fractals: IFractal[]): void;
 }
+
+export interface INewControlsState extends IControlsState {}
 
 export interface IDataSplitState {
   strings: string[];

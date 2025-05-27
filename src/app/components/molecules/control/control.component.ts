@@ -28,8 +28,8 @@ export class ControlComponent implements OnInit {
         filter(() => this.control.parent.cursor !== CWords.New)
       )
       .subscribe(() => {
-        this.ss.dirtyControls.pushUnique(this.control);
-        this.ss.dirtyFractals.pushUnique(this.control.parent);
+        this.ss.dirtySelectedControls.pushUnique(this.control);
+        this.ss.dirtySelectedFractals.pushUnique(this.control.parent);
       });
   }
 

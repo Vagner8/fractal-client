@@ -5,26 +5,28 @@ import { ComponentFixture } from '@angular/core/testing';
 import { AppComponent } from 'app/app.component';
 import { MatCardHarness } from '@angular/material/card/testing';
 import { MatButtonHarness } from '@angular/material/button/testing';
-import { CModifiers } from '@constants';
+import { CModifiers, ENV } from '@constants';
+import { HttpTestingController } from '@angular/common/http/testing';
+import { MatInputHarness } from '@angular/material/input/testing';
+import { MatFormFieldHarness } from '@angular/material/form-field/testing';
 
 describe('AppComponent', () => {
   let user: User;
   let fixture: ComponentFixture<AppComponent>;
   let loader: HarnessLoader;
+  let httpTesting: HttpTestingController;
 
   beforeEach(async () => {
-    ({ user, loader, fixture } = await configureTestingModule());
+    ({ user, loader, fixture, httpTesting } = await configureTestingModule());
     await user.goesToStartPage();
   });
 
-  it('Should save a new fractal even when it was not dirty', async () => {
-    await user.goesToCollections('PopulatedCollection');
+  it('Should be able to render a new fractal when there is no parent Occ', async () => {
     await user.touchedManager();
-    const newTap = await loader.getHarness(MatButtonHarness.with({ text: CModifiers.New }));
-    expect(await newTap.isDisabled()).toBeFalse();
+    await user.touchedCollection('EmptyCollection');
+    await user.touchedManager();
     await user.touchedModifier('New');
-    const saveTap = await loader.getHarness(MatButtonHarness.with({ text: CModifiers.Save }));
-    expect(await saveTap.isDisabled()).toBeFalse();
-    await user.heldModifier('Save');
+    const inputs = await loader.getAllHarnesses(MatFormFieldHarness);
+    expect(inputs.length).toBe(3);
   });
 });
