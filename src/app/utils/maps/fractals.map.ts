@@ -1,5 +1,5 @@
 import { IFractal, IFractals, AppError } from '@types';
-import { Fractal } from '../factories/fractal';
+import { Fractal } from '../factories/fractal.factory';
 import { CIndicatorDuplicationError } from '@constants';
 
 export class FractalsMap extends Map<string, IFractal> implements IFractals {

@@ -3,7 +3,7 @@ import { FormRecord } from '@angular/forms';
 import { CAppFractals, CWords } from '@constants';
 import { ControlsMap } from '../maps/controls.map';
 import { FractalsMap } from '../maps/fractals.map';
-import { FractalDto } from './fractal-dto';
+import { FractalDto } from './fractal-dto.factory';
 import { NewControlsState } from '../states/new-controls.state';
 
 interface FractalProps {

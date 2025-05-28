@@ -2,7 +2,7 @@ import { computed, Injectable, signal } from '@angular/core';
 import { ParamMap } from '@angular/router';
 import { CAppFractals } from '@constants';
 import { ControlsState, FractalsState, FractalState, NewFractalsState } from '@utils';
-import { NewControlsState } from 'app/utils/fractal/states/new-controls.state';
+import { NewControlsState } from 'app/utils/states/new-controls.state';
 
 @Injectable({
   providedIn: 'root',

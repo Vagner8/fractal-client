@@ -52,10 +52,6 @@ export class ModifiersService {
   }
 
   save(): void {
-    console.log('🚀 ~ newFractals:', this.ss.newFractals.value);
-    console.log('🚀 ~ selectedChildrenFractals:', this.ss.selectedChildrenFractals.value);
-    console.log('🚀 ~ selectedFractalForm:', this.ss.selectedFractalForm.value);
-
     if (!this.ss.newFractals.isEmpty) {
       const newFractalsDto: IFractalDto[] = [];
 

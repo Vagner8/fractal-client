@@ -13,7 +13,7 @@ import {
 import { BoolState } from '../states';
 import { isConstControlMutableType } from 'app/utils/guards';
 import { DataSplitState } from '../states/data-split.state';
-import { ControlDto } from './control-dto';
+import { ControlDto } from './control-dto.factory';
 
 interface ControlProps {
   parent: IFractal;
