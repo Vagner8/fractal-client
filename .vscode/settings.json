@@ -1,5 +1,5 @@
 {
-  "cSpell.words": ["panend", "Spliteble", "unsubscriber"],
+  "cSpell.words": ["panend", "Splitable", "Spliteble", "unsubscriber"],
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "[html]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

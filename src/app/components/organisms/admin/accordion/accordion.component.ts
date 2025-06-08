@@ -20,10 +20,10 @@ export class AccordionComponent {
   AppFractals = CAppFractals;
 
   closed(fractal: IFractal): void {
-    this.ss.selectedParentFractal.set(fractal.parent);
+    // this.ss.selectedFractal.set(fractal.parent);
   }
 
   afterExpand(fractal: IFractal): void {
-    this.ss.selectedParentFractal.set(fractal);
+    // this.ss.selectedParentFractal.set(fractal);
   }
 }

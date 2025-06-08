@@ -23,18 +23,13 @@ export interface IBoolState extends IBaseState<boolean> {
   toggle(): void;
 }
 
+export interface IFractalState extends IBaseState<IFractal | null> {
+  toggle(fractal: IFractal): void;
+}
+
 export interface IControlsState extends IArrayState<IControl> {}
 export interface IControlsDtoState extends IArrayState<IControlDto> {}
-
-export interface IFractalsState extends IArrayState<IFractal> {
-  toggleAll(fractal: IFractal | undefined | null): void;
-}
-
-export interface INewFractalsState extends IFractalsState {
-  setCopies(fractals: IFractal[]): void;
-}
-
-export interface INewControlsState extends IControlsState {}
+export interface IFractalsState extends IArrayState<IFractal> {}
 
 export interface IDataSplitState {
   strings: string[];

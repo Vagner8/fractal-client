@@ -2,7 +2,6 @@ import { HarnessLoader, TestElement } from '@angular/cdk/testing';
 import { ManagerHarness } from '@components/molecules';
 import { appMock } from './mocks';
 import { ComponentFixture } from '@angular/core/testing';
-import { AppComponent } from 'app/app.component';
 import { HttpTestingController } from '@angular/common/http/testing';
 import { CHoldThreshold, CMockCollections, CModifiers, ENV } from '@constants';
 import { MatButtonHarness } from '@angular/material/button/testing';
@@ -13,9 +12,9 @@ interface ReturnType<T> {
   harness: T;
 }
 
-export class User {
+export class User<T> {
   constructor(
-    private readonly fixture: ComponentFixture<AppComponent>,
+    private readonly fixture: ComponentFixture<T>,
     private readonly loader: HarnessLoader,
     private readonly httpTesting: HttpTestingController
   ) {}

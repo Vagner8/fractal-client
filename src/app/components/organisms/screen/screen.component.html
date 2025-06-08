@@ -1,5 +1,5 @@
 @let app = fs.$app();
-@let current = ss.selectedParentFractal.$value();
+@let selectedFractal = ss.selectedFractal.$value();
 
 @if (app) {
   @if (Modifiers) {
@@ -15,8 +15,8 @@
         <app-admin [fractal]="app" />
       }
       @default {
-        @if (current && current.fractals.size) {
-          <app-table [fractal]="current" />
+        @if (selectedFractal) {
+          <app-table [$fractal]="selectedFractal" />
         }
       }
     }

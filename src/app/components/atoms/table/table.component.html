@@ -1,16 +1,15 @@
-@let data = this[like];
-@let columns = data.columns();
-@let dataSource = data.dataSource();
+@if ($fractal()?.tableView; as tableView) {
+  @let view = $view();
+  @let columns = tableView.columns(view);
 
-@if (columns && dataSource) {
-  <table mat-table [dataSource]="dataSource" class="table">
+  <table mat-table [dataSource]="tableView.dataSource(view)" class="table">
     @for (column of columns; track column) {
       <ng-container [matColumnDef]="column">
         <th mat-header-cell *matHeaderCellDef>
           {{ column }}
         </th>
-        <td mat-cell *matCellDef="let indicator; let i = index">
-          {{ column === positionColumn ? i + 1 : data.tdContent(indicator, column) }}
+        <td mat-cell *matCellDef="let indicator; let index = index">
+          {{ tableView.tdContent({ view, index, column, indicator }) }}
         </td>
       </ng-container>
     }
@@ -19,8 +18,8 @@
       mat-row
       *matRowDef="let row; columns: columns"
       appTap
-      (hold)="data?.onHold?.(row)"
-      (touch)="data?.onTouch?.(row)"
-      [class.selected-row]="data?.selected?.(row)"></tr>
+      (hold)="tableView.onChildHold()"
+      (touch)="tableView.onChildTouch(row)"
+      [class.selected-row]="tableView.isChildSelected(row)"></tr>
   </table>
 }

@@ -1,5 +1,9 @@
+const BASE_API = 'https://localhost:7002/api';
+
 export const ENV = {
-  ID: '3d3689a6-5ed5-4ce4-8d9a-3565020801fc',
+  ID: 'b83f1bb0-3a36-4afd-aa78-60de62a0c314',
   API: 'https://localhost:7002/api',
-  BASE_API: 'http://localhost:4200',
+  BASE_API,
+  FRACTAL_API: `${BASE_API}/fractal`,
+  CONTROL_API: `${BASE_API}/control`,
 };

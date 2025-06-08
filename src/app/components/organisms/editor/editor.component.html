@@ -1,20 +1,10 @@
-@let newFractals = ss.newFractals.$value();
-@let selectedChildrenFractals = ss.selectedChildrenFractals.$value();
-
 <div class="editor">
-  @if (newFractals.length > 0) {
-    <app-list [dataSource]="newFractals" [templateRef]="controls" />
-  }
-  @if (selectedChildrenFractals.length > 0) {
-    <app-list [dataSource]="selectedChildrenFractals" [templateRef]="controls" />
-  }
+  <app-list [dataSource]="[]" [templateRef]="controls" />
+  <app-list [dataSource]="[]" [templateRef]="controls" />
 </div>
 
 <ng-template #controls let-fractal>
-  <app-card
-    [title]="fractal.cursor"
-    [selected]="ss.selectedFractalForm.$value() === fractal"
-    (clicked)="formCardClicked(fractal)">
+  <app-card [title]="fractal.cursor" [selected]="true" (clicked)="formCardClicked(fractal)">
     <div class="controls">
       @for (indicator of dataSource; track $index) {
         @if (fractal.controls.get(indicator); as control) {

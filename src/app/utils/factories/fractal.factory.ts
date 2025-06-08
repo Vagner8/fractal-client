@@ -1,10 +1,11 @@
-import { IFractal, IFractalDto, IControls, IFractals, INewControlsState } from '@types';
+import { IFractal, IFractalDto, IControls, IFractals, IFractalSetStates, IFractalTableView } from '@types';
 import { FormRecord } from '@angular/forms';
 import { CAppFractals, CWords } from '@constants';
 import { ControlsMap } from '../maps/controls.map';
 import { FractalsMap } from '../maps/fractals.map';
 import { FractalDto } from './fractal-dto.factory';
-import { NewControlsState } from '../states/new-controls.state';
+import { FractalStates } from './fractal-states.factory';
+import { FractalTableView } from './fractal-table-view.factory';
 
 interface FractalProps {
   dto?: IFractalDto;
@@ -20,7 +21,8 @@ export class Fractal implements IFractal {
   fractals: IFractals;
   isCollection: boolean;
 
-  newControls: INewControlsState;
+  states: IFractalSetStates;
+  tableView: IFractalTableView;
 
   constructor(props?: FractalProps) {
     const { dto, parent = { dto: { id: 'no parent' } } as IFractal } = props || {};
@@ -29,9 +31,11 @@ export class Fractal implements IFractal {
     this.parent = parent || ({} as IFractal);
     this.controls = new ControlsMap(this);
     this.fractals = new FractalsMap(this);
-    this.newControls = new NewControlsState([]);
     this.cursor = this.controls.getOne('Cursor')?.dto.data ?? CWords.New;
     this.isCollection = parent?.cursor === CAppFractals.Collections;
+
+    this.states = new FractalStates(this);
+    this.tableView = new FractalTableView(this);
   }
 
   get ancestors(): IFractal[] {

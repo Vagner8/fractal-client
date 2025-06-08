@@ -1,18 +1,23 @@
-@let dataForm = control.getFromControl('data');
+@if (shouldRender) {
+  @let dataForm = control.getFromControl('data');
 
-@if (fullEditMode) {
-  <app-card [selected]="ss.selectedControls.has(control)" (clicked)="controlClicked()">
-    <app-input [form]="control.getFromControl('indicator')" [label]="ControlMutable.indicator" />
-    <app-select [opts]="ControlFieldsValues" [form]="control.getFromControl('field')" [label]="ControlMutable.field" />
-    <app-input [form]="control.getFromControl('data')" [label]="ControlMutable.data" />
-  </app-card>
-} @else {
-  @switch (control.dto.field) {
-    @case (ControlFields.Select) {
-      <app-select [label]="control.dto.indicator" [opts]="control.dto.data.split(':')" [form]="dataForm" />
-    }
-    @default {
-      <app-input [label]="control.dto.indicator" [form]="dataForm" />
+  @if (fullEditMode) {
+    <app-card [selected]="true" (clicked)="controlClicked()">
+      <app-input [form]="control.getFromControl('indicator')" [label]="ControlMutable.indicator" />
+      <app-select
+        [opts]="ControlFieldsValues"
+        [form]="control.getFromControl('field')"
+        [label]="ControlMutable.field" />
+      <app-input [form]="control.getFromControl('data')" [label]="ControlMutable.data" />
+    </app-card>
+  } @else {
+    @switch (control.dto.field) {
+      @case (ControlFields.Select) {
+        <app-select [label]="control.dto.indicator" [opts]="control.dto.data.split(':')" [form]="dataForm" />
+      }
+      @default {
+        <app-input [label]="control.dto.indicator" [form]="dataForm" />
+      }
     }
   }
 }

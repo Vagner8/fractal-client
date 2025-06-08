@@ -24,37 +24,12 @@ export class SidenavComponent {
   AppFractals = CAppFractals;
 
   disabled(tapCursor: string): { signal: Signal<boolean> } {
-    const signal = computed(() => {
-      if (this.ss.$onEditPage()) {
-        switch (tapCursor) {
-          case CModifiers.Save:
-            return this.ss.dirtySelectedFractals.$value().length === 0 && this.ss.newFractals.$value().length === 0;
-          case CModifiers.Edit:
-            return this.ss.selectedFractalForm.isEmpty;
-          case CModifiers.Delete:
-            return this.ss.selectedFractalForm.isEmpty;
-          default:
-            return false;
-        }
-      } else {
-        switch (tapCursor) {
-          case CModifiers.Save:
-            return true;
-          case CModifiers.Edit:
-            return this.ss.selectedChildrenFractals.isEmpty;
-          case CModifiers.Delete:
-            return this.ss.selectedChildrenFractals.isEmpty;
-          default:
-            return false;
-        }
-      }
-    });
+    const signal = computed(() => Boolean(tapCursor));
     return { signal };
   }
 
   onPageTouched(page: IFractal): void {
-    this.ss.selectedParentFractal.set(page);
-    this.ss.clearSelectedFractals();
+    this.ss.selectedFractal.set(page);
     this.fs.navigatePage(page.cursor);
   }
 
@@ -67,8 +42,6 @@ export class SidenavComponent {
         // this.ms.delete(current);
         break;
     }
-
-    this.ss.selectedParentFractal.refresh();
   };
 
   onModifierTouched(modifier: IFractal): void {

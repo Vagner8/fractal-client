@@ -1,7 +1,8 @@
 import { IControlsDto, IControls } from './control.types';
 import { FormRecord } from '@angular/forms';
 import { AppError } from './common.types';
-import { INewControlsState } from './states.types';
+import { IControlsState, IFractalsState, IFractalState } from './states.types';
+import { IFractalTableView } from './fractal-table-view.types';
 
 export type FractalsDto = Record<string, IFractalDto>;
 
@@ -18,6 +19,20 @@ export interface IFractals extends Map<string, IFractal> {
   getByCursor(cursor: string | undefined, fractals?: IFractals): IFractal | null;
 }
 
+export interface IFractalSetStates {
+  selectedForm: IFractalState;
+
+  newControls: IControlsState;
+  dirtyControls: IControlsState;
+  selectedControls: IControlsState;
+
+  newChildren: IFractalsState;
+  selectedChildren: IFractalsState;
+  selectedChildrenForms: IFractalsState;
+
+  toggleAllSelectedChildren(): void;
+}
+
 export interface IFractal {
   dto: IFractalDto;
   form: FormRecord;
@@ -27,7 +42,8 @@ export interface IFractal {
   fractals: IFractals;
   isCollection: boolean;
 
-  newControls: INewControlsState;
-
   get ancestors(): IFractal[];
+
+  states: IFractalSetStates;
+  tableView: IFractalTableView;
 }

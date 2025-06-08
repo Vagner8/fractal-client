@@ -36,7 +36,7 @@ export class ControlsMap extends Map<string, IControl> implements IControls {
     return this.getOne(search)?.dto.data ?? '';
   }
 
-  getOneLikeStrings(search: SearchControlData): string[] {
+  getOneSplitable(search: SearchControlData): string[] {
     return this.getOne(search)?.dataSplit.strings ?? [];
   }
 

@@ -33,7 +33,5 @@ export class ScreenComponent implements OnInit, Params {
     this.route.queryParamMap.subscribe(params => this.ss.$paramMap.set(params));
     this.ss.selectedSidenavTaps.set(this.fs.collections);
     this.es.$managerEvent.set(this.Manager);
-    const current = this.Page === CAppFractals.App ? this.fs.$app() : this.fs.collections?.fractals.get(this.Page);
-    current && this.ss.selectedParentFractal.set(current);
   }
 }

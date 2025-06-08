@@ -24,7 +24,7 @@ export interface IControls extends Map<string, IControl> {
   setOne(control: IControl): [IControl, AppError | null];
   getOne(indicator: SearchControlData): IControl | undefined;
   getOneData(search: SearchControlData): string;
-  getOneLikeStrings(search: SearchControlData): string[];
+  getOneSplitable(search: SearchControlData): string[];
   getOneWithAutoCreation(indicator: string): [IControl, boolean];
 }
 

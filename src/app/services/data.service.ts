@@ -9,33 +9,31 @@ import { Observable } from 'rxjs';
 })
 export class DataService {
   http = inject(HttpClient);
-  private readonly fractalApi = `${ENV.API}/fractal`;
-  private readonly controlApi = `${ENV.API}/control`;
 
   getFractal(): Observable<IFractalDto> {
-    return this.http.get<IFractalDto>(`${this.fractalApi}?id=${ENV.ID}`);
+    return this.http.get<IFractalDto>(`${ENV.FRACTAL_API}?id=${ENV.ID}`);
   }
 
   addFractals(dto: IFractalDto[]): Observable<IFractalDto[]> {
-    return this.http.post<IFractalDto[]>(this.fractalApi, dto);
+    return this.http.post<IFractalDto[]>(ENV.FRACTAL_API, dto);
   }
 
   deleteFractals(body: IFractalDto[]): Observable<IFractalDto[]> {
-    return this.http.delete<IFractalDto[]>(this.fractalApi, {
+    return this.http.delete<IFractalDto[]>(ENV.FRACTAL_API, {
       body,
     });
   }
 
   addControls(dto: IControlDto[]): Observable<IControlDto[]> {
-    return this.http.post<IControlDto[]>(this.controlApi, dto);
+    return this.http.post<IControlDto[]>(ENV.CONTROL_API, dto);
   }
 
   updateControls(dto: IControlDto[]): Observable<IControlDto[]> {
-    return this.http.put<IControlDto[]>(this.controlApi, dto);
+    return this.http.put<IControlDto[]>(ENV.CONTROL_API, dto);
   }
 
   deleteControls(body: IControlDto[]): Observable<IControlDto[]> {
-    return this.http.delete<IControlDto[]>(this.controlApi, {
+    return this.http.delete<IControlDto[]>(ENV.CONTROL_API, {
       body,
     });
   }

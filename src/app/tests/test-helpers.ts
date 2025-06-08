@@ -1,27 +1,28 @@
+import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
+import { provideHttpClient } from '@angular/common/http';
+import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
+import { provideExperimentalZonelessChangeDetection, Type } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { DataService, FractalService } from '@services';
-import { AppComponent } from 'app/app.component';
+import { routes } from 'app/app.routes';
 import { User } from './user';
 import { HarnessLoader } from '@angular/cdk/testing';
-import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { routes } from 'app/app.routes';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideHttpClient } from '@angular/common/http';
-import { provideExperimentalZonelessChangeDetection } from '@angular/core';
-import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 
-interface ConfigureTestingModuleReturnType {
-  user: User;
-  fixture: ComponentFixture<AppComponent>;
+interface ConfigureTestingModuleReturnType<T> {
+  user: User<T>;
   loader: HarnessLoader;
-  component: AppComponent;
+  fixture: ComponentFixture<T>;
+  component: T;
   httpTesting: HttpTestingController;
 }
 
-export const configureTestingModule = async (): Promise<ConfigureTestingModuleReturnType> => {
+export const configureTestingModule = async <T>(
+  testComponent: Type<T>
+): Promise<ConfigureTestingModuleReturnType<T>> => {
   await TestBed.configureTestingModule({
-    imports: [AppComponent],
+    imports: [testComponent],
     providers: [
       DataService,
       FractalService,
@@ -33,11 +34,11 @@ export const configureTestingModule = async (): Promise<ConfigureTestingModuleRe
     ],
   }).compileComponents();
 
-  const fixture = TestBed.createComponent(AppComponent);
+  const fixture = TestBed.createComponent(testComponent);
   const loader = TestbedHarnessEnvironment.loader(fixture);
   const component = fixture.componentInstance;
   const httpTesting = TestBed.inject(HttpTestingController);
-  const user = new User(fixture, loader, httpTesting);
+  const user = new User<T>(fixture, loader, httpTesting);
 
   return {
     user,

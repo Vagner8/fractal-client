@@ -1,6 +1,6 @@
 import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { CardComponent, InputComponent, SelectComponent } from '@components/atoms';
-import { ConstControlFields, CControlMutable, CWords } from '@constants';
+import { ConstControlFields, CControlMutable, CWords, CInternalIndicators } from '@constants';
 import { StatesService } from '@services';
 import { IControl } from '@types';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -27,14 +27,14 @@ export class ControlComponent implements OnInit {
         takeUntilDestroyed(this.destroyRef),
         filter(() => this.control.parent.cursor !== CWords.New)
       )
-      .subscribe(() => {
-        this.ss.dirtySelectedControls.pushUnique(this.control);
-        this.ss.dirtySelectedFractals.pushUnique(this.control.parent);
-      });
+      .subscribe(() => this.control.parent.states.dirtyControls.push(this.control));
+  }
+
+  get shouldRender(): boolean {
+    return !Object.hasOwn(CInternalIndicators, this.control.dto.indicator);
   }
 
   controlClicked(): void {
-    this.ss.selectedFractalForm.clear();
-    this.ss.selectedControls.toggle(this.control);
+    this.control.parent.states.selectedControls.push(this.control);
   }
 }
