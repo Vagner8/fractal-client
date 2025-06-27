@@ -5,7 +5,7 @@
 // import { AppComponent } from 'app/app.component';
 // import { MatCardHarness } from '@angular/material/card/testing';
 // import { MatButtonHarness } from '@angular/material/button/testing';
-// import { CIndicators, CModifiers, ENV } from '@constants';
+// import { INDICATORS, MODIFIERS, ENV } from '@constants';
 // import { HttpTestingController } from '@angular/common/http/testing';
 // import { MatInputHarness } from '@angular/material/input/testing';
 // import { MatFormFieldHarness } from '@angular/material/form-field/testing';
@@ -37,7 +37,7 @@ describe('Should create new fractal(s) #', () => {
     //   it('If the new fractal has no dirty controls', async () => {
     //     const fractalReq = httpTesting.expectOne(ENV.FRACTAL_API);
     //     const [newFractalDto] = fractalReq.request.body as [FractalDto];
-    //     expect(newFractalDto.controls[CIndicators.Cursor].data).toBe('1');
+    //     expect(newFractalDto.controls[INDICATORS.CURSOR].data).toBe('1');
     //   });
     // });
   });

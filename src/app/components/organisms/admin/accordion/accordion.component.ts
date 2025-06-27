@@ -4,7 +4,7 @@ import { PanelComponent } from '../panel/panel.component';
 import { IFractal } from '@types';
 import { StatesService } from '@services';
 import { TableComponent } from '@components/atoms';
-import { CAppFractals } from '@constants';
+import { APP_FRACTALS } from '@constants';
 
 @Component({
   selector: 'app-accordion',
@@ -17,7 +17,7 @@ export class AccordionComponent {
   @Input() ancestors!: IFractal[];
   ss = inject(StatesService);
 
-  AppFractals = CAppFractals;
+  AppFractals = APP_FRACTALS;
 
   closed(fractal: IFractal): void {
     // this.ss.selectedFractal.set(fractal.parent);

@@ -1,39 +1,10 @@
-import { FormControl, FormRecord } from '@angular/forms';
-import { AppError, SearchControlData } from './common.types';
-import { ConstControlMutableType } from './constants.types';
-import { IFractal } from './fractal.types';
-import { IBoolState, IDataSplitState } from './states.types';
+export type ControlsDto = Record<string, ControlDto>;
+export type ControlType = 'String' | 'String[]';
 
-export type ControlsMap = Record<string, IControl>;
-export type ControlForm = FormRecord<FormControl>;
-export type IControlsDto = Record<string, IControlDto>;
-
-export interface IControlMutableDto {
-  data: string;
-  field: string;
-  indicator: string;
-}
-
-export interface IControlDto extends IControlMutableDto {
+export interface ControlDto {
   id: string;
+  data: string;
+  type: ControlType;
   parentId: string;
-}
-
-export interface IControls extends Map<string, IControl> {
-  parent: IFractal;
-  setOne(control: IControl): [IControl, AppError | null];
-  getOne(indicator: SearchControlData): IControl | undefined;
-  getOneData(search: SearchControlData): string;
-  getOneSplitable(search: SearchControlData): string[];
-  getOneWithAutoCreation(indicator: string): [IControl, boolean];
-}
-
-export interface IControl {
-  dto: IControlDto;
-  form: ControlForm;
-  parent: IFractal;
-  dataSplit: IDataSplitState;
-  fullEditMode: IBoolState;
-  set(value: string): IControl;
-  getFromControl(name: ConstControlMutableType): FormControl;
+  indicator: string;
 }

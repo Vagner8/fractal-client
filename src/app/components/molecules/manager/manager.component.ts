@@ -3,9 +3,7 @@ import { MatButtonModule } from '@mat';
 import { TapDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
 import { EventService, FractalService, StatesService } from '@services';
-import { CAppEvents } from '@constants';
-
-const { Hold, Touch } = CAppEvents;
+import { APP_EVENTS } from '@constants';
 
 @Component({
   selector: 'app-manager',
@@ -15,25 +13,25 @@ const { Hold, Touch } = CAppEvents;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ManagerComponent {
-  prevEvent: string = Touch;
+  prevEvent: string = APP_EVENTS.TOUCH;
 
   es = inject(EventService);
-  private readonly ss = inject(StatesService);
-  private readonly fs = inject(FractalService);
+  ss = inject(StatesService);
+  fs = inject(FractalService);
 
   onHold(): void {
-    this.prevEvent = Hold;
-    this.es.$managerEvent.set(Hold);
-    this.fs.navigateManager(Hold);
+    this.prevEvent = APP_EVENTS.HOLD;
+    this.es.$managerEvent.set(APP_EVENTS.HOLD);
+    this.fs.navigateManager(APP_EVENTS.HOLD);
   }
 
   onTouch(): void {
     const { modifiers, collections } = this.fs;
-    if (this.prevEvent === Touch) {
-      this.ss.selectedSidenavTaps.$value.update(prev => (prev === collections ? modifiers : collections));
+    if (this.prevEvent === APP_EVENTS.TOUCH) {
+      this.ss.$sidenavTaps.update(prev => (prev === collections ? modifiers : collections));
     }
-    this.prevEvent = Touch;
-    this.es.$managerEvent.set(Touch);
-    this.fs.navigateManager(Touch);
+    this.prevEvent = APP_EVENTS.TOUCH;
+    this.es.$managerEvent.set(APP_EVENTS.TOUCH);
+    this.fs.navigateManager(APP_EVENTS.TOUCH);
   }
 }

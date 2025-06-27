@@ -1,6 +1,6 @@
 @if (fs.$app()) {
-  <app-header />
-  <app-sidenav />
+  <!-- <app-header /> -->
+  <app-sidenav [$taps]="ss.$sidenavTaps()" />
   <app-toolbar />
 } @else {
   <div class="spinner">

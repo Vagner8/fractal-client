@@ -2,8 +2,7 @@ import { HarnessLoader, TestElement } from '@angular/cdk/testing';
 import { ManagerHarness } from '@components/molecules';
 import { appMock } from './mocks';
 import { ComponentFixture } from '@angular/core/testing';
-import { HttpTestingController } from '@angular/common/http/testing';
-import { CHoldThreshold, CMockCollections, CModifiers, ENV } from '@constants';
+import { HOLD_THRESHOLD, MOCK_COLLECTIONS, MODIFIERS, ENV } from '@constants';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatRowHarness } from '@angular/material/table/testing';
 
@@ -15,12 +14,12 @@ interface ReturnType<T> {
 export class User<T> {
   constructor(
     private readonly fixture: ComponentFixture<T>,
-    private readonly loader: HarnessLoader,
-    private readonly httpTesting: HttpTestingController
+    private readonly loader: HarnessLoader
+    // private readonly httpTesting: HttpTestingController
   ) {}
 
   async hold(host: TestElement): Promise<void> {
-    await this.touch(host, CHoldThreshold);
+    await this.touch(host, HOLD_THRESHOLD);
   }
 
   async touch(host: TestElement, threshold: number = 0): Promise<void> {
@@ -42,7 +41,7 @@ export class User<T> {
     await managerButton.click();
   }
 
-  async heldModifier(text: keyof typeof CModifiers): Promise<void> {
+  async heldModifier(text: keyof typeof MODIFIERS): Promise<void> {
     const modifier = await this.loader.getHarness(MatButtonHarness.with({ text }));
     if (await modifier.isDisabled()) {
       throw new Error(`The button with the text: ${text} is disabled`);
@@ -51,19 +50,19 @@ export class User<T> {
     await this.hold(host);
   }
 
-  async touchedModifier(text: keyof typeof CModifiers): Promise<void> {
+  async touchedModifier(text: keyof typeof MODIFIERS): Promise<void> {
     const modifier = await this.loader.getHarness(MatButtonHarness.with({ text }));
     await modifier.click();
   }
 
-  async touchedCollection(text: keyof typeof CMockCollections): Promise<void> {
+  async touchedCollection(text: keyof typeof MOCK_COLLECTIONS): Promise<void> {
     const collectionTap = await this.loader.getHarness(MatButtonHarness.with({ text: new RegExp(text, 'i') }));
     await collectionTap.click();
   }
 
-  async goesToStartPage(): Promise<void> {
-    this.fixture.detectChanges();
-    const req = this.httpTesting.expectOne(`${ENV.API}/fractal?id=${ENV.ID}`);
-    req.flush(appMock);
-  }
+  // async goesToStartPage(): Promise<void> {
+  //   this.fixture.detectChanges();
+  //   const req = this.httpTesting.expectOne(`${ENV.API}/fractal?id=${ENV.ID}`);
+  //   req.flush(appMock);
+  // }
 }

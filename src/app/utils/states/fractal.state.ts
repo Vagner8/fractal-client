@@ -1,8 +1,12 @@
-import { IFractal, IFractalState } from '@types';
-import { BaseState } from './base.state';
+import { signal } from '@angular/core';
+import { Fractal } from '@types';
 
-export class FractalState extends BaseState<IFractal | null> implements IFractalState {
-  toggle(fractal: IFractal): void {
-    this.set(this.value === fractal ? null : fractal);
-  }
+export class FractalState {
+  value: Fractal | null = null;
+  $value = signal<Fractal | null>(null);
+
+  set = (fractals: Fractal): void => {
+    this.value = fractals;
+    this.$value.set(fractals);
+  };
 }

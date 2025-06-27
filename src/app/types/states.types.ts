@@ -1,6 +1,5 @@
 import { WritableSignal } from '@angular/core';
-import { IControl, IControlDto } from './control.types';
-import { IFractal } from './fractal.types';
+import { Fractal } from './fractal.types';
 
 export interface IBaseState<T> {
   value: T;
@@ -23,13 +22,11 @@ export interface IBoolState extends IBaseState<boolean> {
   toggle(): void;
 }
 
-export interface IFractalState extends IBaseState<IFractal | null> {
-  toggle(fractal: IFractal): void;
+export interface IFractalState extends IBaseState<Fractal | null> {
+  toggle(fractal: Fractal): void;
 }
 
-export interface IControlsState extends IArrayState<IControl> {}
-export interface IControlsDtoState extends IArrayState<IControlDto> {}
-export interface IFractalsState extends IArrayState<IFractal> {}
+export interface IFractalsState extends IArrayState<Fractal> {}
 
 export interface IDataSplitState {
   strings: string[];

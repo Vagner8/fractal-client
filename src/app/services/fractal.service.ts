@@ -1,36 +1,40 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { CAppFractals, CAppParams } from '@constants';
-import { IFractal, IFractalDto } from '@types';
-import { Fractal } from '@utils';
+import { APP_FRACTALS, APP_PARAMS } from '@constants';
+import { ConstantsValues, Fractal, FractalDto } from '@types';
+import { FractalBase } from '@utils';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FractalService {
   private readonly router = inject(Router);
-  $app = signal<IFractal | null>(null);
+  $app = signal<Fractal | null>(null);
 
-  modifiers: IFractal | null = null;
-  collections: IFractal | null = null;
+  manager!: Fractal;
+  modifiers!: Fractal;
+  collections!: Fractal;
 
-  init(dto: IFractalDto): void {
-    const app = new Fractal({ dto });
-    this.modifiers = app.fractals.getByCursor(CAppFractals.Modifiers);
-    this.collections = app.fractals.getByCursor(CAppFractals.Collections);
+  init(dto: FractalDto): void {
+    const app = new FractalBase(dto);
+    console.log('🚀 ~ app:', app);
+
+    [this.manager, this.modifiers, this.collections] = (
+      ['Manager', 'Modifiers', 'Collections'] satisfies ConstantsValues<typeof APP_FRACTALS>[]
+    ).map(app.getChildRecursively);
     this.$app.set(app);
   }
 
   async navigatePage(page: string): Promise<void> {
-    this.navigate([page], { [CAppParams.Modifiers]: null });
+    this.navigate([page], { [APP_PARAMS.MODIFIERS]: null });
   }
 
   async navigateManager(param: string | null): Promise<void> {
-    this.navigate([], { [CAppParams.Manager]: param });
+    this.navigate([], { [APP_PARAMS.MANAGER]: param });
   }
 
   async navigateModifier(param: string | null): Promise<void> {
-    this.navigate([], { [CAppParams.Modifiers]: param });
+    this.navigate([], { [APP_PARAMS.MODIFIERS]: param });
   }
 
   async navigate(commands: unknown[], queryParams?: NavigationExtras['queryParams']): Promise<void> {

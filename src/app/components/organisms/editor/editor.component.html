@@ -1,10 +1,10 @@
-<div class="editor">
+<!-- <div class="editor">
   <app-list [dataSource]="[]" [templateRef]="controls" />
   <app-list [dataSource]="[]" [templateRef]="controls" />
 </div>
 
 <ng-template #controls let-fractal>
-  <app-card [title]="fractal.cursor" [selected]="true" (clicked)="formCardClicked(fractal)">
+  <app-card [title]="fractal.cursor" [selected]="true">
     <div class="controls">
       @for (indicator of dataSource; track $index) {
         @if (fractal.controls.get(indicator); as control) {
@@ -16,4 +16,4 @@
       }
     </div>
   </app-card>
-</ng-template>
+</ng-template> -->

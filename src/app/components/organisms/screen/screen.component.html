@@ -8,15 +8,15 @@
 
   @if (Page && !Modifiers) {
     @switch (Page) {
-      @case (AppPages.Home) {
+      @case (AppPages.HOME) {
         <h1>Home</h1>
       }
-      @case (AppPages.App) {
-        <app-admin [fractal]="app" />
+      @case (AppPages.APP) {
+        <!-- <app-admin [fractal]="app" /> -->
       }
       @default {
         @if (selectedFractal) {
-          <app-table [$fractal]="selectedFractal" />
+          <app-children [$fractal]="selectedFractal" />
         }
       }
     }

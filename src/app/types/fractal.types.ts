@@ -1,49 +1,30 @@
-import { IControlsDto, IControls } from './control.types';
-import { FormRecord } from '@angular/forms';
-import { AppError } from './common.types';
-import { IControlsState, IFractalsState, IFractalState } from './states.types';
-import { IFractalTableView } from './fractal-table-view.types';
+import { ControlDto, ControlsDto } from './control.types';
+import { SearchControlsProp, SearchFractalsProp } from './helpers.types';
 
-export type FractalsDto = Record<string, IFractalDto>;
+export type Children = Record<string, Fractal>;
+export type ChildrenDto = Record<string, FractalDto>;
 
-export interface IFractalDto {
+export interface FractalDto {
   id: string;
   parentId: string;
-  fractals: FractalsDto | null;
-  controls: IControlsDto;
+  controls: ControlsDto;
+  children: ChildrenDto;
 }
 
-export interface IFractals extends Map<string, IFractal> {
-  parent: IFractal;
-  setOne(cursor: string, fractal: IFractal): [IFractal, AppError | null];
-  getByCursor(cursor: string | undefined, fractals?: IFractals): IFractal | null;
-}
-
-export interface IFractalSetStates {
-  selectedForm: IFractalState;
-
-  newControls: IControlsState;
-  dirtyControls: IControlsState;
-  selectedControls: IControlsState;
-
-  newChildren: IFractalsState;
-  selectedChildren: IFractalsState;
-  selectedChildrenForms: IFractalsState;
-
-  toggleAllSelectedChildren(): void;
-}
-
-export interface IFractal {
-  dto: IFractalDto;
-  form: FormRecord;
+export interface Fractal extends FractalDto {
+  parent: Fractal;
   cursor: string;
-  parent: IFractal;
-  controls: IControls;
-  fractals: IFractals;
-  isCollection: boolean;
+  children: Children;
 
-  get ancestors(): IFractal[];
+  is(search: SearchFractalsProp): boolean;
 
-  states: IFractalSetStates;
-  tableView: IFractalTableView;
+  findChild(search: SearchFractalsProp): Fractal;
+  findChildRecursively(search: SearchFractalsProp): Fractal | null;
+  getChildRecursively(search: SearchFractalsProp): Fractal;
+
+  getControl(search: SearchControlsProp): ControlDto;
+  findControl(search: SearchControlsProp): ControlDto | null;
+
+  getString(search: SearchControlsProp): string;
+  getArray(search: SearchControlsProp): string[];
 }

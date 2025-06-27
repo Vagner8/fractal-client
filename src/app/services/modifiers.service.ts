@@ -1,10 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { StatesService } from './states.service';
-import { IControl, IFractal } from '@types';
 import { DataService } from './data.service';
 import { FractalService } from './fractal.service';
-import { CModifiers } from '@constants';
-import { ControlsModificationSet, FractalsModificationSet } from '@utils';
+import { MODIFIERS } from '@constants';
 
 @Injectable({
   providedIn: 'root',
@@ -27,15 +25,14 @@ export class ModifiersService {
   newTouchedOnTablePage(): void {}
 
   edit(): void {
-    this.fs.navigateModifier(CModifiers.Edit);
+    this.fs.navigateModifier(MODIFIERS.EDIT);
   }
 
   save(): void {
-    const fms = new FractalsModificationSet();
-    const cms = new ControlsModificationSet();
-
-    fms.toAdd.length > 0 && this.ds.addFractals(fms.toAdd).subscribe();
-    cms.toAdd.length > 0 && this.ds.addControls(cms.toAdd).subscribe();
-    cms.toUpdate.length > 0 && this.ds.updateControls(cms.toUpdate).subscribe();
+    // const fms = new FractalsModificationSet();
+    // const cms = new ControlsModificationSet();
+    // fms.toAdd.length > 0 && this.ds.addFractals(fms.toAdd).subscribe();
+    // cms.toAdd.length > 0 && this.ds.addControls(cms.toAdd).subscribe();
+    // cms.toUpdate.length > 0 && this.ds.updateControls(cms.toUpdate).subscribe();
   }
 }

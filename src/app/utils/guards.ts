@@ -1,9 +1,8 @@
-import { ConstControlMutableType, ConstOrderType, IFractal } from '@types';
-import { CControlMutable, COrders } from '@constants';
-import { Fractal } from './factories';
+import { CONTROL_MUTABLE_FIELDS, ORDERS } from '@constants';
+import { ConstantsValues } from '@types';
 
-export const isFractal = (value: unknown): value is IFractal => value instanceof Fractal;
-export const isConstOrderType = (value: string): value is ConstOrderType => Object.hasOwn(COrders, value);
-export const isConstControlMutableType = (value: string): value is ConstControlMutableType =>
-  Object.hasOwn(CControlMutable, value);
+export const isConstOrderType = (value: string): value is ConstantsValues<typeof ORDERS> =>
+  Object.hasOwn(ORDERS, value);
+export const isConstControlMutableType = (value: string): value is ConstantsValues<typeof CONTROL_MUTABLE_FIELDS> =>
+  Object.hasOwn(CONTROL_MUTABLE_FIELDS, value);
 export const isHTMLElement = (target: EventTarget | null): target is HTMLElement => target instanceof HTMLElement;

@@ -1,12 +1,12 @@
-import { Component, computed, inject, Signal } from '@angular/core';
+import { Component, computed, inject, input, Signal } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
-import { CAppEvents, CModifiers, CAppFractals } from '@constants';
+import { APP_EVENTS, MODIFIERS, APP_FRACTALS } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { EventService, FractalService, StatesService, ModifiersService } from '@services';
-import { IFractal } from '@types';
+import { Fractal } from '@types';
 
-const { New, Edit, Save, Delete } = CModifiers;
+const { NEW, EDIT, SAVE, DELETE } = MODIFIERS;
 
 @Component({
   selector: 'app-sidenav',
@@ -15,41 +15,43 @@ const { New, Edit, Save, Delete } = CModifiers;
   styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
+  $taps = input<Fractal | null>(null);
+
   es = inject(EventService);
   ss = inject(StatesService);
   fs = inject(FractalService);
-  private readonly ms = inject(ModifiersService);
+  ms = inject(ModifiersService);
 
-  AppEvents = CAppEvents;
-  AppFractals = CAppFractals;
+  AppEvents = APP_EVENTS;
+  AppFractals = APP_FRACTALS;
 
-  disabled(tapCursor: string): { signal: Signal<boolean> } {
-    const signal = computed(() => Boolean(tapCursor));
+  disabled(cursor: string): { signal: Signal<boolean> } {
+    const signal = computed(() => Boolean(cursor));
     return { signal };
   }
 
-  onPageTouched(page: IFractal): void {
+  onPageTouched(page: Fractal): void {
     this.ss.selectedFractal.set(page);
-    this.fs.navigatePage(page.cursor);
+    this.fs.navigatePage(page.getString('Cursor'));
   }
 
-  onModifierHeld = (modifier: IFractal): void => {
-    switch (modifier.cursor) {
-      case Save:
+  onModifierHeld = (cursor: string): void => {
+    switch (cursor) {
+      case SAVE:
         this.ms.save();
         break;
-      case Delete:
+      case DELETE:
         // this.ms.delete(current);
         break;
     }
   };
 
-  onModifierTouched(modifier: IFractal): void {
-    switch (modifier.cursor) {
-      case New:
+  onModifierTouched(cursor: string): void {
+    switch (cursor) {
+      case NEW:
         this.ms.newTouched();
         break;
-      case Edit:
+      case EDIT:
         this.ms.edit();
         break;
     }

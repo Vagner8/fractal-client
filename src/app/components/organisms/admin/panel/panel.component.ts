@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, Input, OnInit, output, viewChild } from '@angular/core';
 import { MatExpansionModule, MatExpansionPanel, MatIconModule } from '@mat';
 import { FractalService, StatesService } from '@services';
-import { IFractal } from '@types';
+import { Fractal } from '@types';
 
 @Component({
   selector: 'app-panel',
@@ -11,16 +11,16 @@ import { IFractal } from '@types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PanelComponent implements OnInit {
-  @Input() fractal!: IFractal;
-  @Input() ancestors!: IFractal[];
+  @Input() fractal!: Fractal;
+  @Input() ancestors!: Fractal[];
   ss = inject(StatesService);
   fs = inject(FractalService);
 
   expansionPanel = viewChild(MatExpansionPanel);
 
   closed = output();
-  afterExpand = output<IFractal>();
-  afterCollapse = output<IFractal>();
+  afterExpand = output<Fractal>();
+  afterCollapse = output<Fractal>();
 
   ngOnInit(): void {
     this.ancestors.includes(this.fractal) && this.expansionPanel()?.open();

@@ -1,4 +1,4 @@
-export const CMockCollections = {
-  EmptyCollection: 'EmptyCollection',
-  PopulatedCollection: 'PopulatedCollection',
+export const MOCK_COLLECTIONS = {
+  EMPTY_COLLECTION: 'EmptyCollection',
+  POPULATED_COLLECTION: 'PopulatedCollection',
 } as const;

@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, output } from '@angular/core';
 import { MatButtonModule, MatIconModule } from '@mat';
 import { TapDirective } from '@directives';
-import { CIndicators } from '@constants';
-import { IFractal } from '@types';
+import { INDICATORS } from '@constants';
+import { Fractal } from '@types';
 
 @Component({
   selector: 'app-tap',
@@ -12,13 +12,13 @@ import { IFractal } from '@types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TapComponent {
-  @Input() tap!: IFractal;
+  @Input() tap!: Fractal;
   @Input() title?: string;
   @Input() disabled = false;
   @Input() disableHoldEvent = false;
 
-  hold = output<IFractal>();
-  touch = output<IFractal>();
+  hold = output<Fractal>();
+  touch = output<Fractal>();
 
-  indicators = CIndicators;
+  indicators = INDICATORS;
 }

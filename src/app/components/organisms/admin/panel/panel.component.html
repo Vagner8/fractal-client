@@ -5,7 +5,7 @@
   (afterCollapse)="afterCollapse.emit(fractal)">
   <mat-expansion-panel-header>
     <mat-panel-title>
-      @if (fractal.controls.getOneData('Icon'); as icon) {
+      @if (fractal.getString('Icon'); as icon) {
         <mat-icon class="icon">{{ icon }}</mat-icon>
       }
       {{ fractal.cursor }}

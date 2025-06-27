@@ -1,4 +1,3 @@
-export const COrders = { Oc: 'Oc', Occ: 'Occ' } as const;
-export const CIndicators = { Icon: 'Icon', Name: 'Name', Cursor: 'Cursor', ...COrders } as const;
-export const CSplitIndicators = { ...COrders } as const;
-export const CInternalIndicators = { ...COrders, Cursor: 'Cursor' };
+export const ORDERS = { OC: 'Oc', OCC: 'Occ' } as const;
+export const INDICATORS = { ICON: 'Icon', NAME: 'Name', CURSOR: 'Cursor', ...ORDERS } as const;
+export const INDICATORS_INTERNAL = { ...ORDERS, CURSOR: 'Cursor' };

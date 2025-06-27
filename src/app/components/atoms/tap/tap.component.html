@@ -1,4 +1,4 @@
-@let icon = tap.controls.getOneData('Icon');
+@let icon = tap.getString('Icon');
 
 <button
   [disabled]="disabled"
@@ -9,5 +9,5 @@
   (hold)="hold.emit(tap)"
   (touch)="touch.emit(tap)">
   <mat-icon [hidden]="!icon" aria-hidden="false">{{ icon }}</mat-icon>
-  {{ title ? title : tap.controls.getOneData('Name') }}
+  {{ title ? title : tap.getString('Name') }}
 </button>
