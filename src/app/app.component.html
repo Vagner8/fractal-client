@@ -1,6 +1,6 @@
 @if (fs.$app()) {
-  <!-- <app-header /> -->
-  <app-sidenav [$taps]="ss.$sidenavTaps()" />
+  <app-header [$fractal]="ss.selectedFractal.$value()" />
+  <app-sidenav [$fractal]="ss.$sidenavTaps()" />
   <app-toolbar />
 } @else {
   <div class="spinner">

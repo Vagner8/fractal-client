@@ -1,13 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { SidenavComponent } from '@components/organisms';
-import { SpinnerComponent } from '@components/atoms';
+import { HeaderComponent, SpinnerComponent } from '@components/atoms';
 import { ToolbarComponent } from '@components/molecules';
 import { DataService, FractalService, StatesService } from '@services';
 import { appMock } from '@tests';
 
 @Component({
   selector: 'app-root',
-  imports: [SidenavComponent, ToolbarComponent, SpinnerComponent],
+  imports: [SidenavComponent, ToolbarComponent, SpinnerComponent, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })

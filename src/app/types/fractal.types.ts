@@ -8,17 +8,19 @@ export interface FractalDto {
   id: string;
   parentId: string;
   controls: ControlsDto;
-  children: ChildrenDto;
+  children: ChildrenDto | null;
 }
 
 export interface Fractal extends FractalDto {
   parent: Fractal;
   cursor: string;
-  children: Children;
+  children: Children | null;
 
   is(search: SearchFractalsProp): boolean;
 
-  findChild(search: SearchFractalsProp): Fractal;
+  getChild(search: SearchFractalsProp): Fractal;
+  findChild(search: SearchFractalsProp): Fractal | undefined;
+
   findChildRecursively(search: SearchFractalsProp): Fractal | null;
   getChildRecursively(search: SearchFractalsProp): Fractal;
 

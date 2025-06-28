@@ -6,18 +6,10 @@
     mode="side"
     position="end">
     <div>
-      @if ($taps(); as taps) {
+      @if ($fractal(); as taps) {
         @for (cursor of taps.getArray('Oc'); track cursor) {
           @if (taps.findChild([cursor]); as tap) {
-            @if (taps.parent.is('Modifiers')) {
-              <app-tap
-                [tap]="tap"
-                [disabled]="disabled(cursor).signal()"
-                (hold)="onModifierHeld(cursor)"
-                (touch)="onModifierTouched(cursor)" />
-            } @else {
-              <app-tap [tap]="tap" [disableHoldEvent]="true" (touch)="onPageTouched($event)" />
-            }
+            <app-tap [$fractal]="taps.findChild([cursor])" (hold)="onHold($event)" (touch)="onTouch($event)" />
           }
         }
       }

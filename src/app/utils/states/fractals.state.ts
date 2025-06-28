@@ -11,7 +11,7 @@ export class FractalsState {
   deleteBunch = (fractals: Fractal[]): void => this.set(this.value.filter(fractal => !fractals.includes(fractal)));
 
   toggle = (fractal: Fractal): void => (this.value.includes(fractal) ? this.delete(fractal) : this.push(fractal));
-  toggleAll = (fractal: Fractal): void => this.set(this.isEmpty() ? Object.values(fractal.parent.children) : []);
+  toggleAll = (fractal: Fractal): void => this.set(this.isEmpty() ? Object.values(fractal.parent.children ?? {}) : []);
 
   set = (fractals: Fractal[]): void => {
     this.value = fractals;

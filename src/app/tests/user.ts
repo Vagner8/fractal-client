@@ -1,8 +1,7 @@
 import { HarnessLoader, TestElement } from '@angular/cdk/testing';
 import { ManagerHarness } from '@components/molecules';
-import { appMock } from './mocks';
 import { ComponentFixture } from '@angular/core/testing';
-import { HOLD_THRESHOLD, MOCK_COLLECTIONS, MODIFIERS, ENV } from '@constants';
+import { HOLD_THRESHOLD, MOCK_COLLECTIONS, MODIFIERS } from '@constants';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MatRowHarness } from '@angular/material/table/testing';
 

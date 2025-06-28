@@ -3,7 +3,7 @@
 
 @if (app) {
   @if (Modifiers) {
-    <app-editor />
+    edit
   }
 
   @if (Page && !Modifiers) {
@@ -12,7 +12,7 @@
         <h1>Home</h1>
       }
       @case (AppPages.APP) {
-        <!-- <app-admin [fractal]="app" /> -->
+        app
       }
       @default {
         @if (selectedFractal) {

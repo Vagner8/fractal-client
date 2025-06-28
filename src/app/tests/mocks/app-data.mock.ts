@@ -7,7 +7,7 @@ export const appMock: FractalDto = {
         Users: {
           children: {
             '1': {
-              children: {},
+              children: null,
               controls: {
                 Name: {
                   data: 'Dima',
@@ -35,7 +35,7 @@ export const appMock: FractalDto = {
               parentId: '3660b6a6-1024-43de-bfce-39c105fdd615',
             },
             '2': {
-              children: {},
+              children: null,
               controls: {
                 Name: {
                   data: 'Anna',
@@ -63,7 +63,7 @@ export const appMock: FractalDto = {
               parentId: '3660b6a6-1024-43de-bfce-39c105fdd615',
             },
             '3': {
-              children: {},
+              children: null,
               controls: {
                 Email: {
                   data: 'vova@mail.com',
@@ -125,7 +125,7 @@ export const appMock: FractalDto = {
           parentId: 'ef0077b4-af7c-4928-9b6c-06e9845908b5',
         },
         Products: {
-          children: {},
+          children: null,
           controls: {
             Icon: {
               data: 'widgets',
@@ -187,7 +187,7 @@ export const appMock: FractalDto = {
       parentId: '93ee08d6-9eb5-4087-a8fa-a603b3fd932d',
     },
     Manager: {
-      children: {},
+      children: null,
       controls: {
         Cursor: {
           data: 'Manager',
@@ -203,7 +203,7 @@ export const appMock: FractalDto = {
     Modifiers: {
       children: {
         Delete: {
-          children: {},
+          children: null,
           controls: {
             Cursor: {
               data: 'Delete',
@@ -224,7 +224,7 @@ export const appMock: FractalDto = {
           parentId: '688d3311-1f66-4bc2-a511-73ad7ba5e465',
         },
         Save: {
-          children: {},
+          children: null,
           controls: {
             Cursor: {
               data: 'Save',
@@ -245,7 +245,7 @@ export const appMock: FractalDto = {
           parentId: '688d3311-1f66-4bc2-a511-73ad7ba5e465',
         },
         Edit: {
-          children: {},
+          children: null,
           controls: {
             Name: {
               data: 'Edit',
@@ -266,7 +266,7 @@ export const appMock: FractalDto = {
           parentId: '688d3311-1f66-4bc2-a511-73ad7ba5e465',
         },
         New: {
-          children: {},
+          children: null,
           controls: {
             Name: {
               data: 'New',

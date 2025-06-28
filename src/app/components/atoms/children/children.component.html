@@ -1,23 +1,28 @@
-@let fractal = $fractal();
-@let columns = getColumns(fractal);
+@if ($fractal(); as fractal) {
+  @if (fractal.children) {
+    @let columns = getColumns(fractal);
 
-<table mat-table [dataSource]="fractal.getArray('Oc')" class="table">
-  @for (column of columns; track column) {
-    <ng-container [matColumnDef]="column">
-      <th mat-header-cell *matHeaderCellDef>
-        {{ column }}
-      </th>
-      <td mat-cell *matCellDef="let indicator; let index = index">
-        {{ tdContent({ index, column, indicator }) }}
-      </td>
-    </ng-container>
+    <table mat-table [dataSource]="fractal.getArray('Oc')" class="table">
+      @for (column of columns; track column) {
+        <ng-container [matColumnDef]="column">
+          <th mat-header-cell *matHeaderCellDef>
+            {{ column }}
+          </th>
+          <td mat-cell *matCellDef="let cursor; let index = index">
+            {{ tdContent({ index, cursor, indicator: column }) }}
+          </td>
+        </ng-container>
+      }
+      <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+      <tr
+        mat-row
+        *matRowDef="let cursor; columns: columns"
+        appTap
+        (hold)="this.ss.selectedChildren.toggleAll(fractal.getChild([cursor]))"
+        (touch)="this.ss.selectedChildren.toggle(fractal.getChild([cursor]))"
+        [class.selected-row]="ss.selectedChildren.$value().includes(fractal.getChild([cursor]))"></tr>
+    </table>
+  } @else {
+    <h1>No children to display</h1>
   }
-  <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
-  <tr
-    mat-row
-    *matRowDef="let cursor; columns: columns"
-    appTap
-    (hold)="this.ss.selectedChildren.toggleAll(fractal.findChild([cursor]))"
-    (touch)="this.ss.selectedChildren.toggle(fractal.findChild([cursor]))"
-    [class.selected-row]="ss.selectedChildren.$value().includes(fractal.findChild([cursor]))"></tr>
-</table>
+}

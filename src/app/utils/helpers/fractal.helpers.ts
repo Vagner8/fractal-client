@@ -18,13 +18,16 @@ export const findChildRecursively: SearchFractals<Fractal | null> = (search, chi
   return null;
 };
 
-export const createFractals = (children: ChildrenDto | null, parent: Fractal): Children => {
+export const createChildren = (children: ChildrenDto | null, parent: Fractal): Children | null => {
+  if (!children) return null;
+
   const result: Children = {};
-  for (const cursor in children) {
-    const fractalDto = children[cursor];
+
+  for (const [cursor, fractalDto] of Object.entries(children)) {
     const fractal = new FractalBase(fractalDto, parent);
+    fractal.children = createChildren(fractalDto.children, fractal);
     result[cursor] = fractal;
-    fractal.children = createFractals(fractalDto.children, fractal);
   }
+
   return result;
 };

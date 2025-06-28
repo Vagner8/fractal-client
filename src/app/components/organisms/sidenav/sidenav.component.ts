@@ -1,12 +1,10 @@
-import { Component, computed, inject, input, Signal } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
-import { APP_EVENTS, MODIFIERS, APP_FRACTALS } from '@constants';
+import { APP_EVENTS, MODIFIERS } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { EventService, FractalService, StatesService, ModifiersService } from '@services';
 import { Fractal } from '@types';
-
-const { NEW, EDIT, SAVE, DELETE } = MODIFIERS;
 
 @Component({
   selector: 'app-sidenav',
@@ -15,7 +13,7 @@ const { NEW, EDIT, SAVE, DELETE } = MODIFIERS;
   styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
-  $taps = input<Fractal | null>(null);
+  $fractal = input<Fractal | null>(null);
 
   es = inject(EventService);
   ss = inject(StatesService);
@@ -23,35 +21,35 @@ export class SidenavComponent {
   ms = inject(ModifiersService);
 
   AppEvents = APP_EVENTS;
-  AppFractals = APP_FRACTALS;
 
-  disabled(cursor: string): { signal: Signal<boolean> } {
-    const signal = computed(() => Boolean(cursor));
-    return { signal };
-  }
-
-  onPageTouched(page: Fractal): void {
-    this.ss.selectedFractal.set(page);
-    this.fs.navigatePage(page.getString('Cursor'));
-  }
-
-  onModifierHeld = (cursor: string): void => {
-    switch (cursor) {
-      case SAVE:
-        this.ms.save();
-        break;
-      case DELETE:
-        // this.ms.delete(current);
-        break;
+  onTouch(tap: Fractal): void {
+    if (tap.parent.is('Modifiers')) {
+      this.onModifierTouch(tap.cursor);
+    } else {
+      this.ss.selectedFractal.set(tap);
+      this.fs.navigatePage(tap.cursor);
     }
-  };
+  }
 
-  onModifierTouched(cursor: string): void {
+  onHold(tap: Fractal): void {
+    if (tap.parent.is('Modifiers')) {
+      switch (tap.cursor) {
+        case MODIFIERS.SAVE:
+          this.ms.save();
+          break;
+        case MODIFIERS.DELETE:
+          // this.ms.delete(current);
+          break;
+      }
+    }
+  }
+
+  onModifierTouch(cursor: string): void {
     switch (cursor) {
-      case NEW:
+      case MODIFIERS.NEW:
         this.ms.newTouched();
         break;
-      case EDIT:
+      case MODIFIERS.EDIT:
         this.ms.edit();
         break;
     }
