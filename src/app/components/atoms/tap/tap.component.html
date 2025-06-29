@@ -1,6 +1,12 @@
 @if ($fractal(); as fractal) {
   @let icon = fractal.getString('Icon');
-  <button mat-flat-button extended appTap (hold)="hold.emit(fractal)" (touch)="touch.emit(fractal)">
+  <button
+    mat-flat-button
+    extended
+    appTap
+    [disabled]="$disable()"
+    (hold)="hold.emit(fractal)"
+    (touch)="touch.emit(fractal)">
     <mat-icon [hidden]="!icon" aria-hidden="false">{{ icon }}</mat-icon>
     {{ fractal.getString('Name') }}
   </button>

@@ -1,5 +1,5 @@
 export const WORDS = { NEW: 'New' } as const;
-export const APP_PAGES = { APP: 'App', HOME: 'Home' } as const;
+export const APP_PAGES = { APP: 'App', HOME: 'Home', EDITOR: 'Editor' } as const;
 export const APP_EVENTS = { HOLD: 'Hold', TOUCH: 'Touch' } as const;
 
 export const HOLD_THRESHOLD = 820;

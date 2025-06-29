@@ -13,11 +13,11 @@ export class ModifiersService {
   private readonly fs = inject(FractalService);
 
   newTouched(): void {
-    if (this.ss.$onEditPage()) {
-      this.newTouchedOnEditPage();
-    } else {
-      this.newTouchedOnTablePage();
-    }
+    // if (this.ss.$onEditPage()) {
+    //   this.newTouchedOnEditPage();
+    // } else {
+    //   this.newTouchedOnTablePage();
+    // }
   }
 
   newTouchedOnEditPage(): void {}
