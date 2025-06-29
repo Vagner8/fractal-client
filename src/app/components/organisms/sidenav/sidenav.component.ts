@@ -1,5 +1,5 @@
 import { Component, inject, input } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterModule, RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { APP_EVENTS, MODIFIERS } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
@@ -19,6 +19,8 @@ export class SidenavComponent {
   ss = inject(StatesService);
   fs = inject(FractalService);
   ms = inject(ModifiersService);
+
+  route = inject(ActivatedRoute);
 
   AppEvents = APP_EVENTS;
 

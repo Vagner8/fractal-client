@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
-import { APP_FRACTALS, APP_PARAMS } from '@constants';
+import { APP_FRACTALS, APP_PAGES, APP_PARAMS } from '@constants';
 import { ConstantsValues, Fractal, FractalDto } from '@types';
 import { FractalBase } from '@utils';
 
@@ -8,7 +8,7 @@ import { FractalBase } from '@utils';
   providedIn: 'root',
 })
 export class FractalService {
-  private readonly router = inject(Router);
+  router = inject(Router);
   $app = signal<Fractal | null>(null);
 
   manager!: Fractal;
@@ -34,7 +34,7 @@ export class FractalService {
   }
 
   async navigateModifier(param: string | null): Promise<void> {
-    this.navigate([], { [APP_PARAMS.MODIFIERS]: param });
+    this.navigate([APP_PAGES.EDITOR], { [APP_PARAMS.MODIFIERS]: param });
   }
 
   async navigate(commands: unknown[], queryParams?: NavigationExtras['queryParams']): Promise<void> {
