@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
-import { ChildrenComponent, HomeComponent } from '@components/atoms';
+import { CollectionComponent, HomeComponent } from '@components/atoms';
 import { EditorComponent } from '@components/organisms';
-import { APP_PAGES, APP_PARAMS } from '@constants';
+import { APP_PAGES, PARAMS } from '@constants';
 
 export const routes: Routes = [
   {
@@ -9,11 +9,11 @@ export const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: `:${APP_PARAMS.PAGE}`,
-    component: ChildrenComponent,
+    path: `:${PARAMS.COLLECTION}`,
+    component: CollectionComponent,
   },
   {
-    path: `:${APP_PARAMS.PAGE}/${APP_PAGES.EDITOR}`,
+    path: `:${PARAMS.COLLECTION}/${APP_PAGES.EDITOR}`,
     component: EditorComponent,
   },
   { path: '**', redirectTo: APP_PAGES.HOME },

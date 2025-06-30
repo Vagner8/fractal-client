@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { StatesService } from '@services';
 
 @Component({
@@ -10,8 +10,11 @@ import { StatesService } from '@services';
 export class EditorComponent {
   ss = inject(StatesService);
 
+  Editor = input('');
+  Collection = input('');
+
   get dataSource(): string[] {
-    return this.ss.selectedFractal.value?.getArray('Occ') || [];
+    return this.ss.selectedCollection.value?.getArray('Occ') || [];
   }
 
   formCardClicked(): void {}

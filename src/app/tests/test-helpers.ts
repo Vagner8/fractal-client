@@ -2,7 +2,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { provideExperimentalZonelessChangeDetection, Type } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { DataService, EventService, FractalService, ModifiersService, StatesService } from '@services';
+import { DataService, ModifiersService, StatesService } from '@services';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { User } from './user';
@@ -21,9 +21,7 @@ export const configureTestingModule = async <T>(component: Type<T>): Promise<Con
     imports: [component],
     providers: [
       DataService,
-      EventService,
       StatesService,
-      FractalService,
       ModifiersService,
       provideRouter([]),
       provideAnimations(),

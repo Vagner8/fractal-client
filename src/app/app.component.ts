@@ -2,8 +2,13 @@ import { Component, inject, OnInit } from '@angular/core';
 import { SidenavComponent } from '@components/organisms';
 import { HeaderComponent, SpinnerComponent } from '@components/atoms';
 import { ToolbarComponent } from '@components/molecules';
-import { DataService, FractalService, StatesService } from '@services';
+import { DataService, StatesService } from '@services';
 import { appMock } from '@tests';
+import { Router } from '@angular/router';
+import { FractalBase, isNavigationEnd } from '@utils';
+import { ConstantsValues } from '@types';
+import { APP_FRACTALS } from '@constants';
+import { filter, take } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -14,11 +19,19 @@ import { appMock } from '@tests';
 export class AppComponent implements OnInit {
   ds = inject(DataService);
   ss = inject(StatesService);
-  fs = inject(FractalService);
+
+  router = inject(Router);
 
   ngOnInit(): void {
-    // this.ds.getChildRecursively().subscribe(dto => this.fs.init(dto));
+    const app = new FractalBase(appMock);
+    console.log('🚀 ~ app:', app);
 
-    this.fs.init(appMock);
+    [this.ss.manager, this.ss.modifiers, this.ss.collections] = (
+      ['Manager', 'Modifiers', 'Collections'] satisfies ConstantsValues<typeof APP_FRACTALS>[]
+    ).map(app.getChildRecursively);
+    this.ss.$app.set(app);
+
+    this.router.events.pipe(filter(isNavigationEnd), take(1)).subscribe(this.ss.init);
+    this.router.events.pipe(filter(isNavigationEnd)).subscribe(this.ss.navigationEnd);
   }
 }

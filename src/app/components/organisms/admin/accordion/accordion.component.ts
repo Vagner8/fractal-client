@@ -20,7 +20,7 @@ export class AccordionComponent {
   AppFractals = APP_FRACTALS;
 
   closed(fractal: IFractal): void {
-    // this.ss.selectedFractal.set(fractal.parent);
+    // this.ss.selectedCollection.set(fractal.parent);
   }
 
   afterExpand(fractal: IFractal): void {

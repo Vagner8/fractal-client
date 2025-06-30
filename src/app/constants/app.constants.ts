@@ -12,11 +12,14 @@ export const APP_FRACTALS = {
   COLLECTIONS: 'Collections',
 } as const;
 
-export const APP_PARAMS = {
+export const QUERY_PARAMS = {
   TAPS: 'Taps',
-  PAGE: 'Page',
   MANAGER: 'Manager',
   SELECTED: 'Selected',
   EDIT_MODE: 'EditMode',
   MODIFIERS: 'Modifiers',
+} as const;
+
+export const PARAMS = {
+  COLLECTION: 'Collection',
 } as const;

@@ -5,12 +5,12 @@ import { StatesService } from '@services';
 import { Fractal } from '@types';
 
 @Component({
-  selector: 'app-children',
+  selector: 'app-collection',
   imports: [MatTableModule, MatButtonModule, TapDirective],
-  templateUrl: './children.component.html',
-  styleUrl: './children.component.scss',
+  templateUrl: './collection.component.html',
+  styleUrl: './collection.component.scss',
 })
-export class ChildrenComponent {
+export class CollectionComponent {
   ss = inject(StatesService);
 
   getColumns = (fractal: Fractal): string[] => ['No.', ...fractal.getArray('Occ')];
@@ -18,5 +18,5 @@ export class ChildrenComponent {
   tdContent = ({ index, cursor, indicator }: { index: number; cursor: string; indicator: string }): string | number =>
     indicator === 'No.'
       ? index + 1
-      : (this.ss.selectedFractal.$value()?.findChild([cursor])?.getString([indicator]) ?? '');
+      : (this.ss.selectedCollection.$value()?.findChild([cursor])?.getString([indicator]) ?? '');
 }

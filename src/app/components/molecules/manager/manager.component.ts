@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@mat';
 import { TapDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
-import { EventService, FractalService, StatesService } from '@services';
+import { StatesService } from '@services';
 import { APP_EVENTS } from '@constants';
 
 @Component({
@@ -15,23 +15,19 @@ import { APP_EVENTS } from '@constants';
 export class ManagerComponent {
   prevEvent: string = APP_EVENTS.TOUCH;
 
-  es = inject(EventService);
   ss = inject(StatesService);
-  fs = inject(FractalService);
 
   onHold(): void {
     this.prevEvent = APP_EVENTS.HOLD;
-    this.es.$managerEvent.set(APP_EVENTS.HOLD);
-    this.fs.navigateManager(APP_EVENTS.HOLD);
+    this.ss.setManager(APP_EVENTS.HOLD);
   }
 
-  onTouch(): void {
-    const { modifiers, collections } = this.fs;
+  async onTouch(): Promise<void> {
+    const { modifiers, collections } = this.ss;
     if (this.prevEvent === APP_EVENTS.TOUCH) {
       this.ss.$sidenavTaps.update(prev => (prev === collections ? modifiers : collections));
     }
     this.prevEvent = APP_EVENTS.TOUCH;
-    this.es.$managerEvent.set(APP_EVENTS.TOUCH);
-    this.fs.navigateManager(APP_EVENTS.TOUCH);
+    await this.ss.setManager(APP_EVENTS.TOUCH);
   }
 }

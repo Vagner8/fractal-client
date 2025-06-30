@@ -1,20 +1,20 @@
 import { ComponentFixture } from '@angular/core/testing';
-import { ChildrenComponent } from './children.component';
+import { CollectionComponent } from './children.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { configureTestingModule, fulfillCollection, User } from '@tests';
 import { Fractal } from '@types';
 import { FractalBase } from '@utils';
 import { MatRowHarness, MatHeaderCellHarness } from '@angular/material/table/testing';
 
-describe('ChildrenComponent', () => {
+describe('CollectionComponent', () => {
   let loader: HarnessLoader;
-  let fixture: ComponentFixture<ChildrenComponent>;
+  let fixture: ComponentFixture<CollectionComponent>;
 
-  let user: User<ChildrenComponent>;
+  let user: User<CollectionComponent>;
   let collection: Fractal;
 
   beforeEach(async () => {
-    ({ user, loader, fixture } = await configureTestingModule(ChildrenComponent));
+    ({ user, loader, fixture } = await configureTestingModule(CollectionComponent));
 
     collection = new FractalBase(fulfillCollection);
   });

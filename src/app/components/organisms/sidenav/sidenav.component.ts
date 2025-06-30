@@ -1,9 +1,9 @@
 import { Component, inject, input } from '@angular/core';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, RouterModule, RouterOutlet } from '@angular/router';
 import { TapComponent } from '@components/atoms';
 import { APP_EVENTS, MODIFIERS } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { EventService, FractalService, StatesService, ModifiersService } from '@services';
+import { StatesService, ModifiersService } from '@services';
 import { Fractal } from '@types';
 
 @Component({
@@ -15,10 +15,10 @@ import { Fractal } from '@types';
 export class SidenavComponent {
   $fractal = input<Fractal | null>(null);
 
-  es = inject(EventService);
   ss = inject(StatesService);
-  fs = inject(FractalService);
   ms = inject(ModifiersService);
+
+  route = inject(ActivatedRoute);
 
   AppEvents = APP_EVENTS;
 
@@ -26,8 +26,7 @@ export class SidenavComponent {
     if (tap.parent.is('Modifiers')) {
       this.onModifierTouch(tap.cursor);
     } else {
-      this.ss.selectedFractal.set(tap);
-      this.fs.navigatePage(tap.cursor);
+      this.ss.setCollection(tap);
     }
   }
 

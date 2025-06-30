@@ -1,6 +1,6 @@
 import { Directive, ElementRef, inject, Input, OnDestroy, OnInit, output } from '@angular/core';
 import { HOLD_THRESHOLD } from '@constants';
-import { EventService } from '@services';
+import { StatesService } from '@services';
 import { fromEvent, map, merge, race, Subscription, switchMap, takeUntil, tap, timer } from 'rxjs';
 
 @Directive({
@@ -9,7 +9,7 @@ import { fromEvent, map, merge, race, Subscription, switchMap, takeUntil, tap, t
 })
 export class TapDirective implements OnInit, OnDestroy {
   private readonly el = inject(ElementRef<HTMLElement>);
-  private readonly es = inject(EventService);
+  private readonly ss = inject(StatesService);
 
   @Input() disableHoldEvent = false;
 
@@ -28,7 +28,7 @@ export class TapDirective implements OnInit, OnDestroy {
         .pipe(
           tap(() => {
             if (this.disableHoldEvent) return;
-            this.es.$isHoldEventRunning.set(true);
+            this.ss.$isHoldEventRunning.set(true);
           }),
           switchMap(() =>
             race(
@@ -40,7 +40,7 @@ export class TapDirective implements OnInit, OnDestroy {
                   this.hold.emit();
                 }
 
-                this.es.$isHoldEventRunning.set(false);
+                this.ss.$isHoldEventRunning.set(false);
               })
             )
           )

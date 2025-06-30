@@ -24,6 +24,6 @@ export class PanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.ancestors.includes(this.fractal) && this.expansionPanel()?.open();
-    this.ss.selectedFractal.value === this.fractal && this.expansionPanel()?.open();
+    this.ss.selectedCollection.value === this.fractal && this.expansionPanel()?.open();
   }
 }

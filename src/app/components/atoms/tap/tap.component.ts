@@ -17,27 +17,26 @@ export class TapComponent {
   ss = inject(StatesService);
 
   $disable = computed<boolean>(() => {
-    return false;
-    // const cursor = this.$fractal()?.cursor;
-    // if ('') {
-    //   switch (cursor) {
-    //     case MODIFIERS.EDIT:
-    //       return true;
-    //     case MODIFIERS.NEW:
-    //       return true;
-    //     default:
-    //       return false;
-    //   }
-    // } else {
-    //   switch (cursor) {
-    //     case MODIFIERS.EDIT:
-    //       return this.ss.selectedChildren.$isEmpty();
-    //     case MODIFIERS.NEW:
-    //       return false;
-    //     default:
-    //       return false;
-    //   }
-    // }
+    const cursor = this.$fractal()?.cursor;
+    if (this.ss.$editorParam()) {
+      switch (cursor) {
+        case MODIFIERS.EDIT:
+          return true;
+        case MODIFIERS.NEW:
+          return true;
+        default:
+          return false;
+      }
+    } else {
+      switch (cursor) {
+        case MODIFIERS.EDIT:
+          return this.ss.selectedChildren.$isEmpty();
+        case MODIFIERS.NEW:
+          return false;
+        default:
+          return false;
+      }
+    }
   });
 
   hold = output<Fractal>();
