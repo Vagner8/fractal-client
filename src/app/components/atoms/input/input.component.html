@@ -1,19 +1,23 @@
-<mat-form-field class="app-form-field">
-  <mat-label>{{ label }}</mat-label>
-  <input #inputElementRef matInput [type]="label" [formControl]="form" />
+@if ($control(); as control) {
+  @let form = crateForm(control.data);
 
-  <mat-error *ngFor="let error of errors">
-    {{ error }}
-  </mat-error>
+  <mat-form-field class="app-form-field">
+    <mat-label>{{ control.indicator }}</mat-label>
+    <input #inputElementRef matInput [type]="control.indicator" [formControl]="form" />
 
-  <button
-    [class.hidden-button]="!inputElementRef.value || form.disabled"
-    type="button"
-    matSuffix
-    mat-icon-button
-    i18n-aria-label
-    aria-label="Clear input"
-    (click)="form.setValue('')">
-    <mat-icon>close</mat-icon>
-  </button>
-</mat-form-field>
+    <mat-error *ngFor="let error of errors(form)">
+      {{ error }}
+    </mat-error>
+
+    <button
+      [class.hidden-button]="!inputElementRef.value || form.disabled"
+      type="button"
+      matSuffix
+      mat-icon-button
+      i18n-aria-label
+      aria-label="Clear input"
+      (click)="form.setValue('')">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+}

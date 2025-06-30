@@ -1,7 +1,8 @@
 import { NgFor } from '@angular/common';
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatFormFieldModule, MatIcon, MatInputModule } from '@mat';
+import { ControlDto } from '@types';
 
 @Component({
   selector: 'app-input',
@@ -11,10 +12,8 @@ import { MatButtonModule, MatFormFieldModule, MatIcon, MatInputModule } from '@m
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputComponent {
-  @Input() label: string = '';
-  @Input() form!: FormControl;
+  $control = input<ControlDto | null>(null);
 
-  get errors(): string[] {
-    return this.form.errors ? Object.values(this.form.errors) : [];
-  }
+  errors = (form: FormControl): string[] => (form.errors ? Object.values(form.errors) : []);
+  crateForm = (data: string): FormControl => new FormControl(data);
 }

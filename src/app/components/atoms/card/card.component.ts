@@ -1,4 +1,4 @@
-import { Component, Input, output } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { MatCardModule } from '@mat';
 
 @Component({
@@ -8,7 +8,5 @@ import { MatCardModule } from '@mat';
   styleUrl: './card.component.scss',
 })
 export class CardComponent {
-  @Input() title: string | undefined = '';
-  @Input() selected = false;
-  clicked = output<Event>();
+  $title = input('');
 }

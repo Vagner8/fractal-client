@@ -1,21 +1,10 @@
-<h1>Editor</h1>
+@let parent = ss.selectedCollection.$value();
+@let children = ss.selectedChildren.$value();
 
-<!-- <div class="editor">
-  <app-list [dataSource]="[]" [templateRef]="controls" />
-  <app-list [dataSource]="[]" [templateRef]="controls" />
-</div>
-
-<ng-template #controls let-fractal>
-  <app-card [title]="fractal.cursor" [selected]="true">
-    <div class="controls">
-      @for (indicator of dataSource; track $index) {
-        @if (fractal.controls.get(indicator); as control) {
-          <app-control [fullEditMode]="control.fullEditMode.$value()" [control]="control" />
-        }
-      }
-      @for (control of fractal.newControls.$value(); track control.dto.id) {
-        <app-control [fullEditMode]="control.fullEditMode.$value()" [control]="control" />
-      }
-    </div>
-  </app-card>
-</ng-template> -->
+@if (parent) {
+  <div class="controls">
+    @for (child of children; track child.cursor; let index = $index) {
+      <app-control [$title]="(index + 1).toString()" [$fractal]="child" />
+    }
+  </div>
+}

@@ -1,7 +1,6 @@
 export * from './tap/tap.component';
 export * from './home/home.component';
 export * from './card/card.component';
-export * from './list/list.component';
 export * from './input/input.component';
 export * from './header/header.component';
 export * from './select/select.component';
