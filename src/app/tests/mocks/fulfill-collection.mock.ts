@@ -4,14 +4,14 @@ export const fulfillCollection: FractalDto = {
   controls: {
     Oc: {
       data: '3:2:1',
-      type: 'String[]',
+      type: 'Select',
       indicator: 'Oc',
       id: 'bba0d106-e654-4dd0-be21-641ccfc7bb2f',
       parentId: '3660b6a6-1024-43de-bfce-39c105fdd615',
     },
     Occ: {
       data: 'Email:Name',
-      type: 'String[]',
+      type: 'Select',
       indicator: 'Occ',
       id: 'b8455672-c614-40f7-b877-e780ef22d4b8',
       parentId: '3660b6a6-1024-43de-bfce-39c105fdd615',

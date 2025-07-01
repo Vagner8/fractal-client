@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@mat';
 
@@ -10,7 +10,7 @@ import { MatSelectModule } from '@mat';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SelectComponent {
-  @Input() opts: string[] = [];
-  @Input() label: string = '';
-  @Input() form!: FormControl;
+  $form = input<FormControl>();
+  $opts = input<string[]>([]);
+  $label = input('');
 }

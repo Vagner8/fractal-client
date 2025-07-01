@@ -12,11 +12,13 @@ export class StatesService {
 
   $app = signal<Fractal | null>(null);
 
+  newChildren = new FractalsState();
   selectedChildren = new FractalsState();
   selectedCollection = new FractalState();
 
   $sidenavTaps = signal<Fractal | null>(null);
   $managerEvent = signal<string | null>(null);
+  $isFullEditModeActivated = signal(true);
   $isHoldEventRunning = signal(false);
 
   manager!: Fractal;

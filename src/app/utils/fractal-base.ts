@@ -49,5 +49,5 @@ export class FractalBase implements Fractal {
   findControl = (search: SearchControlsProp): ControlDto | null => this.controls[parseSearch(search)] ?? null;
 
   getString = (search: SearchControlsProp): string => this.findControl(search)?.data ?? '';
-  getArray = (search: SearchControlsProp): string[] => ensureExists(this.getString(search).split(':'));
+  getArray = (search: SearchControlsProp): string[] => ensureExists(this.getString(search).split(':').filter(Boolean));
 }

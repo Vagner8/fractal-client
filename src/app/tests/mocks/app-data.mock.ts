@@ -94,14 +94,14 @@ export const appMock: FractalDto = {
           controls: {
             Oc: {
               data: '3:2:1',
-              type: 'String[]',
+              type: 'Select',
               indicator: 'Oc',
               id: 'bba0d106-e654-4dd0-be21-641ccfc7bb2f',
               parentId: '3660b6a6-1024-43de-bfce-39c105fdd615',
             },
             Occ: {
               data: 'Email:Name',
-              type: 'String[]',
+              type: 'Select',
               indicator: 'Occ',
               id: 'b8455672-c614-40f7-b877-e780ef22d4b8',
               parentId: '3660b6a6-1024-43de-bfce-39c105fdd615',
@@ -156,7 +156,7 @@ export const appMock: FractalDto = {
       controls: {
         Occ: {
           data: 'Name:Icon',
-          type: 'String[]',
+          type: 'Select',
           indicator: 'Occ',
           id: '9f12bd03-4c38-4650-8cc8-0f59830bbdee',
           parentId: 'ef0077b4-af7c-4928-9b6c-06e9845908b5',
@@ -177,7 +177,7 @@ export const appMock: FractalDto = {
         },
         Oc: {
           data: 'Products:Users',
-          type: 'String[]',
+          type: 'Select',
           indicator: 'Oc',
           id: '26656b41-d321-425e-a0df-97c36a5fd311',
           parentId: 'ef0077b4-af7c-4928-9b6c-06e9845908b5',
@@ -290,7 +290,7 @@ export const appMock: FractalDto = {
       controls: {
         Occ: {
           data: 'Name',
-          type: 'String[]',
+          type: 'Select',
           indicator: 'Occ',
           id: '5972107d-eb07-4318-a77b-0a67e815bc1b',
           parentId: '688d3311-1f66-4bc2-a511-73ad7ba5e465',
@@ -311,7 +311,7 @@ export const appMock: FractalDto = {
         },
         Oc: {
           data: 'Delete:Save:New:Edit',
-          type: 'String[]',
+          type: 'Select',
           indicator: 'Oc',
           id: '5ef13ca4-bc06-4299-bee2-e0dea53782dc',
           parentId: '688d3311-1f66-4bc2-a511-73ad7ba5e465',
@@ -324,14 +324,14 @@ export const appMock: FractalDto = {
   controls: {
     Oc: {
       data: 'Modifiers:Collections',
-      type: 'String[]',
+      type: 'Select',
       indicator: 'Oc',
       id: '6241b8ee-8595-4d9c-a7e0-2eca84a545a8',
       parentId: '93ee08d6-9eb5-4087-a8fa-a603b3fd932d',
     },
     Occ: {
       data: 'Name',
-      type: 'String[]',
+      type: 'Select',
       indicator: 'Occ',
       id: '7df8d4dc-206f-426d-bfa4-36b0f60b386d',
       parentId: '93ee08d6-9eb5-4087-a8fa-a603b3fd932d',

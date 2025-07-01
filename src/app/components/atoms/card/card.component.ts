@@ -1,5 +1,6 @@
-import { Component, input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { MatCardModule } from '@mat';
+import { StatesService } from '@services';
 
 @Component({
   selector: 'app-card',
@@ -8,5 +9,7 @@ import { MatCardModule } from '@mat';
   styleUrl: './card.component.scss',
 })
 export class CardComponent {
-  $title = input('');
+  ss = inject(StatesService);
+
+  $title = input<number | string>('');
 }

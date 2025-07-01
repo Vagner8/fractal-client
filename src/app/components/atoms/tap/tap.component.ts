@@ -23,7 +23,7 @@ export class TapComponent {
         case MODIFIERS.EDIT:
           return true;
         case MODIFIERS.NEW:
-          return true;
+          return false;
         default:
           return false;
       }

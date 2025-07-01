@@ -1,0 +1,20 @@
+@if ($fractal(); as fractal) {
+  <app-card [$title]="$title()">
+    @for (indicator of fractal.parent.getArray('Occ'); track indicator) {
+      @if (fractalForm.get(indicator); as controlForm) {
+        @if (ss.$isFullEditModeActivated()) {
+          <app-card
+            ><app-input [$form]="getFieldForm(indicator, 'indicator')" [$label]="mutableFields.INDICATOR" />
+            <app-select
+              [$form]="getFieldForm(indicator, 'type')"
+              [$opts]="controlsTypes"
+              [$label]="mutableFields.TYPE" />
+            <app-input [$form]="getFieldForm(indicator, 'data')" [$label]="mutableFields.DATA"
+          /></app-card>
+        } @else {
+          <app-input [$form]="getFieldForm(indicator, 'data')" [$label]="indicator" />
+        }
+      }
+    }
+  </app-card>
+}

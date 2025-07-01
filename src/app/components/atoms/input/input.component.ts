@@ -2,7 +2,6 @@ import { NgFor } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule, MatFormFieldModule, MatIcon, MatInputModule } from '@mat';
-import { ControlDto } from '@types';
 
 @Component({
   selector: 'app-input',
@@ -12,8 +11,9 @@ import { ControlDto } from '@types';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class InputComponent {
-  $control = input<ControlDto | null>(null);
+  $form = input<FormControl>();
+  $label = input('');
 
   errors = (form: FormControl): string[] => (form.errors ? Object.values(form.errors) : []);
-  crateForm = (data: string): FormControl => new FormControl(data);
+  crateForm = (value: string): FormControl => new FormControl(value);
 }

@@ -1,5 +1,8 @@
+import { CONTROL_TYPES } from '@constants';
+import { ConstantsValues } from './common.types';
+
 export type ControlsDto = Record<string, ControlDto>;
-export type ControlType = 'String' | 'String[]';
+export type ControlType = ConstantsValues<typeof CONTROL_TYPES>;
 
 export interface ControlDto {
   id: string;

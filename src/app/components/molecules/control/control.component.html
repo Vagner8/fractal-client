@@ -1,7 +1,0 @@
-@if ($fractal(); as fractal) {
-  <app-card [$title]="$title()">
-    @for (indicator of fractal.parent.getArray('Occ'); track indicator) {
-      <app-input [$control]="fractal.findControl([indicator])" />
-    }
-  </app-card>
-}

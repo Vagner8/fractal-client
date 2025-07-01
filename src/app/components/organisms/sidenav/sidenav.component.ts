@@ -46,7 +46,7 @@ export class SidenavComponent {
   onModifierTouch(cursor: string): void {
     switch (cursor) {
       case MODIFIERS.NEW:
-        this.ms.newTouched();
+        this.ms.new();
         break;
       case MODIFIERS.EDIT:
         this.ms.edit();

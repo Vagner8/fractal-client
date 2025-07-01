@@ -90,7 +90,7 @@ export const modifiersMock: FractalDto = {
   controls: {
     Occ: {
       data: 'Name',
-      type: 'String[]',
+      type: 'Select',
       indicator: 'Occ',
       id: '5972107d-eb07-4318-a77b-0a67e815bc1b',
       parentId: '688d3311-1f66-4bc2-a511-73ad7ba5e465',
@@ -111,7 +111,7 @@ export const modifiersMock: FractalDto = {
     },
     Oc: {
       data: 'Delete:Save:New:Edit',
-      type: 'String[]',
+      type: 'Select',
       indicator: 'Oc',
       id: '5ef13ca4-bc06-4299-bee2-e0dea53782dc',
       parentId: '688d3311-1f66-4bc2-a511-73ad7ba5e465',

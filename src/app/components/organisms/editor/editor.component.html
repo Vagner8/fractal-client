@@ -1,10 +1,14 @@
 @let parent = ss.selectedCollection.$value();
 @let children = ss.selectedChildren.$value();
+@let newChildren = ss.newChildren.$value();
 
 @if (parent) {
   <div class="controls">
     @for (child of children; track child.cursor; let index = $index) {
-      <app-control [$title]="(index + 1).toString()" [$fractal]="child" />
+      <app-form-fractal [$title]="index + 1" [$fractal]="child" />
+    }
+    @for (child of newChildren; track index; let index = $index) {
+      <app-form-fractal [$title]="words.NEW" [$fractal]="child" />
     }
   </div>
 }

@@ -34,3 +34,9 @@
 mat-card-header.card-heder {
   padding: 0 16px 16px 0 !important;
 }
+
+.card-content.full-edit-view {
+  display: flex;
+  flex-direction: column;
+  gap: map-get($size, md);
+}
