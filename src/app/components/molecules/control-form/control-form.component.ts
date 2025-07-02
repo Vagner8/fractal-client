@@ -1,8 +1,8 @@
-import { Component, inject, input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormRecord } from '@angular/forms';
+import { Component, inject, input, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { CardComponent, InputComponent, SelectComponent } from '@components/atoms';
 import { CONTROL_MUTABLE_FIELDS, CONTROL_TYPES } from '@constants';
-import { ConstantsValues, ControlDto } from '@types';
+import { Control, ControlDtoMutable } from '@types';
 
 @Component({
   selector: 'app-control-form',
@@ -10,26 +10,26 @@ import { ConstantsValues, ControlDto } from '@types';
   templateUrl: './control-form.component.html',
   styleUrl: './control-form.component.css',
 })
-export class ControlFormComponent implements OnInit {
-  $control = input.required<ControlDto>();
+export class ControlFormComponent implements OnInit, OnDestroy {
+  $control = input.required<Control>();
+  control!: Control;
 
   fb = inject(FormBuilder);
 
-  form!: FormRecord;
   mutableFields = CONTROL_MUTABLE_FIELDS;
   controlsTypes = Object.values(CONTROL_TYPES);
 
   ngOnInit(): void {
-    this.form = this.fb.group(this.$control());
-    this.form.valueChanges.subscribe(formValue => {
-      const control = this.$control();
-      Object.entries(formValue).forEach(([key, value]) => {
-        control[key as keyof ControlDto] = value;
-      });
-    });
+    this.control = this.$control();
+    this.control.form = this.createForm();
   }
 
-  getFormControl = (field: ConstantsValues<typeof CONTROL_MUTABLE_FIELDS>): FormControl => {
-    return this.form.controls[field] as FormControl;
-  };
+  ngOnDestroy(): void {
+    this.control.form = undefined;
+  }
+
+  createForm = (): FormGroup =>
+    this.fb.group(Object.fromEntries(Object.values(CONTROL_MUTABLE_FIELDS).map(key => [key, this.control[key]])));
+
+  getFromControl = (field: keyof ControlDtoMutable, form: FormGroup): FormControl => form.get(field) as FormControl;
 }

@@ -1,5 +1,5 @@
 import { signal } from '@angular/core';
-import { Control, ControlDto, ControlType, Fractal } from '@types';
+import { Control, ControlDtoMutable, ControlType, Fractal } from '@types';
 
 export class ControlFactory implements Control {
   data: string;
@@ -10,11 +10,12 @@ export class ControlFactory implements Control {
 
   $isFullEditMode = signal(false);
 
-  constructor(parent: Fractal, dto: ControlDto) {
-    this.data = dto.data;
-    this.type = dto.type;
-    this.cursor = dto.cursor;
+  constructor(parent: Fractal, dto: Partial<ControlDtoMutable>) {
+    const { data = '', type = 'String', cursor = '' } = dto;
+    this.data = data;
+    this.type = type;
+    this.cursor = cursor;
     this.parent = parent;
-    this.parentCursor = dto.parentCursor;
+    this.parentCursor = parent.cursor;
   }
 }

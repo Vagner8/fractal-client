@@ -1,8 +1,8 @@
-import { Children, ControlDto, Controls, Fractal, FractalDto, SearchControlsProp, SearchFractalsProp } from '@types';
+import { Children, Control, Controls, Fractal, FractalDto, SearchControlsProp, SearchFractalsProp } from '@types';
 import {
   createChildren,
   createControls,
-  ensureControlDtoExists,
+  ensureControlExists,
   ensureExists,
   ensureFractalExists,
   findChildRecursively,
@@ -18,7 +18,7 @@ export class FractalFactory implements Fractal {
   controls?: Controls;
   children?: Children;
 
-  $newControls = signal<ControlDto[]>([]);
+  $newControls = signal<Control[]>([]);
 
   constructor(parent: Fractal, { cursor, parentCursor, children, controls }: FractalDto) {
     this.cursor = cursor;
@@ -46,8 +46,8 @@ export class FractalFactory implements Fractal {
   getChildRecursively = (search: SearchFractalsProp): Fractal =>
     ensureFractalExists(findChildRecursively(search, this.children), search);
 
-  getControl = (search: SearchControlsProp): ControlDto => ensureControlDtoExists(this.findControl(search), search);
-  findControl = (search: SearchControlsProp): ControlDto | null => this.controls?.[parseSearch(search)] ?? null;
+  getControl = (search: SearchControlsProp): Control => ensureControlExists(this.findControl(search), search);
+  findControl = (search: SearchControlsProp): Control | null => this.controls?.[parseSearch(search)] ?? null;
 
   getString = (search: SearchControlsProp): string => this.findControl(search)?.data ?? '';
   getArray = (search: SearchControlsProp): string[] => ensureExists(this.getString(search).split(':').filter(Boolean));

@@ -1,5 +1,5 @@
 import { WritableSignal } from '@angular/core';
-import { ControlDto, ControlsDto } from './control.types';
+import { Control, ControlsDto } from './control.types';
 import { SearchControlsProp, SearchFractalsProp } from './helpers.types';
 
 export type Children = Record<string, Fractal>;
@@ -17,7 +17,7 @@ export interface Fractal extends FractalDto {
   parent: Fractal;
 
   children?: Children;
-  $newControls: WritableSignal<ControlDto[]>;
+  $newControls: WritableSignal<Control[]>;
 
   is(search: SearchFractalsProp): boolean;
 
@@ -27,8 +27,8 @@ export interface Fractal extends FractalDto {
   findChildRecursively(search: SearchFractalsProp): Fractal | null;
   getChildRecursively(search: SearchFractalsProp): Fractal;
 
-  getControl(search: SearchControlsProp): ControlDto;
-  findControl(search: SearchControlsProp): ControlDto | null;
+  getControl(search: SearchControlsProp): Control;
+  findControl(search: SearchControlsProp): Control | null;
 
   getString(search: SearchControlsProp): string;
   getArray(search: SearchControlsProp): string[];

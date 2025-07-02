@@ -1,4 +1,4 @@
-import { ControlDto, Fractal, SearchControlsProp, SearchFractalsProp } from '@types';
+import { Control, Fractal, SearchControlsProp, SearchFractalsProp } from '@types';
 
 export const parseSearch = (search: string | [string]): string => (typeof search === 'string' ? search : search[0]);
 
@@ -12,10 +12,10 @@ export const ensureFractalExists = (
   throw new Error(`Unable to get a fractal by: ${search}`);
 };
 
-export const ensureControlDtoExists = (
-  controlDto: ControlDto | null,
+export const ensureControlExists = (
+  controlDto: Control | null,
   search: SearchControlsProp | SearchFractalsProp
-): ControlDto => {
+): Control => {
   if (controlDto) {
     return controlDto;
   }

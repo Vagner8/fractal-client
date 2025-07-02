@@ -1,11 +1,13 @@
-@let dataForm = getFormControl(mutableFields.DATA);
+@let control = $control();
 
-@if (true) {
-  <app-card
-    ><app-input [$form]="getFormControl(mutableFields.CURSOR)" [$label]="mutableFields.CURSOR" />
-    <app-select [$form]="getFormControl(mutableFields.TYPE)" [$opts]="controlsTypes" [$label]="mutableFields.TYPE" />
-    <app-input [$form]="dataForm" [$label]="mutableFields.DATA"
-  /></app-card>
-} @else {
-  <app-input [$form]="dataForm" [$label]="mutableFields.DATA" />
+@if (control.form; as form) {
+  @if (control.$isFullEditMode()) {
+    <app-card
+      ><app-input [$form]="getFromControl('cursor', form)" [$label]="mutableFields.CURSOR" />
+      <app-select [$form]="getFromControl('type', form)" [$opts]="controlsTypes" [$label]="mutableFields.TYPE" />
+      <app-input [$form]="getFromControl('data', form)" [$label]="mutableFields.DATA"
+    /></app-card>
+  } @else {
+    <app-input [$form]="getFromControl('data', form)" [$label]="control.cursor" />
+  }
 }
