@@ -1,0 +1,11 @@
+@let dataForm = getFormControl(mutableFields.DATA);
+
+@if (true) {
+  <app-card
+    ><app-input [$form]="getFormControl(mutableFields.CURSOR)" [$label]="mutableFields.CURSOR" />
+    <app-select [$form]="getFormControl(mutableFields.TYPE)" [$opts]="controlsTypes" [$label]="mutableFields.TYPE" />
+    <app-input [$form]="dataForm" [$label]="mutableFields.DATA"
+  /></app-card>
+} @else {
+  <app-input [$form]="dataForm" [$label]="mutableFields.DATA" />
+}

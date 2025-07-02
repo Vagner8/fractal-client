@@ -8,6 +8,6 @@
     (hold)="hold.emit(fractal)"
     (touch)="touch.emit(fractal)">
     <mat-icon [hidden]="!icon" aria-hidden="false">{{ icon }}</mat-icon>
-    {{ fractal.getString('Name') }}
+    {{ fractal.cursor }}
   </button>
 }

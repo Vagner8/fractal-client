@@ -2,8 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { StatesService } from './states.service';
 import { DataService } from './data.service';
 import { MODIFIERS } from '@constants';
-import { FractalBase } from '@utils';
-import { FractalDtoFactory } from 'app/utils/fractal-dto-factory';
+import { CollectionChildFactory } from '@utils';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +12,9 @@ export class ModifiersService {
   private readonly ss = inject(StatesService);
 
   new(): void {
-    const { value } = this.ss.selectedCollection;
-    if (value) {
-      const newFractalDto = new FractalDtoFactory(value);
-      const newFractal = new FractalBase(newFractalDto, value);
-      this.ss.newChildren.push(newFractal);
+    const collection = this.ss.selectedCollection.value;
+    if (collection) {
+      this.ss.newChildren.push(CollectionChildFactory(collection));
       this.ss.setModifier(MODIFIERS.NEW);
     }
   }

@@ -2,7 +2,7 @@ import { HarnessLoader } from '@angular/cdk/testing';
 import { SidenavComponent } from './sidenav.component';
 import { configureTestingModule, modifiersMock } from '@tests';
 import { ComponentFixture } from '@angular/core/testing';
-import { FractalBase } from '@utils';
+import { FractalFactory } from '@utils';
 import { MatButtonHarness } from '@angular/material/button/testing';
 import { MODIFIERS } from '@constants';
 
@@ -17,7 +17,7 @@ describe('SidenavComponent', () => {
 
   describe('Modifiers', () => {
     beforeEach(async () => {
-      fixture.componentRef.setInput('$fractal', new FractalBase(modifiersMock));
+      fixture.componentRef.setInput('$fractal', new FractalFactory(modifiersMock));
     });
 
     it('should render all modifiers', async () => {

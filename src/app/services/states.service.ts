@@ -55,8 +55,12 @@ export class StatesService {
   }
 
   async setCollection(collection: Fractal): Promise<void> {
-    this.selectedCollection.set(collection);
     this.$collectionParam.set(collection.cursor);
+    this.selectedCollection.set(collection);
+
+    this.newChildren.set([]);
+    this.selectedChildren.set([]);
+
     this.navigate([collection.cursor], { [QUERY_PARAMS.MODIFIERS]: null });
   }
 

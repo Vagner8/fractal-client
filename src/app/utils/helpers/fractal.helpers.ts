@@ -1,6 +1,6 @@
 import { Children, ChildrenDto, Fractal, SearchFractals } from '@types';
 import { parseSearch } from './common.helpers';
-import { FractalBase } from '../fractal-base';
+import { FractalFactory } from '../factories/fractal.factory';
 
 export const findChildRecursively: SearchFractals<Fractal | null> = (search, children) => {
   if (!children) return null;
@@ -18,14 +18,14 @@ export const findChildRecursively: SearchFractals<Fractal | null> = (search, chi
   return null;
 };
 
-export const createChildren = (children: ChildrenDto | null, parent: Fractal): Children | null => {
-  if (!children) return null;
+export const createChildren = (parent: Fractal, children?: ChildrenDto): Children | undefined => {
+  if (!children) return undefined;
 
   const result: Children = {};
 
   for (const [cursor, fractalDto] of Object.entries(children)) {
-    const fractal = new FractalBase(fractalDto, parent);
-    fractal.children = createChildren(fractalDto.children, fractal);
+    const fractal = new FractalFactory(parent, fractalDto);
+    fractal.children = createChildren(fractal, fractalDto.children);
     result[cursor] = fractal;
   }
 

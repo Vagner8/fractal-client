@@ -5,8 +5,8 @@ import { ToolbarComponent } from '@components/molecules';
 import { DataService, StatesService } from '@services';
 import { appMock } from '@tests';
 import { Router } from '@angular/router';
-import { FractalBase, isNavigationEnd } from '@utils';
-import { ConstantsValues } from '@types';
+import { FractalFactory, isNavigationEnd } from '@utils';
+import { ConstantsValues, Fractal } from '@types';
 import { APP_FRACTALS } from '@constants';
 import { filter, take } from 'rxjs';
 
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   router = inject(Router);
 
   ngOnInit(): void {
-    const app = new FractalBase(appMock);
+    const app = new FractalFactory({} as Fractal, appMock);
     console.log('🚀 ~ app:', app);
 
     [this.ss.manager, this.ss.modifiers, this.ss.collections] = (

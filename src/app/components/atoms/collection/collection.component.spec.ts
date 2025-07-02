@@ -3,7 +3,7 @@ import { CollectionComponent } from './children.component';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { configureTestingModule, fulfillCollection, User } from '@tests';
 import { Fractal } from '@types';
-import { FractalBase } from '@utils';
+import { FractalFactory } from '@utils';
 import { MatRowHarness, MatHeaderCellHarness } from '@angular/material/table/testing';
 
 describe('CollectionComponent', () => {
@@ -16,7 +16,7 @@ describe('CollectionComponent', () => {
   beforeEach(async () => {
     ({ user, loader, fixture } = await configureTestingModule(CollectionComponent));
 
-    collection = new FractalBase(fulfillCollection);
+    collection = new FractalFactory(fulfillCollection);
   });
 
   beforeEach(() => {
