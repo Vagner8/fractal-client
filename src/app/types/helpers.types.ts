@@ -1,7 +1,7 @@
-import { APP_FRACTALS, INDICATORS } from '@constants';
+import { APP_FRACTALS, CONTROL_CURSORS } from '@constants';
 import { Children, ConstantsValues, Controls } from '@types';
 
-export type SearchControlsProp = ConstantsValues<typeof INDICATORS> | [string];
+export type SearchControlsProp = ConstantsValues<typeof CONTROL_CURSORS> | [string];
 export type SearchFractalsProp = ConstantsValues<typeof APP_FRACTALS> | [string];
 
 export type SearchControls<T> = (search: SearchControlsProp, controls: Controls) => T;

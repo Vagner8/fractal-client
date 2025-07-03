@@ -9,17 +9,18 @@ export type ControlsDto = Record<string, ControlDto>;
 export type ControlType = ConstantsValues<typeof CONTROL_TYPES>;
 
 export interface ControlDtoMutable {
-  cursor: string;
   data: string;
   type: ControlType;
+  cursor: string;
 }
 
 export interface ControlDto extends ControlDtoMutable {
+  id: string;
   parentCursor: string;
 }
 
 export interface Control extends ControlDto {
-  form?: FormGroup;
+  form: FormGroup | null;
   parent: Fractal;
   $isFullEditMode: WritableSignal<boolean>;
 }

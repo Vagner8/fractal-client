@@ -5,12 +5,14 @@ export const appMock = {
   parentCursor: '',
   controls: {
     Oc: {
+      id: '',
       cursor: 'Oc',
       parentCursor: 'App',
       data: 'Modifiers:Collections',
       type: 'Select',
     },
     Occ: {
+      id: '',
       cursor: 'Occ',
       parentCursor: 'App',
       data: 'Name',
@@ -23,6 +25,7 @@ export const appMock = {
       parentCursor: 'App',
       controls: {
         Oc: {
+          id: '',
           cursor: 'Oc',
           parentCursor: 'Collections',
           data: 'Products:Users',
@@ -35,12 +38,14 @@ export const appMock = {
           parentCursor: 'Collections',
           controls: {
             Oc: {
+              id: '',
               cursor: 'Oc',
               parentCursor: 'Users',
               data: '3:2:1',
               type: 'Select',
             },
             Occ: {
+              id: '',
               cursor: 'Occ',
               parentCursor: 'Users',
               data: 'Email:Name',
@@ -53,12 +58,14 @@ export const appMock = {
               parentCursor: 'Users',
               controls: {
                 Name: {
+                  id: '',
                   cursor: 'Name',
                   parentCursor: '1',
                   data: 'John-1',
                   type: 'String',
                 },
                 Email: {
+                  id: '',
                   cursor: 'Email',
                   parentCursor: '1',
                   data: 'dima@mail.com',
@@ -71,12 +78,14 @@ export const appMock = {
               parentCursor: 'Users',
               controls: {
                 Name: {
+                  id: '',
                   cursor: 'Name',
                   parentCursor: '2',
                   data: 'John-2',
                   type: 'String',
                 },
                 Email: {
+                  id: '',
                   cursor: 'Email',
                   parentCursor: '2',
                   data: 'dima@mail.com',
@@ -89,12 +98,14 @@ export const appMock = {
               parentCursor: 'Users',
               controls: {
                 Name: {
+                  id: '',
                   cursor: 'Name',
                   parentCursor: '3',
                   data: 'John-3',
                   type: 'String',
                 },
                 Email: {
+                  id: '',
                   cursor: 'Email',
                   parentCursor: '3',
                   data: 'dima@mail.com',
@@ -119,6 +130,7 @@ export const appMock = {
       parentCursor: 'App',
       controls: {
         Oc: {
+          id: '',
           cursor: 'Oc',
           parentCursor: 'Modifiers',
           data: 'Delete:Save:New:Edit',

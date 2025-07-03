@@ -10,8 +10,8 @@ import { Observable } from 'rxjs';
 export class DataService {
   http = inject(HttpClient);
 
-  getChildRecursively(): Observable<FractalDto> {
-    return this.http.get<FractalDto>(`${ENV.FRACTAL_API}?id=${ENV.ID}`);
+  getFractalWithChildrenRecursively(cursor: string): Observable<FractalDto> {
+    return this.http.get<FractalDto>(`${ENV.FRACTAL_API}?cursor=${cursor}`);
   }
 
   addFractals(dto: FractalDto[]): Observable<FractalDto[]> {

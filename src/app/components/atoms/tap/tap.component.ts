@@ -12,7 +12,7 @@ import { Fractal } from '@types';
   styleUrl: './tap.component.scss',
 })
 export class TapComponent {
-  $fractal = input<Fractal>();
+  $fractal = input<Fractal | null>(null);
 
   ss = inject(StatesService);
 

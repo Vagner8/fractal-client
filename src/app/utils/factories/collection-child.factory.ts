@@ -12,9 +12,8 @@ export const CollectionChildFactory = (parent: Fractal): Fractal => {
 export const createChildControls = (parent: Fractal): Control[] => {
   const occ = parent.parent.getArray('Occ');
   if (occ.length > 0) {
-    const firsChild = parent.parent.getChild(['1']);
     return occ.map(cursor => {
-      const { type } = firsChild.getControl([cursor]);
+      const type = parent.parent.findChild(['1'])?.findControl([cursor])?.type;
       return new ControlFactory(parent, { cursor, type });
     });
   } else {

@@ -1,13 +1,5 @@
 import { Children, Control, Controls, Fractal, FractalDto, SearchControlsProp, SearchFractalsProp } from '@types';
-import {
-  createChildren,
-  createControls,
-  ensureControlExists,
-  ensureExists,
-  ensureFractalExists,
-  findChildRecursively,
-  parseSearch,
-} from '../helpers';
+import { createChildren, createControls, findChildRecursively, parseSearch } from '../helpers';
 import { signal } from '@angular/core';
 
 export class FractalFactory implements Fractal {
@@ -38,17 +30,14 @@ export class FractalFactory implements Fractal {
 
   is = (search: SearchFractalsProp): boolean => this.cursor === parseSearch(search);
 
-  getChild = (search: SearchFractalsProp): Fractal => ensureFractalExists(this.findChild(search), search);
-  findChild = (search: SearchFractalsProp): Fractal | undefined =>
-    this.children ? this.children?.[parseSearch(search)] : undefined;
+  findChild = (search: SearchFractalsProp): Fractal | null =>
+    this.children ? this.children?.[parseSearch(search)] : null;
 
   findChildRecursively = (search: SearchFractalsProp): Fractal | null => findChildRecursively(search, this.children);
-  getChildRecursively = (search: SearchFractalsProp): Fractal =>
-    ensureFractalExists(findChildRecursively(search, this.children), search);
 
-  getControl = (search: SearchControlsProp): Control => ensureControlExists(this.findControl(search), search);
   findControl = (search: SearchControlsProp): Control | null => this.controls?.[parseSearch(search)] ?? null;
 
   getString = (search: SearchControlsProp): string => this.findControl(search)?.data ?? '';
-  getArray = (search: SearchControlsProp): string[] => ensureExists(this.getString(search).split(':').filter(Boolean));
+
+  getArray = (search: SearchControlsProp): string[] => this.getString(search).split(':').filter(Boolean);
 }

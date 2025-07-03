@@ -7,14 +7,28 @@ export class FractalsState {
 
   $isEmpty = computed<boolean>(() => this.$value().length === 0);
 
+  has = (fractal: Fractal | null): boolean => this.value.some(f => f === fractal);
+
   push = (fractal: Fractal): void => this.set([...this.value, fractal]);
-  delete = (fractal: Fractal): void => this.set(this.value.filter(prevItem => prevItem !== fractal));
+
+  delete = (fractal: Fractal | null): void => this.set(this.value.filter(prevItem => prevItem !== fractal));
+
   isEmpty = (): boolean => this.value.length === 0;
 
   deleteBunch = (fractals: Fractal[]): void => this.set(this.value.filter(fractal => !fractals.includes(fractal)));
 
-  toggle = (fractal: Fractal): void => (this.value.includes(fractal) ? this.delete(fractal) : this.push(fractal));
-  toggleAll = (fractal: Fractal): void => this.set(this.isEmpty() ? Object.values(fractal.parent.children ?? {}) : []);
+  toggle(fractal: Fractal | null): void {
+    if (fractal) {
+      if (this.has(fractal)) {
+        this.delete(fractal);
+      } else {
+        this.push(fractal);
+      }
+    }
+  }
+
+  toggleAll = (fractal: Fractal | null): void =>
+    this.set(this.isEmpty() ? Object.values(fractal?.parent.children ?? {}) : []);
 
   set = (fractals: Fractal[]): void => {
     this.value = fractals;

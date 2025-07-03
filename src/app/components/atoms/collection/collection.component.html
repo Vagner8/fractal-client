@@ -18,9 +18,9 @@
         mat-row
         *matRowDef="let cursor; columns: columns"
         appTap
-        (hold)="this.ss.selectedChildren.toggleAll(fractal.getChild([cursor]))"
-        (touch)="this.ss.selectedChildren.toggle(fractal.getChild([cursor]))"
-        [class.selected-row]="ss.selectedChildren.$value().includes(fractal.getChild([cursor]))"></tr>
+        (hold)="this.ss.selectedChildren.toggleAll(fractal.findChild([cursor]))"
+        (touch)="this.ss.selectedChildren.toggle(fractal.findChild([cursor]))"
+        [class.selected-row]="ss.selectedChildren.has(fractal.findChild([cursor]))"></tr>
     </table>
   } @else {
     <h1>No children to display</h1>
