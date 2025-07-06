@@ -1,28 +1,28 @@
-<!-- <div class="container">
-  @if (fractal.cursor !== AppFractals.App) {
-    <app-table class="controls-table" view="controls" [$fractal]="fractal" />
-  }
+@if ($fractal(); as fractal) {
+  @if (!fractal.parent?.is('Collections')) {
+    <mat-accordion hideToggle class="mat-accordion">
+      @for (cursor of fractal.getArray('Oc'); track cursor) {
+        @if (fractal.findChild([cursor]); as child) {
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                @if (child.getString('Icon'); as icon) {
+                  <mat-icon class="icon">{{ icon }}</mat-icon>
+                }
+                {{ child.cursor }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
 
-  @if (fractal.isCollection && fractal.fractals.size) {
-    <app-table [$fractal]="fractal" />
-  }
+            <app-controls [$fractal]="fractal" />
 
-  @if (!fractal.isCollection) {
-    <mat-accordion class="accordion">
-      @for (cursor of fractal.controls.getOneSplitable('Oc'); track cursor) {
-        @if (fractal.fractals.get(cursor); as child) {
-          <app-panel
-            #panel
-            [fractal]="child"
-            [ancestors]="ancestors"
-            (closed)="closed(child)"
-            (afterExpand)="afterExpand(child)">
-            @if (panel.expansionPanel()?.expanded) {
-              <app-accordion [fractal]="child" [ancestors]="ancestors" />
+            @if (child.parent?.is('Collections')) {
+              <app-collection [$fractal]="child" />
             }
-          </app-panel>
+
+            <app-accordion [$fractal]="child" />
+          </mat-expansion-panel>
         }
       }
     </mat-accordion>
   }
-</div> -->
+}

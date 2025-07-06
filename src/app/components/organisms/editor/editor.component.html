@@ -6,11 +6,7 @@
   <div class="controls">
     @for (child of children; track child.cursor; let index = $index) {
       <app-card [$title]="index + 1">
-        @for (cursor of child.parent.getArray('Occ'); track cursor) {
-          @if (child.findControl([cursor]); as control) {
-            <app-control-form [$control]="control" />
-          }
-        }
+        <app-ordered-controls [$fractal]="child" [templateRef]="controls" />
       </app-card>
     }
     @for (child of newChildren; track index; let index = $index) {
@@ -22,3 +18,7 @@
     }
   </div>
 }
+
+<ng-template #controls let-control>
+  <app-control-form [$control]="control" />
+</ng-template>

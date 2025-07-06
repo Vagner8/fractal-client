@@ -24,7 +24,7 @@ export const createChildren = (parent: Fractal, children?: ChildrenDto): Childre
   const result: Children = {};
 
   for (const [cursor, fractalDto] of Object.entries(children)) {
-    const fractal = new FractalFactory(parent, fractalDto);
+    const fractal = new FractalFactory(fractalDto, parent);
     fractal.children = createChildren(fractal, fractalDto.children);
     result[cursor] = fractal;
   }

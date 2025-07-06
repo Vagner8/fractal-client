@@ -3,8 +3,8 @@ import { createChildren, createControls, findChildRecursively, parseSearch } fro
 import { signal } from '@angular/core';
 
 export class FractalFactory implements Fractal {
-  private readonly _parent?: Fractal;
   cursor: string;
+  parent?: Fractal;
   parentCursor: string;
 
   controls?: Controls;
@@ -12,20 +12,12 @@ export class FractalFactory implements Fractal {
 
   $newControls = signal<Control[]>([]);
 
-  constructor(parent: Fractal, { cursor, parentCursor, children, controls }: FractalDto) {
+  constructor({ cursor, parentCursor, children, controls }: FractalDto, parent?: Fractal) {
     this.cursor = cursor;
     this.parentCursor = parentCursor;
-    this._parent = parent;
+    this.parent = parent;
     this.controls = createControls(this, controls);
     this.children = createChildren(this, children);
-  }
-
-  get parent(): Fractal {
-    if (this._parent instanceof FractalFactory) {
-      return this._parent;
-    } else {
-      throw new Error('Unable to get parent for the App fractal');
-    }
   }
 
   is = (search: SearchFractalsProp): boolean => this.cursor === parseSearch(search);

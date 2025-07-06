@@ -28,7 +28,7 @@ export class FractalsState {
   }
 
   toggleAll = (fractal: Fractal | null): void =>
-    this.set(this.isEmpty() ? Object.values(fractal?.parent.children ?? {}) : []);
+    this.set(this.isEmpty() ? Object.values(fractal?.parent?.children ?? {}) : []);
 
   set = (fractals: Fractal[]): void => {
     this.value = fractals;

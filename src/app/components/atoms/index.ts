@@ -5,4 +5,7 @@ export * from './input/input.component';
 export * from './header/header.component';
 export * from './select/select.component';
 export * from './spinner/spinner.component';
+export * from './controls/controls.component';
 export * from './collection/children.component';
+export * from './ordered-children/ordered-children.component';
+export * from './ordered-controls/ordered-controls.component';

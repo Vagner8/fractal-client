@@ -1,4 +1,4 @@
-@if (this.ss.selectedCollection.$value(); as fractal) {
+@if ($currentFractal(); as fractal) {
   @if (fractal.children) {
     @let columns = getColumns(fractal);
 

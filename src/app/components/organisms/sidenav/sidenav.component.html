@@ -6,14 +6,16 @@
     mode="side"
     position="end">
     <div>
-      @if ($fractal(); as taps) {
-        @for (cursor of taps.getArray('Oc'); track cursor) {
-          @if (taps.findChild([cursor]); as tap) {
-            <app-tap [$fractal]="taps.findChild([cursor])" (hold)="onHold($event)" (touch)="onTouch($event)" />
-          }
-        }
+      <app-ordered-children [$fractal]="$fractal()" [templateRef]="collectionsTaps" />
+      @if (ss.$sidenavTaps()?.is('Collections')) {
+        <app-ordered-children [$fractal]="ss.pages" [templateRef]="pagesTaps" />
       }
     </div>
   </mat-drawer>
   <router-outlet />
 </mat-drawer-container>
+
+<ng-template #pagesTaps let-page><app-tap [$fractal]="page" (touch)="onTouch($event)" /></ng-template>
+<ng-template #collectionsTaps let-collection
+  ><app-tap [$fractal]="collection" (hold)="onHold($event)" (touch)="onTouch($event)"
+/></ng-template>

@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
-import { NavigationEnd, NavigationExtras, Router } from '@angular/router';
-import { APP_EVENTS, APP_PAGES, QUERY_PARAMS } from '@constants';
+import { NavigationExtras, Router } from '@angular/router';
+import { APP_PAGES, QUERY_PARAMS } from '@constants';
 import { ConstantsValues, Control, Fractal } from '@types';
 import { FractalsState, FractalState } from '@utils';
 
@@ -23,6 +23,7 @@ export class StatesService {
   $isFullEditModeActivated = signal(true);
   $isHoldEventRunning = signal(false);
 
+  pages: Fractal | null = null;
   manager: Fractal | null = null;
   modifiers: Fractal | null = null;
   collections: Fractal | null = null;
@@ -30,21 +31,6 @@ export class StatesService {
   $editorParam = signal<string | null>(null);
   $queryParams = signal<Partial<Record<ConstantsValues<typeof QUERY_PARAMS>, string>>>({});
   $collectionParam = signal<string | null>(null);
-
-  init = (): void => {
-    const collectionParam = this.$collectionParam();
-    this.$sidenavTaps.set(this.collections);
-    this.$managerEvent.set(this.$queryParams().Manager ?? APP_EVENTS.HOLD);
-    this.collections && collectionParam && this.selectedCollection.set(this.collections.findChild([collectionParam]));
-  };
-
-  navigationEnd = (event: NavigationEnd): void => {
-    const { queryParams, editorParam, collectionParam } = this.getSegments(event);
-
-    this.$queryParams.set(queryParams);
-    this.$editorParam.set(editorParam);
-    this.$collectionParam.set(collectionParam);
-  };
 
   async setManager(managerEvent: string | null): Promise<void> {
     this.$managerEvent.set(managerEvent);
@@ -71,21 +57,5 @@ export class StatesService {
       queryParams,
       queryParamsHandling: 'merge',
     });
-  }
-
-  private getSegments(event: NavigationEnd): {
-    collectionParam: string;
-    editorParam: string;
-    queryParams: Partial<Record<ConstantsValues<typeof QUERY_PARAMS>, string>>;
-  } {
-    const url = new URL(event.urlAfterRedirects, window.location.origin);
-    const [collectionParam, editorParam] = url.pathname.split('/').filter(Boolean);
-
-    const queryParams: Record<string, string> = {};
-    url.searchParams.forEach((value, key) => {
-      queryParams[key] = value;
-    });
-
-    return { collectionParam, editorParam, queryParams };
   }
 }

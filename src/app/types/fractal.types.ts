@@ -14,7 +14,7 @@ export interface FractalDto {
 }
 
 export interface Fractal extends FractalDto {
-  parent: Fractal;
+  parent?: Fractal;
   children?: Children;
   controls?: Controls;
 

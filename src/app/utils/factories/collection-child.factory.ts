@@ -4,16 +4,16 @@ import { WORDS } from '@constants';
 import { ControlFactory } from './control.factory';
 
 export const CollectionChildFactory = (parent: Fractal): Fractal => {
-  const child = new FractalFactory(parent, { cursor: WORDS.NEW, parentCursor: parent.cursor });
+  const child = new FractalFactory({ cursor: WORDS.NEW, parentCursor: parent.cursor }, parent);
   child.$newControls.set(createChildControls(child));
   return child;
 };
 
 export const createChildControls = (parent: Fractal): Control[] => {
-  const occ = parent.parent.getArray('Occ');
-  if (occ.length > 0) {
+  const occ = parent?.parent?.getArray('Occ');
+  if (occ && occ.length > 0) {
     return occ.map(cursor => {
-      const type = parent.parent.findChild(['1'])?.findControl([cursor])?.type;
+      const type = parent?.parent?.findChild(['1'])?.findControl([cursor])?.type;
       return new ControlFactory(parent, { cursor, type });
     });
   } else {

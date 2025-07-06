@@ -1,5 +1,11 @@
 @use 'variables.scss' as *;
 
+:host {
+  width: 100%;
+  display: block;
+  overflow: auto;
+}
+
 .td {
   cursor: default;
 }

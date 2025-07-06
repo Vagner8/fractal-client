@@ -1,3 +1,18 @@
-@if (ss.selectedCollection.$value(); as selectedParentFractal) {
-  <!-- <app-accordion [fractal]="fractal" [ancestors]="selectedParentFractal.ancestors" /> -->
+@if (ss.$app(); as fractal) {
+  <mat-accordion hideToggle class="mat-accordion">
+    <mat-expansion-panel expanded>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          @if (fractal.getString('Icon'); as icon) {
+            <mat-icon class="icon">{{ icon }}</mat-icon>
+          }
+          {{ fractal.cursor }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <app-controls [$fractal]="fractal" />
+
+      <app-accordion [$fractal]="fractal" />
+    </mat-expansion-panel>
+  </mat-accordion>
 }

@@ -1,29 +1,16 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { CollectionComponent, ControlsComponent } from '@components/atoms';
 import { MatExpansionModule, MatIconModule } from '@mat';
-import { PanelComponent } from '../panel/panel.component';
-import { IFractal } from '@types';
 import { StatesService } from '@services';
-import { TableComponent } from '@components/atoms';
-import { APP_FRACTALS } from '@constants';
+import { Fractal } from '@types';
 
 @Component({
   selector: 'app-accordion',
-  imports: [MatIconModule, MatExpansionModule, TableComponent, PanelComponent],
+  imports: [MatIconModule, MatExpansionModule, ControlsComponent, CollectionComponent],
   templateUrl: './accordion.component.html',
   styleUrl: './accordion.component.scss',
 })
 export class AccordionComponent {
-  @Input() fractal!: IFractal;
-  @Input() ancestors!: IFractal[];
+  $fractal = input<Fractal | null>();
   ss = inject(StatesService);
-
-  AppFractals = APP_FRACTALS;
-
-  closed(fractal: IFractal): void {
-    // this.ss.selectedCollection.set(fractal.parent);
-  }
-
-  afterExpand(fractal: IFractal): void {
-    // this.ss.selectedParentFractal.set(fractal);
-  }
 }
