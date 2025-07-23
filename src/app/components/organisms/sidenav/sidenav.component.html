@@ -6,8 +6,8 @@
     mode="side"
     position="end">
     <div>
-      <app-ordered-children [$fractal]="$fractal()" [templateRef]="collectionsTaps" />
-      @if (ss.$sidenavTaps()?.is('Collections')) {
+      <app-ordered-children [$fractal]="$sidenavTaps()" [templateRef]="collectionsTaps" />
+      @if (!$sidenavTaps()?.is('Modifiers')) {
         <app-ordered-children [$fractal]="ss.pages" [templateRef]="pagesTaps" />
       }
     </div>

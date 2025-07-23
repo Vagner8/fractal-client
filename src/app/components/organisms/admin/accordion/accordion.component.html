@@ -1,9 +1,12 @@
 @if ($fractal(); as fractal) {
-  @if (!fractal.parent?.is('Collections')) {
-    <mat-accordion hideToggle class="mat-accordion">
-      @for (cursor of fractal.getArray('Oc'); track cursor) {
-        @if (fractal.findChild([cursor]); as child) {
-          <mat-expansion-panel>
+  <mat-accordion hideToggle class="mat-accordion 1">
+    @for (cursor of fractal.getArray('Oc'); track cursor) {
+      @if (fractal.findChild([cursor]); as child) {
+        @if (child.children) {
+          <mat-expansion-panel
+            (opened)="onOpened(child)"
+            (closed)="onClosed(child)"
+            [expanded]="ss.closedPanel.$value() === child.parent">
             <mat-expansion-panel-header>
               <mat-panel-title>
                 @if (child.getString('Icon'); as icon) {
@@ -13,16 +16,27 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
 
-            <app-controls [$fractal]="fractal" />
+            <mat-accordion hideToggle class="mat-accordion 2">
+              <mat-expansion-panel [expanded]="ss.closedPanel.$value() === child">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Controls</mat-panel-title>
+                </mat-expansion-panel-header>
+                <app-controls [$fractal]="child" />
+              </mat-expansion-panel>
 
-            @if (child.parent?.is('Collections')) {
-              <app-collection [$fractal]="child" />
-            }
-
-            <app-accordion [$fractal]="child" />
+              <mat-expansion-panel [expanded]="ss.closedPanel.$value() === child">
+                <mat-expansion-panel-header>
+                  <mat-panel-title>Children</mat-panel-title>
+                </mat-expansion-panel-header>
+                <div class="collection-container">
+                  <app-collection [$fractal]="child" class="collection" />
+                </div>
+                <app-accordion [$fractal]="child" />
+              </mat-expansion-panel>
+            </mat-accordion>
           </mat-expansion-panel>
         }
       }
-    </mat-accordion>
-  }
+    }
+  </mat-accordion>
 }

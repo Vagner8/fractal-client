@@ -25,3 +25,8 @@ export const PARAMS = {
   APP: 'App',
   COLLECTION: 'Collection',
 } as const;
+
+export const CUSTOM_CHILDREN_COLUMNS = {
+  NO: 'No.',
+  CURSOR: 'Cursor',
+};

@@ -7,6 +7,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { FractalFactory, getSegments, isNavigationEnd } from '@utils';
 import { APP_EVENTS, APP_FRACTALS } from '@constants';
 import { filter } from 'rxjs';
+import { appTestData } from './app-test-data';
 
 @Component({
   selector: 'app-root',
@@ -23,19 +24,31 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.router.events.pipe(filter(isNavigationEnd)).subscribe(this.navigationEnd);
 
-    this.ds.getFractalWithChildrenRecursively(APP_FRACTALS.APP).subscribe(dto => {
-      const app = new FractalFactory(dto);
-      this.ss.$app.set(app);
+    // this.ds.getFractalWithChildrenRecursively(APP_FRACTALS.APP).subscribe(() => {
+    //   const app = new FractalFactory(appTestData);
+    //   this.ss.$app.set(app);
 
-      console.info('🚀 ~ app:', app);
+    //   console.info('🚀 ~ app:', app);
 
-      this.ss.pages = app.findChildRecursively('Pages');
-      this.ss.manager = app.findChildRecursively('Manager');
-      this.ss.modifiers = app.findChildRecursively('Modifiers');
-      this.ss.collections = app.findChildRecursively('Collections');
+    //   this.ss.pages = app.findChildRecursively('Pages');
+    //   this.ss.manager = app.findChildRecursively('Manager');
+    //   this.ss.modifiers = app.findChildRecursively('Modifiers');
+    //   this.ss.collections = app.findChildRecursively('Collections');
 
-      this.init();
-    });
+    //   this.init();
+    // });
+
+    const app = new FractalFactory(appTestData);
+    this.ss.$app.set(app);
+
+    console.info('🚀 ~ app:', app);
+
+    this.ss.pages = app.findChildRecursively('Pages');
+    this.ss.manager = app.findChildRecursively('Manager');
+    this.ss.modifiers = app.findChildRecursively('Modifiers');
+    this.ss.collections = app.findChildRecursively('Collections');
+
+    this.init();
   }
 
   init(): void {

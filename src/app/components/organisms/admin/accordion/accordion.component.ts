@@ -13,4 +13,12 @@ import { Fractal } from '@types';
 export class AccordionComponent {
   $fractal = input<Fractal | null>();
   ss = inject(StatesService);
+
+  onOpened(fractal: Fractal): void {
+    this.ss.selectedFractal.set(fractal);
+  }
+
+  onClosed(fractal: Fractal): void {
+    this.ss.closedPanel.set(fractal);
+  }
 }

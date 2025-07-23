@@ -10,3 +10,7 @@
   flex-direction: column;
   gap: map-get($size, xs);
 }
+
+.collection-container {
+  margin-bottom: map-get($size, xs);
+}

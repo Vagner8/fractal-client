@@ -13,7 +13,7 @@ import { Fractal } from '@types';
   styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
-  $fractal = input<Fractal | null>(null);
+  $sidenavTaps = input<Fractal | null>(null);
 
   ss = inject(StatesService);
   ms = inject(ModifiersService);

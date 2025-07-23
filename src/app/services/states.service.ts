@@ -12,6 +12,9 @@ export class StatesService {
 
   $app = signal<Fractal | null>(null);
 
+  selectedFractal = new FractalState();
+  closedPanel = new FractalState();
+
   newChildren = new FractalsState();
   selectedChildren = new FractalsState();
   selectedCollection = new FractalState();

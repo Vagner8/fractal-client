@@ -1,6 +1,1 @@
 @use 'variables.scss' as *;
-
-.mat-expansion-panel {
-  border: solid 1px map-get($color, border);
-  box-shadow: none !important;
-}
