@@ -1,1 +1,7 @@
 @use 'variables.scss' as *;
+
+ul {
+  display: flex;
+  flex-direction: column;
+  gap: map-get($size, sm);
+}

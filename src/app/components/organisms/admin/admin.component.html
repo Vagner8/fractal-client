@@ -1,3 +1,9 @@
-@if (ss.$app(); as app) {
-  <app-accordion [$fractal]="app" />
-}
+<ul>
+  @if (ss.$app(); as app) {
+    @for (cursor of app.getArray('Oc'); track $index) {
+      <li>
+        <app-card [$fractal]="app.findChild([cursor])" />
+      </li>
+    }
+  }
+</ul>
