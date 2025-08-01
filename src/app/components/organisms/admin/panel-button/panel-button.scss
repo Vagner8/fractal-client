@@ -1,28 +1,19 @@
-@use 'variables.scss' as *;
+@use 'variables' as *;
 
-.admin,
 ul {
   display: flex;
   flex-direction: column;
   gap: map-get($size, sm);
 }
 
-.btn-forward,
-.btn-back {
+.btn {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   width: 100%;
   background-color: map-get($color, common);
 }
 
-.btn-forward {
-  justify-content: space-between;
-}
-
-.btn-back {
-  justify-content: flex-start;
-}
-
-.btn-forward-icon {
+.icon {
   order: 1;
 }

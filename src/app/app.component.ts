@@ -5,7 +5,7 @@ import { ToolbarComponent } from '@components/molecules';
 import { DataService, StatesService } from '@services';
 import { NavigationEnd, Router } from '@angular/router';
 import { FractalFactory, getSegments, isNavigationEnd } from '@utils';
-import { APP_EVENTS, APP_FRACTALS } from '@constants';
+import { APP_EVENTS } from '@constants';
 import { filter } from 'rxjs';
 import { appTestData } from './app-test-data';
 

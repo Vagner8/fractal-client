@@ -1,4 +1,4 @@
-import { ApplicationConfig, importProvidersFrom, provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter, withComponentInputBinding } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
@@ -11,7 +11,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([fetchInterceptor])),
     provideRouter(routes, withComponentInputBinding()),
     provideAnimations(),
-    provideExperimentalZonelessChangeDetection(),
+    provideZonelessChangeDetection(),
     importProvidersFrom(MatNativeDateModule),
   ],
 };
