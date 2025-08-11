@@ -1,4 +1,4 @@
-@let selectedParent = fs.selectedParent.$value();
+@let selectedParent = fs.selectedFractal.$value();
 @let ooc = selectedParent?.getStringsData('Ooc');
 
 <div class="view">
@@ -7,7 +7,10 @@
       <h3>Controls</h3>
       <app-table
         [$like]="'controls'"
-        [$fractal]="selectedParent"/>
+        [$fractal]="selectedParent"
+        [$selectedRows]="fs.selectedControls.$cursors()"
+        (heldRow)="onHeldControl()"
+        (touchedRow)="onTouchControl($event)"/>
     </div>
   }
 
@@ -19,7 +22,8 @@
       <app-table
         [$fractal]="selectedParent"
         [$selectedRows]="fs.selectedChildren.$cursors()"
-        (touchedRow)="onTouchRow($event)"/>
+        (heldRow)="onHoldChild()"
+        (touchedRow)="onTouchChild($event)"/>
     </div>
   }
 </div>

@@ -42,8 +42,8 @@ export class AppComponent implements OnInit {
     const app = new FractalFactory(appTestData);
     this.ss.$app.set(app);
     this.fs.$app.set(app);
-    this.fs.settings = app.findChild('Settings')!;
-    this.fs.selectedParent.set(app);
+    // this.fs.settings = app.findChild('Settings')!;
+    this.fs.selectedFractal.set(app);
 
     console.info('🚀 ~ app:', app);
 

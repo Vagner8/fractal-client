@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { StatesService } from '@services';
+import { FractalService } from '@services';
 
 @Component({
   selector: 'app-header',
@@ -9,5 +9,5 @@ import { StatesService } from '@services';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  ss = inject(StatesService);
+  fs = inject(FractalService);
 }

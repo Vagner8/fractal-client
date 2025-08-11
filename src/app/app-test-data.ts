@@ -19,10 +19,10 @@ export const appTestData: FractalDto = {
       parentCursor: 'App',
     },
     Ooc: {
-      data: 'Oc:Occ:Ooc',
+      data: 'Oc:Occ:Ooc:Omc',
       type: 'Select',
       id: '6f7a9f7f-0c3e-4d51-a3f0-96be1f574001',
-      cursor: 'Occ',
+      cursor: 'Ooc',
       parentCursor: 'App',
     },
     Omc: {
@@ -53,10 +53,10 @@ export const appTestData: FractalDto = {
           parentCursor: 'Collections',
         },
         Ooc: {
-          data: 'Oc:Occ:Ooc',
+          data: 'Oc:Occ:Ooc:Omc',
           type: 'Select',
           id: '6f7a9f7f-0c3e-4d51-a3f0-96by1f574001',
-          cursor: 'Occ',
+          cursor: 'Ooc',
           parentCursor: 'Collections',
         },
         Omc: {
@@ -80,7 +80,7 @@ export const appTestData: FractalDto = {
               parentCursor: 'Users',
             },
             Ooc: {
-              data: 'Oc:Ooc:Occ',
+              data: 'Oc:Ooc:Occ:Omc',
               type: 'Select',
               id: '6f7a9f9f-0c3e-4d51-a3f0-96be1f574001',
               cursor: 'Occ',
@@ -128,10 +128,10 @@ export const appTestData: FractalDto = {
               parentCursor: 'Products',
             },
             Ooc: {
-              data: 'Oc:Ooc:Occ',
+              data: 'Oc:Ooc:Occ:Omc',
               type: 'Select',
               id: '6f7a9f9f-0c3e-4d01-a3f0-96be1f574001',
-              cursor: 'Occ',
+              cursor: 'Ooc',
               parentCursor: 'Products',
             },
             Occ: {
@@ -171,10 +171,10 @@ export const appTestData: FractalDto = {
           parentCursor: 'Settings',
         },
         Ooc: {
-          data: 'Oc:Occ:Ooc',
+          data: 'Oc:Occ:Ooc:Omc',
           type: 'Select',
           id: '6f7a9f7f-0c3e-4d51-a3f0-90by1f574001',
-          cursor: 'Occ',
+          cursor: 'Ooc',
           parentCursor: 'Settings',
         },
         Omc: {

@@ -12,12 +12,23 @@ import { RowEmitType } from '@types';
 export class View {
   fs = inject(FractalService);
 
-  onHoldRow({ parent, childCursor }: RowEmitType): void {
-    this.fs.selectedChildren.toggleAll(parent.findChild(childCursor));
+  onHeldControl(): void {
+    this.fs.selectedControls.toggleAll(this.fs.selectedFractal.value);
   }
 
-  onTouchRow(cursor: string): void {
-    const child = this.fs.selectedParent.$value()?.findChild(cursor);
+  onTouchControl(cursor: string): void {
+    const control = this.fs.selectedFractal.$value()?.findControl(cursor);
+    if (control) {
+      this.fs.selectedControls.toggle(control);
+    }
+  }
+
+  onHoldChild(): void {
+    this.fs.selectedChildren.toggleAll(this.fs.selectedFractal.value);
+  }
+
+  onTouchChild(cursor: string): void {
+    const child = this.fs.selectedFractal.$value()?.findChild(cursor);
     if (child) {
       this.fs.selectedChildren.toggle(child);
     }

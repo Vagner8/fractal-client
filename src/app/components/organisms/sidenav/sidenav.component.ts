@@ -36,7 +36,7 @@ export class Sidenav {
   }
 
   onTouch(tap: Fractal): void {
-    this.fs.selectedParent.set(tap);
+    this.fs.selectedFractal.set(tap);
   }
 
   onModifierHold({ cursor }: Fractal): void {
