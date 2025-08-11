@@ -1,6 +1,6 @@
 import { Component, inject, input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { CardComponent, InputComponent, SelectComponent } from '@components/atoms';
+// import { CardComponent, InputComponent, SelectComponent } from '@components/atoms';ks
 import { CONTROL_MUTABLE, CONTROL_TYPES } from '@constants';
 import { StatesService } from '@services';
 import { Control, ControlDtoMutable } from '@types';
@@ -8,7 +8,7 @@ import { take } from 'rxjs';
 
 @Component({
   selector: 'app-control-form',
-  imports: [CardComponent, InputComponent, SelectComponent],
+  // imports: [CardComponent, InputComponent, SelectComponent],
   templateUrl: './control-form.component.html',
 })
 export class ControlFormComponent implements OnInit, OnDestroy {
@@ -34,7 +34,7 @@ export class ControlFormComponent implements OnInit, OnDestroy {
   }
 
   createForm = (): FormGroup =>
-    this.fb.group(Object.fromEntries(Object.values(CONTROL_MUTABLE).map(key => [key, this.control[key]])));
+    this.fb.group(Object.fromEntries(Object.values(CONTROL_MUTABLE).map((key) => [key, this.control[key]])));
 
   getFromControl = (field: keyof ControlDtoMutable, form: FormGroup): FormControl => form.get(field) as FormControl;
 }

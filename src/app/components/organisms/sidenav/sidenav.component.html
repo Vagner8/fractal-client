@@ -1,3 +1,7 @@
+@let showModifiersTaps = ss.$showModifiersTaps();
+@let selectedParent = fs.selectedParent.$value();
+@let current = showModifiersTaps ? ss.modifiers : selectedParent;
+
 <mat-drawer-container class="mat-drawer-container-app-sidenav" autosize>
   <mat-drawer
     [opened]="ss.$managerEvent() === AppEvents.TOUCH"
@@ -6,16 +10,22 @@
     mode="side"
     position="end">
     <div>
-      <app-ordered-children [$fractal]="$sidenavTaps()" [templateRef]="collectionsTaps" />
-      @if (!$sidenavTaps()?.is('Modifiers')) {
-        <app-ordered-children [$fractal]="ss.pages" [templateRef]="pagesTaps" />
+      @if (current) {
+        @for (cursor of current.getStringsData('Oc'); track $index) {
+          @if (current.findChild(cursor); as child) {
+            @if (child.findControl('Oc') || showModifiersTaps) {
+              <app-tap
+                [$fractal]="child"
+                (hold)="showModifiersTaps ? onModifierHold(child) : onHold(child)"
+                (touch)="showModifiersTaps ? onModifierTouch(child) : onTouch(child)"/>
+            }
+          }
+        }
       }
+      <!-- @if (!showModifiersTaps && selectedParent?.parent; as parent) {
+        <app-tap [$title]="backButton?.getString('Name')" [$fractal]="backButton" (touch)="onTouch(parent)"/>
+      } -->
     </div>
   </mat-drawer>
   <router-outlet />
 </mat-drawer-container>
-
-<ng-template #pagesTaps let-page><app-tap [$fractal]="page" (touch)="onTouch($event)" /></ng-template>
-<ng-template #collectionsTaps let-collection
-  ><app-tap [$fractal]="collection" (hold)="onHold($event)" (touch)="onTouch($event)"
-/></ng-template>

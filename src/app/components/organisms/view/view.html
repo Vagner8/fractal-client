@@ -1,0 +1,25 @@
+@let selectedParent = fs.selectedParent.$value();
+@let ooc = selectedParent?.getStringsData('Ooc');
+
+<div class="view">
+  @if (ooc?.length) {
+    <div>
+      <h3>Controls</h3>
+      <app-table
+        [$like]="'controls'"
+        [$fractal]="selectedParent"/>
+    </div>
+  }
+
+  @if(selectedParent?.children) {
+    <div>
+      @if (ooc?.length) {
+        <h3>Children</h3>
+      }
+      <app-table
+        [$fractal]="selectedParent"
+        [$selectedRows]="fs.selectedChildren.$cursors()"
+        (touchedRow)="onTouchRow($event)"/>
+    </div>
+  }
+</div>

@@ -1,8 +1,0 @@
-@if ($fractal(); as fractal) {
-  <div>
-    @for (cursor of fractal.parent?.getArray('Occ'); track cursor) {
-      <ng-container
-        *ngTemplateOutlet="templateRef; context: { $implicit: fractal.findControl([cursor]), index: $index }" />
-    }
-  </div>
-}

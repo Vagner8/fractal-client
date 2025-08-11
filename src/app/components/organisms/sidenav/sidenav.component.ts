@@ -1,34 +1,26 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { ActivatedRoute, RouterModule, RouterOutlet } from '@angular/router';
-import { OrderedChildrenComponent, TapComponent } from '@components/atoms';
-import { APP_EVENTS, MODIFIERS } from '@constants';
+import { Tap } from '@components/atoms';
+import { APP_EVENTS, APP_FRACTALS, MODIFIERS, SETTINGS } from '@constants';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { StatesService, ModifiersService } from '@services';
+import { FractalService, ModifiersService, StatesService } from '@services';
 import { Fractal } from '@types';
 
 @Component({
   selector: 'app-sidenav',
-  imports: [RouterModule, MatSidenavModule, RouterOutlet, MatListModule, TapComponent, OrderedChildrenComponent],
+  imports: [RouterModule, MatSidenavModule, RouterOutlet, MatListModule, Tap],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })
-export class SidenavComponent {
-  $sidenavTaps = input<Fractal | null>(null);
-
+export class Sidenav {
   ss = inject(StatesService);
+  fs = inject(FractalService);
   ms = inject(ModifiersService);
-
   route = inject(ActivatedRoute);
 
-  AppEvents = APP_EVENTS;
+  // backButton = this.fs.settings.findChild('');ks
 
-  onTouch(tap: Fractal): void {
-    if (tap?.parent?.is('Modifiers')) {
-      this.onModifierTouch(tap.cursor);
-    } else {
-      this.ss.setCollection(tap);
-    }
-  }
+  AppEvents = APP_EVENTS;
 
   onHold(tap: Fractal): void {
     if (tap?.parent?.is('Modifiers')) {
@@ -43,7 +35,22 @@ export class SidenavComponent {
     }
   }
 
-  onModifierTouch(cursor: string): void {
+  onTouch(tap: Fractal): void {
+    this.fs.selectedParent.set(tap);
+  }
+
+  onModifierHold({ cursor }: Fractal): void {
+    switch (cursor) {
+      case MODIFIERS.NEW:
+        this.ms.new();
+        break;
+      case MODIFIERS.EDIT:
+        this.ms.edit();
+        break;
+    }
+  }
+
+  onModifierTouch({ cursor }: Fractal): void {
     switch (cursor) {
       case MODIFIERS.NEW:
         this.ms.new();

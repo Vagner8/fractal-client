@@ -1,0 +1,7 @@
+@use 'variables' as *;
+
+.view {
+  display: flex;
+  flex-direction: column;
+  gap: map-get($size, md);
+}

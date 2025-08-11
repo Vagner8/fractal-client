@@ -1,11 +1,9 @@
 import { NavigationEnd } from '@angular/router';
 import { QUERY_PARAMS } from '@constants';
-import { ConstantsValues } from '@types';
-
-export const parseSearch = (search: string | [string]): string => (typeof search === 'string' ? search : search[0]);
+import { ConstantsValues, Timeout } from '@types';
 
 export const getSegments = (
-  event: NavigationEnd
+  event: NavigationEnd,
 ): {
   collectionParam: string;
   editorParam: string;
@@ -20,4 +18,14 @@ export const getSegments = (
   });
 
   return { collectionParam, editorParam, queryParams };
+};
+
+export const debounce = <T extends (...args: unknown[]) => void>(fn: T, delay: number) => {
+  let timeoutId: Timeout;
+  return (...args: unknown[]): void => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      fn.apply(this, args);
+    }, delay);
+  };
 };

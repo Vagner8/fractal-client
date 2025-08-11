@@ -21,13 +21,12 @@ export class StatesService {
 
   controlToUpdate: Control[] = [];
 
-  $sidenavTaps = signal<Fractal | null>(null);
+  $showModifiersTaps = signal(false);
   $managerEvent = signal<string | null>(null);
   $isFullEditModeActivated = signal(true);
   $isHoldEventRunning = signal(false);
 
-  pages: Fractal | null = null;
-  manager: Fractal | null = null;
+  settings: Fractal | null = null;
   modifiers: Fractal | null = null;
   collections: Fractal | null = null;
 

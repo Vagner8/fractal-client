@@ -9,6 +9,7 @@ export const APP_FRACTALS = {
   APP: 'App',
   PAGES: 'Pages',
   MANAGER: 'Manager',
+  SETTINGS: 'Settings',
   MODIFIERS: 'Modifiers',
   COLLECTIONS: 'Collections',
 } as const;

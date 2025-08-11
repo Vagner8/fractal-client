@@ -1,5 +1,5 @@
-import { Children, Control, Controls, Fractal, FractalDto, SearchControlsProp, SearchFractalsProp } from '@types';
-import { createChildren, createControls, findChildRecursively, parseSearch } from '../helpers';
+import { Children, Control, Controls, Fractal, FractalDto } from '@types';
+import { createChildren, createControls, findChildRecursively } from '../helpers';
 import { signal } from '@angular/core';
 
 export class FractalFactory implements Fractal {
@@ -20,16 +20,10 @@ export class FractalFactory implements Fractal {
     this.children = createChildren(this, children);
   }
 
-  is = (search: SearchFractalsProp): boolean => this.cursor === parseSearch(search);
-
-  findChild = (search: SearchFractalsProp): Fractal | null =>
-    this.children ? this.children?.[parseSearch(search)] : null;
-
-  findChildRecursively = (search: SearchFractalsProp): Fractal | null => findChildRecursively(search, this.children);
-
-  findControl = (search: SearchControlsProp): Control | null => this.controls?.[parseSearch(search)] ?? null;
-
-  getString = (search: SearchControlsProp): string => this.findControl(search)?.data ?? '';
-
-  getArray = (search: SearchControlsProp): string[] => this.getString(search).split(':').filter(Boolean);
+  is: Fractal['is'] = (cursor) => this.cursor === cursor;
+  findChild: Fractal['findChild'] = (cursor) => (this.children ? this.children[cursor] : null);
+  findChildRecursively: Fractal['findChildRecursively'] = (cursor) => findChildRecursively(cursor, this.children);
+  findControl: Fractal['findControl'] = (cursor) => this.controls?.[cursor] ?? null;
+  getStringData: Fractal['getStringData'] = (cursor) => this.findControl(cursor)?.data ?? '';
+  getStringsData: Fractal['getStringsData'] = (cursor) => this.findControl(cursor)?.data.split(':') ?? [];
 }

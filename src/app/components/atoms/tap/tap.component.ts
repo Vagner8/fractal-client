@@ -1,8 +1,6 @@
-import { Component, computed, inject, input, output } from '@angular/core';
-import { MODIFIERS } from '@constants';
+import { Component, input, output } from '@angular/core';
 import { TapDirective } from '@directives';
 import { MatButtonModule, MatIconModule } from '@mat';
-import { StatesService } from '@services';
 import { Fractal } from '@types';
 
 @Component({
@@ -11,34 +9,10 @@ import { Fractal } from '@types';
   templateUrl: './tap.component.html',
   styleUrl: './tap.component.scss',
 })
-export class TapComponent {
-  $fractal = input<Fractal | null>(null);
-
-  ss = inject(StatesService);
-
-  $disable = computed<boolean>(() => {
-    const cursor = this.$fractal()?.cursor;
-    if (this.ss.$editorParam()) {
-      switch (cursor) {
-        case MODIFIERS.EDIT:
-          return true;
-        case MODIFIERS.NEW:
-          return false;
-        default:
-          return false;
-      }
-    } else {
-      switch (cursor) {
-        case MODIFIERS.EDIT:
-          return this.ss.selectedChildren.$isEmpty();
-        case MODIFIERS.NEW:
-          return false;
-        default:
-          return false;
-      }
-    }
-  });
-
+export class Tap {
+  $fractal = input<Fractal | null>();
+  $disabled = input(false);
+  $title = input<string>();
   hold = output<Fractal>();
   touch = output<Fractal>();
 }

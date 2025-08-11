@@ -23,9 +23,8 @@ export class ManagerComponent {
   }
 
   async onTouch(): Promise<void> {
-    const { modifiers, collections } = this.ss;
     if (this.prevEvent === APP_EVENTS.TOUCH) {
-      this.ss.$sidenavTaps.update(prev => (prev === collections ? modifiers : collections));
+      this.ss.$showModifiersTaps.update((prev) => !prev);
     }
     this.prevEvent = APP_EVENTS.TOUCH;
     await this.ss.setManager(APP_EVENTS.TOUCH);
