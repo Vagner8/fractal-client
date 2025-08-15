@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 // import { HomeComponent } from '@components/atoms';
-import { EditorComponent, View } from '@components/organisms';
+import { EditorComponent, Dashboard } from '@components/organisms';
 import { APP_PAGES, PARAMS } from '@constants';
 
 export const routes: Routes = [
@@ -10,7 +10,7 @@ export const routes: Routes = [
   // },
   {
     path: `:${PARAMS.COLLECTION}`,
-    component: View,
+    component: Dashboard,
   },
   {
     path: `:${PARAMS.COLLECTION}/${APP_PAGES.EDITOR}`,

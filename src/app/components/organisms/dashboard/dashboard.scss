@@ -1,0 +1,25 @@
+@use 'variables' as *;
+
+.dashboard,
+.collection,
+.fractals-cards {
+  display: flex;
+  flex-direction: column;
+  gap: map-get($size, sm);
+}
+
+.button-ancestor,
+.card-ancestor {
+  width: 100%;
+  height: 100%;
+}
+
+.button-ancestor {
+  background-color: map-get($color, common);
+}
+
+.button-card {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}

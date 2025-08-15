@@ -4,6 +4,7 @@ import { TapDirective } from '@directives';
 import { SpinnerComponent } from '@components/atoms';
 import { StatesService } from '@services';
 import { APP_EVENTS } from '@constants';
+import { TapEvents } from '@types';
 
 @Component({
   selector: 'app-manager',
@@ -13,20 +14,20 @@ import { APP_EVENTS } from '@constants';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ManagerComponent {
-  prevEvent: string = APP_EVENTS.TOUCH;
+  prevEvent: TapEvents = 'touch';
 
   ss = inject(StatesService);
 
   onHold(): void {
-    this.prevEvent = APP_EVENTS.HOLD;
-    this.ss.setManager(APP_EVENTS.HOLD);
+    this.prevEvent = 'hold';
+    this.ss.setManager('hold');
   }
 
   async onTouch(): Promise<void> {
-    if (this.prevEvent === APP_EVENTS.TOUCH) {
+    if (this.prevEvent === 'touch') {
       this.ss.$showModifiersTaps.update((prev) => !prev);
     }
-    this.prevEvent = APP_EVENTS.TOUCH;
-    await this.ss.setManager(APP_EVENTS.TOUCH);
+    this.prevEvent = 'touch';
+    await this.ss.setManager('touch');
   }
 }

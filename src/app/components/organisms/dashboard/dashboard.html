@@ -1,0 +1,53 @@
+@if (fs.selectedFractal.$value(); as selectedFractal) {
+  <div class="dashboard">
+    @let ancestors = $ancestors();
+    @if (ancestors.length > 0) {
+      <mat-grid-list cols="5" rowHeight="3:1" gutterSize="8px">
+        @for (ancestor of ancestors; track $index) {
+          <mat-grid-tile>
+            <button type="button" class="button-ancestor" matButton="outlined" (click)="onTouch(ancestor)">
+              {{ ancestor.cursor }}
+              <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+          </mat-grid-tile>
+        }
+      </mat-grid-list>
+    }
+
+    @if ($editMode()) {
+      @if (selectedFractal.findControl('Children controls')) {
+        <div class="collection">
+          <app-table [$like]="'controls'" [$fractal]="selectedFractal" [$title]="null" />
+          <app-table [$fractal]="selectedFractal" />
+        </div>
+      } @else {
+        <app-table [$like]="'controls'" [$fractal]="selectedFractal" />
+      }
+    } @else { 
+      <div class="fractals-cards">
+        @for (cursor of selectedFractal.getStringsData('Children'); track $index) {
+          @if (selectedFractal.findChild([cursor]); as child) {
+            @let children = child.getStringsData('Children');
+
+            <mat-card appearance="outlined" >
+              <button
+                type="button"
+                class="button-card"
+                matButton
+                [disableRipple]="children.length === 0"
+                appTap
+                (touch)="onTouch(child)"
+                (hold)="onHold(child)">{{''}}</button>
+              <mat-card-header>
+                <mat-card-title>{{ child.cursor }}</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                Children: {{ children.length }}
+              </mat-card-content>
+            </mat-card>
+          }
+        }
+      </div>
+    }
+  </div>
+}

@@ -1,19 +1,29 @@
 @let showModifiersTaps = ss.$showModifiersTaps();
-@let selectedParent = fs.selectedFractal.$value();
-@let current = showModifiersTaps ? ss.modifiers : selectedParent;
+@let selectedFractal = fs.selectedFractal.$value();
+@let backButton = fs.$app()?.findChildRecursively('Back button');
 
 <mat-drawer-container class="mat-drawer-container-app-sidenav" autosize>
   <mat-drawer
-    [opened]="ss.$managerEvent() === AppEvents.TOUCH"
+    [opened]="ss.$managerEvent() === 'touch'"
     [disableClose]="false"
     class="mat-drawer-app-sidenav"
     mode="side"
     position="end">
     <div>
-      @if (current) {
-        @for (cursor of current.getStringsData('Oc'); track $index) {
-          @if (current.findChild(cursor); as child) {
-            @if (child.findControl('Oc') || showModifiersTaps) {
+      @if (showModifiersTaps && modifiers) {
+        @for (cursor of modifiers.getStringsData('Children'); track $index) {
+          @if (modifiers.findChild([cursor]); as child) {
+            <app-tap
+              [$fractal]="child"
+              (hold)="showModifiersTaps ? onModifierHold(child) : onHold(child)"
+              (touch)="showModifiersTaps ? onModifierTouch(child) : onTouch(child)"/>
+          }
+        }
+      } @else {
+        @if (selectedFractal) {
+          @for (cursor of selectedFractal.getStringsData('Children'); track $index) {
+            @let child = selectedFractal.findChild([cursor]);
+            @if (child && child.findControl('Children')) {
               <app-tap
                 [$fractal]="child"
                 (hold)="showModifiersTaps ? onModifierHold(child) : onHold(child)"
@@ -22,9 +32,9 @@
           }
         }
       }
-      <!-- @if (!showModifiersTaps && selectedParent?.parent; as parent) {
-        <app-tap [$title]="backButton?.getString('Name')" [$fractal]="backButton" (touch)="onTouch(parent)"/>
-      } -->
+      @if (!showModifiersTaps && selectedFractal?.parent; as parent) {
+        <app-tap [$title]="backButton?.getStringData('Name')" [$fractal]="backButton" (touch)="onTouch(parent)"/>
+      }
     </div>
   </mat-drawer>
   <router-outlet />

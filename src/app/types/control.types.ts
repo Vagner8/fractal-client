@@ -7,6 +7,9 @@ import { FormGroup } from '@angular/forms';
 export type Controls = Record<string, Control>;
 export type ControlsDto = Record<string, ControlDto>;
 export type ControlType = ConstantsValues<typeof CONTROL_TYPES>;
+export type ControlsStructuralCursors = 'Children' | 'Controls' | 'Control keys' | 'Children controls';
+export type ControlsCommonCursors = 'Name' | 'Icon';
+export type ControlsCursors = ControlsStructuralCursors | ControlsCommonCursors;
 
 export interface ControlDtoMutable {
   data: string;

@@ -1,4 +1,4 @@
-@use 'variables.scss' as *;
+@use 'variables' as *;
 
 :host {
   width: 100%;
@@ -8,10 +8,6 @@
 
 .td {
   cursor: default;
-}
-
-.table {
-  border: solid 1px map-get($color, border);
 }
 
 .selected-row {

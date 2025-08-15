@@ -1,4 +1,4 @@
-@use 'variables.scss' as *;
+@use 'variables' as *;
 
 .mat-drawer-container-app-sidenav {
   padding: calc(map-get($size, sm) / 2);

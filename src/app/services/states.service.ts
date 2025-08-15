@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { NavigationExtras, Router } from '@angular/router';
 import { APP_PAGES, QUERY_PARAMS } from '@constants';
-import { ConstantsValues, Control, Fractal } from '@types';
+import { ConstantsValues, Control, Fractal, TapEvents } from '@types';
 import { FractalsState, FractalState } from '@utils';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class StatesService {
   controlToUpdate: Control[] = [];
 
   $showModifiersTaps = signal(false);
-  $managerEvent = signal<string | null>(null);
+  $managerEvent = signal<TapEvents | null>(null);
   $isFullEditModeActivated = signal(true);
   $isHoldEventRunning = signal(false);
 
@@ -34,7 +34,7 @@ export class StatesService {
   $queryParams = signal<Partial<Record<ConstantsValues<typeof QUERY_PARAMS>, string>>>({});
   $collectionParam = signal<string | null>(null);
 
-  async setManager(managerEvent: string | null): Promise<void> {
+  async setManager(managerEvent: TapEvents): Promise<void> {
     this.$managerEvent.set(managerEvent);
     this.navigate([], { [QUERY_PARAMS.MANAGER]: managerEvent });
   }

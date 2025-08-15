@@ -6,14 +6,14 @@ export const appMock = {
   controls: {
     Oc: {
       id: '',
-      cursor: 'Oc',
+      cursor: 'Children,
       parentCursor: 'App',
       data: 'Modifiers:Collections',
       type: 'Select',
     },
     Occ: {
       id: '',
-      cursor: 'Occ',
+      cursor: 'Children controls',
       parentCursor: 'App',
       data: 'Name',
       type: 'Select',
@@ -26,7 +26,7 @@ export const appMock = {
       controls: {
         Oc: {
           id: '',
-          cursor: 'Oc',
+          cursor: 'Children,
           parentCursor: 'Collections',
           data: 'Products:Users',
           type: 'Select',
@@ -39,14 +39,14 @@ export const appMock = {
           controls: {
             Oc: {
               id: '',
-              cursor: 'Oc',
+              cursor: 'Children,
               parentCursor: 'Users',
               data: '3:2:1',
               type: 'Select',
             },
             Occ: {
               id: '',
-              cursor: 'Occ',
+              cursor: 'Children controls',
               parentCursor: 'Users',
               data: 'Email:Name',
               type: 'Select',
@@ -131,7 +131,7 @@ export const appMock = {
       controls: {
         Oc: {
           id: '',
-          cursor: 'Oc',
+          cursor: 'Children,
           parentCursor: 'Modifiers',
           data: 'Delete:Save:New:Edit',
           type: 'Select',

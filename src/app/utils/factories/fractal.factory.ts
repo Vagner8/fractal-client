@@ -20,10 +20,19 @@ export class FractalFactory implements Fractal {
     this.children = createChildren(this, children);
   }
 
-  is: Fractal['is'] = (cursor) => this.cursor === cursor;
-  findChild: Fractal['findChild'] = (cursor) => (this.children ? this.children[cursor] : null);
-  findChildRecursively: Fractal['findChildRecursively'] = (cursor) => findChildRecursively(cursor, this.children);
-  findControl: Fractal['findControl'] = (cursor) => this.controls?.[cursor] ?? null;
-  getStringData: Fractal['getStringData'] = (cursor) => this.findControl(cursor)?.data ?? '';
-  getStringsData: Fractal['getStringsData'] = (cursor) => this.findControl(cursor)?.data.split(':') ?? [];
+  is: Fractal['is'] = (search) => this.cursor === this.parseSearch(search);
+
+  findChild: Fractal['findChild'] = (search) => (this.children ? this.children[this.parseSearch(search)] : null);
+
+  findChildRecursively: Fractal['findChildRecursively'] = (search) =>
+    findChildRecursively(this.parseSearch(search), this.children);
+
+  findControl: Fractal['findControl'] = (search) => this.controls?.[this.parseSearch(search)] ?? null;
+
+  getStringData: Fractal['getStringData'] = (search) => this.findControl(search)?.data ?? '';
+
+  getStringsData: Fractal['getStringsData'] = (search) => this.findControl(search)?.data.split(':') ?? [];
+
+  private readonly parseSearch = (search: string | [string]): string =>
+    typeof search === 'string' ? search : search[0];
 }

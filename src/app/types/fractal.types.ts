@@ -1,8 +1,11 @@
 import { WritableSignal } from '@angular/core';
-import { Control, Controls, ControlsDto } from './control.types';
+import { Control, Controls, ControlsCursors, ControlsDto } from './control.types';
 
 export type Children = Record<string, Fractal>;
 export type ChildrenDto = Record<string, FractalDto>;
+export type FractalSettingsCursors = 'Back button';
+export type FractalsCommonCursors = 'App' | 'Settings' | 'Modifiers';
+export type FractalsCursors = FractalSettingsCursors | FractalsCommonCursors;
 
 export interface FractalDto {
   cursor: string;
@@ -10,6 +13,7 @@ export interface FractalDto {
 
   controls?: ControlsDto;
   children?: ChildrenDto;
+  childrenControls?: ControlsDto;
 }
 
 export interface Fractal extends FractalDto {
@@ -19,10 +23,10 @@ export interface Fractal extends FractalDto {
 
   $newControls: WritableSignal<Control[]>;
 
-  is(cursor: string): boolean;
-  findChild(cursor: string): Fractal | null;
-  findChildRecursively(cursor: string): Fractal | null;
-  findControl(cursor: string): Control | null;
-  getStringData(cursor: string): string;
-  getStringsData(cursor: string): string[];
+  is(cursor: FractalsCursors | [string]): boolean;
+  findChild(cursor: FractalsCursors | [string]): Fractal | null;
+  findChildRecursively(cursor: FractalsCursors | [string]): Fractal | null;
+  findControl(cursor: ControlsCursors | [string]): Control | null;
+  getStringData(cursor: ControlsCursors | [string]): string;
+  getStringsData(cursor: ControlsCursors | [string]): string[];
 }

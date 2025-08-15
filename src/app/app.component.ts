@@ -5,9 +5,8 @@ import { ToolbarComponent } from '@components/molecules';
 import { DataService, FractalService, StatesService } from '@services';
 import { NavigationEnd, Router } from '@angular/router';
 import { FractalFactory, getSegments, isNavigationEnd } from '@utils';
-import { APP_EVENTS } from '@constants';
 import { filter } from 'rxjs';
-import { appTestData } from './app-test-data';
+import { appData } from './data/appData';
 
 @Component({
   selector: 'app-root',
@@ -39,11 +38,10 @@ export class AppComponent implements OnInit {
     //   this.init();
     // });
 
-    const app = new FractalFactory(appTestData);
-    this.ss.$app.set(app);
+    const app = new FractalFactory(appData);
     this.fs.$app.set(app);
-    // this.fs.settings = app.findChild('Settings')!;
     this.fs.selectedFractal.set(app);
+    // this.fs.settings = app.findChild('Settings')!;
 
     console.info('🚀 ~ app:', app);
 
@@ -55,7 +53,7 @@ export class AppComponent implements OnInit {
   }
 
   init(): void {
-    this.ss.$managerEvent.set(this.ss.$queryParams().Manager ?? APP_EVENTS.HOLD);
+    // this.ss.$managerEvent.set(this.ss.$queryParams().Manager ?? 'hold');
   }
 
   navigationEnd = (event: NavigationEnd): void => {

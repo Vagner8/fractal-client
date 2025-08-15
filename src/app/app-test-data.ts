@@ -4,66 +4,85 @@ export const appTestData: FractalDto = {
   cursor: 'App',
   parentCursor: 'null',
   controls: {
-    Oc: {
-      data: 'Collections:Settings',
+    Children: {
+      data: 'Collections:Settings:Modifiers',
       type: 'Select',
       id: '6f7a9f7f-0c3e-4d51-a3f2-96be1f574001',
-      cursor: 'Oc',
+      cursor: 'Children',
       parentCursor: 'App',
     },
-    Occ: {
-      data: 'No.:Cursor',
-      type: 'Select',
-      id: '6f7a9f7f-0c3e-4d51-a3f0-96beYU574001',
-      cursor: 'Occ',
-      parentCursor: 'App',
-    },
-    Ooc: {
-      data: 'Oc:Occ:Ooc:Omc',
-      type: 'Select',
-      id: '6f7a9f7f-0c3e-4d51-a3f0-96be1f574001',
-      cursor: 'Ooc',
-      parentCursor: 'App',
-    },
-    Omc: {
+    'Control keys': {
       data: 'data:type:cursor:No.',
       type: 'Select',
       id: '6f7a9f7f-0c3e-4d51-a3f0-96be1f574901',
-      cursor: 'Omc',
+      cursor: 'Columns',
+      parentCursor: 'App',
+    },
+  },
+  childrenControls: {
+    Children: {
+      data: '',
+      type: 'Select',
+      id: '6f6a9f7f-0c3e-4d51-a3f2-96be1f574001',
+      cursor: 'Children',
+      parentCursor: 'App',
+    },
+    'Children controls': {
+      data: '',
+      type: 'Select',
+      id: '6f6a9f7f-0c3e-4d51-a3f2-96be1f574881',
+      cursor: 'Children controls',
       parentCursor: 'App',
     },
   },
   children: {
+    Modifiers: {
+      cursor: 'Modifiers',
+      parentCursor: 'App',
+      controls: {
+        Children: {
+          data: 'Delete:Save:New:Edit',
+          type: 'Select',
+          id: '6f7a9f7f-0c3e-4d51-a3f2-96be1f574003',
+          cursor: 'Children',
+          parentCursor: 'Modifiers',
+        },
+        'Children controls': {
+          data: 'No.:Cursor',
+          type: 'Select',
+          id: '6f7a9f7f-0c3e-4d50-a3f2-96be1f574003',
+          cursor: 'Children',
+          parentCursor: 'Modifiers',
+        },
+      },
+      children: {
+        Delete: {
+          cursor: 'Delete',
+          parentCursor: 'Modifiers',
+        },
+        Edit: {
+          cursor: 'Edit',
+          parentCursor: 'Modifiers',
+        },
+        New: {
+          cursor: 'New',
+          parentCursor: 'Modifiers',
+        },
+        Save: {
+          cursor: 'Save',
+          parentCursor: 'Modifiers',
+        },
+      },
+    },
     Collections: {
       cursor: 'Collections',
       parentCursor: 'App',
       controls: {
-        Oc: {
+        Children: {
           data: 'Users:Products',
           type: 'Select',
           id: '6f7a9f7f-0c3e-4d51-p3f2-96be1f574003',
-          cursor: 'Oc',
-          parentCursor: 'Collections',
-        },
-        Occ: {
-          data: 'Cursor:No.',
-          type: 'Select',
-          id: '6f7a9f7O-0c3e-4d51-p3f8-96be1f574003',
-          cursor: 'Occ',
-          parentCursor: 'Collections',
-        },
-        Ooc: {
-          data: 'Oc:Occ:Ooc:Omc',
-          type: 'Select',
-          id: '6f7a9f7f-0c3e-4d51-a3f0-96by1f574001',
-          cursor: 'Ooc',
-          parentCursor: 'Collections',
-        },
-        Omc: {
-          data: 'data:type:cursor:No.',
-          type: 'Select',
-          id: '6f7a9f7f-0c3e-4d51-a3f0-96be1v574901',
-          cursor: 'Omc',
+          cursor: 'Children',
           parentCursor: 'Collections',
         },
       },
@@ -72,32 +91,18 @@ export const appTestData: FractalDto = {
           cursor: 'Users',
           parentCursor: 'Collections',
           controls: {
-            Oc: {
+            Children: {
               data: '2:1:3',
               type: 'Select',
               id: '6i7a9f7f-0c3e-4p51-p3f2-96be1f574003',
-              cursor: 'Oc',
+              cursor: 'Children',
               parentCursor: 'Users',
             },
-            Ooc: {
-              data: 'Oc:Ooc:Occ:Omc',
-              type: 'Select',
-              id: '6f7a9f9f-0c3e-4d51-a3f0-96be1f574001',
-              cursor: 'Occ',
-              parentCursor: 'Users',
-            },
-            Occ: {
+            Controls: {
               data: 'No.:Cursor',
               type: 'Select',
               id: '6f7a9f7f-0c3e-6d51-a3f0-96by1f574001',
-              cursor: 'Occ',
-              parentCursor: 'Users',
-            },
-            Omc: {
-              data: 'data:type:cursor:No.',
-              type: 'Select',
-              id: '6f7a9f7f-0c3e-4u51-a3f0-96be1v574901',
-              cursor: 'Omc',
+              cursor: 'Children controls',
               parentCursor: 'Users',
             },
           },
@@ -120,32 +125,18 @@ export const appTestData: FractalDto = {
           cursor: 'Products',
           parentCursor: 'Collections',
           controls: {
-            Oc: {
+            Children: {
               data: '',
               type: 'Select',
               id: '6i7a9f7f-0c3n-4p51-p3f2-96be1f574003',
-              cursor: 'Oc',
+              cursor: 'Children',
               parentCursor: 'Products',
             },
-            Ooc: {
-              data: 'Oc:Ooc:Occ:Omc',
+            Controls: {
+              data: 'No.',
               type: 'Select',
               id: '6f7a9f9f-0c3e-4d01-a3f0-96be1f574001',
-              cursor: 'Ooc',
-              parentCursor: 'Products',
-            },
-            Occ: {
-              data: 'No.',
-              type: 'Select',
-              id: '6f7a9f7f-0c3e-6d59-a3f0-96by1f574001',
-              cursor: 'Occ',
-              parentCursor: 'Products',
-            },
-            Omc: {
-              data: 'No.',
-              type: 'Select',
-              id: '6f7a9f7f-0c3e-6d51-a3f0-96by1f574001',
-              cursor: 'Omc',
+              cursor: 'Controls',
               parentCursor: 'Products',
             },
           },
@@ -156,75 +147,30 @@ export const appTestData: FractalDto = {
       cursor: 'Settings',
       parentCursor: 'App',
       controls: {
-        Oc: {
-          data: 'Modifiers:Manager:Back button',
+        Children: {
+          data: 'Manager:Back button',
           type: 'Select',
           id: '6f7a9f7f-0c5e-4d51-p3f2-96be1f574003',
-          cursor: 'Oc',
-          parentCursor: 'Settings',
-        },
-        Occ: {
-          data: 'Cursor:No.',
-          type: 'Select',
-          id: '6f7a9f7O-0c3e-4d51-p3f8-96be1f577703',
-          cursor: 'Occ',
-          parentCursor: 'Settings',
-        },
-        Ooc: {
-          data: 'Oc:Occ:Ooc:Omc',
-          type: 'Select',
-          id: '6f7a9f7f-0c3e-4d51-a3f0-90by1f574001',
-          cursor: 'Ooc',
-          parentCursor: 'Settings',
-        },
-        Omc: {
-          data: 'data:type:cursor:No.',
-          type: 'Select',
-          id: '6f7a9f7f-0c3e-4u51-a3f0-98be1v574901',
-          cursor: 'Omc',
+          cursor: 'Children',
           parentCursor: 'Settings',
         },
       },
       children: {
-        Modifiers: {
-          children: {
-            Delete: {
-              cursor: 'Delete',
-              parentCursor: 'Modifiers',
-            },
-            Edit: {
-              cursor: 'Edit',
-              parentCursor: 'Modifiers',
-            },
-            New: {
-              cursor: 'New',
-              parentCursor: 'Modifiers',
-            },
-            Save: {
-              cursor: 'Save',
-              parentCursor: 'Modifiers',
-            },
-          },
-          controls: {
-            Oc: {
-              data: 'Delete:Save:New:Edit',
-              type: 'Select',
-              id: '6f7a9f7f-0c3e-4d51-a3f2-96be1f574003',
-              cursor: 'Oc',
-              parentCursor: 'Modifiers',
-            },
-          },
-          cursor: 'Modifiers',
-          parentCursor: 'App',
-        },
         Manager: {
           cursor: 'Manager',
-          parentCursor: 'App',
+          parentCursor: 'Settings',
         },
         ['Back button']: {
           cursor: 'Back button',
           parentCursor: 'Settings',
           controls: {
+            Controls: {
+              data: 'Icon:Name',
+              type: 'Select',
+              id: '6f7a9f7f-0c3e-4d51-a3W2-96Ve1f574003',
+              cursor: 'Controls',
+              parentCursor: 'Back button',
+            },
             Icon: {
               data: 'arrow_back_ios',
               type: 'String',
