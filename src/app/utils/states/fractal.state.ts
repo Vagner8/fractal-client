@@ -1,12 +1,13 @@
-import { signal } from '@angular/core';
+import { effect, signal } from '@angular/core';
 import { Fractal } from '@types';
 
 export class FractalState {
   value: Fractal | null = null;
   $value = signal<Fractal | null>(null);
 
-  set = (fractals: Fractal | null): void => {
-    this.value = fractals;
-    this.$value.set(fractals);
-  };
+  constructor() {
+    effect(() => {
+      this.value = this.$value();
+    });
+  }
 }

@@ -1,34 +1,34 @@
-import { computed, signal } from '@angular/core';
-import { Control, Fractal } from '@types';
+import { computed, effect, signal } from '@angular/core';
+import { Control, Fractal, ICollectionState } from '@types';
+import { FractalState } from './fractal.state';
 
-export abstract class CollectionState<T extends Fractal | Control> {
+export abstract class CollectionState<T extends Fractal | Control> implements ICollectionState {
   value: T[] = [];
   $value = signal<T[]>([]);
-  $cursors = signal<string[]>([]);
 
   $isEmpty = computed<boolean>(() => this.$value().length === 0);
+  $cursors = computed<string[]>(() => this.$value().map(({ cursor }) => cursor));
 
-  has = (item: T | null): boolean => this.value.some((f) => f === item);
-  push = (item: T): void => this.set([...this.value, item]);
-  delete = (item: T | null): void => this.set(this.value.filter((prevItem) => prevItem !== item));
-  isEmpty = (): boolean => this.value.length === 0;
-  deleteBunch = (items: T[]): void => this.set(this.value.filter((item) => !items.includes(item)));
+  constructor(protected selectedFractalState: FractalState) {
+    effect(() => {
+      this.value = this.$value();
+    });
+  }
 
-  toggle(item: T | null): void {
+  has = (item: T | null): boolean => this.value.some((i) => i === item);
+  push = (item: T): void => this.$value.update((prev) => [...prev, item]);
+  delete = (items: T[]): void => this.$value.update((prev) => prev.filter((item) => !items.includes(item)));
+
+  protected toggleItem(item: T | null | undefined): void {
     if (item) {
       if (this.has(item)) {
-        this.delete(item);
+        this.delete([item]);
       } else {
         this.push(item);
       }
     }
   }
 
-  set = (items: T[]): void => {
-    this.value = items;
-    this.$value.set(items);
-    this.$cursors.set(items.map(({ cursor }) => cursor));
-  };
-
-  abstract toggleAll(fractal: Fractal): void;
+  abstract toggle(cursor: string): void;
+  abstract toggleAll(): void;
 }

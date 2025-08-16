@@ -13,7 +13,7 @@ interface ReturnType<T> {
 export class User<T> {
   constructor(
     private readonly fixture: ComponentFixture<T>,
-    private readonly loader: HarnessLoader
+    private readonly loader: HarnessLoader,
     // private readonly httpTesting: HttpTestingController
   ) {}
 
@@ -23,11 +23,11 @@ export class User<T> {
 
   async touch(host: TestElement, threshold: number = 0): Promise<void> {
     await host.dispatchEvent('pointerdown');
-    await new Promise(resolve => setTimeout(resolve, threshold));
+    await new Promise((resolve) => setTimeout(resolve, threshold));
     await host.dispatchEvent('pointerup');
   }
 
-  async touchedRow(index: number = 0): Promise<ReturnType<MatRowHarness>> {
+  async touchRow(index: number = 0): Promise<ReturnType<MatRowHarness>> {
     const row = (await this.loader.getAllHarnesses(MatRowHarness))[index];
     const host = await row.host();
     await this.touch(host);

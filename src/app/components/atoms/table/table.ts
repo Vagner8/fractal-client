@@ -10,6 +10,15 @@ interface TdContentProps {
   column: string;
 }
 
+interface TableData {
+  columns: string[] | undefined;
+  dataSource: string[] | undefined;
+  tdContent(props: TdContentProps): string | number | undefined;
+}
+
+type Like = 'Children' | 'Controls' | 'Children controls';
+type TablesData = Record<Like, TableData>;
+
 @Component({
   selector: 'app-table',
   imports: [MatTableModule, TapDirective, MatCardModule],
@@ -17,33 +26,41 @@ interface TdContentProps {
   styleUrl: './table.scss',
 })
 export class Table {
-  $like = input<'children' | 'controls'>('children');
-  $title = input<string | null>('');
+  $like = input<Like>('Children');
   $fractal = input<Fractal | null>();
+  $selected = input(false);
   $selectedRows = input<string[]>([]);
 
   fs = inject(FractalService);
 
-  $isChildren = computed(() => this.$like() === 'children');
-  $columns = computed(() =>
-    this.$isChildren()
-      ? this.$fractal()?.getStringsData('Children controls')
-      : this.fs.$app()?.getStringsData('Control keys'),
-  );
-  $dataSource = computed(() => this.$fractal()?.getStringsData(this.$isChildren() ? 'Children' : 'Controls') ?? []);
+  holdRow = output<string>();
+  touchRow = output<string>();
 
-  heldRow = output<string>();
-  touchedRow = output<string>();
+  $tablesData = computed<TableData>(() => {
+    const tablesData: TablesData = {
+      Children: {
+        columns: this.$fractal()?.getStringsData('Children controls'),
+        dataSource: this.$fractal()?.getStringsData('Children'),
+        tdContent: ({ column, cursor }) =>
+          column === 'Cursor' ? cursor : this.$fractal()?.findChild([cursor])?.getStringData([column]),
+      },
+      Controls: {
+        columns: this.fs.$app()?.getStringsData('Control keys'),
+        dataSource: this.$fractal()?.getStringsData('Controls'),
+        tdContent: ({ column, cursor }) => this.$fractal()?.findControl([cursor])?.[column as keyof ControlDto],
+      },
+      'Children controls': {
+        columns: this.fs
+          .$app()
+          ?.getStringsData('Control keys')
+          .filter((key) => key !== 'data'),
+        dataSource: this.$fractal()?.getStringsData('Children controls'),
+        tdContent: ({ column, cursor }) => {
+          return this.$fractal()?.findChildrenControl(cursor)?.[column as keyof ControlDto];
+        },
+      },
+    };
 
-  tdContent({ column, index, cursor }: TdContentProps): string | number {
-    if (column === 'No.') {
-      return index + 1;
-    }
-
-    if (this.$isChildren()) {
-      return column === 'Cursor' ? cursor : (this.$fractal()?.findChild([cursor])?.getStringData([column]) ?? '');
-    } else {
-      return this.$fractal()?.findControl([cursor])?.[column as keyof ControlDto] ?? '';
-    }
-  }
+    return tablesData[this.$like()];
+  });
 }

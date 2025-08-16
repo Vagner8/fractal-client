@@ -1,7 +1,3 @@
-@let showModifiersTaps = ss.$showModifiersTaps();
-@let selectedFractal = fs.selectedFractal.$value();
-@let backButton = fs.$app()?.findChildRecursively('Back button');
-
 <mat-drawer-container class="mat-drawer-container-app-sidenav" autosize>
   <mat-drawer
     [opened]="ss.$managerEvent() === 'touch'"
@@ -10,30 +6,15 @@
     mode="side"
     position="end">
     <div>
-      @if (showModifiersTaps && modifiers) {
+      @if (this.fs.$app()?.findChildRecursively('Modifiers'); as modifiers) {
         @for (cursor of modifiers.getStringsData('Children'); track $index) {
-          @if (modifiers.findChild([cursor]); as child) {
+          @if (modifiers.findChild([cursor]); as modifier) {
             <app-tap
-              [$fractal]="child"
-              (hold)="showModifiersTaps ? onModifierHold(child) : onHold(child)"
-              (touch)="showModifiersTaps ? onModifierTouch(child) : onTouch(child)"/>
+              [$fractal]="modifier"
+              (hold)="onHold(modifier)"
+              (touch)="onTouch(modifier)"/>
           }
         }
-      } @else {
-        @if (selectedFractal) {
-          @for (cursor of selectedFractal.getStringsData('Children'); track $index) {
-            @let child = selectedFractal.findChild([cursor]);
-            @if (child && child.findControl('Children')) {
-              <app-tap
-                [$fractal]="child"
-                (hold)="showModifiersTaps ? onModifierHold(child) : onHold(child)"
-                (touch)="showModifiersTaps ? onModifierTouch(child) : onTouch(child)"/>
-            }
-          }
-        }
-      }
-      @if (!showModifiersTaps && selectedFractal?.parent; as parent) {
-        <app-tap [$title]="backButton?.getStringData('Name')" [$fractal]="backButton" (touch)="onTouch(parent)"/>
       }
     </div>
   </mat-drawer>

@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
 
     const app = new FractalFactory(appData);
     this.fs.$app.set(app);
-    this.fs.selectedFractal.set(app);
+    this.fs.selectedFractal.$value.set(app);
     // this.fs.settings = app.findChild('Settings')!;
 
     console.info('🚀 ~ app:', app);

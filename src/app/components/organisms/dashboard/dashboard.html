@@ -5,7 +5,7 @@
       <mat-grid-list cols="5" rowHeight="3:1" gutterSize="8px">
         @for (ancestor of ancestors; track $index) {
           <mat-grid-tile>
-            <button type="button" class="button-ancestor" matButton="outlined" (click)="onTouch(ancestor)">
+            <button type="button" class="button-ancestor" matButton="outlined" (click)="onCardTouch(ancestor)">
               {{ ancestor.cursor }}
               <mat-icon>arrow_back_ios</mat-icon>
             </button>
@@ -15,14 +15,32 @@
     }
 
     @if ($editMode()) {
-      @if (selectedFractal.findControl('Children controls')) {
-        <div class="collection">
-          <app-table [$like]="'controls'" [$fractal]="selectedFractal" [$title]="null" />
-          <app-table [$fractal]="selectedFractal" />
-        </div>
-      } @else {
-        <app-table [$like]="'controls'" [$fractal]="selectedFractal" />
-      }
+      @let childrenControls = selectedFractal.findControl('Children controls');
+      <div [class.collection]="childrenControls">
+        <app-table
+          [$like]="'Controls'"
+          [$fractal]="selectedFractal"
+          [$selected]="fs.selectedControls.$value().length > 0"
+          [$selectedRows]="fs.selectedControls.$cursors()"
+          (holdRow)="onControlHold()"
+          (touchRow)="onControlTouch($event)" />
+        @if (childrenControls) {
+          <app-table
+            [$like]="'Children controls'"
+            [$fractal]="selectedFractal" 
+            [$selected]="fs.selectedChildrenControls.$value().length > 0"
+            [$selectedRows]="fs.selectedChildrenControls.$cursors()"
+            (holdRow)="onChildrenControlHold()"
+            (touchRow)="onChildrenControlTouch($event)" />
+
+          <app-table
+            [$fractal]="selectedFractal"
+            [$selected]="fs.selectedChildren.$value().length > 0"
+            [$selectedRows]="fs.selectedControls.$cursors()"
+            (holdRow)="onChildHold()"
+            (touchRow)="onChildTouch($event)" />
+        }
+      </div>
     } @else { 
       <div class="fractals-cards">
         @for (cursor of selectedFractal.getStringsData('Children'); track $index) {
@@ -36,8 +54,8 @@
                 matButton
                 [disableRipple]="children.length === 0"
                 appTap
-                (touch)="onTouch(child)"
-                (hold)="onHold(child)">{{''}}</button>
+                (touch)="onCardTouch(child)"
+                (hold)="onCardHold(child)">{{''}}</button>
               <mat-card-header>
                 <mat-card-title>{{ child.cursor }}</mat-card-title>
               </mat-card-header>

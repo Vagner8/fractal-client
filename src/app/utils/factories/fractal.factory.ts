@@ -9,15 +9,17 @@ export class FractalFactory implements Fractal {
 
   controls?: Controls;
   children?: Children;
+  childrenControls?: Controls;
 
   $newControls = signal<Control[]>([]);
 
-  constructor({ cursor, parentCursor, children, controls }: FractalDto, parent?: Fractal) {
+  constructor({ cursor, parentCursor, children, controls, childrenControls }: FractalDto, parent?: Fractal) {
     this.cursor = cursor;
     this.parentCursor = parentCursor;
     this.parent = parent;
     this.controls = createControls(this, controls);
     this.children = createChildren(this, children);
+    this.childrenControls = createControls(this, childrenControls);
   }
 
   is: Fractal['is'] = (search) => this.cursor === this.parseSearch(search);
@@ -28,6 +30,8 @@ export class FractalFactory implements Fractal {
     findChildRecursively(this.parseSearch(search), this.children);
 
   findControl: Fractal['findControl'] = (search) => this.controls?.[this.parseSearch(search)] ?? null;
+
+  findChildrenControl: Fractal['findChildrenControl'] = (cursor) => this.childrenControls?.[cursor] ?? null;
 
   getStringData: Fractal['getStringData'] = (search) => this.findControl(search)?.data ?? '';
 

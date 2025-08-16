@@ -20,13 +20,15 @@ export interface Fractal extends FractalDto {
   parent?: Fractal;
   children?: Children;
   controls?: Controls;
+  childrenControls?: Controls;
 
   $newControls: WritableSignal<Control[]>;
 
-  is(cursor: FractalsCursors | [string]): boolean;
-  findChild(cursor: FractalsCursors | [string]): Fractal | null;
-  findChildRecursively(cursor: FractalsCursors | [string]): Fractal | null;
-  findControl(cursor: ControlsCursors | [string]): Control | null;
-  getStringData(cursor: ControlsCursors | [string]): string;
-  getStringsData(cursor: ControlsCursors | [string]): string[];
+  is(search: FractalsCursors | [string]): boolean;
+  findChild(search: FractalsCursors | [string]): Fractal | null;
+  findChildRecursively(search: FractalsCursors | [string]): Fractal | null;
+  findControl(search: ControlsCursors | [string]): Control | null;
+  findChildrenControl(cursor: string): Control | null;
+  getStringData(search: ControlsCursors | [string]): string;
+  getStringsData(search: ControlsCursors | [string]): string[];
 }

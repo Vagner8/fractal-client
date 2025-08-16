@@ -15,7 +15,7 @@ export class ControlFactory implements Control {
   $isFullEditMode = signal(false);
 
   constructor(parent: Fractal, dto: Partial<ControlDto>) {
-    const { id = '', data = '', type = 'String', cursor = '', parentCursor = '' } = dto;
+    const { id = '', data = '', type = 'string', cursor = '', parentCursor = '' } = dto;
     this.id = id;
     this.data = data;
     this.type = type;

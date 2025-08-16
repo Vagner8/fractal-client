@@ -8,14 +8,14 @@ export const appData: FractalDto = {
   controls: {
     Children: {
       data: 'Collections:Settings',
-      type: 'Select',
+      type: 'splitable',
       id: '6f7a9f7f-0c3e-4d51-a3f2-96be1f574001',
       cursor: 'Children',
       parentCursor: 'App',
     },
     'Control keys': {
       data: 'data:type:cursor',
-      type: 'Select',
+      type: 'splitable',
       id: '6f7a9f7f-0c3e-4d51-a3f0-96be1f574901',
       cursor: 'Columns',
       parentCursor: 'App',
@@ -24,14 +24,14 @@ export const appData: FractalDto = {
   childrenControls: {
     Children: {
       data: '',
-      type: 'Select',
+      type: 'splitable',
       id: '6f6a9f7f-0c3e-4d51-a3f2-96be1f574001',
       cursor: 'Children',
       parentCursor: 'App',
     },
     Controls: {
       data: '',
-      type: 'Select',
+      type: 'splitable',
       id: '6f6a9f7f-0c3e-4d51-a3f2-96le1f574001',
       cursor: 'Controls',
       parentCursor: 'App',
