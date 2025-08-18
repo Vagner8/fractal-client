@@ -9,23 +9,23 @@ export const settingsData: FractalDto = {
       data: 'Manager:Back button:Modifiers',
       type: 'Splittable',
       id: '6f7a9f7f-0c5e-4d51-p3f2-96be1f574003',
-      cursor: 'Children',
+      cursor: 'children',
       parentCursor: 'Settings',
     },
     Controls: {
       data: 'Controls:Children',
       type: 'Splittable',
       id: '9f7a9f7f-0c3e-4d51-p3f2-96be1p574003',
-      cursor: 'Controls',
+      cursor: 'controls',
       parentCursor: 'Settings',
     },
   },
   childrenControls: {
-    'Children controls': {
+    'children controls': {
       data: '',
       type: 'Splittable',
       id: '6f6a9f7f-0c3e-4d51-a3ff-96be1f574881',
-      cursor: 'Children controls',
+      cursor: 'children controls',
       parentCursor: 'Settings',
     },
   },
@@ -42,7 +42,7 @@ export const settingsData: FractalDto = {
           data: 'Controls:Icon:Name',
           type: 'Splittable',
           id: '6f7a9f7f-0c3e-4d51-a3W2-96Ve1f574003',
-          cursor: 'Controls',
+          cursor: 'controls',
           parentCursor: 'Back button',
         },
         Icon: {

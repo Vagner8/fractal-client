@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Table } from '@components/atoms';
 import { FractalService } from '@services';
-import { ICollectionState } from '@types';
+import { FractalFields, ICollectionState } from '@types';
 
 @Component({
   selector: 'app-tables',
@@ -12,28 +12,9 @@ import { ICollectionState } from '@types';
 export class Tables {
   fs = inject(FractalService);
 
-  onChildHold(): void {
-    this.onCollectionHold(this.fs.selectedChildren);
-  }
-
-  onChildTouch(cursor: string): void {
-    this.onCollectionTouch(this.fs.selectedChildren, cursor);
-  }
-
-  onControlHold(): void {
-    this.onCollectionHold(this.fs.selectedControls);
-  }
-
-  onControlTouch(cursor: string): void {
-    this.onCollectionTouch(this.fs.selectedControls, cursor);
-  }
-
-  onChildrenControlHold(): void {
-    this.onCollectionHold(this.fs.selectedChildrenControls);
-  }
-
-  onChildrenControlTouch(cursor: string): void {
-    this.onCollectionTouch(this.fs.selectedChildrenControls, cursor);
+  onCardHoldOrTouch(field: FractalFields, state: ICollectionState): void {
+    this.fs.resetOthers(state);
+    this.fs.$fractalFields.set(field);
   }
 
   onCollectionHold(state: ICollectionState): void {
@@ -41,7 +22,7 @@ export class Tables {
     this.fs.resetOthers(state);
   }
 
-  onCollectionTouch(state: ICollectionState, cursor: string): void {
+  onCollectionTouch(cursor: string, state: ICollectionState): void {
     state.toggle(cursor);
     this.fs.resetOthers(state);
   }

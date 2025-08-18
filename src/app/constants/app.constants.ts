@@ -29,5 +29,5 @@ export const PARAMS = {
 
 export const CUSTOM_CHILDREN_COLUMNS = {
   NO: 'No.',
-  CURSOR: 'Cursor',
+  CURSOR: 'cursor',
 };

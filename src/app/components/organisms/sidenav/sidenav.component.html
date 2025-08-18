@@ -7,7 +7,7 @@
     position="end">
     <div>
       @if (this.fs.$app()?.findChildRecursively('Modifiers'); as modifiers) {
-        @for (cursor of modifiers.getStringsData('Children'); track $index) {
+        @for (cursor of modifiers.getStringsData('children'); track $index) {
           @if (modifiers.findChild([cursor]); as modifier) {
             <app-tap
               [$fractal]="modifier"

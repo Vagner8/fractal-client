@@ -11,7 +11,7 @@
 
   @if (!showTables) {
     @if (fs.selectedFractal.$value(); as selectedFractal) {
-      @for (cursor of selectedFractal.getStringsData('Children'); track $index) {
+      @for (cursor of selectedFractal.getStringsData('children'); track $index) {
         @if (selectedFractal.findChild([cursor]); as child) {
           <app-tile [$fractal]="child" (tileHold)="onTileHold(child)" (tileTouch)="onTileTouch(child)"/>
         }

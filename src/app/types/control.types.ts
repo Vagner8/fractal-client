@@ -5,7 +5,7 @@ import { FormGroup } from '@angular/forms';
 export type Controls = Record<string, Control>;
 export type ControlsDto = Record<string, ControlDto>;
 export type ControlType = 'String' | 'Splittable';
-export type ControlsStructuralCursors = 'Children' | 'Controls' | 'Control keys' | 'Children controls';
+export type ControlsStructuralCursors = 'children' | 'controls' | 'control keys' | 'children controls';
 export type ControlsCommonCursors = 'Name' | 'Icon';
 export type ControlsCursors = ControlsStructuralCursors | ControlsCommonCursors;
 

@@ -13,7 +13,7 @@ export const appMock = {
     },
     Occ: {
       id: '',
-      cursor: 'Children controls',
+      cursor: 'children controls',
       parentCursor: 'App',
       data: 'Name',
       type: 'Select',
@@ -46,7 +46,7 @@ export const appMock = {
             },
             Occ: {
               id: '',
-              cursor: 'Children controls',
+              cursor: 'children controls',
               parentCursor: 'Users',
               data: 'Email:Name',
               type: 'Select',
