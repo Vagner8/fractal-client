@@ -1,10 +1,15 @@
 @let tablesData = $tablesData();
 @let columns = tablesData.columns;
 @let dataSource = tablesData.dataSource;
+@let like = $like();
 
-<mat-card appearance="outlined" [class.selected]="$selected()">
+<mat-card 
+  appearance="outlined"
+  appTap
+  (touch)="fs.$fractalFields.set(like)"
+  [class.selected]="fs.$fractalFields() === like">
   <mat-card-header>
-    <mat-card-title>{{ $like() }}</mat-card-title>
+    <mat-card-title>{{ fractalFieldsMap() }}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     @if (columns && columns.length > 0 && dataSource && dataSource.length > 0) {
@@ -24,8 +29,8 @@
           mat-row
           *matRowDef="let cursor; columns: columns"
           appTap
-          (hold)="holdRow.emit(cursor)"
-          (touch)="touchRow.emit(cursor)"
+          (hold)="rowHold.emit(cursor)"
+          (touch)="rowTouch.emit(cursor)"
           [class.selected-row]="$selectedRows().includes(cursor)"></tr>
       </table>
     } @else {

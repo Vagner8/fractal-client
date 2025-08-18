@@ -1,0 +1,23 @@
+@if (fs.selectedFractal.$value(); as selectedFractal) {
+  <div class="tables">
+    <app-table
+      [$like]="'controls'"
+      [$fractal]="selectedFractal"
+      [$selectedRows]="fs.selectedControls.$cursors()"
+      (rowHold)="onControlHold()"
+      (rowTouch)="onControlTouch($event)" />
+
+      <app-table
+        [$like]="'childrenControls'"
+        [$fractal]="selectedFractal" 
+        [$selectedRows]="fs.selectedChildrenControls.$cursors()"
+        (rowHold)="onChildrenControlHold()"
+        (rowTouch)="onChildrenControlTouch($event)" />
+
+      <app-table
+        [$fractal]="selectedFractal"
+        [$selectedRows]="fs.selectedControls.$cursors()"
+        (rowHold)="onChildHold()"
+        (rowTouch)="onChildTouch($event)" />
+  </div>
+}

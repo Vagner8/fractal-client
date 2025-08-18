@@ -27,7 +27,7 @@ export class User<T> {
     await host.dispatchEvent('pointerup');
   }
 
-  async touchRow(index: number = 0): Promise<ReturnType<MatRowHarness>> {
+  async rowTouch(index: number = 0): Promise<ReturnType<MatRowHarness>> {
     const row = (await this.loader.getAllHarnesses(MatRowHarness))[index];
     const host = await row.host();
     await this.touch(host);

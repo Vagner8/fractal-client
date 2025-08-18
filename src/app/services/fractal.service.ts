@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { Fractal, ICollectionState } from '@types';
+import { Fractal, FractalFields, ICollectionState } from '@types';
 import { ChildrenControlsState, ControlsState, FractalsState, FractalState } from '@utils';
 
 @Injectable({
@@ -7,9 +7,9 @@ import { ChildrenControlsState, ControlsState, FractalsState, FractalState } fro
 })
 export class FractalService {
   $app = signal<Fractal | null>(null);
+  $fractalFields = signal<FractalFields | null>(null);
 
   selectedFractal = new FractalState();
-
   selectedControls = new ControlsState(this.selectedFractal);
   selectedChildren = new FractalsState(this.selectedFractal);
   selectedChildrenControls = new ChildrenControlsState(this.selectedFractal);

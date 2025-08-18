@@ -2,7 +2,7 @@ import { Component, computed, inject, input, output } from '@angular/core';
 import { TapDirective } from '@directives';
 import { MatCardModule, MatTableModule } from '@mat';
 import { FractalService } from '@services';
-import { ControlDto, Fractal } from '@types';
+import { ControlDto, Fractal, FractalFields } from '@types';
 
 interface TdContentProps {
   index: number;
@@ -16,8 +16,8 @@ interface TableData {
   tdContent(props: TdContentProps): string | number | undefined;
 }
 
-type Like = 'Children' | 'Controls' | 'Children controls';
-type TablesData = Record<Like, TableData>;
+type TablesData = Record<FractalFields, TableData>;
+type FractalFieldsMap = Record<FractalFields, string>;
 
 @Component({
   selector: 'app-table',
@@ -26,30 +26,29 @@ type TablesData = Record<Like, TableData>;
   styleUrl: './table.scss',
 })
 export class Table {
-  $like = input<Like>('Children');
+  $like = input<FractalFields>('children');
   $fractal = input<Fractal | null>();
-  $selected = input(false);
   $selectedRows = input<string[]>([]);
 
   fs = inject(FractalService);
 
-  holdRow = output<string>();
-  touchRow = output<string>();
+  rowHold = output<string>();
+  rowTouch = output<string>();
 
   $tablesData = computed<TableData>(() => {
     const tablesData: TablesData = {
-      Children: {
+      children: {
         columns: this.$fractal()?.getStringsData('Children controls'),
         dataSource: this.$fractal()?.getStringsData('Children'),
         tdContent: ({ column, cursor }) =>
           column === 'Cursor' ? cursor : this.$fractal()?.findChild([cursor])?.getStringData([column]),
       },
-      Controls: {
+      controls: {
         columns: this.fs.$app()?.getStringsData('Control keys'),
         dataSource: this.$fractal()?.getStringsData('Controls'),
         tdContent: ({ column, cursor }) => this.$fractal()?.findControl([cursor])?.[column as keyof ControlDto],
       },
-      'Children controls': {
+      childrenControls: {
         columns: this.fs
           .$app()
           ?.getStringsData('Control keys')
@@ -63,4 +62,14 @@ export class Table {
 
     return tablesData[this.$like()];
   });
+
+  fractalFieldsMap(): string {
+    const map: FractalFieldsMap = {
+      children: 'Children',
+      controls: 'Controls',
+      childrenControls: 'Children controls',
+    };
+
+    return map[this.$like()];
+  }
 }

@@ -3,6 +3,7 @@ import { Control, Controls, ControlsCursors, ControlsDto } from './control.types
 
 export type Children = Record<string, Fractal>;
 export type ChildrenDto = Record<string, FractalDto>;
+export type FractalFields = keyof Pick<FractalDto, 'children' | 'controls' | 'childrenControls'>;
 export type FractalSettingsCursors = 'Back button';
 export type FractalsCommonCursors = 'App' | 'Settings' | 'Modifiers';
 export type FractalsCursors = FractalSettingsCursors | FractalsCommonCursors;
