@@ -1,47 +1,47 @@
 import { FractalDto } from '@types';
 
 export const modifiersData: FractalDto = {
-  cursor: 'Modifiers',
+  cursor: 'modifiers',
   parentCursor: 'App',
   controls: {
     Children: {
       data: 'Delete:Save:New:Edit',
-      type: 'Splittable',
+      type: 'splittable',
       id: '6f7a9f7f-0c3e-4d51-a3f2-96be1f574003',
       cursor: 'children',
-      parentCursor: 'Modifiers',
+      parentCursor: 'modifiers',
     },
     Controls: {
       data: 'Children:Controls:children controls',
-      type: 'Splittable',
+      type: 'splittable',
       id: '9f7a9f7f-0c3e-4d51-p3f2-96be1f574003',
       cursor: 'controls',
       parentCursor: 'Collections',
     },
     'children controls': {
       data: 'No.:Cursor',
-      type: 'Splittable',
+      type: 'splittable',
       id: '6f7a9f7f-0c3e-4d50-a3f2-96be1f574003',
       cursor: 'children',
-      parentCursor: 'Modifiers',
+      parentCursor: 'modifiers',
     },
   },
   children: {
     Delete: {
       cursor: 'Delete',
-      parentCursor: 'Modifiers',
+      parentCursor: 'modifiers',
     },
     Edit: {
       cursor: 'Edit',
-      parentCursor: 'Modifiers',
+      parentCursor: 'modifiers',
     },
     New: {
       cursor: 'New',
-      parentCursor: 'Modifiers',
+      parentCursor: 'modifiers',
     },
     Save: {
       cursor: 'Save',
-      parentCursor: 'Modifiers',
+      parentCursor: 'modifiers',
     },
   },
 };

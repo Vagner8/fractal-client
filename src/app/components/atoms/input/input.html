@@ -1,0 +1,11 @@
+@if ($form(); as form) {
+  <mat-form-field class="mat-form-field">
+  <mat-label>{{ $label() }}</mat-label>
+  <input matInput type="text" [formControl]="form" />
+    @if (form.value) {
+      <button type="button" matSuffix matIconButton aria-label="Clear" (click)="form.setValue('')">
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </mat-form-field>
+}

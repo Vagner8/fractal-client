@@ -10,4 +10,10 @@ export class FractalState {
       this.value = this.$value();
     });
   }
+
+  reset = (): void => {
+    const prev = this.value;
+    this.$value.set(null);
+    this.$value.set(prev);
+  };
 }

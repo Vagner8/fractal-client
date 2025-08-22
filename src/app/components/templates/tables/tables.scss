@@ -1,0 +1,9 @@
+@use 'variables' as *;
+
+.tables,
+.new-entities,
+.table-container {
+  display: flex;
+  flex-direction: column;
+  gap: map-get($size, sm);
+}

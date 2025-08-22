@@ -1,17 +1,16 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { Sidenav } from '@components/organisms';
-import { HeaderComponent, SpinnerComponent } from '@components/atoms';
-import { ToolbarComponent } from '@components/molecules';
+import { HeaderComponent, SpinnerComponent } from '@atoms';
+import { Sidenav, Toolbar } from '@molecules';
 import { DataService, FractalService, StatesService } from '@services';
 import { NavigationEnd, Router } from '@angular/router';
 import { FractalFactory, getSegments, isNavigationEnd } from '@utils';
 import { filter } from 'rxjs';
-import { appData } from './data/appData';
 import { APP_FRACTALS } from '@constants';
+import { Fractal } from '@types';
 
 @Component({
   selector: 'app-root',
-  imports: [Sidenav, ToolbarComponent, SpinnerComponent, HeaderComponent],
+  imports: [Sidenav, Toolbar, SpinnerComponent, HeaderComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -26,7 +25,7 @@ export class AppComponent implements OnInit {
     this.router.events.pipe(filter(isNavigationEnd)).subscribe(this.navigationEnd);
 
     this.ds.getFractalWithChildrenRecursively(APP_FRACTALS.APP).subscribe((appDto) => {
-      const app = new FractalFactory(appDto);
+      const app = new FractalFactory(null, appDto);
       this.fs.$app.set(app);
       console.info('🚀 ~ app:', app);
     });

@@ -1,0 +1,34 @@
+@let tablesView = $tablesView();
+
+<div class="dashboard">
+  @if (fs.selectedFractal.$value()) {
+    <app-bread-crumbs (crumbClick)="onCrumbTouch($event)" />
+  }
+
+  @if (tablesView) {
+    <app-tables />
+  }
+
+  @if (!tablesView) {
+    @if (fs.selectedFractal.$value(); as selectedFractal) {
+      @for (cursor of selectedFractal.getSplittableData('children'); track cursor) {
+        @if (selectedFractal.findChild([cursor]); as child) {
+          <ng-container [ngTemplateOutlet]="tile" [ngTemplateOutletContext]="{fractal: child}"  />
+        }
+      }
+    } @else {
+      @if (fs.$app(); as app) {
+        <ng-container [ngTemplateOutlet]="tile" [ngTemplateOutletContext]="{fractal: app}"  />
+      }
+    }
+  }
+</div>
+
+<ng-template #tile let-fractal="fractal">
+  @let children = fractal.getSplittableData('children');
+  <app-card
+    [$like]="'button'"
+    [$title]="fractal.cursor"
+    (cardHold)="onTileHoldOrTouch(fractal, true)"
+    (cardTouch)="onTileHoldOrTouch(fractal)">Children: {{ children.length }}</app-card>
+</ng-template>

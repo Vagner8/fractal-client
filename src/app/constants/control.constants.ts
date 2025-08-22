@@ -5,5 +5,5 @@ export const CONTROL_CURSORS = { ...CONTROL_ORDERS_CURSORS, ...CONTROL_COMMON_CU
 export const CONTROL_MUTABLE = { CURSOR: 'cursor', TYPE: 'type', DATA: 'data' } as const;
 export const CONTROL_TYPES = {
   SELECT: 'Select',
-  STRING: 'String',
+  STRING: 'text',
 } as const;

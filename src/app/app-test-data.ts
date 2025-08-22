@@ -37,7 +37,7 @@ export const appTestData: FractalDto = {
   },
   children: {
     Modifiers: {
-      cursor: 'Modifiers',
+      cursor: 'modifiers',
       parentCursor: 'App',
       controls: {
         Children: {
@@ -45,32 +45,32 @@ export const appTestData: FractalDto = {
           type: 'Select',
           id: '6f7a9f7f-0c3e-4d51-a3f2-96be1f574003',
           cursor: 'children',
-          parentCursor: 'Modifiers',
+          parentCursor: 'modifiers',
         },
         'children controls': {
           data: 'No.:Cursor',
           type: 'Select',
           id: '6f7a9f7f-0c3e-4d50-a3f2-96be1f574003',
           cursor: 'children',
-          parentCursor: 'Modifiers',
+          parentCursor: 'modifiers',
         },
       },
       children: {
         Delete: {
           cursor: 'Delete',
-          parentCursor: 'Modifiers',
+          parentCursor: 'modifiers',
         },
         Edit: {
           cursor: 'Edit',
-          parentCursor: 'Modifiers',
+          parentCursor: 'modifiers',
         },
         New: {
           cursor: 'New',
-          parentCursor: 'Modifiers',
+          parentCursor: 'modifiers',
         },
         Save: {
           cursor: 'Save',
-          parentCursor: 'Modifiers',
+          parentCursor: 'modifiers',
         },
       },
     },
@@ -173,14 +173,14 @@ export const appTestData: FractalDto = {
             },
             Icon: {
               data: 'arrow_back_ios',
-              type: 'String',
+              type: 'text',
               cursor: 'Icon',
               id: '6f7yuf7f-0c3e-4d51-a3f2-96be1f571004',
               parentCursor: 'Back button',
             },
             Name: {
               data: 'Back',
-              type: 'String',
+              type: 'text',
               cursor: 'Name',
               id: '6f7yuf7f-0c3e-4d51-a3f2-96b09f571004',
               parentCursor: 'Back button',

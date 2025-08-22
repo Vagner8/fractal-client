@@ -1,0 +1,23 @@
+<mat-drawer-container class="mat-drawer-container-app-sidenav" autosize>
+  <mat-drawer
+    [opened]="ss.$managerEvent() === 'touch'"
+    [disableClose]="false"
+    class="mat-drawer-app-sidenav"
+    mode="side"
+    position="end">
+    <div>
+      @if (this.fs.$app()?.findChildRecursively('modifiers'); as modifiers) {
+        @for (cursor of modifiers.getSplittableData('children'); track cursor) {
+          @if (modifiers.findChild([cursor]); as modifier) {
+            <app-tap
+              [$fractal]="modifier"
+              [$disabled]="onModifierDisabled(modifier)()"
+              (tapHold)="onModifierHold(modifier)"
+              (tapTouch)="onModifierTouch(modifier)"/>
+          }
+        }
+      }
+    </div>
+  </mat-drawer>
+  <router-outlet />
+</mat-drawer-container>

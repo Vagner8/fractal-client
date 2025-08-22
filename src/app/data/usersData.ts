@@ -6,21 +6,21 @@ export const usersData: FractalDto = {
   controls: {
     Children: {
       data: '2:1:3',
-      type: 'Splittable',
+      type: 'splittable',
       id: '6i7a9f7f-0c3e-4p51-p3f2-96be1f574003',
       cursor: 'children',
       parentCursor: 'Users',
     },
     Controls: {
       data: 'children controls:Children:Controls',
-      type: 'Splittable',
+      type: 'splittable',
       id: '6i7a9f7f-0c3e-4p55-p3f2-96be1f574003',
       cursor: 'controls',
       parentCursor: 'Users',
     },
     'children controls': {
       data: 'Name',
-      type: 'Splittable',
+      type: 'splittable',
       id: '6f6a9f7f-0c3e-4d59-a3f2-96be1f574881',
       cursor: 'children controls',
       parentCursor: 'Collections',
@@ -29,7 +29,7 @@ export const usersData: FractalDto = {
   childrenControls: {
     Name: {
       data: '',
-      type: 'String',
+      type: 'text',
       id: '6i7a9f7f-0c3e-4p51-p9f2-96be1f574003',
       cursor: 'Name',
       parentCursor: 'Users',

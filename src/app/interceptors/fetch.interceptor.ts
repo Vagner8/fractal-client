@@ -1,8 +1,8 @@
 import { HttpErrorResponse, HttpEvent, HttpHandlerFn, HttpRequest } from '@angular/common/http';
-import { Observable, catchError, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 
 export const fetchInterceptor = (req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> => {
-  return next(req).pipe(catchError(error => handleError(error)));
+  return next(req).pipe(catchError((error) => handleError(error)));
 };
 
 export const handleError = (error: HttpErrorResponse): Observable<never> => {

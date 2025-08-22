@@ -1,0 +1,21 @@
+@let like = $like();
+
+<mat-card appearance="outlined">
+  @if (like === 'button') {
+    <button
+      type="button"
+      class="button"
+      matButton
+      [disableRipple]="$disableRipple()"
+      appTap
+      (hold)="cardHold.emit()"
+      (touch)="cardTouch.emit()">{{''}}</button>
+  }
+  <mat-card-header>
+    <mat-card-title>{{ $title() }}</mat-card-title>
+  </mat-card-header>
+  
+  <mat-card-content>
+    <ng-content />
+  </mat-card-content>
+</mat-card>

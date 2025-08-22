@@ -7,7 +7,7 @@
       </button>
     </mat-grid-tile>
   }
-  @for (crumb of $crumbs(); track $index) {
+  @for (crumb of $crumbs(); track crumb.cursor) {
     <mat-grid-tile>
       <button type="button" class="button" matButton="outlined" (click)="crumbClick.emit(crumb)">
         {{ crumb.cursor }}

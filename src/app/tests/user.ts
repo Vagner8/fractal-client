@@ -1,5 +1,5 @@
 import { HarnessLoader, TestElement } from '@angular/cdk/testing';
-import { ManagerHarness } from '@components/molecules';
+import { ManagerHarness } from '@molecules';
 import { ComponentFixture } from '@angular/core/testing';
 import { HOLD_THRESHOLD, MOCK_COLLECTIONS, MODIFIERS } from '@constants';
 import { MatButtonHarness } from '@angular/material/button/testing';

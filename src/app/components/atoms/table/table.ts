@@ -1,6 +1,6 @@
 import { Component, computed, inject, input, output } from '@angular/core';
 import { TapDirective } from '@directives';
-import { MatCardModule, MatTableModule } from '@mat';
+import { MatTableModule } from '@mat';
 import { FractalService } from '@services';
 import { ControlDto, Fractal, FractalFields } from '@types';
 
@@ -13,15 +13,13 @@ interface TdContentProps {
 interface TableData {
   columns(): string[] | undefined;
   dataSource(): string[] | undefined;
-  tdContent(props: TdContentProps): string | number | undefined;
+  tdContent(props: TdContentProps): string | null | undefined;
 }
 
 type TablesData = Record<FractalFields, TableData>;
-type FractalFieldsMap = Record<FractalFields, string>;
-
 @Component({
   selector: 'app-table',
-  imports: [MatTableModule, TapDirective, MatCardModule],
+  imports: [MatTableModule, TapDirective],
   templateUrl: './table.html',
   styleUrl: './table.scss',
 })
@@ -35,42 +33,31 @@ export class Table {
 
   rowHold = output<string>();
   rowTouch = output<string>();
-  cardTouch = output<FractalFields>();
 
   $tablesData = computed<TableData>(() => {
     const tablesData: TablesData = {
       children: {
-        columns: () => this.$fractal()?.getStringsData('children controls'),
-        dataSource: () => this.$fractal()?.getStringsData('children'),
+        columns: () => this.$fractal()?.getSplittableData('children controls'),
+        dataSource: () => this.$fractal()?.getSplittableData('children'),
         tdContent: ({ column, cursor }) =>
-          column === 'cursor' ? cursor : this.$fractal()?.findChild([cursor])?.getStringData([column]),
+          column === 'cursor' ? cursor : this.$fractal()?.findChild([cursor])?.getTextData([column]),
       },
       controls: {
-        columns: () => this.fs.$app()?.getStringsData('control keys'),
-        dataSource: () => this.$fractal()?.getStringsData('controls'),
+        columns: () => this.fs.$app()?.getSplittableData('control keys'),
+        dataSource: () => this.$fractal()?.getSplittableData('controls'),
         tdContent: ({ column, cursor }) => this.$fractal()?.findControl([cursor])?.[column as keyof ControlDto],
       },
       childrenControls: {
         columns: () =>
           this.fs
             .$app()
-            ?.getStringsData('control keys')
+            ?.getSplittableData('control keys')
             .filter((key) => key !== 'data'),
-        dataSource: () => this.$fractal()?.getStringsData('children controls'),
+        dataSource: () => this.$fractal()?.getSplittableData('children controls'),
         tdContent: ({ column, cursor }) => this.$fractal()?.findChildrenControl(cursor)?.[column as keyof ControlDto],
       },
     };
 
     return tablesData[this.$like()];
   });
-
-  fractalFieldsMap(): string {
-    const map: FractalFieldsMap = {
-      children: 'Children',
-      controls: 'Controls',
-      childrenControls: 'Children controls',
-    };
-
-    return map[this.$like()];
-  }
 }

@@ -2,7 +2,7 @@ import { Children, ChildrenDto, Fractal } from '@types';
 import { FractalFactory } from '../factories/fractal.factory';
 import { WritableSignal } from '@angular/core';
 
-export const findChildRecursively = (cursor: string, children?: Children): Fractal | null => {
+export const findChildRecursively = (cursor: string, children: Children | null): Fractal | null => {
   if (!children) {
     return null;
   }
@@ -22,15 +22,15 @@ export const findChildRecursively = (cursor: string, children?: Children): Fract
   return null;
 };
 
-export const createChildren = (parent: Fractal, children?: ChildrenDto): Children | undefined => {
+export const createChildren = (parent: Fractal, children: ChildrenDto | null): Children | null => {
   if (!children) {
-    return undefined;
+    return null;
   }
 
   const result: Children = {};
 
   for (const [cursor, fractalDto] of Object.entries(children)) {
-    const fractal = new FractalFactory(fractalDto, parent);
+    const fractal = new FractalFactory(parent, fractalDto);
     fractal.children = createChildren(fractal, fractalDto.children);
     result[cursor] = fractal;
   }

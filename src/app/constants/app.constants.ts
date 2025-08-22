@@ -10,7 +10,7 @@ export const APP_FRACTALS = {
   PAGES: 'Pages',
   MANAGER: 'Manager',
   SETTINGS: 'Settings',
-  MODIFIERS: 'Modifiers',
+  MODIFIERS: 'modifiers',
   COLLECTIONS: 'Collections',
 } as const;
 
@@ -19,7 +19,7 @@ export const QUERY_PARAMS = {
   MANAGER: 'Manager',
   SELECTED: 'Selected',
   EDIT_MODE: 'EditMode',
-  MODIFIERS: 'Modifiers',
+  MODIFIERS: 'modifiers',
 } as const;
 
 export const PARAMS = {

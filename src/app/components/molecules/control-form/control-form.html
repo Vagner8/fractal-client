@@ -1,0 +1,11 @@
+@if ($control(); as control) {
+  @if (control.$isFullEditMode()) {
+    <app-card>
+      <app-input [$form]="formGroup.controls.cursor" [$label]="'Cursor'" />
+      <app-select [$form]="formGroup.controls.type" [$opts]="controlTypes" [$label]="'Type'" />
+      <app-input [$form]="formGroup.controls.data" [$label]="'Data'" />
+    </app-card>
+  } @else {
+    <app-input [$label]="control.cursor" [$form]="formGroup.controls.data" />
+  }
+}

@@ -1,0 +1,12 @@
+@if ($fractal(); as fractal) {
+  <app-card [$title]="$title()">
+    <div class="controls">
+      @if ($cursorControl(); as cursorControl) {
+        <app-control-form [$control]="cursorControl" />
+      }
+      @for (cursor of fractal.getSplittableData('controls'); track cursor) {
+        <app-control-form [$control]="fractal.findControl([cursor])" />
+      }
+    </div>
+  </app-card>
+}

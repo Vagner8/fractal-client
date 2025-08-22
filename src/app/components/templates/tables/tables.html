@@ -1,0 +1,55 @@
+@let newChildren = cs.$children();
+
+@if (fs.selectedFractal.$value(); as selectedFractal) {
+  <mat-accordion>
+    <ng-container
+      [ngTemplateOutlet]="table"
+      [ngTemplateOutletContext]="{
+        like: 'controls',
+        title: 'Controls',
+        state: fs.selectedControls
+      }" />
+
+    <ng-container
+      [ngTemplateOutlet]="table"
+      [ngTemplateOutletContext]="{
+        like: 'childrenControls',
+        title: 'Children controls',
+        state: fs.selectedChildrenControls
+      }" />
+
+    <ng-container
+      [ngTemplateOutlet]="table"
+      [ngTemplateOutletContext]="{
+        like: 'children',
+        title: 'Children',
+        state: fs.selectedChildren }" />
+
+    <ng-template #table let-like="like" let-title="title" let-state="state" >
+      <mat-expansion-panel
+        (opened)="onPanelOpened(like, state)"
+        (closed)="state.$value.set([])" >
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ title }}</mat-panel-title>
+        </mat-expansion-panel-header>
+          <div class="table-container">
+            <app-table
+              [$like]="like"
+              [$fractal]="selectedFractal"
+              [$selectedRows]="state.$cursors()"
+              [$selectedCard]="fs.$selectedFractalField()"
+              (rowHold)="onCollectionHold(state)"
+              (rowTouch)="onCollectionTouch($event, state)" />
+            
+            @if (newChildren.length > 0) {
+              <div class="new-entities">
+                @for (child of newChildren; track child; let index = $index) {
+                  <app-fractal-form [$title]="(index + 1).toString()" [$fractal]="child"/>
+                }
+              </div>
+            }
+          </div>
+      </mat-expansion-panel>
+    </ng-template>
+  </mat-accordion>
+}

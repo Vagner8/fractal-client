@@ -1,10 +1,11 @@
-export * from './tap/tap.component';
+export * from './tap/tap';
 export * from './home/home.component';
-export * from './card/card.component';
-export * from './input/input.component';
 export * from './header/header.component';
 export * from './select/select.component';
 export * from './spinner/spinner.component';
-export * from './tile/tile';
+
+export * from './card/card';
+export * from './input/input';
 export * from './table/table';
+export * from './manager/manager';
 export * from './bread-crumbs/bread-crumbs';

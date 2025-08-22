@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, output } from '@angular/core';
+import { Component, computed, inject, output } from '@angular/core';
 import { MatButtonModule, MatGridListModule, MatIcon } from '@mat';
 import { FractalService } from '@services';
 import { Fractal } from '@types';

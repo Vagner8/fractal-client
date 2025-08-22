@@ -21,9 +21,12 @@
     "lib": ["ES2022", "dom", "dom.iterable"],
     "baseUrl": "./src",
     "paths": {
-      "@components/molecules": ["app/components/molecules/index.ts"],
-      "@components/organisms": ["app/components/organisms/index.ts"],
-      "@components/atoms": ["app/components/atoms/index.ts"],
+      "@atoms": ["app/components/atoms/index.ts"],
+      "@molecules": ["app/components/molecules/index.ts"],
+      "@organisms": ["app/components/organisms/index.ts"],
+      "@templates": ["app/components/templates/index.ts"],
+      "@pages": ["app/components/pages/index.ts"],
+
       "@interceptors": ["app/interceptors/index.ts"],
       "@directives": ["app/directives/index.ts"],
       "@constants": ["app/constants/index.ts"],
