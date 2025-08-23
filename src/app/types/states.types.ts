@@ -6,7 +6,7 @@ export interface ICollectionState {
   $isEmpty: Signal<boolean>;
   $cursors: Signal<string[]>;
 
-  has(item: unknown): boolean;
+  has(item: unknown): { $: Signal<boolean> };
   push(item: unknown): void;
   delete(items: unknown[]): void;
   toggle(cursor: string): void;

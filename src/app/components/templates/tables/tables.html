@@ -28,7 +28,7 @@
     <ng-template #table let-like="like" let-title="title" let-state="state" >
       <mat-expansion-panel
         (opened)="onPanelOpened(like, state)"
-        (closed)="state.$value.set([])" >
+        (closed)="onPanelClosed(like, state)">
         <mat-expansion-panel-header>
           <mat-panel-title>{{ title }}</mat-panel-title>
         </mat-expansion-panel-header>

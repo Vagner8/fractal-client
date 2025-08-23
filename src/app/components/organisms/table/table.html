@@ -10,7 +10,12 @@
           {{ column }}
         </th>
         <td mat-cell *matCellDef="let cursor; let index = index">
-          {{ tablesData.tdContent({ index, cursor, column }) }}
+          @let content = tablesData.tdContent({ index, cursor, column });
+          @if ($editMode() && content.control) {
+            <app-control-form [$control]="content.control" />
+          } @else {
+            {{ content.data }}
+          }
         </td>
       </ng-container>
     }

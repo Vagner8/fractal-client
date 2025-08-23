@@ -4,6 +4,7 @@ import { Tap } from '@atoms';
 import { MatListModule, MatSidenavModule } from '@mat';
 import { CreationService, DataService, FractalService, StatesService } from '@services';
 import { Fractal, Modifiers } from '@types';
+import { FractalDtoFactory } from '@utils';
 
 @Component({
   selector: 'app-sidenav',
@@ -20,8 +21,8 @@ export class Sidenav {
   onModifierHold(modifier: Fractal): void {
     switch (modifier.cursor as Modifiers) {
       case 'save':
-        // this.ds.addFractals(this.cs.$children().map((child) => new FractalDtoFactory(child))).subscribe();
-        console.log('🚀 ~ save ', this.cs.$children());
+        this.ds.addFractals(this.cs.$children().map((child) => new FractalDtoFactory(child))).subscribe();
+        // console.log('🚀 ~ save ', this.cs.$children());
         break;
       case 'delete':
         break;
@@ -29,7 +30,9 @@ export class Sidenav {
   }
 
   onModifierTouch(modifier: Fractal): void {
-    switch (modifier.cursor as Modifiers) {
+    const cursor = modifier.cursor as Modifiers;
+    this.fs.$modifierTouch.set(cursor);
+    switch (cursor) {
       case 'new':
         if (this.fs.$selectedFractalField() === 'children') {
           this.cs.pushChild(this.fs.selectedFractal.value);

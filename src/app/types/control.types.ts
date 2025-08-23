@@ -1,5 +1,4 @@
 import { Fractal } from './fractal.types';
-import { WritableSignal } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 export type Controls = Record<string, Control>;
@@ -22,9 +21,6 @@ export interface ControlDto extends ControlDtoMutable {
 }
 
 export interface Control extends ControlDto {
-  form: FormGroup | null;
   parent: Fractal | null;
-  $isFullEditMode: WritableSignal<boolean>;
-
   push(data: string): void;
 }

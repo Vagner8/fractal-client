@@ -1,4 +1,4 @@
-import { computed, effect, signal } from '@angular/core';
+import { computed, effect, Signal, signal } from '@angular/core';
 import { Control, Fractal, ICollectionState } from '@types';
 import { FractalState } from './fractal.state';
 
@@ -15,13 +15,15 @@ export abstract class CollectionState<T extends Fractal | Control> implements IC
     });
   }
 
-  has = (item: T | null): boolean => this.value.some((i) => i === item);
+  has = (item: T | null | undefined): { $: Signal<boolean> } => ({
+    $: computed(() => (item ? this.$value().includes(item) : false)),
+  });
   push = (item: T): void => this.$value.update((prev) => [...prev, item]);
   delete = (items: T[]): void => this.$value.update((prev) => prev.filter((item) => !items.includes(item)));
 
   protected toggleItem(item: T | null | undefined): void {
     if (item) {
-      if (this.has(item)) {
+      if (this.value.includes(item)) {
         this.delete([item]);
       } else {
         this.push(item);

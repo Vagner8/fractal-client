@@ -1,8 +1,7 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { Table } from '@atoms';
 import { MatExpansionModule } from '@mat';
-import { FractalForm } from '@organisms';
+import { FractalForm, Table } from '@organisms';
 import { CreationService, FractalService } from '@services';
 import { FractalFields, ICollectionState } from '@types';
 
@@ -19,6 +18,13 @@ export class Tables {
   onPanelOpened(field: FractalFields, state: ICollectionState): void {
     this.fs.clearCollectionStates({ exclude: [state] });
     this.fs.$selectedFractalField.set(field);
+  }
+
+  onPanelClosed(field: FractalFields, state: ICollectionState): void {
+    state.$value.set([]);
+    if (this.fs.$selectedFractalField() === field) {
+      this.fs.$selectedFractalField.set(null);
+    }
   }
 
   onCollectionHold(state: ICollectionState): void {

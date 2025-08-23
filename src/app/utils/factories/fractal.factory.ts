@@ -20,10 +20,11 @@ export class FractalFactory implements Fractal {
       this.parent = parent;
     }
     if (dto) {
-      this.cursor = dto.cursor;
-      this.children = createChildren(this, dto.children);
-      this.controls = createControls(this, dto.controls);
-      this.childrenControls = createControls(this, dto.childrenControls);
+      const { cursor, children, controls, childrenControls } = dto;
+      this.cursor = cursor;
+      this.children = createChildren(this, children);
+      this.controls = createControls(this, controls);
+      this.childrenControls = createControls(this, childrenControls);
     }
   }
 

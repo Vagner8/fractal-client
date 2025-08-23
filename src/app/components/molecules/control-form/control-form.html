@@ -1,5 +1,5 @@
 @if ($control(); as control) {
-  @if (control.$isFullEditMode()) {
+  @if ($isFullEditMode()) {
     <app-card>
       <app-input [$form]="formGroup.controls.cursor" [$label]="'Cursor'" />
       <app-select [$form]="formGroup.controls.type" [$opts]="controlTypes" [$label]="'Type'" />

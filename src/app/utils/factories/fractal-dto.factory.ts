@@ -9,12 +9,12 @@ export class FractalDtoFactory implements FractalDto {
   childrenControls: ControlsDto | null;
 
   constructor(fractal: Fractal) {
-    const { cursor, parentCursor, controls } = fractal;
+    const { cursor, parentCursor, controls, childrenControls } = fractal;
     this.cursor = cursor;
     this.parentCursor = parentCursor;
     this.children = null;
     this.controls = controls && this.toControlsDto(controls);
-    this.childrenControls = controls && this.toControlsDto(controls);
+    this.childrenControls = childrenControls && this.toControlsDto(childrenControls);
   }
 
   toControlsDto = (controls: Controls): ControlsDto =>

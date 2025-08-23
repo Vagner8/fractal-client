@@ -1,0 +1,7 @@
+@if ($control(); as control) {
+  @switch ($like()) {
+    @case ('text') {
+      {{ control.data }}
+    }
+  }
+}

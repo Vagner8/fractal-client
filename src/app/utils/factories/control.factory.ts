@@ -1,5 +1,4 @@
 import { signal } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { Control, ControlDto, ControlType, Fractal } from '@types';
 import { v4 } from 'uuid';
 
@@ -10,8 +9,6 @@ export class ControlFactory implements Control {
   cursor: string;
   parent: Fractal | null;
   parentCursor: string | null;
-
-  form: FormGroup | null = null;
 
   $isFullEditMode = signal(false);
 
