@@ -1,1 +1,1 @@
-export * from './tables/tables';
+export * from './accordion/accordion';

@@ -9,7 +9,7 @@
         <th mat-header-cell *matHeaderCellDef>
           {{ column }}
         </th>
-        <td mat-cell *matCellDef="let cursor; let index = index">
+        <td mat-cell *matCellDef="let cursor; let index = index;">
           @let content = tablesData.tdContent({ index, cursor, column });
           @if ($editMode() && content.control) {
             <app-control-form [$control]="content.control" />
@@ -24,9 +24,9 @@
       mat-row
       *matRowDef="let cursor; columns: columns"
       appTap
-      (hold)="rowHold.emit(cursor)"
-      (touch)="rowTouch.emit(cursor)"
-      [class.selected-row]="$selectedRows().includes(cursor)"></tr>
+      (hold)="onRowHold(cursor)"
+      (touch)="onRowTouch(cursor)"
+      [class.selected-row]="$state().$$hasItemWithCursor(cursor)()"></tr>
   </table>
 } @else {
   <p>No data to display</p>

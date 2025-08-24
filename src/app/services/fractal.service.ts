@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { FormRecord } from '@angular/forms';
 import { Fractal, FractalFields, ICollectionState, Modifiers } from '@types';
 import { ChildrenControlsState, ControlsState, FractalsState, FractalState } from '@utils';
@@ -9,29 +9,28 @@ import { ChildrenControlsState, ControlsState, FractalsState, FractalState } fro
 export class FractalService {
   $app = signal<Fractal | null>(null);
   $modifierTouch = signal<Modifiers | null>(null);
-  $selectedFractalField = signal<FractalFields | null>(null);
+  $selectedCollectionState: WritableSignal<ICollectionState>;
 
   selectedFractal = new FractalState();
 
-  selectedControls = new ControlsState(this.selectedFractal);
-  selectedChildren = new FractalsState(this.selectedFractal);
-  selectedChildrenControls = new ChildrenControlsState(this.selectedFractal);
+  selectedChildren = new FractalsState(this);
+  selectedControls = new ControlsState(this);
+  selectedChildrenControls = new ChildrenControlsState(this);
 
-  selectedControlsTest = new ControlsState(this.selectedFractal);
+  collectionStates: Record<FractalFields, ICollectionState> = {
+    children: this.selectedChildren,
+    controls: this.selectedControls,
+    childrenControls: this.selectedChildrenControls,
+  };
 
   controlsForms = new FormRecord({});
 
-  map = new Map<ICollectionState, ICollectionState>([
-    [this.selectedControls, this.selectedControls],
-    [this.selectedChildren, this.selectedChildren],
-    [this.selectedChildrenControls, this.selectedChildrenControls],
-  ]);
-
-  clearCollectionStates(props?: { exclude?: ICollectionState[] }): void {
-    this.map.forEach((state) => {
-      if (!props?.exclude?.includes(state)) {
-        state.$value.set([]);
-      }
-    });
+  constructor() {
+    this.$selectedCollectionState = signal(this.selectedChildren);
   }
+
+  clearCollectionsStates = (): void =>
+    Object.values(this.collectionStates).forEach((state) => {
+      state.clear();
+    });
 }

@@ -37,7 +37,20 @@ export class FractalFactory implements Fractal {
 
   findControl: Fractal['findControl'] = (search) => this.controls?.[this.parseSearch(search)] ?? null;
 
-  findChildrenControl: Fractal['findChildrenControl'] = (cursor) => this.childrenControls?.[cursor] ?? null;
+  findChildrenControl: Fractal['findChildrenControl'] = (cursor) => {
+    let current: Fractal | null = this as Fractal;
+    let control: Control | null = null;
+
+    while (current) {
+      control = current.childrenControls?.[cursor] ?? null;
+      if (control) {
+        return control;
+      }
+      current = current.parent;
+    }
+
+    return control;
+  };
 
   getTextData: Fractal['getTextData'] = (search) => this.findControl(search)?.data ?? '';
 

@@ -6,40 +6,33 @@
       [ngTemplateOutlet]="table"
       [ngTemplateOutletContext]="{
         like: 'controls',
-        title: 'Controls',
-        state: fs.selectedControls
+        title: 'Controls'
       }" />
 
     <ng-container
       [ngTemplateOutlet]="table"
       [ngTemplateOutletContext]="{
         like: 'childrenControls',
-        title: 'Children controls',
-        state: fs.selectedChildrenControls
+        title: 'Children controls'
       }" />
 
     <ng-container
       [ngTemplateOutlet]="table"
       [ngTemplateOutletContext]="{
         like: 'children',
-        title: 'Children',
-        state: fs.selectedChildren }" />
+        title: 'Children'
+      }" />
 
-    <ng-template #table let-like="like" let-title="title" let-state="state" >
-      <mat-expansion-panel
-        (opened)="onPanelOpened(like, state)"
-        (closed)="onPanelClosed(like, state)">
+    <ng-template #table let-like="like" let-title="title" >
+      <mat-expansion-panel (opened)="onPanelOpened(like)" >
         <mat-expansion-panel-header>
           <mat-panel-title>{{ title }}</mat-panel-title>
         </mat-expansion-panel-header>
           <div class="table-container">
             <app-table
               [$like]="like"
-              [$fractal]="selectedFractal"
-              [$selectedRows]="state.$cursors()"
-              [$selectedCard]="fs.$selectedFractalField()"
-              (rowHold)="onCollectionHold(state)"
-              (rowTouch)="onCollectionTouch($event, state)" />
+              [$state]="fs.$selectedCollectionState()"
+              [$fractal]="selectedFractal" />
             
             @if (newChildren.length > 0) {
               <div class="new-entities">

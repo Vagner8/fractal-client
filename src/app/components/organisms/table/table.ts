@@ -1,9 +1,9 @@
-import { Component, computed, inject, input, output, signal, Signal } from '@angular/core';
+import { Component, computed, inject, input, output, signal } from '@angular/core';
 import { TapDirective } from '@directives';
 import { MatTableModule } from '@mat';
 import { ControlForm } from '@molecules';
 import { FractalService } from '@services';
-import { Control, ControlDto, Fractal, FractalFields } from '@types';
+import { Control, ControlDto, Fractal, FractalFields, ICollectionState } from '@types';
 
 type TablesData = Record<FractalFields, TableData>;
 
@@ -15,7 +15,7 @@ interface TdContentProps {
 
 interface TdContent {
   data: string | null | undefined;
-  control: Control | null | undefined;
+  control?: Control | null;
 }
 
 interface TableData {
@@ -32,11 +32,8 @@ interface TableData {
 })
 export class Table {
   $like = input<FractalFields>('children');
+  $state = input.required<ICollectionState>();
   $fractal = input<Fractal | null>();
-  $selectedCard = input<FractalFields | null>(null);
-  $selectedRows = input<string[]>([]);
-
-  $holdRows = signal<string[]>([]);
 
   fs = inject(FractalService);
 
@@ -44,6 +41,7 @@ export class Table {
   rowTouch = output<string>();
 
   $editMode = signal(false);
+  $holdRows = signal<string[]>([]);
 
   $tablesData = computed<TableData>(() => {
     const tablesData: TablesData = {
@@ -51,6 +49,9 @@ export class Table {
         columns: () => this.$fractal()?.getSplittableData('children controls'),
         dataSource: () => this.$fractal()?.getSplittableData('children'),
         tdContent: ({ column, cursor }) => {
+          if (column === 'cursor') {
+            return { data: cursor };
+          }
           const control = this.$fractal()?.findChild([cursor])?.findControl([column]);
           return { data: control?.data, control };
         },
@@ -79,4 +80,13 @@ export class Table {
 
     return tablesData[this.$like()];
   });
+
+  onRowHold(cursor: string): void {
+    this.rowHold.emit(cursor);
+  }
+
+  onRowTouch(cursor: string): void {
+    this.rowTouch.emit(cursor);
+    this.$state().toggle(cursor);
+  }
 }

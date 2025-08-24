@@ -1,6 +1,6 @@
 import { computed, effect, Signal, signal } from '@angular/core';
 import { Control, Fractal, ICollectionState } from '@types';
-import { FractalState } from './fractal.state';
+import { FractalService } from '@services';
 
 export abstract class CollectionState<T extends Fractal | Control> implements ICollectionState {
   value: T[] = [];
@@ -9,17 +9,20 @@ export abstract class CollectionState<T extends Fractal | Control> implements IC
   $isEmpty = computed<boolean>(() => this.$value().length === 0);
   $cursors = computed<string[]>(() => this.$value().map(({ cursor }) => cursor));
 
-  constructor(protected selectedFractalState: FractalState) {
+  constructor(protected fs: FractalService) {
     effect(() => {
       this.value = this.$value();
     });
   }
 
-  has = (item: T | null | undefined): { $: Signal<boolean> } => ({
-    $: computed(() => (item ? this.$value().includes(item) : false)),
-  });
   push = (item: T): void => this.$value.update((prev) => [...prev, item]);
+  clear = (): void => this.$value.set([]);
   delete = (items: T[]): void => this.$value.update((prev) => prev.filter((item) => !items.includes(item)));
+
+  $$has = (item: T | null | undefined): Signal<boolean> =>
+    computed(() => (item ? this.$value().includes(item) : false));
+  $$hasItemWithCursor = (cursor: string): Signal<boolean> =>
+    computed(() => this.$value().some((item) => item.cursor === cursor));
 
   protected toggleItem(item: T | null | undefined): void {
     if (item) {
@@ -32,5 +35,4 @@ export abstract class CollectionState<T extends Fractal | Control> implements IC
   }
 
   abstract toggle(cursor: string): void;
-  abstract toggleAll(): void;
 }

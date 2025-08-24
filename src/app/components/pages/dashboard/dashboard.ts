@@ -1,13 +1,13 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { BreadCrumbs, Card } from '@atoms';
-import { Tables } from '@templates';
 import { FractalService } from '@services';
+import { Accordion } from '@templates';
 import { Fractal } from '@types';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [Tables, BreadCrumbs, Card, NgTemplateOutlet],
+  imports: [BreadCrumbs, Card, Accordion, NgTemplateOutlet],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -18,8 +18,7 @@ export class Dashboard {
   onCrumbTouch(fractal: Fractal | null): void {
     this.$tablesView.set(false);
     this.fs.selectedFractal.$value.set(fractal);
-    this.fs.clearCollectionStates();
-    this.fs.$selectedFractalField.set(null);
+    this.fs.selectedControls.clear();
   }
 
   onTileHoldOrTouch(fractal: Fractal | null, isHold = false): void {

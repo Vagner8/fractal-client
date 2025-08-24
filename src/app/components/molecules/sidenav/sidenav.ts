@@ -34,9 +34,6 @@ export class Sidenav {
     this.fs.$modifierTouch.set(cursor);
     switch (cursor) {
       case 'new':
-        if (this.fs.$selectedFractalField() === 'children') {
-          this.cs.pushChild(this.fs.selectedFractal.value);
-        }
         break;
       case 'edit':
         break;
@@ -45,13 +42,8 @@ export class Sidenav {
 
   onModifierDisabled = ({ cursor }: Fractal): Signal<boolean> => {
     const test: Record<Modifiers, Signal<boolean>> = {
-      new: computed(() => !this.fs.$selectedFractalField()),
-      edit: computed(
-        () =>
-          this.fs.selectedChildren.$isEmpty() &&
-          this.fs.selectedControls.$isEmpty() &&
-          this.fs.selectedChildrenControls.$isEmpty(),
-      ),
+      new: computed(() => false),
+      edit: computed(() => false),
       save: computed(() => false),
       delete: computed(() => false),
     };
