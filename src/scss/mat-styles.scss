@@ -10,7 +10,7 @@
   stroke: map-get($color, manager) !important;
 }
 
-.manager-spinner .mat-mdc-progress-spinner circle {
+.manager .mat-mdc-progress-spinner circle {
   stroke: map-get($color, secondary) !important;
 }
 
@@ -34,4 +34,8 @@
 
 .mat-expansion-panel-body {
   padding: 0 16px 16px !important;
+}
+
+.mdc-circular-progress__determinate-circle {
+  transition: stroke-dashoffset 10ms linear !important;
 }

@@ -1,6 +1,6 @@
 import { NavigationEnd } from '@angular/router';
 import { QUERY_PARAMS } from '@constants';
-import { ConstantsValues, Timeout } from '@types';
+import { ConstantsValues, TimeoutId } from '@types';
 
 export const getSegments = (
   event: NavigationEnd,
@@ -21,7 +21,7 @@ export const getSegments = (
 };
 
 export const debounce = <T extends (...args: unknown[]) => void>(fn: T, delay: number) => {
-  let timeoutId: Timeout;
+  let timeoutId: TimeoutId;
   return (...args: unknown[]): void => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => {

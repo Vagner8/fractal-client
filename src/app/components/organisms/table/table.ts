@@ -1,8 +1,8 @@
-import { Component, computed, inject, input, output, signal } from '@angular/core';
-import { TapDirective } from '@directives';
+import { Component, computed, inject, input, output, Signal } from '@angular/core';
+import { TapEvents } from '@directives';
 import { MatTableModule } from '@mat';
 import { ControlForm } from '@molecules';
-import { FractalService } from '@services';
+import { EventsService, StatesService } from '@services';
 import { Control, ControlDto, Fractal, FractalFields, ICollectionState } from '@types';
 
 type TablesData = Record<FractalFields, TableData>;
@@ -26,7 +26,7 @@ interface TableData {
 
 @Component({
   selector: 'app-table',
-  imports: [MatTableModule, TapDirective, ControlForm],
+  imports: [MatTableModule, TapEvents, ControlForm],
   templateUrl: './table.html',
   styleUrl: './table.scss',
 })
@@ -35,13 +35,11 @@ export class Table {
   $state = input.required<ICollectionState>();
   $fractal = input<Fractal | null>();
 
-  fs = inject(FractalService);
+  ss = inject(StatesService);
+  es = inject(EventsService);
 
   rowHold = output<string>();
   rowTouch = output<string>();
-
-  $editMode = signal(false);
-  $holdRows = signal<string[]>([]);
 
   $tablesData = computed<TableData>(() => {
     const tablesData: TablesData = {
@@ -57,7 +55,7 @@ export class Table {
         },
       },
       controls: {
-        columns: () => this.fs.$app()?.getSplittableData('control keys'),
+        columns: () => this.ss.$app()?.getSplittableData('control keys'),
         dataSource: () => this.$fractal()?.getSplittableData('controls'),
         tdContent: ({ column, cursor }) => {
           const control = this.$fractal()?.findControl([cursor]);
@@ -66,7 +64,7 @@ export class Table {
       },
       childrenControls: {
         columns: () =>
-          this.fs
+          this.ss
             .$app()
             ?.getSplittableData('control keys')
             .filter((key) => key !== 'data'),
@@ -80,6 +78,14 @@ export class Table {
 
     return tablesData[this.$like()];
   });
+
+  $$showControlForm = (control: Control | null | undefined): Signal<boolean> =>
+    computed<boolean>(() => {
+      if (this.es.$modifierTouch() === 'edit') {
+        return this.$state().$$has(control)() || this.$state().$$has(control?.parent)();
+      }
+      return false;
+    });
 
   onRowHold(cursor: string): void {
     this.rowHold.emit(cursor);

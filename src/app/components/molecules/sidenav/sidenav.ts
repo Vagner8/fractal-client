@@ -2,7 +2,7 @@ import { Component, computed, inject, Signal } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { Tap } from '@atoms';
 import { MatListModule, MatSidenavModule } from '@mat';
-import { CreationService, DataService, FractalService, StatesService } from '@services';
+import { CreationService, DataService, EventsService, StatesService } from '@services';
 import { Fractal, Modifiers } from '@types';
 import { FractalDtoFactory } from '@utils';
 
@@ -15,14 +15,13 @@ import { FractalDtoFactory } from '@utils';
 export class Sidenav {
   ds = inject(DataService);
   ss = inject(StatesService);
-  fs = inject(FractalService);
+  es = inject(EventsService);
   cs = inject(CreationService);
 
   onModifierHold(modifier: Fractal): void {
     switch (modifier.cursor as Modifiers) {
       case 'save':
         this.ds.addFractals(this.cs.$children().map((child) => new FractalDtoFactory(child))).subscribe();
-        // console.log('🚀 ~ save ', this.cs.$children());
         break;
       case 'delete':
         break;
@@ -31,7 +30,7 @@ export class Sidenav {
 
   onModifierTouch(modifier: Fractal): void {
     const cursor = modifier.cursor as Modifiers;
-    this.fs.$modifierTouch.set(cursor);
+    this.es.$modifierTouch.set(cursor);
     switch (cursor) {
       case 'new':
         break;

@@ -1,10 +1,10 @@
 import { Component, input, output } from '@angular/core';
-import { TapDirective } from '@directives';
+import { TapEvents } from '@directives';
 import { MatButton, MatCardModule } from '@mat';
 
 @Component({
   selector: 'app-card',
-  imports: [MatCardModule, MatButton, TapDirective],
+  imports: [MatCardModule, MatButton, TapEvents],
   templateUrl: './card.html',
   styleUrl: './card.scss',
 })

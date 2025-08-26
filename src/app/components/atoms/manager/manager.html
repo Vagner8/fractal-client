@@ -1,5 +1,13 @@
-<button type="button" mat-mini-fab appTap (hold)="onHold()" (touch)="onTouch()">
-  @if (ss.$isHoldEventRunning()) {
-    <app-spinner class="manager-spinner" mode="determinate" />
-  }
+<button
+  class="manager"
+  type="button"
+  mat-mini-fab 
+  appTapEvents
+  (hold)="onHold()"
+  (touch)="onTouch()" >
+    <mat-progress-spinner
+      mode="determinate"
+      [value]="$value()"
+      [diameter]="42"
+      [strokeWidth]="3"/>
 </button>

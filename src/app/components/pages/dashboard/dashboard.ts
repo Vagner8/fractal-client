@@ -1,7 +1,7 @@
 import { NgTemplateOutlet } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { BreadCrumbs, Card } from '@atoms';
-import { FractalService } from '@services';
+import { StatesService } from '@services';
 import { Accordion } from '@templates';
 import { Fractal } from '@types';
 
@@ -12,17 +12,17 @@ import { Fractal } from '@types';
   styleUrl: './dashboard.scss',
 })
 export class Dashboard {
-  fs = inject(FractalService);
+  ss = inject(StatesService);
   $tablesView = signal(false);
 
   onCrumbTouch(fractal: Fractal | null): void {
     this.$tablesView.set(false);
-    this.fs.selectedFractal.$value.set(fractal);
-    this.fs.selectedControls.clear();
+    this.ss.selectedFractal.$value.set(fractal);
+    this.ss.selectedControls.clear();
   }
 
   onTileHoldOrTouch(fractal: Fractal | null, isHold = false): void {
     this.$tablesView.set(isHold);
-    this.fs.selectedFractal.$value.set(fractal);
+    this.ss.selectedFractal.$value.set(fractal);
   }
 }

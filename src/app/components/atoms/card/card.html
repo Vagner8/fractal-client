@@ -7,7 +7,7 @@
       class="button"
       matButton
       [disableRipple]="$disableRipple()"
-      appTap
+      appTapEvents
       (hold)="cardHold.emit()"
       (touch)="cardTouch.emit()">{{''}}</button>
   }

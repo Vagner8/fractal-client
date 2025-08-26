@@ -1,1 +1,1 @@
-export * from './tap.directive';
+export * from './tap-events.directive';

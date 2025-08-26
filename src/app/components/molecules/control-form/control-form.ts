@@ -1,8 +1,8 @@
-import { Component, inject, input, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, computed, inject, input, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { Card, Input, SelectComponent } from '@atoms';
-import { FractalService } from '@services';
-import { Control, ControlFormGroup, ControlType } from '@types';
+import { StatesService } from '@services';
+import { Control, ControlDtoMutable, ControlFormGroup, ControlType } from '@types';
 
 @Component({
   selector: 'app-control-form',
@@ -10,13 +10,19 @@ import { Control, ControlFormGroup, ControlType } from '@types';
   templateUrl: './control-form.html',
 })
 export class ControlForm implements OnInit, OnDestroy {
-  $control = input.required<Control | null>();
+  $label = input.required<string>();
+  $control = input<Control | null>();
+  $isChildControl = input(false);
   $isFullEditMode = input(false);
 
-  id = '';
   fb = inject(FormBuilder);
-  fs = inject(FractalService);
+  ss = inject(StatesService);
 
+  $form = computed<FormControl>(
+    () => this.formGroup.controls[this.$isChildControl() ? 'data' : (this.$label() as keyof ControlDtoMutable)],
+  );
+
+  id = '';
   formGroup!: ControlFormGroup;
   controlTypes: ControlType[] = ['text', 'splittable'];
 
@@ -32,11 +38,11 @@ export class ControlForm implements OnInit, OnDestroy {
         cursor,
       });
 
-      this.fs.controlsForms.addControl(id, this.formGroup);
+      this.ss.controlsForms.addControl(id, this.formGroup);
     }
   }
 
   ngOnDestroy(): void {
-    this.fs.controlsForms.removeControl(this.id);
+    this.ss.controlsForms.removeControl(this.id);
   }
 }

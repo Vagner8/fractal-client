@@ -1,5 +1,0 @@
-@if (mode === 'indeterminate') {
-  <mat-progress-spinner [mode]="mode" [diameter]="diameter" [strokeWidth]="strokeWidth" />
-} @else {
-  <mat-progress-spinner [mode]="mode" [value]="timeout$ | async" [diameter]="diameter" [strokeWidth]="strokeWidth" />
-}

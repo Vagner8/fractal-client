@@ -1,6 +1,6 @@
 import { computed, effect, Signal, signal } from '@angular/core';
 import { Control, Fractal, ICollectionState } from '@types';
-import { FractalService } from '@services';
+import { StatesService } from '@services';
 
 export abstract class CollectionState<T extends Fractal | Control> implements ICollectionState {
   value: T[] = [];
@@ -9,7 +9,7 @@ export abstract class CollectionState<T extends Fractal | Control> implements IC
   $isEmpty = computed<boolean>(() => this.$value().length === 0);
   $cursors = computed<string[]>(() => this.$value().map(({ cursor }) => cursor));
 
-  constructor(protected fs: FractalService) {
+  constructor(protected ss: StatesService) {
     effect(() => {
       this.value = this.$value();
     });

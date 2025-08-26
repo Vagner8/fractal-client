@@ -1,12 +1,12 @@
 <mat-drawer-container class="mat-drawer-container-app-sidenav" autosize>
   <mat-drawer
-    [opened]="ss.$managerEvent() === 'touch'"
+    [opened]="es.$isManagerTouched()"
     [disableClose]="false"
     class="mat-drawer-app-sidenav"
     mode="side"
     position="end">
     <div>
-      @if (this.fs.$app()?.findChildRecursively('modifiers'); as modifiers) {
+      @if (ss.$app()?.findChildRecursively('modifiers'); as modifiers) {
         @for (cursor of modifiers.getSplittableData('children'); track cursor) {
           @if (modifiers.findChild([cursor]); as modifier) {
             <app-tap

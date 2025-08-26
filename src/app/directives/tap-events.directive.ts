@@ -1,17 +1,15 @@
-import { Directive, ElementRef, inject, Input, OnDestroy, OnInit, output } from '@angular/core';
-import { HOLD_THRESHOLD } from '@constants';
-import { StatesService } from '@services';
+import { Directive, ElementRef, inject, input, OnDestroy, OnInit, output } from '@angular/core';
+import { HoldDelay } from '@types';
 import { fromEvent, map, merge, race, Subscription, switchMap, takeUntil, tap, timer } from 'rxjs';
 
 @Directive({
-  selector: '[appTap]',
+  selector: '[appTapEvents]',
   standalone: true,
 })
-export class TapDirective implements OnInit, OnDestroy {
-  el = inject(ElementRef<HTMLElement>);
-  ss = inject(StatesService);
+export class TapEvents implements OnInit, OnDestroy {
+  $holdDelay = input<HoldDelay>(300);
 
-  @Input() disableHoldEvent = false;
+  el = inject(ElementRef<HTMLElement>);
 
   hold = output();
   touch = output();
@@ -23,26 +21,17 @@ export class TapDirective implements OnInit, OnDestroy {
     const pointerDown$ = fromEvent<PointerEvent>(this.el.nativeElement, 'pointerdown');
     const pointerLeave$ = fromEvent<PointerEvent>(this.el.nativeElement, 'pointerleave');
 
+    const holdDelay = this.$holdDelay();
+
     this.sbs.push(
       pointerDown$
         .pipe(
-          tap(() => {
-            if (this.disableHoldEvent) {
-              return;
-            }
-            this.ss.$isHoldEventRunning.set(true);
-          }),
           switchMap(() =>
-            race(
-              timer(HOLD_THRESHOLD).pipe(map(() => true)),
-              merge(pointerUp$, pointerLeave$).pipe(map(() => false)),
-            ).pipe(
+            race(timer(holdDelay).pipe(map(() => true)), merge(pointerUp$, pointerLeave$).pipe(map(() => false))).pipe(
               tap((isTimerCompleted) => {
                 if (isTimerCompleted) {
                   this.hold.emit();
                 }
-
-                this.ss.$isHoldEventRunning.set(false);
               }),
             ),
           ),
@@ -55,7 +44,7 @@ export class TapDirective implements OnInit, OnDestroy {
         .pipe(
           switchMap(() =>
             pointerUp$.pipe(
-              takeUntil(timer(HOLD_THRESHOLD)),
+              takeUntil(timer(holdDelay)),
               takeUntil(pointerLeave$),
               tap(() => this.touch.emit()),
             ),

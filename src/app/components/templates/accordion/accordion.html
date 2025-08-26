@@ -1,6 +1,6 @@
 @let newChildren = cs.$children();
 
-@if (fs.selectedFractal.$value(); as selectedFractal) {
+@if (ss.selectedFractal.$value(); as selectedFractal) {
   <mat-accordion>
     <ng-container
       [ngTemplateOutlet]="table"
@@ -29,10 +29,12 @@
           <mat-panel-title>{{ title }}</mat-panel-title>
         </mat-expansion-panel-header>
           <div class="table-container">
-            <app-table
-              [$like]="like"
-              [$state]="fs.$selectedCollectionState()"
-              [$fractal]="selectedFractal" />
+            @if (ss.$selectedCollectionState(); as state) {
+              <app-table
+                [$like]="like"
+                [$state]="state"
+                [$fractal]="selectedFractal" />
+            }
             
             @if (newChildren.length > 0) {
               <div class="new-entities">

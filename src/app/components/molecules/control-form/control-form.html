@@ -1,4 +1,6 @@
 @if ($control(); as control) {
+  @let label = $label();
+
   @if ($isFullEditMode()) {
     <app-card>
       <app-input [$form]="formGroup.controls.cursor" [$label]="'Cursor'" />
@@ -6,6 +8,6 @@
       <app-input [$form]="formGroup.controls.data" [$label]="'Data'" />
     </app-card>
   } @else {
-    <app-input [$label]="control.cursor" [$form]="formGroup.controls.data" />
+    <app-input [$label]="label" [$form]="$form()" />
   }
 }

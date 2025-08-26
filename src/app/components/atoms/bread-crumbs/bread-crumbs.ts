@@ -1,6 +1,6 @@
 import { Component, computed, inject, output } from '@angular/core';
 import { MatButtonModule, MatGridListModule, MatIcon } from '@mat';
-import { FractalService } from '@services';
+import { StatesService } from '@services';
 import { Fractal } from '@types';
 import { getAncestors } from '@utils';
 
@@ -11,7 +11,7 @@ import { getAncestors } from '@utils';
   styleUrl: './bread-crumbs.scss',
 })
 export class BreadCrumbs {
-  fs = inject(FractalService);
+  ss = inject(StatesService);
   crumbClick = output<Fractal | null>();
-  $crumbs = computed<Fractal[]>(getAncestors(this.fs.selectedFractal.$value));
+  $crumbs = computed<Fractal[]>(getAncestors(this.ss.selectedFractal.$value));
 }

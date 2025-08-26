@@ -1,7 +1,7 @@
 @let tablesView = $tablesView();
 
 <div class="dashboard">
-  @if (fs.selectedFractal.$value()) {
+  @if (ss.selectedFractal.$value()) {
     <app-bread-crumbs (crumbClick)="onCrumbTouch($event)" />
   }
 
@@ -10,14 +10,14 @@
   }
 
   @if (!tablesView) {
-    @if (fs.selectedFractal.$value(); as selectedFractal) {
+    @if (ss.selectedFractal.$value(); as selectedFractal) {
       @for (cursor of selectedFractal.getSplittableData('children'); track cursor) {
         @if (selectedFractal.findChild([cursor]); as child) {
           <ng-container [ngTemplateOutlet]="tile" [ngTemplateOutletContext]="{fractal: child}"  />
         }
       }
     } @else {
-      @if (fs.$app(); as app) {
+      @if (ss.$app(); as app) {
         <ng-container [ngTemplateOutlet]="tile" [ngTemplateOutletContext]="{fractal: app}"  />
       }
     }

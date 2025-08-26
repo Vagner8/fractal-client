@@ -1,32 +1,45 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { MatButtonModule } from '@mat';
-import { TapDirective } from '@directives';
-import { SpinnerComponent } from '@atoms';
-import { StatesService } from '@services';
-import { TapEvents } from '@types';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { MatButtonModule, MatProgressSpinnerModule } from '@mat';
+import { TapEvents } from '@directives';
+import { EventsService } from '@services';
+import { HoldDelay, IntervalId } from '@types';
 
 @Component({
   selector: 'app-manager',
-  imports: [MatButtonModule, SpinnerComponent, TapDirective],
+  imports: [MatButtonModule, MatProgressSpinnerModule, TapEvents],
   templateUrl: './manager.html',
   styleUrl: './manager.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Manager {
-  prevEvent: TapEvents = 'touch';
+  es = inject(EventsService);
+  $value = signal(0);
 
-  ss = inject(StatesService);
+  intervalId!: IntervalId;
+  holdDelayMap: Record<HoldDelay, { seed: number; delay: number }> = {
+    300: { seed: 5, delay: 10 },
+    1000: { seed: 1, delay: 10 },
+  };
 
   onHold(): void {
-    this.prevEvent = 'hold';
-    this.ss.setManager('hold');
+    this.es.$isManagerTouched.set(false);
+    clearInterval(this.intervalId);
+    this.$value.set(0);
   }
 
-  async onTouch(): Promise<void> {
-    if (this.prevEvent === 'touch') {
-      this.ss.$showModifiersTaps.update((prev) => !prev);
-    }
-    this.prevEvent = 'touch';
-    await this.ss.setManager('touch');
+  onTouch(): void {
+    this.es.$isManagerTouched.set(true);
+  }
+
+  onHoldStart(holdDelay: HoldDelay): void {
+    console.log('🚀 ~ onHoldStart:', holdDelay);
+
+    const { seed, delay } = this.holdDelayMap[holdDelay];
+    this.intervalId = setInterval(() => this.$value.update((prev) => prev + seed), delay);
+  }
+
+  onHoldCancel(): void {
+    clearInterval(this.intervalId);
+    this.$value.set(0);
   }
 }
