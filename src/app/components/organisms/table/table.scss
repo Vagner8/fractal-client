@@ -9,11 +9,3 @@
 .td {
   cursor: default;
 }
-
-.selected-row {
-  background-color: map-get($color, secondary);
-}
-
-.selected {
-  border: 1px solid map-get($color, manager);
-}

@@ -5,7 +5,7 @@
     mat-flat-button
     extended
     appTapEvents
-    [$holdDelay]="1000"
+    [$holdEventDelay]="1000"
     [disabled]="$disabled()"
     (hold)="tapHold.emit(fractal)"
     (touch)="tapTouch.emit(fractal)">

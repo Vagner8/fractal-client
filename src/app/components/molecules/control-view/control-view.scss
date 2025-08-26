@@ -1,0 +1,5 @@
+@use 'variables' as *;
+
+.control-view.edit-mode {
+  margin-top: map-get($size, md);
+}

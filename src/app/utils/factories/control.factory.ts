@@ -1,5 +1,5 @@
 import { signal } from '@angular/core';
-import { Control, ControlDto, ControlType, Fractal } from '@types';
+import { Control, ControlDto, ControlLike, ControlType, Fractal } from '@types';
 import { v4 } from 'uuid';
 
 export class ControlFactory implements Control {
@@ -10,7 +10,7 @@ export class ControlFactory implements Control {
   parent: Fractal | null;
   parentCursor: string | null;
 
-  $isFullEditMode = signal(false);
+  $like = signal<ControlLike>('data');
 
   constructor(parent: Fractal, dto?: Partial<ControlDto>) {
     this.id = dto?.id || v4();

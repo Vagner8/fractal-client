@@ -1,0 +1,21 @@
+<div class="control-view" [class.edit-mode]="$isEditMode()">
+  @switch (true) {
+    @case ($isEditMode()) {
+      @if (formControl) {
+        <app-input [$label]="$column()" [$form]="formControl" />
+      }
+    }
+    @case ($isFullEditMode()) {
+      @if (formControl) {
+        <app-card>
+          <!-- <app-input [$form]="formControl.controls.cursor" [$label]="'Cursor'" />
+          <app-select [$form]="formControl.controls.type" [$opts]="controlTypes" [$label]="'Type'" />
+          <app-input [$form]="formControl.controls.data" [$label]="'Data'" /> -->
+        </app-card>
+      }
+    }
+    @default {
+      {{ dataView }}
+    }
+  }
+</div>

@@ -1,3 +1,3 @@
 export * from './toolbar/toolbar';
 export * from './sidenav/sidenav';
-export * from './control-form/control-form';
+export * from './control-view/control-view';

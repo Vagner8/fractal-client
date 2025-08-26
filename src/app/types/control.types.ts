@@ -1,3 +1,4 @@
+import { WritableSignal } from '@angular/core';
 import { Fractal } from './fractal.types';
 import { FormControl, FormGroup } from '@angular/forms';
 
@@ -8,6 +9,7 @@ export type ControlsStructuralCursors = 'children' | 'controls' | 'control keys'
 export type ControlsCommonCursors = 'name' | 'icon';
 export type ControlsCursors = ControlsStructuralCursors | ControlsCommonCursors;
 export type ControlFormGroup = FormGroup<Record<keyof ControlDtoMutable, FormControl>>;
+export type ControlLike = 'data' | 'edit';
 
 export interface ControlDtoMutable {
   data: string;
@@ -22,5 +24,6 @@ export interface ControlDto extends ControlDtoMutable {
 
 export interface Control extends ControlDto {
   parent: Fractal | null;
+  $like: WritableSignal<ControlLike>;
   push(data: string): void;
 }

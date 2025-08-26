@@ -1,14 +1,16 @@
 import { Directive, ElementRef, inject, input, OnDestroy, OnInit, output } from '@angular/core';
-import { HoldDelay } from '@types';
-import { fromEvent, map, merge, race, Subscription, switchMap, takeUntil, tap, timer } from 'rxjs';
+import { EventsService } from '@services';
+import { HoldEventDelay } from '@types';
+import { fromEvent, merge, race, Subscription, switchMap, takeUntil, tap, timer } from 'rxjs';
 
 @Directive({
   selector: '[appTapEvents]',
   standalone: true,
 })
 export class TapEvents implements OnInit, OnDestroy {
-  $holdDelay = input<HoldDelay>(300);
+  $holdEventDelay = input<HoldEventDelay>(300);
 
+  es = inject(EventsService);
   el = inject(ElementRef<HTMLElement>);
 
   hold = output();
@@ -21,18 +23,21 @@ export class TapEvents implements OnInit, OnDestroy {
     const pointerDown$ = fromEvent<PointerEvent>(this.el.nativeElement, 'pointerdown');
     const pointerLeave$ = fromEvent<PointerEvent>(this.el.nativeElement, 'pointerleave');
 
-    const holdDelay = this.$holdDelay();
+    const delay = this.$holdEventDelay();
 
     this.sbs.push(
       pointerDown$
         .pipe(
+          tap(() => this.es.holdEvent$.next({ status: 'start', delay })),
           switchMap(() =>
-            race(timer(holdDelay).pipe(map(() => true)), merge(pointerUp$, pointerLeave$).pipe(map(() => false))).pipe(
-              tap((isTimerCompleted) => {
-                if (isTimerCompleted) {
+            race(
+              timer(delay).pipe(
+                tap(() => {
                   this.hold.emit();
-                }
-              }),
+                  this.es.holdEvent$.next({ status: 'done' });
+                }),
+              ),
+              merge(pointerUp$, pointerLeave$).pipe(tap(() => this.es.holdEvent$.next({ status: 'cancel' }))),
             ),
           ),
         )
@@ -44,9 +49,12 @@ export class TapEvents implements OnInit, OnDestroy {
         .pipe(
           switchMap(() =>
             pointerUp$.pipe(
-              takeUntil(timer(holdDelay)),
+              takeUntil(timer(delay)),
               takeUntil(pointerLeave$),
-              tap(() => this.touch.emit()),
+              tap(() => {
+                this.es.holdEvent$.next({ status: 'idle' });
+                this.touch.emit();
+              }),
             ),
           ),
         )

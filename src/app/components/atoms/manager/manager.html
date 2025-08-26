@@ -3,11 +3,11 @@
   type="button"
   mat-mini-fab 
   appTapEvents
-  (hold)="onHold()"
-  (touch)="onTouch()" >
+  (hold)="onHoldAndTouch(false)"
+  (touch)="onHoldAndTouch(true)" >
     <mat-progress-spinner
       mode="determinate"
-      [value]="$value()"
+      [value]="value$ | async"
       [diameter]="42"
       [strokeWidth]="3"/>
 </button>

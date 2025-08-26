@@ -5,11 +5,11 @@ import { MatSelectModule } from '@mat';
 @Component({
   selector: 'app-select',
   imports: [MatSelectModule, ReactiveFormsModule],
-  templateUrl: './select.component.html',
-  styleUrl: './select.component.scss',
+  templateUrl: './select.html',
+  styleUrl: './select.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SelectComponent {
+export class Select {
   $form = input<FormControl>();
   $opts = input<string[]>([]);
   $label = input('');

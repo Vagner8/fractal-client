@@ -1,7 +1,6 @@
-@let state = $state();
-@let tablesData = $tablesData();
-@let columns = tablesData.columns();
-@let dataSource = tablesData.dataSource();
+@let data = tablesData[$like()];
+@let columns = data.columns();
+@let dataSource = data.dataSource();
 
 @if (columns && columns.length > 0 && dataSource && dataSource.length > 0) {
   <table mat-table [dataSource]="dataSource">
@@ -11,16 +10,10 @@
           {{ column }}
         </th>
         <td mat-cell *matCellDef="let cursor; let index = index;">
-          @let content = tablesData.tdContent({ index, cursor, column });
-          @if ($$showControlForm(content.control)()) {
-            <app-control-form
-              [$label]="column"
-              [$control]="content.control"
-              [$isChildControl]="!ss.selectedChildren.$isEmpty()" />
-          } @else {
-            {{ content.data }}
-          }
-          {{ content.data }}
+          <app-control-view
+            [$column]="column"
+            [$cursor]="cursor"
+            [$fractalField]="$like()" />
         </td>
       </ng-container>
     }
@@ -29,9 +22,7 @@
       mat-row
       *matRowDef="let cursor; columns: columns"
       appTapEvents
-      (hold)="onRowHold(cursor)"
-      (touch)="onRowTouch(cursor)"
-      [class.selected-row]="state.$$hasItemWithCursor(cursor)()"></tr>
+      (hold)="onRowHold(cursor)"></tr>
   </table>
 } @else {
   <p>No data to display</p>

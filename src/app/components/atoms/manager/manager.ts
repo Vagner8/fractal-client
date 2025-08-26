@@ -1,45 +1,41 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule, MatProgressSpinnerModule } from '@mat';
 import { TapEvents } from '@directives';
 import { EventsService } from '@services';
-import { HoldDelay, IntervalId } from '@types';
+import { delay, delayWhen, interval, map, Observable, of, switchMap } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+import { HoldEventDelay } from '@types';
 
 @Component({
   selector: 'app-manager',
-  imports: [MatButtonModule, MatProgressSpinnerModule, TapEvents],
+  imports: [MatButtonModule, MatProgressSpinnerModule, TapEvents, AsyncPipe],
   templateUrl: './manager.html',
   styleUrl: './manager.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Manager {
+export class Manager implements OnInit {
   es = inject(EventsService);
-  $value = signal(0);
+  value$!: Observable<number>;
 
-  intervalId!: IntervalId;
-  holdDelayMap: Record<HoldDelay, { seed: number; delay: number }> = {
-    300: { seed: 5, delay: 10 },
-    1000: { seed: 1, delay: 10 },
+  holdEventDelayMap: Record<HoldEventDelay, [number, number]> = {
+    300: [8, 15],
+    1000: [2, 15],
   };
 
-  onHold(): void {
-    this.es.$isManagerTouched.set(false);
-    clearInterval(this.intervalId);
-    this.$value.set(0);
+  ngOnInit(): void {
+    this.value$ = this.es.holdEvent$.pipe(
+      switchMap((event) => {
+        if (event.status === 'start' && event.delay) {
+          const [seed, speed] = this.holdEventDelayMap[event.delay];
+          return interval(speed).pipe(map((num) => (num < 5 ? 0 : num * seed)));
+        } else {
+          return of(0);
+        }
+      }),
+    );
   }
 
-  onTouch(): void {
-    this.es.$isManagerTouched.set(true);
-  }
-
-  onHoldStart(holdDelay: HoldDelay): void {
-    console.log('🚀 ~ onHoldStart:', holdDelay);
-
-    const { seed, delay } = this.holdDelayMap[holdDelay];
-    this.intervalId = setInterval(() => this.$value.update((prev) => prev + seed), delay);
-  }
-
-  onHoldCancel(): void {
-    clearInterval(this.intervalId);
-    this.$value.set(0);
+  onHoldAndTouch(isTouch: boolean): void {
+    this.es.$isManagerTouched.set(isTouch);
   }
 }
