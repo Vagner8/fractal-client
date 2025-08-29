@@ -10,6 +10,7 @@ export interface ICollectionState {
   clear(): void;
   delete(items: unknown[]): void;
   toggle(cursor: string): void;
+  toggleAll(): void;
 
   $$has(item: unknown): Signal<boolean>;
   $$hasItemWithCursor(cursor: string): Signal<boolean>;

@@ -8,8 +8,9 @@
       matButton
       [disableRipple]="$disableRipple()"
       appTapEvents
-      (hold)="cardHold.emit()"
-      (touch)="cardTouch.emit()">{{''}}</button>
+      [lastHoldEvent]="lastHoldEvent"
+      (touch)="cardTouch.emit()"
+      (holdSave)="cardHoldSave.emit()">{{''}}</button>
   }
   <mat-card-header>
     <mat-card-title>{{ $title() }}</mat-card-title>

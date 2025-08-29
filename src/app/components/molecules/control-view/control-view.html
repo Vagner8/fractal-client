@@ -1,21 +1,33 @@
-<div class="control-view" [class.edit-mode]="$isEditMode()">
-  @switch (true) {
-    @case ($isEditMode()) {
-      @if (formControl) {
-        <app-input [$label]="$column()" [$form]="formControl" />
+<div class="control-view">
+    @switch (true) {
+      @case ($isEditMode()) {
+        <ng-container [ngTemplateOutlet]="editView" />
+      }
+      @case ($isEditMode()) {
+        <ng-container [ngTemplateOutlet]="fullEditView" />
+      }
+      @default {
+        <ng-container [ngTemplateOutlet]="dataView" />
       }
     }
-    @case ($isFullEditMode()) {
-      @if (formControl) {
-        <app-card>
-          <!-- <app-input [$form]="formControl.controls.cursor" [$label]="'Cursor'" />
-          <app-select [$form]="formControl.controls.type" [$opts]="controlTypes" [$label]="'Type'" />
-          <app-input [$form]="formControl.controls.data" [$label]="'Data'" /> -->
-        </app-card>
-      }
-    }
-    @default {
-      {{ dataView }}
-    }
-  }
 </div>
+
+<ng-template #fullEditView>
+  <app-card>
+    <!-- <app-input [$form]="formControl.controls.cursor" [$label]="'Cursor'" />
+    <app-select [$form]="formControl.controls.type" [$opts]="controlTypes" [$label]="'Type'" />
+    <app-input [$form]="formControl.controls.data" [$label]="'Data'" /> -->
+  </app-card>
+</ng-template>
+
+<ng-template #editView>
+  @if (formControl) {
+    <div class="edit-mode-container">
+      <app-input [$label]="$column()" [$form]="formControl" />
+    </div>
+  }
+</ng-template>
+
+<ng-template #dataView>
+  {{ controlData }}
+</ng-template>

@@ -22,7 +22,9 @@
       mat-row
       *matRowDef="let cursor; columns: columns"
       appTapEvents
-      (hold)="onRowHold(cursor)"></tr>
+      lastHoldEvent="warning"
+      (holdSave)="onHoldSave(cursor)"
+      (holdWarning)="onHoldWarning()"></tr>
   </table>
 } @else {
   <p>No data to display</p>

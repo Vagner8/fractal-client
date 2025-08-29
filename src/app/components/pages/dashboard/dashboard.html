@@ -1,15 +1,15 @@
-@let tablesView = $tablesView();
+@let accordionView = $accordionView();
 
 <div class="dashboard">
   @if (ss.selectedFractal.$value()) {
     <app-bread-crumbs (crumbClick)="onCrumbTouch($event)" />
   }
 
-  @if (tablesView) {
+  @if (accordionView) {
     <app-accordion />
   }
 
-  @if (!tablesView) {
+  @if (!accordionView) {
     @if (ss.selectedFractal.$value(); as selectedFractal) {
       @for (cursor of selectedFractal.getSplittableData('children'); track cursor) {
         @if (selectedFractal.findChild([cursor]); as child) {
@@ -29,6 +29,7 @@
   <app-card
     [$like]="'button'"
     [$title]="fractal.cursor"
-    (cardHold)="onTileHoldOrTouch(fractal, true)"
-    (cardTouch)="onTileHoldOrTouch(fractal)">Children: {{ children.length }}</app-card>
+    lastHoldEvent="save"
+    (cardTouch)="onCardTouch(fractal)"
+    (cardHoldSave)="onCardHoldSave(fractal)">Children: {{ children.length }}</app-card>
 </ng-template>

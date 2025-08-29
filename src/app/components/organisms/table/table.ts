@@ -3,7 +3,7 @@ import { TapEvents } from '@directives';
 import { MatTableModule } from '@mat';
 import { ControlView } from '@molecules';
 import { EventsService, StatesService } from '@services';
-import { Fractal, FractalFields, ICollectionState } from '@types';
+import { Control, Fractal, FractalFields, ICollectionState } from '@types';
 
 type TablesData = Record<FractalFields, TableData>;
 
@@ -48,7 +48,11 @@ export class Table {
     },
   };
 
-  onRowHold(cursor: string): void {
+  onHoldSave(cursor: string): void {
     this.$state().toggle(cursor);
+  }
+
+  onHoldWarning(): void {
+    this.$state().toggleAll();
   }
 }

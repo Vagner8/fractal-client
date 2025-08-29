@@ -34,5 +34,12 @@ export abstract class CollectionState<T extends Fractal | Control> implements IC
     }
   }
 
+  protected toggleAllItems(items: Record<string, T> | null | undefined): void {
+    if (items) {
+      this.$value.update((prev) => (prev.length > 0 ? [] : Object.values(items)));
+    }
+  }
+
   abstract toggle(cursor: string): void;
+  abstract toggleAll(): void;
 }

@@ -1,12 +1,13 @@
+import { NgTemplateOutlet } from '@angular/common';
 import { Component, computed, inject, input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Card, Input, Select } from '@atoms';
 import { StatesService } from '@services';
-import { Control, ControlDto, ControlDtoMutable, ControlType, FractalFields } from '@types';
+import { Control, ControlDto, ControlDtoMutable, ControlTypes, FractalFields } from '@types';
 
 @Component({
   selector: 'app-control-view',
-  imports: [Card, Input, Select],
+  imports: [Card, Input, Select, NgTemplateOutlet],
   templateUrl: './control-view.html',
   styleUrl: './control-view.scss',
 })
@@ -19,7 +20,7 @@ export class ControlView implements OnInit, OnDestroy {
   ss = inject(StatesService);
 
   control: Control | null | undefined;
-  controlTypes: ControlType[] = ['text', 'splittable'];
+  publicTypes: ControlTypes[] = ['string', 'select'];
 
   ngOnInit(): void {
     this.control = this.getControl();
@@ -27,11 +28,14 @@ export class ControlView implements OnInit, OnDestroy {
 
   $isChildControl = computed(() => this.$fractalField() === 'children');
 
-  $isEditMode = computed<boolean>(() =>
-    this.ss.collectionStates[this.$fractalField()].$$has(
-      this.$isChildControl() ? this.control?.parent : this.control,
-    )(),
-  );
+  $isEditMode = computed<boolean>(() => {
+    if (!this.control) {
+      return false;
+    }
+    return this.ss.collectionStates[this.$fractalField()].$$has(
+      this.$isChildControl() ? this.control.parent : this.control,
+    )();
+  });
 
   $isFullEditMode = computed<boolean>(() => false);
 
@@ -50,7 +54,7 @@ export class ControlView implements OnInit, OnDestroy {
     }
   }
 
-  get dataView(): string | null | undefined {
+  get controlData(): string | null | undefined {
     const column = this.$column();
     const cursor = this.$cursor();
     switch (this.$fractalField()) {

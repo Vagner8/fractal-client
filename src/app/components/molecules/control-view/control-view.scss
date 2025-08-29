@@ -1,5 +1,5 @@
 @use 'variables' as *;
 
-.control-view.edit-mode {
+.edit-mode-container {
   margin-top: map-get($size, md);
 }

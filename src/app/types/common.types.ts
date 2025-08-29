@@ -1,15 +1,9 @@
 export type TimeoutId = ReturnType<typeof setTimeout>;
 export type IntervalId = ReturnType<typeof setInterval>;
 export type ConstantsValues<T> = T[keyof T];
-export type TapEvents = 'hold' | 'touch';
 export type Paths = 'edit';
-export type HoldEventDelay = 300 | 1000;
-export type HoldEventStatus = 'idle' | 'start' | 'done' | 'cancel';
-
-export interface HoldEvent {
-  delay?: HoldEventDelay;
-  status: HoldEventStatus;
-}
+export type HoldEvents = 'save' | 'warning' | 'danger';
+export type HoldEventState = 'start' | 'cancel' | HoldEvents;
 
 export interface AppError {
   name: string;

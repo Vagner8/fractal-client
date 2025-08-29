@@ -1,13 +1,5 @@
 <button
-  class="manager"
+  [style.--mat-fab-small-container-color]="color$ | async"
   type="button"
-  mat-mini-fab 
-  appTapEvents
-  (hold)="onHoldAndTouch(false)"
-  (touch)="onHoldAndTouch(true)" >
-    <mat-progress-spinner
-      mode="determinate"
-      [value]="value$ | async"
-      [diameter]="42"
-      [strokeWidth]="3"/>
-</button>
+  mat-mini-fab
+  (click)="onClick()">{{''}}</button>

@@ -6,10 +6,6 @@
   right: 0 !important;
 }
 
-.mat-mdc-progress-spinner circle {
-  stroke: map-get($color, manager) !important;
-}
-
 .manager .mat-mdc-progress-spinner circle {
   stroke: map-get($color, secondary) !important;
 }

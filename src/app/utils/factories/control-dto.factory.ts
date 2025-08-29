@@ -1,9 +1,9 @@
-import { Control, ControlDto, ControlType } from '@types';
+import { Control, ControlDto, ControlTypes } from '@types';
 
 export class ControlDtoFactory implements ControlDto {
   id: string;
   data: string;
-  type: ControlType;
+  type: ControlTypes;
   cursor: string;
   parentCursor: string | null;
 

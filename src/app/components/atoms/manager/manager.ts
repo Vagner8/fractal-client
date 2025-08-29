@@ -2,9 +2,8 @@ import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/cor
 import { MatButtonModule, MatProgressSpinnerModule } from '@mat';
 import { TapEvents } from '@directives';
 import { EventsService } from '@services';
-import { delay, delayWhen, interval, map, Observable, of, switchMap } from 'rxjs';
+import { filter, map, merge, Observable, startWith } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import { HoldEventDelay } from '@types';
 
 @Component({
   selector: 'app-manager',
@@ -15,27 +14,47 @@ import { HoldEventDelay } from '@types';
 })
 export class Manager implements OnInit {
   es = inject(EventsService);
-  value$!: Observable<number>;
-
-  holdEventDelayMap: Record<HoldEventDelay, [number, number]> = {
-    300: [8, 15],
-    1000: [2, 15],
-  };
+  color$!: Observable<string>;
 
   ngOnInit(): void {
-    this.value$ = this.es.holdEvent$.pipe(
-      switchMap((event) => {
-        if (event.status === 'start' && event.delay) {
-          const [seed, speed] = this.holdEventDelayMap[event.delay];
-          return interval(speed).pipe(map((num) => (num < 5 ? 0 : num * seed)));
-        } else {
-          return of(0);
-        }
-      }),
-    );
+    const defaultColor = 'rgb(245, 245, 245)';
+
+    this.color$ = merge(
+      this.es.holdEventInterval$.pipe(
+        map((num) => {
+          if (num <= 33) {
+            const t = num / 33;
+            const r = this.lerp(245, 40, t);
+            const g = this.lerp(245, 167, t);
+            const b = this.lerp(245, 69, t);
+            return `rgb(${r}, ${g}, ${b})`;
+          }
+
+          if (num <= 66) {
+            const t = (num - 33) / 33;
+            const r = this.lerp(40, 255, t);
+            const g = this.lerp(167, 193, t);
+            const b = this.lerp(69, 7, t);
+            return `rgb(${r}, ${g}, ${b})`;
+          }
+
+          const t = (num - 66) / 34;
+          const r = this.lerp(255, 255, t);
+          const g = this.lerp(193, 64, t);
+          const b = this.lerp(7, 129, t);
+          return `rgb(${r}, ${g}, ${b})`;
+        }),
+      ),
+      this.es.holdEventState$.pipe(
+        filter((state) => state === 'cancel'),
+        map(() => defaultColor),
+      ),
+    ).pipe(startWith(defaultColor));
   }
 
-  onHoldAndTouch(isTouch: boolean): void {
-    this.es.$isManagerTouched.set(isTouch);
+  onClick(): void {
+    this.es.$drawerOpened.update((prev) => !prev);
   }
+
+  lerp = (a: number, b: number, t: number): number => a + (b - a) * t;
 }

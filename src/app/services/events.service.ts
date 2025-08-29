@@ -1,5 +1,5 @@
 import { Injectable, signal } from '@angular/core';
-import { HoldEvent, HoldEventDelay, Modifiers } from '@types';
+import { HoldEventState, Modifiers } from '@types';
 import { Subject } from 'rxjs';
 
 @Injectable({
@@ -7,7 +7,8 @@ import { Subject } from 'rxjs';
 })
 export class EventsService {
   $modifierTouch = signal<Modifiers | null>(null);
-  $isManagerTouched = signal(false);
+  $drawerOpened = signal(false);
 
-  holdEvent$ = new Subject<HoldEvent>();
+  holdEventState$ = new Subject<HoldEventState>();
+  holdEventInterval$ = new Subject<number>();
 }

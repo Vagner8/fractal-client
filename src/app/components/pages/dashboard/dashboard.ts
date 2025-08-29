@@ -13,16 +13,21 @@ import { Fractal } from '@types';
 })
 export class Dashboard {
   ss = inject(StatesService);
-  $tablesView = signal(false);
+  $accordionView = signal(false);
 
   onCrumbTouch(fractal: Fractal | null): void {
-    this.$tablesView.set(false);
+    this.$accordionView.set(false);
     this.ss.selectedFractal.$value.set(fractal);
     this.ss.selectedControls.clear();
   }
 
-  onTileHoldOrTouch(fractal: Fractal | null, isHold = false): void {
-    this.$tablesView.set(isHold);
+  onCardTouch(fractal: Fractal | null): void {
+    this.$accordionView.set(false);
+    this.ss.selectedFractal.$value.set(fractal);
+  }
+
+  onCardHoldSave(fractal: Fractal | null): void {
+    this.$accordionView.set(true);
     this.ss.selectedFractal.$value.set(fractal);
   }
 }
